@@ -13,7 +13,7 @@ def newtonsMethod(fx, dfx, x, n):
 
     for i in range(n):
         x = x - f(x)/df(x)
-        print(x)
+        
     return "Root: " + str(round(x, 5))
 
 print(newtonsMethod("x**2 - 2", "2*x", 1, 10))
