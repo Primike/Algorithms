@@ -8,8 +8,8 @@ def countConstruct(word, wordBank, memo = {}):
 
     for i in wordBank:
         if word.startswith(i):
-            numWaysForRest = countConstruct(word[len(i) :], wordBank, memo)
-            total = total + numWaysForRest
+            ways = countConstruct(word[len(i) :], wordBank, memo)
+            total = total + ways
 
     memo[word] = total
     return total

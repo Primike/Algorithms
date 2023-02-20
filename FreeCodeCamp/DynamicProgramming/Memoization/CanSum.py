@@ -7,8 +7,7 @@ def canSum(x, array, memo = {}):
         return True
 
     for i in array:
-        if canSum(x - i, array) == True:
-            memo[x] = True
+        if canSum(x - i, array):
             return True
     
     memo[x] = False

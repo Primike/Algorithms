@@ -9,9 +9,11 @@ def bestSum(x, array, memo = {}):
     shortest = None
 
     for i in array:
-        remainderCombination = bestSum(x - i, array, memo)
-        if remainderCombination != None:
-            combination = [*remainderCombination, i]
+        result = bestSum(x - i, array, memo)
+
+        if result != None:
+            combination = [*result, i]
+
             if shortest == None or len(combination) < len(shortest):
                 shortest = combination
 

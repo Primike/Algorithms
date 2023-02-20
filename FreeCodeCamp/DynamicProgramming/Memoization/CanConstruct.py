@@ -6,8 +6,7 @@ def canConstruct(word, wordBank, memo = {}):
     
     for i in wordBank:
         if word.startswith(i):
-            if canConstruct(word[len(i) :], wordBank, memo):
-                memo[word] = True
+            if canConstruct(word[len(i) :], wordBank):
                 return True
             
     memo[word] = False

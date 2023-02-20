@@ -2,6 +2,7 @@ def fibonacciTab(n):
     table = [0]*(n+1)
     table[1] = 1
 
+    print(table)
     for i in range(n):
         if i + 1 <= n:
             table[i + 1] += table[i]

@@ -12,8 +12,8 @@ def twoSum(array, x):
     for i in range(len(array)):
         if array[i] in dictionary:
             return [dictionary[array[i]], i]
-        else:
-            dictionary[x - array[i]] = i
+        
+        dictionary[x - array[i]] = i
     
 print(twoSum([1, 2, 7, 11, 15], 9))
 print(twoSum([3, 3], 6))

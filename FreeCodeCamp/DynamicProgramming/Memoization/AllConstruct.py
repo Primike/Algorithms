@@ -8,10 +8,9 @@ def allConstruct(word, wordBank, memo = {}):
 
     for i in wordBank:
         if word.startswith(i):
-            suffix = word[len(i) :]
-            suffixWays = allConstruct(suffix, wordBank, memo)
-            targetWays = list(map(lambda x: [i] + x, suffixWays))
-            result = result + targetWays
+            ways = allConstruct(word[len(i) :], wordBank, memo)
+            appendedWays = list(map(lambda x: [i] + x, ways))
+            result = result + appendedWays
 
     memo[word] = result
     return result

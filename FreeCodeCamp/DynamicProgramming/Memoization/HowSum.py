@@ -8,9 +8,9 @@ def howSum(x, array, memo = {}):
     
     for i in array:
         result = howSum(x - i, array)
+
         if result != None:
-            memo[x] = [*result, i]
-            return memo[x]
+            return result + [i]
 
     memo[x] = None
     return None
@@ -18,4 +18,4 @@ def howSum(x, array, memo = {}):
 
 print(howSum(8, [2,3,5]))
 print(howSum(1,[4,5,6,7,8,9,10]))
-print(howSum(300,[7,14]))
+print(howSum(30,[7,14]))
