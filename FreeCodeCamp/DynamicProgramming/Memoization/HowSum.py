@@ -1,18 +1,18 @@
-def howSum(x, array, memo = {}):
-    if x in memo:
-        return memo[x]
-    if x == 0:
+def howSum(target, array, memo = {}):
+    if target in memo:
+        return memo[target]
+    if target == 0:
         return []
-    if x < 0:
+    if target < 0:
         return None
     
-    for i in array:
-        result = howSum(x - i, array)
+    for number in array:
+        result = howSum(target - number, array)
 
         if result != None:
-            return result + [i]
+            return result + [number]
 
-    memo[x] = None
+    memo[target] = None
     return None
 
 

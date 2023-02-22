@@ -1,16 +1,16 @@
-def canSum(x, array, memo = {}):
-    if x in memo:
-        return memo[x]
-    if x < 0:
+def canSum(target, array, memo = {}):
+    if target in memo:
+        return memo[target]
+    if target < 0:
         return False
-    if x == 0:
+    if target == 0:
         return True
 
-    for i in array:
-        if canSum(x - i, array):
+    for number in array:
+        if canSum(target - number, array):
             return True
     
-    memo[x] = False
+    memo[target] = False
     return False
 
 print(canSum(27, [1,3,5]))

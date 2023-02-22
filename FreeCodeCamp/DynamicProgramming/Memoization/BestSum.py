@@ -1,23 +1,23 @@
-def bestSum(x, array, memo = {}):
-    if x in memo:
-        return memo[x]
-    if x == 0:
+def bestSum(target, array, memo = {}):
+    if target in memo:
+        return memo[target]
+    if target == 0:
         return []
-    if x < 0:
+    if target < 0:
         return None
     
     shortest = None
 
-    for i in array:
-        result = bestSum(x - i, array, memo)
+    for number in array:
+        result = bestSum(target - number, array, memo)
 
         if result != None:
-            combination = [*result, i]
+            combination = [*result, number]
 
             if shortest == None or len(combination) < len(shortest):
                 shortest = combination
 
-    memo[x] = shortest
+    memo[target] = shortest
     return shortest
 
 print(bestSum(100, [1,2,5,25]))

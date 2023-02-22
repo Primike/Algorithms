@@ -1,11 +1,11 @@
-def fibonacci(n, memo = {}):
-    if n in memo:
-        return memo[n]
-    if n <= 2:
+def fibonacci(target, memo = {}):
+    if target in memo:
+        return memo[target]
+    if target <= 2:
         return 1
         
-    memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
-    return memo[n]
+    memo[target] = fibonacci(target - 1, memo) + fibonacci(target - 2, memo)
+    return memo[target]
 
 print(fibonacci(5))
 print(fibonacci(10))

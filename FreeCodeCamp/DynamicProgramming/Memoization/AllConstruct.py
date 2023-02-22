@@ -1,18 +1,18 @@
-def allConstruct(word, wordBank, memo = {}):
-    if word in memo: 
-        return memo[word]
-    if word == "":
+def allConstruct(string, array, memo = {}):
+    if string in memo: 
+        return memo[string]
+    if string == "":
         return [[]]
 
-    result = []
+    solution = []
 
-    for i in wordBank:
-        if word.startswith(i):
-            ways = allConstruct(word[len(i) :], wordBank, memo)
-            appendedWays = list(map(lambda x: [i] + x, ways))
-            result = result + appendedWays
+    for word in array:
+        if string.startswith(word):
+            result = allConstruct(string[len(word) :], array, memo)
+            appended_string = list(map(lambda x: [word] + x, result))
+            solution = solution + appended_string
 
-    memo[word] = result
-    return result
+    memo[string] = solution
+    return solution
     
 print(allConstruct("purple", ["purp", "p", "ur", "le", "purpl"]))

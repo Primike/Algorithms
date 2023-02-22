@@ -1,17 +1,17 @@
-def countConstruct(word, wordBank, memo = {}):
-    if word in memo:
-        return memo[word]
-    if word == "":
+def countConstruct(string, array, memo = {}):
+    if string in memo:
+        return memo[string]
+    if string == "":
         return 1
 
-    total = 0
+    count = 0
 
-    for i in wordBank:
-        if word.startswith(i):
-            ways = countConstruct(word[len(i) :], wordBank, memo)
-            total = total + ways
+    for word in array:
+        if string.startswith(word):
+            result = countConstruct(string[len(word):], array, memo)
+            count = count + result
 
-    memo[word] = total
-    return total
+    memo[string] = count
+    return count
 
 print(countConstruct("purple", ["purp", "p", "ur", "le", "purpl"]))

@@ -1,15 +1,15 @@
-def canConstruct(word, wordBank, memo = {}):
-    if word in memo:
-        return memo[word]
-    if word == "":
+def canConstruct(string, array, memo = {}):
+    if string in memo:
+        return memo[string]
+    if string == "":
         return True
     
-    for i in wordBank:
-        if word.startswith(i):
-            if canConstruct(word[len(i) :], wordBank):
+    for word in array:
+        if string.startswith(word):
+            if canConstruct(string[len(word):], array):
                 return True
             
-    memo[word] = False
+    memo[string] = False
     return False
 
 print(canConstruct("abcdef", ["ab", "abc", "cd", "def", "abcd"]))
