@@ -41,7 +41,7 @@ class LinkedList:
             else:
                 current = current.next_node
             
-            return None
+        return None
         
     def insert(self, data, index):
         if index == 0:
@@ -53,8 +53,8 @@ class LinkedList:
             current = self.head
         
             while position > 1:
-                current = node.next_node
-                position += 1
+                current = current.next_node
+                position -= 1
 
             prev_node = current
             next_node = current.next_node
@@ -93,19 +93,17 @@ class LinkedList:
                 nodes.append("[%s]" % current.data)
 
             current = current.next_node
+
+        return '-> '.join(nodes)
     
 
 
 
-N1 = Node(10)
-N2 = Node(20)
-N1.next_node = N2
-print(N1, N2, N1.next_node)
+l = LinkedList()  
+l.add(1)
+l.add(2)
+l.add(3)
+l.add(4)
 
-l = LinkedList()
-l.head = N1
-print(l.size())
-
-k = LinkedList()
-k.add(1)
-print(k.size())
+l.remove(2)
+print(l)
