@@ -6,14 +6,16 @@
 
 # You can return the answer in any order.
 
-def twoSum(array, x):
-    dictionary = {}
+def twoSum(nums, target):
+    dict = {}
 
-    for i in range(len(array)):
-        if dictionary.get(array[i]) != None:
-            return [dictionary[array[i]], i]
-        else:
-            dictionary[x - array[i]] = i
+    for i, number in enumerate(nums):
+        if number in dict:
+            return [dict[number], i]
+        
+        dict[target - number] = i
+
+    return
     
 print(twoSum([1, 2, 7, 11, 15], 9))
 print(twoSum([3, 3], 6))
