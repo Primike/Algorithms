@@ -6,7 +6,6 @@ def merge_sort(list):
     left = merge_sort(left_half)
     right = merge_sort(right_half)
 
-    print(left, right)
     return merge(left, right)
 
 def split(list):
@@ -17,7 +16,6 @@ def split(list):
     return left, right
 
 def merge(left, right):
-    print(left, right)
     l = []
     i = 0
     j = 0
