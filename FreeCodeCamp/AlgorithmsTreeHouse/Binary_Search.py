@@ -5,7 +5,7 @@ def binary_search(list, target):
     last = len(list)
 
     while first <= last:
-        midpoint = (last - first)//2
+        midpoint = (last + first)//2
 
         if list[midpoint] == target:
             return midpoint
