@@ -1,9 +1,4 @@
-class Node:
-    def __init__(self, val, num):
-        self.val, self.num, self.next = val, num, None
-
-a, b, c = Node("A", 1), Node("B", 2), Node("C", 3)
-a.next, b.next = b, c
+from Node import node_a
 
 def linkedListFind(head, target):
     current = head
@@ -16,7 +11,7 @@ def linkedListFind(head, target):
 
     return False
 
-print(linkedListFind(a, "B"))
+print(linkedListFind(node_a, "B"))
 
 
 
@@ -30,4 +25,4 @@ def linkedListFindRecursion(head, target):
 
     return linkedListFind(head.next, target)
 
-print(linkedListFindRecursion(a, "B"))
+print(linkedListFindRecursion(node_a, "B"))

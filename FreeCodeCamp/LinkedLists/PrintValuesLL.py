@@ -1,9 +1,4 @@
-class Node:
-    def __init__(self, val, num):
-        self.val, self.num, self.next = val, num, None
-
-a, b, c = Node("A", 1), Node("B", 2), Node("C", 3)
-a.next, b.next = b, c
+from Node import node_a
 
 def linkedListValues(head):
     values = []
@@ -15,7 +10,7 @@ def linkedListValues(head):
 
     return values
 
-print(linkedListValues(a))
+print(linkedListValues(node_a))
 
 
 
@@ -28,4 +23,4 @@ def linkedListValuesRecursion(head, values = []):
 
     return values
 
-print(linkedListValuesRecursion(a))
+print(linkedListValuesRecursion(node_a))

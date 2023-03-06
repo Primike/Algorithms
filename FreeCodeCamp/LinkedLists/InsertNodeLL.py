@@ -1,10 +1,4 @@
-class Node:
-    def __init__(self, val, num):
-        self.val, self.num, self.next = val, num, None
-
-a, b, c = Node("A", 1), Node("B", 2), Node("C", 3)
-a.next, b.next = b, c
-z = Node("Z", 10)
+from Node import Node, node_a
 
 def insertNodeAt(head, index, node):
     if index == 0:
@@ -23,4 +17,6 @@ def insertNodeAt(head, index, node):
     node.next = next
     return head
 
-print(insertNodeAt(a, 2, z).next.next.val)
+
+node_z = Node("Z", 10)
+print(insertNodeAt(node_a, 2, node_z).next.next.val)

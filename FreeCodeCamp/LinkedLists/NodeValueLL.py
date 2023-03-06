@@ -1,9 +1,4 @@
-class Node:
-    def __init__(self, val, num):
-        self.val, self.num, self.next = val, num, None
-
-a, b, c = Node("A", 1), Node("B", 2), Node("C", 3)
-a.next, b.next = b, c
+from Node import node_a
 
 def getNodeValue(head, index):
     current = head
@@ -15,7 +10,7 @@ def getNodeValue(head, index):
         count += 1
         current = current.next
 
-print(getNodeValue(a, 2))
+print(getNodeValue(node_a, 2))
 
 
 
@@ -28,4 +23,4 @@ def getNodeValueRecursion(head, index):
 
     return getNodeValueRecursion(head.next, index - 1)
 
-print(getNodeValueRecursion(a, 2))
+print(getNodeValueRecursion(node_a, 2))

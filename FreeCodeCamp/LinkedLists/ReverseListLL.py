@@ -1,9 +1,4 @@
-class Node:
-    def __init__(self, val, num):
-        self.val, self.num, self.next = val, num, None
-
-a, b, c = Node("A", 1), Node("B", 2), Node("C", 3)
-a.next, b.next = b, c
+from Node import node_a
 
 def reverseList(head):
     prev = None
@@ -17,7 +12,8 @@ def reverseList(head):
 
     return prev
 
-print(reverseList(a).val)
+print(reverseList(node_a).val)
+
 
 
 def reverseListRecursion(head, prev = None):
@@ -25,6 +21,7 @@ def reverseListRecursion(head, prev = None):
         return prev
 
     next = head.next
+    head.next = prev
     return reverseListRecursion(next, head)
 
-print(reverseListRecursion(a).val)
+print(reverseListRecursion(node_a).val)

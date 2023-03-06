@@ -1,9 +1,4 @@
-class Node:
-    def __init__(self, val, num):
-        self.val, self.num, self.next = val, num, None
-
-a, b, c = Node("A", 1), Node("B", 2), Node("C", 3)
-a.next, b.next = b, c
+from Node import node_a
 
 def sumList(head):
     sum = 0
@@ -14,7 +9,9 @@ def sumList(head):
 
     return sum
 
-print(sumList(a))
+print(sumList(node_a))
+
+
 
 def sumListRecursion(head):
     if head == None:
@@ -22,4 +19,4 @@ def sumListRecursion(head):
 
     return head.num + sumListRecursion(head.next)
 
-print(sumListRecursion(a))
+print(sumListRecursion(node_a))
