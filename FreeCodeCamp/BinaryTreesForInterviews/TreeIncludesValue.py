@@ -19,3 +19,15 @@ def treeIncludes(root, target):
     return False
 
 print(treeIncludes(root_node, 33))
+
+
+
+def treeIncludesRecursion(root, target):
+    if root == None:
+        return False
+    if root.val == target:
+        return True
+
+    return treeIncludesRecursion(root.left, target) or treeIncludesRecursion(root.right, target)
+
+print(treeIncludesRecursion(root_node, 3))

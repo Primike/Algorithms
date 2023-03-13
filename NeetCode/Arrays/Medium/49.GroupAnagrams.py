@@ -3,16 +3,16 @@
 
 from collections import defaultdict
 
-def groupAnagrams(array):
+def groupAnagrams(strs):
     result = defaultdict(list)
 
-    for i in array:
+    for string in strs:
         count = [0] * 26
 
-        for j in i:
-            count[ord(j) - ord("a")] += 1
+        for letter in string:
+            count[ord(letter) - ord("a")] += 1
 
-        result[tuple(count)].append(i)
+        result[tuple(count)].append(string)
 
     return result.values()
     
