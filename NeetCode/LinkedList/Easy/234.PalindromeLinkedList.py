@@ -1,6 +1,11 @@
 # Given the head of a singly linked list, return true if it is a 
 # palindrome or false otherwise.
 
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
 def isPalindrome(head):
     slow, fast = head, head
 
