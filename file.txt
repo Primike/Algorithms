@@ -6,7 +6,10 @@ Arrays:
         editing the input array,
         crisscross left right sum/product,
         bubblesort,
-        array of alphabet count as keys in a dict
+        array of alphabet count as keys in a dict,
+        prefix/postfix subarray sum,
+        left, right dicts for palindrome,
+        one pass with a constant
     ]
     Easy: 58, 392, 14, 118!, 27!, 929!, 205!, 169!, 496!, 448!, 1189
-    Medium: 912!, 347!, 238!, 49, 128
+    Medium: 912!, 347!, 238!, 49, 128, 560!, 1930!, 1963!!, 2001!
