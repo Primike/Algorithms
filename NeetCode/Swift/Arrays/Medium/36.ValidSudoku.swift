@@ -1,31 +1,37 @@
-# Determine if a 9 x 9 Sudoku board is valid. 
-# Only the filled cells need to be validated according to the following rules:
-# Each row must contain the digits 1-9 without repetition.
-# Each column must contain the digits 1-9 without repetition.
-# Each 3 x 3 sub-boxes must contain the digits 1-9, without repetition.
+//Determine if a 9 x 9 Sudoku board is valid. 
+//Only the filled cells need to be validated according to the following rules:
+//Each row must contain the digits 1-9 without repetition.
+//Each column must contain the digits 1-9 without repetition.
+//Each 3 x 3 sub-boxes must contain the digits 1-9, without repetition.
 
 import collections
 
-def isValidSudoku(board):
-    rows = collections.defaultdict(set)
-    cols = collections.defaultdict(set)
-    boxes = collections.defaultdict(set)
-
-    for r in range(9):
-        for c in range(9):
-            if board[r][c] == ".":
+func isValidSudoku(_ board: [[Character]]) -> Bool {
+    var rows = [Int: Set<Character>]()
+    var cols = [Int: Set<Character>]()
+    var boxes = [Int: Set<Character>]()
+    
+    for r in 0..<9 {
+        for c in 0..<9 {
+            let char = board[r][c]
+            if char == "." {
                 continue
-            if (board[r][c] in rows[r] or 
-                board[r][c] in cols[c] or
-                board[r][c] in boxes[(r//3, c//3)]):
-                return False
+            }
             
-            cols[c].add(board[r][c])
-            rows[r].add(board[r][c])
-            boxes[(r//3, c//3)].add(board[r][c])
-
-    return True
+            if rows[r]?.contains(char) ?? false ||
+                cols[c]?.contains(char) ?? false ||
+                boxes[(r / 3) * 3 + c / 3]?.contains(char) ?? false {
+                return false
+            }
             
+            rows[r, default: []].insert(char)
+            cols[c, default: []].insert(char)
+            boxes[(r / 3) * 3 + c / 3, default: []].insert(char)
+        }
+    }
+    
+    return true
+}
 
 print(isValidSudoku([["5","3",".",".","7",".",".",".","."]
                     ,["6",".",".","1","9","5",".",".","."]
