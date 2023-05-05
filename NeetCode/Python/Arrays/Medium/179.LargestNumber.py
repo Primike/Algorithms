@@ -1,18 +1,20 @@
+# Given a list of non-negative integers nums, 
+# arrange them such that they form the largest number and return it.
+# Since the result may be very large, so you need to return a string instead of an integer.
+
+
 def largestNumber(nums):
-    integer = 9
-    array = []
-    result = ""
+    for i, number in enumerate(nums):
+        nums[i] = str(number)
 
-    while integer != 0 or len(array) != len(nums):
-        for number in nums:
-            if str(number).startswith(str(integer)):
-                array.append(number)
+    def compare(n1, n2):
+        if n1+ n2 > n2 + n1:
+            return -1
+        else:
+            return 1
+        
+    nums = sorted(nums, key=cmp_to_key(compare))
 
-        array.sort()
-        result += ''.join(str(array) for number in array)
-        array = []
-        integer -= 1
-
-    return result
+    return str(int("".join(nums)))
 
 print(largestNumber([21,9]))

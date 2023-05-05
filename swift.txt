@@ -1,0 +1,18 @@
+Strings:
+    string.prefix(i + 1)
+
+    email.split(separator: "@")
+
+    string[string.index(string.startIndex, offsetBy: i)]
+
+    local.replacingOccurrences(of: "x", with: "")
+
+
+Array:
+    array.swapAt(left, right)
+
+
+Set:
+    hashSet.insert(item)
+
+    create hashable struct for tuples
