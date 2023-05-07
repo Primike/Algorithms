@@ -16,3 +16,17 @@ Set:
     hashSet.insert(item)
 
     create hashable struct for tuples
+
+Functions:
+    var dict = array.reduce(into: [:]) { currentDict, item in
+        currentDict[item, default: 0] += 1
+    }
+
+    var array: [[Int]] = Array(repeating: [], count: 5)
+
+Loops:
+    for i in (0..<array.count).reversed()
+
+    for (key, value) in dict
+
+    for i in stride(from: array.count - 1, to: -1, by: -1) 

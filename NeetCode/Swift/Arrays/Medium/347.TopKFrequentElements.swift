@@ -3,15 +3,13 @@
 //You may return the answer in any order.
 
 func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
-    var count: [Int: Int] = [:]
+    var dict = nums.reduce(into: [:]) { currentDict, number in
+        currentDict[number, default: 0] += 1
+    }
     var frequency: [[Int]] = Array(repeating: [], count: nums.count + 1)
     var result: [Int] = []
 
-    for number in nums {
-        count[number] = (count[number] ?? 0) + 1
-    }
-
-    for (key, value) in count {
+    for (key, value) in dict {
         frequency[value].append(key)
     }
 
