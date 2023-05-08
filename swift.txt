@@ -1,28 +1,44 @@
 Strings:
     string.prefix(i + 1)
 
-    email.split(separator: "@")
+    string.hasPrefix(subString)
+
+    string.split(separator: "@")  - returns [SubString]
+
+    string.components(separatedBy: " ")  - returns [String], does not remove consecutive 
 
     string[string.index(string.startIndex, offsetBy: i)]
 
-    local.replacingOccurrences(of: "x", with: "")
+    string.replacingOccurrences(of: "x", with: "")
 
 
 Array:
     array.swapAt(left, right)
 
+    var array: [[Int]] = Array(repeating: [], count: 5)
+
+    let index = Int(letter.unicodeScalars.first!.value) - Int(Unicode.Scalar("a").value)
+
+
+Dictionary:
+    dict[key, default: []].append(string)
+
+    dict.keys.contains(key)
+
+    dict.values.allSatisfy { $0 == 0 }
+
+    count += dict[key] ?? 0
+
 
 Set:
+    Set(array)
+
     hashSet.insert(item)
+
+    !hashSet.contains(item)
 
     create hashable struct for tuples
 
-Functions:
-    var dict = array.reduce(into: [:]) { currentDict, item in
-        currentDict[item, default: 0] += 1
-    }
-
-    var array: [[Int]] = Array(repeating: [], count: 5)
 
 Loops:
     for i in (0..<array.count).reversed()
@@ -30,3 +46,15 @@ Loops:
     for (key, value) in dict
 
     for i in stride(from: array.count - 1, to: -1, by: -1) 
+
+
+Functions:
+    let dict = array.reduce(into: [:]) { currentDict, item in
+        currentDict[item, default: 0] += 1
+    }
+
+    let dict = array.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+
+    let key = array.map { String($0) }.joined(separator: ",")
+
+    Array(repeating: array, count: 2).flatMap { $0 }

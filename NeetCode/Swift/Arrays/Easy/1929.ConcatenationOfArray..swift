@@ -3,7 +3,7 @@
 //ans[i + n] == nums[i] for 0 <= i < n (0-indexed).
 
 func getConcatenation(_ nums: [Int]) -> [Int] {
-    return nums + nums
+    return Array(repeating: nums, count: 2).flatMap { $0 }
 }
 
 print(getConcatenation([1,2,1]))

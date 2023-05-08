@@ -3,8 +3,7 @@
 //If there is no common prefix, return an empty string "".
 
 func longestCommonPrefix(_ strs: [String]) -> String {
-    if strs.isEmpty { return "" }
-
+    
     for (i, letter) in strs[0].enumerated() {
         let index = strs[0].index(strs[0].startIndex, offsetBy: i)
 

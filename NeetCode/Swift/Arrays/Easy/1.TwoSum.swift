@@ -8,14 +8,16 @@ func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
     var dict = [Int: Int]()
 
     for (i, number) in nums.enumerated() {
-        if let index = dict[number] {
-            return [index, i]
+        var difference = target - number
+
+        if dict.keys.contains(difference) {
+            return [dict[difference, default: 0], i]
         }
-        
-        dict[target - number] = i
+
+        dict[number, default: 0] = i
     }
 
-    return []
+    return[]
 }
     
 print(twoSum([1, 2, 7, 11, 15], 9))

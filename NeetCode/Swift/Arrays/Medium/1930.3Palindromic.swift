@@ -9,8 +9,8 @@ func countPalindromicSubsequence(_ s: String) -> Int {
     
     var result = Set<(CharPair)>()
     var left = Set<Character>()
-    var right = s.reduce(into: [Character: Int]()) { counts, char in
-        counts[char, default: 0] += 1
+    var right = s.reduce(into: [Character: Int]()) { dict, letter in
+        dict[letter, default: 0] += 1
     }
 
     for letter in s {

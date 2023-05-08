@@ -3,17 +3,18 @@
 
 
 func isSubsequence(_ s: String, _ t: String) -> Bool {
-    if s.isEmpty {
-        return true
+    let s = Array(s)
+    var count = 0
+
+    for letter in t {
+        if count == s.count { return true }
+
+        if letter == s[count] {
+            count += 1
+        }
     }
 
-    return t.reduce((s: Array(s), index: 0)) { (result, letter) in
-        var (s, index) = result
-        if index < s.count && s[index] == letter {
-            index += 1
-        }
-        return (s, index)
-    }.index == s.count
+    return count == s.count
 }
 
 print(isSubsequence("abc", "ahbgdc"))
