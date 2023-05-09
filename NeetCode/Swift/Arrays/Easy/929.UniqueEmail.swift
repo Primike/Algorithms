@@ -16,7 +16,6 @@ func numUniqueEmails(_ emails: [String]) -> Int {
         var local = String(parts[0])
         let domain = String(parts[1])
         
-        //when performing some operations like split String turns to Substring
         local = String(local.split(separator: "+")[0])
         local = local.replacingOccurrences(of: ".", with: "")
         
@@ -33,3 +32,17 @@ print(numUniqueEmails(["test.email+alex@leetcode.com",
 print(numUniqueEmails(["a@leetcode.com",
                        "b@leetcode.com",
                        "c@leetcode.com"]))
+
+
+func numUniqueEmails2(_ emails: [String]) -> Int {
+    var result = Set<String>()
+
+    for email in emails {
+        var emailSplit = email.components(separatedBy: "@")
+        var local = emailSplit[0].replacingOccurrences(of: ".", with: "").components(separatedBy: "+")
+        
+        result.insert(local[0] + "@" + emailSplit[1])
+    }
+
+    return result.count
+}

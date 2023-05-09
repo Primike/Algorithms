@@ -2,9 +2,8 @@
 //first greater element that is to the right of x in the same array.
 
 func nextGreaterElement(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
-    let nums1Dict = Dictionary(uniqueKeysWithValues: nums1.enumerated().map { ($0.element, $0.offset) })
+    let nums1Dict = nums1.enumerated().reduce(into: [:]) { $0[$1.element] = $1.offset }
     var result = [Int](repeating: -1, count: nums1.count)
-
     var stack = [Int]()
 
     for number in nums2 {

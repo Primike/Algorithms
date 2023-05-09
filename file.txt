@@ -1,7 +1,12 @@
 Arrays:
-    Try: [
-        try modify given array instead of a new array
+    Easy: [
+        try modify given array instead of a new array,
+        have an index go through a string subsequence,
+        use 2 dict pointers to compare 2 strings,
+        add extra elements on the sides of array,
+        majority element of array use inflection count,
+        use stack if solution requires proximity
     ]
 
-    Easy: 169, 496!, 448!, 1189
+    Easy: 496!, 448!, 1189
     Medium: 347!, 238!!, 49, 128, 560!, 1930!, 1963!!, 2017!, 523, 179!, 665

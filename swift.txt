@@ -55,6 +55,11 @@ Functions:
 
     let dict = array.reduce(into: [:]) { $0[$1, default: 0] += 1 }
 
+    let dict = array.enumerated().reduce(into: [:]) { $0[$1.element] = $1.offset }
+    let dict = array.enumerated().reduce(into: [Int: Int]()) { (dict, pair) in
+        dict[pair.element] = pair.offset
+    }
+
     let key = array.map { String($0) }.joined(separator: ",")
 
     Array(repeating: array, count: 2).flatMap { $0 }
