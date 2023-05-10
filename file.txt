@@ -5,8 +5,19 @@ Arrays:
         use 2 dict pointers to compare 2 strings,
         add extra elements on the sides of array,
         majority element of array use inflection count,
-        use stack if solution requires proximity
+        use stack if solution requires proximity,
+        to find missing elements loop through first making negatives,
+        for string count in another string use weakest link (min)
     ]
 
-    Easy: 496!, 448!, 1189
-    Medium: 347!, 238!!, 49, 128, 560!, 1930!, 1963!!, 2017!, 523, 179!, 665
+    Medium: [
+        use unicode array to compare anagrams,
+        try bucketsort,
+        prefix/postfix array/resultarray,
+        for sequence check if its the leftmost element,
+        two pointers increment/decrement only if necessary,
+        try to use a dict instead of a value init array,
+    ]
+
+    Easy: 496!, 448, 1189
+    Medium: 238!, 75, 560!, 1930!, 1963!!, 2017!, 523, 179!, 665

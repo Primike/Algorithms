@@ -4,14 +4,12 @@
 func subarraySum(_ nums: [Int], _ k: Int) -> Int {
     var dict = [0: 1]
     var result = 0
-    var currentSum = 0
+    var prefixSum = 0
 
     for number in nums {
-        currentSum += number
-        let difference = currentSum - k
-
-        result += dict[difference] ?? 0
-        dict[currentSum] = (dict[currentSum] ?? 0) + 1
+        prefixSum += number
+        result += dict[prefixSum - k, default: 0]
+        dict[prefixSum, default: 0] += 1
     }
 
     return result

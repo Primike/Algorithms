@@ -6,15 +6,15 @@ func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
     var dict = nums.reduce(into: [:]) { currentDict, number in
         currentDict[number, default: 0] += 1
     }
-    var frequency: [[Int]] = Array(repeating: [], count: nums.count + 1)
+    var bucket: [[Int]] = Array(repeating: [], count: nums.count + 1)
     var result: [Int] = []
 
     for (key, value) in dict {
-        frequency[value].append(key)
+        bucket[value].append(key)
     }
 
-    for i in (0..<frequency.count).reversed() {
-        for number in frequency[i] {
+    for i in (0..<bucket.count).reversed() {
+        for number in bucket[i] {
             result.append(number)
 
             if result.count == k {

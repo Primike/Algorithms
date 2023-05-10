@@ -3,22 +3,21 @@
 //a bijection between a letter in pattern and a non-empty word in s.
 
 func wordPattern(_ pattern: String, _ s: String) -> Bool {
-    let sArray = s.split(separator: " ")
-    var sDict = [String: Character]()
+    var sArray = s.components(separatedBy: " ")
     var patternDict = [Character: String]()
+    var sDict = [String: Character]()
 
     if pattern.count != sArray.count {
         return false
     }
 
     for (i, j) in zip(pattern, sArray) {
-        let jString = String(j)
-        if (patternDict[i] != nil && patternDict[i] != jString) || (sDict[jString] != nil && sDict[jString] != i) {
+        //takes care of nil 
+        if patternDict[i, default: j] != j || sDict[j, default: i] != i {
             return false
         }
-
-        patternDict[i] = jString
-        sDict[jString] = i
+        patternDict[i] = j
+        sDict[j] = i
     }
 
     return true
