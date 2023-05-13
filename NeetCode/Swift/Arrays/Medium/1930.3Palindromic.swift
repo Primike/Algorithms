@@ -8,28 +8,26 @@ func countPalindromicSubsequence(_ s: String) -> Int {
     }
     
     var result = Set<(CharPair)>()
-    var left = Set<Character>()
-    var right = s.reduce(into: [Character: Int]()) { dict, letter in
-        dict[letter, default: 0] += 1
-    }
+    var prefixSet = Set<Character>()
+    var postfixSet = s.reduce(into: [Character: Int]()) { $0[$1, default: 0] += 1 }
 
     for letter in s {
-        //no negative since letter has to be in right
-        right[letter, default: 0] -= 1
+        //no negative since letter has to be in postfixSet
+        postfixSet[letter, default: 0] -= 1
 
-        if right[letter] == 0 {
-            right.removeValue(forKey: letter)
+        if postfixSet[letter] == 0 {
+            postfixSet.removeValue(forKey: letter)
         }
 
         for i in 0..<26 {
             let alpha = Character(UnicodeScalar("a".unicodeScalars.first!.value + UInt32(i))!)
 
-            if left.contains(alpha) && right.keys.contains(alpha) {
+            if prefixSet.contains(alpha) && postfixSet.keys.contains(alpha) {
                 result.insert(CharPair(first: alpha, second: letter))
             }
         }
 
-        left.insert(letter)
+        prefixSet.insert(letter)
     }
 
     return result.count

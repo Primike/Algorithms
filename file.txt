@@ -17,7 +17,8 @@ Arrays:
         for sequence check if its the leftmost element,
         two pointers increment/decrement only if necessary,
         try to use a dict instead of a value init array,
+        try prefixSum in dict for subarray,
     ]
 
     Easy: 496!, 448, 1189
-    Medium: 238!, 75, 560!, 1930!, 1963!!, 2017!, 523, 179!, 665
+    Medium: 238!, 75, 1930!, 1963!!, 2017!, 438, 523, 179!, 665

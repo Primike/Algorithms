@@ -3,11 +3,13 @@ Strings:
 
     string.hasPrefix(subString)
 
+    string.dropFirst()
+
     string.split(separator: "@")  - returns [SubString]
 
     string.components(separatedBy: " ")  - returns [String], does not remove consecutive 
 
-    string[string.index(string.startIndex, offsetBy: i)]
+    string.index(string.startIndex, offsetBy: i)
 
     string.replacingOccurrences(of: "x", with: "")
 
