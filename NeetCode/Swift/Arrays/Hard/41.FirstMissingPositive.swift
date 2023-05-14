@@ -8,6 +8,7 @@ func firstMissingPositive(_ nums: [Int]) -> Int {
     var left = 0
     var right = nums.count - 1
 
+    //make negatives = zero on first loop(better)
     while left <= right {
         if nums[left] <= 0 {
             nums.swapAt(left, right)

@@ -13,6 +13,14 @@ Strings:
 
     string.replacingOccurrences(of: "x", with: "")
 
+    left = string.startIndex 
+    
+    left = string.index(after: left)
+
+    right = string.index(before: string.endIndex)
+
+    string.isNumber/isLetter
+
 
 Array:
     array.swapAt(left, right)
@@ -67,6 +75,8 @@ Functions:
     }
 
     let key = array.map { String($0) }.joined(separator: ",")
+
+    string.filter { $0.isLetter || $0.isNumber }.lowercased()
 
     let doubleArray = Array(repeating: array, count: 2).flatMap { $0 }
 
