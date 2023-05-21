@@ -30,7 +30,8 @@ Two Pointers:
     ]
 
     Medium: [
+        Iterate through the duplicates count
     ]
 
     Easy: 680,
-    Medium:
+    Medium: 80!, 15!, 18!!
