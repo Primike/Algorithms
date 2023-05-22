@@ -30,8 +30,10 @@ Two Pointers:
     ]
 
     Medium: [
-        Iterate through the duplicates count
+        Iterate through the duplicates count,
+        try to inverse array multiple times,
+        two pointer shuffle,
     ]
 
     Easy: 680,
-    Medium: 80!, 15!, 18!!
+    Medium: 80!, 15!, 18!!, 189!, 1968
