@@ -5,16 +5,16 @@ Strings:
 
     string.dropFirst()
 
+    left = string.startIndex 
+
     string.split(separator: "@")  - returns [SubString]
 
     string.components(separatedBy: " ")  - returns [String], does not remove consecutive 
 
-    string.index(string.startIndex, offsetBy: i)
-
     string.replacingOccurrences(of: "x", with: "")
 
-    left = string.startIndex 
-    
+    string.index(string.startIndex, offsetBy: i)
+
     left = string.index(after: left)
 
     right = string.index(before: string.endIndex)
@@ -44,6 +44,8 @@ Set:
     Set(array)
 
     hashSet.insert(item)
+
+    hashSet.delete(item)
 
     !hashSet.contains(item)
 

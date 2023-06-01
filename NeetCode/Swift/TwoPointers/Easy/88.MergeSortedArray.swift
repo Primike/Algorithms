@@ -4,7 +4,7 @@
 //Merge nums1 and nums2 into a single array sorted in non-decreasing order.
 
 func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
-    var last = m + n - 1
+    var last = nums1.count - 1
     var m = m - 1
     var n = n - 1
 

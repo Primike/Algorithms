@@ -35,5 +35,12 @@ Two Pointers:
         two pointer shuffle,
     ]
 
-    Easy: 680,
+    Easy: 125?, 680,
     Medium: 80!, 15!, 18!!, 189!, 1968
+
+Sliding Window: 
+    Easy: [
+        can use while/for
+    ]
+
+    Easy: 219?
