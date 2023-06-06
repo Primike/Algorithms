@@ -5,8 +5,6 @@ Strings:
 
     string.dropFirst()
 
-    left = string.startIndex 
-
     string.split(separator: "@")  - returns [SubString]
 
     string.components(separatedBy: " ")  - returns [String], does not remove consecutive 
@@ -14,6 +12,8 @@ Strings:
     string.replacingOccurrences(of: "x", with: "")
 
     string.index(string.startIndex, offsetBy: i)
+
+    left = string.startIndex 
 
     left = string.index(after: left)
 
