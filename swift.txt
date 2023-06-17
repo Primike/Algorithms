@@ -29,6 +29,12 @@ Array:
 
     let index = Int(letter.unicodeScalars.first!.value) - Int(Unicode.Scalar("a").value)
 
+    array.isEmpty
+
+    array.last/first
+
+    array.removeLast()
+
 
 Dictionary:
     dict[key, default: []].append(string)
