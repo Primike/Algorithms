@@ -38,6 +38,7 @@ Two Pointers:
     Easy: 125?, 680,
     Medium: 80!, 15!, 18!!, 189!, 1968
 
+
 Sliding Window: 
     Easy: [
         can use while/for
@@ -45,3 +46,12 @@ Sliding Window:
 
     Easy: 219?
     Medium: 567?
+
+
+Stack: 
+    Easy: [
+        
+    ]
+
+    Easy: 
+    Medium: 22!

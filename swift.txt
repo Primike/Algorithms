@@ -35,6 +35,8 @@ Array:
 
     array.removeLast()
 
+    array.popLast()
+
 
 Dictionary:
     dict[key, default: []].append(string)
