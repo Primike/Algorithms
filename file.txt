@@ -48,10 +48,10 @@ Sliding Window:
     Medium: 567?
 
 
-Stack: 
-    Easy: [
-        
-    ]
-
+Stack:
     Easy: 
     Medium: 22!
+
+
+Binary Search:
+    Medium: 33
