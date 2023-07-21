@@ -1,0 +1,30 @@
+Strings:
+
+
+
+Array:
+
+
+
+Dictionary:
+    dict[letter] = dict.get(letter, 0) + 1
+
+
+Set:
+    hash_set = set()
+
+    hash_set.add(number)
+
+
+Loops:
+    for i, number in enumerate(array)
+
+    for i in range(len(nums) - 1, -1, -1)
+
+    for key in dict
+
+    for i, j in zip(s, t)
+
+
+Functions:
+    if (i in dict and/or dict[i] != j):

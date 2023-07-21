@@ -55,3 +55,7 @@ Stack:
 
 Binary Search:
     Medium: 33
+
+
+BinaryTree:
+    Easy: 543
