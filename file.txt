@@ -59,3 +59,4 @@ Binary Search:
 
 BinaryTree:
     Easy: 543
+    Medium: 199, 1448!

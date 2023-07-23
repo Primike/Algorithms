@@ -33,9 +33,9 @@ Array:
 
     array.last/first
 
-    array.removeLast()
+    array.removeLast/First() 
 
-    array.popLast()
+    array.popLast() //returns optional
 
 
 Dictionary:
