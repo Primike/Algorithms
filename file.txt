@@ -62,4 +62,11 @@ BinaryTree:
     Medium: 199, 1448!, 98!
 
 BackTracking:
-    Medium:
+    [
+        Build up for subsets maybe pass in first empty,
+        Append parameter at the start of the func,
+        Pass in array being built up,
+        Increment index each iteration,
+        Modify given array each iteration,
+    ]
+    Medium: 39
