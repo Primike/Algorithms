@@ -7,15 +7,13 @@ func wordPattern(_ pattern: String, _ s: String) -> Bool {
     var patternDict = [Character: String]()
     var sDict = [String: Character]()
 
-    if pattern.count != sArray.count {
-        return false
-    }
+    if pattern.count != sArray.count { return false }
 
     for (i, j) in zip(pattern, sArray) {
-        //takes care of nil 
         if patternDict[i, default: j] != j || sDict[j, default: i] != i {
             return false
         }
+        
         patternDict[i] = j
         sDict[j] = i
     }

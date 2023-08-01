@@ -18,4 +18,8 @@ class NumArray {
 
         return count
     }
+
+    func sumRange2(_ left: Int, _ right: Int) -> Int {
+        return nums[left...right].reduce(0, +)
+    }
 }

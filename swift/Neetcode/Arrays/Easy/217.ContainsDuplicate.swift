@@ -6,9 +6,7 @@ func containsDuplicate(_ nums: [Int]) -> Bool {
     var hashSet = Set<Int>()
 
     for number in nums {
-        if hashSet.contains(number) {
-            return true
-        }
+        if hashSet.contains(number) { return true }
 
         hashSet.insert(number)
     }

@@ -1,13 +1,9 @@
 Arrays:
     Easy: [
         try modify given array instead of a new array,
-        have an index go through a string subsequence,
-        use 2 dict pointers to compare 2 strings,
         add extra elements on the sides of array,
         majority element of array use inflection count,
-        use stack if solution requires proximity,
         to find missing elements loop through first making negatives,
-        for string count in another string use weakest link (min)
     ]
 
     Medium: [
@@ -20,7 +16,7 @@ Arrays:
         try prefixSum in dict for subarray,
     ]
 
-    Easy: 496!, 448, 1189
+    Easy: 205?, 1189
     Medium: 238!, 75, 1930!, 1963!!, 2017!, 438, 523, 179!, 665
 
 

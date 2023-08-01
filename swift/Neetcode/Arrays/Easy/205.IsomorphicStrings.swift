@@ -5,8 +5,7 @@
 func isIsomorphic(_ s: String, _ t: String) -> Bool {
     //a letter of a String is a Character
     //Characters can only have 1 element
-    var sDict = [Character: Character]()
-    var tDict = [Character: Character]()
+    var sDict = [Character: Character](), tDict = [Character: Character]()
 
     //using subscripts returns a Character Type
     //i and j are characters

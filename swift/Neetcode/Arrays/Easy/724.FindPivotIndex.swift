@@ -8,9 +8,7 @@ func pivotIndex(_ nums: [Int]) -> Int {
     var currentSum = 0
 
     for (i, number) in nums.enumerated() {
-        if currentSum * 2 == totalSum - nums[i] {
-            return i
-        } 
+        if totalSum - number - currentSum == currentSum { return i }
 
         currentSum += number
     }

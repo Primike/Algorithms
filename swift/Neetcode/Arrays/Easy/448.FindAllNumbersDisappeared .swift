@@ -8,15 +8,13 @@ func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
 
     //enumerated() produces an EnumeratedSequence<[Int]>
     //so index is not needed as it uses original nums values
+    //number will be the same as when the loop was initialized
     for (i, number) in nums.enumerated() {
-        // let index = abs(number) - 1
         nums[number - 1] = abs(nums[number - 1]) * -1
     }
 
     for (i, number) in nums.enumerated() {
-        if number > 0 {
-            result.append(i + 1)
-        }
+        if number > 0 { result.append(i + 1) }
     }
 
     return result

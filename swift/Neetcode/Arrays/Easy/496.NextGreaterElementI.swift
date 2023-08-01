@@ -2,20 +2,22 @@
 //first greater element that is to the right of x in the same array.
 
 func nextGreaterElement(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
-    let nums1Dict = nums1.enumerated().reduce(into: [:]) { $0[$1.element] = $1.offset }
-    var result = [Int](repeating: -1, count: nums1.count)
+    var dict = [Int: Int]()
     var stack = [Int]()
 
     for number in nums2 {
         while let last = stack.last, number > last {
-            let value = stack.removeLast()
-            let index = nums1Dict[value]!
-            result[index] = number
+            var last = stack.removeLast()
+            dict[last] = number
         }
-        
-        if nums1Dict.keys.contains(number) {
-            stack.append(number)
-        }
+
+        stack.append(number)
+    }
+
+    var result = nums1
+
+    for (i, number) in result.enumerated() {
+        result[i] = dict[number] ?? -1
     }
 
     return result

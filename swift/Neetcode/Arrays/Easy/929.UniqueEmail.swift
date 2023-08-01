@@ -2,6 +2,28 @@
 //return the number of different addresses that actually receive mails.
 
 func numUniqueEmails(_ emails: [String]) -> Int {
+    var emailSet = Set<String>()
+
+    for email in emails {
+        var split = email.components(separatedBy: "@")
+        var local = split[0].components(separatedBy: "+")[0].replacingOccurrences(of: ".", with: "")
+
+        emailSet.insert(local + "@" + split[1])
+    }
+
+    return emailSet.count
+}
+
+print(numUniqueEmails(["test.email+alex@leetcode.com",
+                       "test.e.mail+bob.cathy@leetcode.com",
+                       "testemail+david@lee.tcode.com"]))
+
+print(numUniqueEmails(["a@leetcode.com",
+                       "b@leetcode.com",
+                       "c@leetcode.com"]))
+
+
+func numUniqueEmails2(_ emails: [String]) -> Int {
     //tuples not hashable since they could be different types
     //Contstant time lookup with Hashable
     struct Email: Hashable {
@@ -23,26 +45,4 @@ func numUniqueEmails(_ emails: [String]) -> Int {
     }
 
     return hashSet.count
-}
-
-print(numUniqueEmails(["test.email+alex@leetcode.com",
-                       "test.e.mail+bob.cathy@leetcode.com",
-                       "testemail+david@lee.tcode.com"]))
-
-print(numUniqueEmails(["a@leetcode.com",
-                       "b@leetcode.com",
-                       "c@leetcode.com"]))
-
-
-func numUniqueEmails2(_ emails: [String]) -> Int {
-    var result = Set<String>()
-
-    for email in emails {
-        var emailSplit = email.components(separatedBy: "@")
-        var local = emailSplit[0].replacingOccurrences(of: ".", with: "").components(separatedBy: "+")
-        
-        result.insert(local[0] + "@" + emailSplit[1])
-    }
-
-    return result.count
 }

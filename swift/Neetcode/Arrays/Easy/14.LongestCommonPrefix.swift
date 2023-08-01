@@ -3,18 +3,19 @@
 //If there is no common prefix, return an empty string "".
 
 func longestCommonPrefix(_ strs: [String]) -> String {
-    
-    for (i, letter) in strs[0].enumerated() {
-        let index = strs[0].index(strs[0].startIndex, offsetBy: i)
+    var result = ""
 
-        for string in strs {
-            if i == string.count || string[index] != letter {
-                return String(string.prefix(i))
-            }
+    for i in 0..<strs[0].count {
+        var substring = strs[0].prefix(i + 1)
+
+        for word in strs {
+            if !word.hasPrefix(substring) { return result }
         }
+
+        result = String(substring)
     }
-    
-    return strs[0]
+
+    return result
 }
     
 print(longestCommonPrefix(["flower","flow","flight"]))

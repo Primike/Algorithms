@@ -1,8 +1,24 @@
 //Given two strings s and t, return true if s is a subsequence of t, 
 //or false otherwise.
 
-
 func isSubsequence(_ s: String, _ t: String) -> Bool {
+    var sIndex = s.startIndex
+
+    for letter in t {
+        if sIndex == s.endIndex { return true }
+
+        if s[sIndex] == letter {
+            sIndex = s.index(after: sIndex)
+        }
+    }
+
+    return sIndex == s.endIndex
+}
+
+print(isSubsequence("abc", "ahbgdc"))
+print(isSubsequence("axc", "ahbgdc"))
+
+func isSubsequence2(_ s: String, _ t: String) -> Bool {
     let s = Array(s)
     var count = 0
 
@@ -16,6 +32,3 @@ func isSubsequence(_ s: String, _ t: String) -> Bool {
 
     return count == s.count
 }
-
-print(isSubsequence("abc", "ahbgdc"))
-print(isSubsequence("axc", "ahbgdc"))

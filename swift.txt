@@ -11,13 +11,13 @@ Strings:
 
     string.replacingOccurrences(of: "x", with: "")
 
-    string.index(string.startIndex, offsetBy: i)
+    string.index(string.startIndex, offsetBy: i) // used for string subscript
 
     left = string.startIndex 
 
-    left = string.index(after: left)
-
     right = string.index(before: string.endIndex)
+
+    second = string.index(after: first)
 
     string.isNumber/isLetter
 
@@ -61,7 +61,7 @@ Set:
 
 
 Loops:
-    for i in (0..<array.count).reversed()
+    for i in (0..<array.count).reversed() // if reversing array i starts from 0 not last
 
     for (key, value) in dict
 
