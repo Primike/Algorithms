@@ -4,16 +4,12 @@
 //KMP
 
 func strStr(_ haystack: String, _ needle: String) -> Int {
-    var index = 0
     var haystack = haystack
 
-    while !haystack.isEmpty {
-        if haystack.hasPrefix(needle) {
-            return index
-        } else {
-            haystack = String(haystack.dropFirst())
-            index += 1
-        }
+    for i in 0..<haystack.count {
+        if haystack.hasPrefix(needle) { return i }
+        
+        haystack = String(haystack.dropFirst())
     }
 
     return -1

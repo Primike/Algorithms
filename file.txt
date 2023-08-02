@@ -16,7 +16,7 @@ Arrays:
         try prefixSum in dict for subarray,
     ]
 
-    Easy: 205?, 1189
+    Easy: 205?
     Medium: 238!, 75, 1930!, 1963!!, 2017!, 438, 523, 179!, 665
 
 
