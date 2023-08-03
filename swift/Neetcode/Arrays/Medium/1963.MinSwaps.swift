@@ -4,16 +4,16 @@
 
 func minSwaps(_ s: String) -> Int {
     var result = 0
-    var count = 0
+    var opened = 0
 
     for bracket in s {
         if bracket == "]" {
-            count += 1
+            opened += 1
         } else {
-            count -= 1
+            opened -= 1
         }
 
-        result = max(result, count)
+        result = max(result, opened)
     }
 
     return (result + 1) / 2

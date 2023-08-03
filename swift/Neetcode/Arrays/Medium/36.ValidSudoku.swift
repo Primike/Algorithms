@@ -8,25 +8,23 @@ import collections
 
 func isValidSudoku(_ board: [[Character]]) -> Bool {
     var rows = [Int: Set<Character>]()
-    var cols = [Int: Set<Character>]()
+    var columns = [Int: Set<Character>]()
     var boxes = [Int: Set<Character>]()
     
     for r in 0..<9 {
         for c in 0..<9 {
-            let char = board[r][c]
-            if char == "." {
-                continue
-            }
+            let number = board[r][c]
+            if number == "." { continue }
             
-            if rows[r]?.contains(char) ?? false ||
-                cols[c]?.contains(char) ?? false ||
-                boxes[(r / 3) * 3 + c / 3]?.contains(char) ?? false {
+            if rows[r, default: []].contains(number) ||
+                columns[c, default: []].contains(number) ||
+                boxes[(r / 3) * 3 + c / 3, default: []].contains(number) {
                 return false
             }
             
-            rows[r, default: []].insert(char)
-            cols[c, default: []].insert(char)
-            boxes[(r / 3) * 3 + c / 3, default: []].insert(char)
+            rows[r, default: []].insert(number)
+            columns[c, default: []].insert(number)
+            boxes[(r / 3) * 3 + c / 3, default: []].insert(number)
         }
     }
     

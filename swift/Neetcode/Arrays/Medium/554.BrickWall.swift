@@ -2,18 +2,18 @@
 //return the minimum number of crossed bricks after drawing such a vertical line.
 
 func leastBricks(_ wall: [[Int]]) -> Int {
-    var dict: [Int: Int] = [0: 0]
+    var indexDict = [Int: Int]()
 
     for row in wall {
-        var sum = 0
+        var index = 0
 
         for i in 0..<row.count - 1 {
-            sum += row[i]
-            dict[sum] = (dict[sum] ?? 0) + 1
+            index += row[i]
+            indexDict[index, default: 0] += 1
         }
     }
 
-    return wall.count - (dict.values.max() ?? 0)
+    return wall.count - (indexDict.values.max() ?? 0)
 }
 
 print(leastBricks([[1,2,2,1],[3,1,2],[1,3,2],[2,4],[3,1,2],[1,3,1,1]]))

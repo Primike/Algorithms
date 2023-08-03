@@ -4,19 +4,13 @@
 //Return the number of pairs of interchangeable rectangles in rectangles.
 
 func interchangeableRectangles(_ rectangles: [[Int]]) -> Int {
-    var result = 0
-    var dict = rectangles.reduce(into: [Double: Int]()) { currentDict, rectangle in
-        let ratio = Double(rectangle[1]) / Double(rectangle[0])
-        currentDict[ratio, default: 0] += 1
+    var ratios = [Double: Int]()
+
+    for sides in rectangles {
+        ratios[Double(sides[0]) / Double(sides[1]), default: 0] += 1
     }
 
-    for value in dict.values {
-        if value > 1 {
-            result += (value * (value - 1)) / 2
-        }
-    }
-
-    return result
+    return ratios.values.reduce(0) { $0 + ($1 * ($1 - 1)) / 2 }
 }
 
 print(interchangeableRectangles([[4,8],[3,6],[10,20],[15,30]]))

@@ -51,9 +51,7 @@ Dictionary:
 Set:
     Set(array)
 
-    hashSet.insert(item)
-
-    hashSet.remove(item)
+    hashSet.insert/remove
 
     !hashSet.contains(item)
 
@@ -64,6 +62,8 @@ Loops:
     for i in (0..<array.count).reversed() // if reversing array i starts from 0 not last
 
     for (key, value) in dict
+
+    for (i, j) in zip(s, t)
 
     for i in stride(from: array.count - 1, to: -1, by: -1) 
 
@@ -97,3 +97,8 @@ NSCountedSet:
     var arrayCount = NSCountedSet(array: Array(string))
 
     arrayCount.count(for: letter)
+
+
+Math:
+    Combinatorics: C(n, k) = n! / k!(n - k)! 
+        n = count, k = pair size

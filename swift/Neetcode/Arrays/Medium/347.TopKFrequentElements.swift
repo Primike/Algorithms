@@ -3,23 +3,20 @@
 //You may return the answer in any order.
 
 func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
-    var dict = nums.reduce(into: [:]) { currentDict, number in
-        currentDict[number, default: 0] += 1
-    }
     var bucket: [[Int]] = Array(repeating: [], count: nums.count + 1)
-    var result: [Int] = []
+    var numsDict = nums.reduce(into: [:]) { $0[$1, default: 0] += 1 }
 
-    for (key, value) in dict {
-        bucket[value].append(key)
+    for (number, count) in numsDict {
+        bucket[count].append(number)
     }
 
-    for i in (0..<bucket.count).reversed() {
+    var result = [Int]()
+
+    for i in stride(from: bucket.count - 1, to: -1, by: -1) {
         for number in bucket[i] {
             result.append(number)
 
-            if result.count == k {
-                return result
-            }
+            if result.count == k { return result }
         }
     }
 

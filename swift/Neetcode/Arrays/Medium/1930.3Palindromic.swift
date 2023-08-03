@@ -2,28 +2,20 @@
 //of length three that are a subsequence of s.
 
 func countPalindromicSubsequence(_ s: String) -> Int {
-    struct CharPair: Hashable {
-        let first: Character
-        let second: Character
-    }
-    
-    var result = Set<(CharPair)>()
+    var postfixDict = s.reduce(into: [:]) { $0[$1, default: 0] += 1 }
     var prefixSet = Set<Character>()
-    var postfixSet = s.reduce(into: [Character: Int]()) { $0[$1, default: 0] += 1 }
+    var result = Set<String>()
 
     for letter in s {
-        //no negative since letter has to be in postfixSet
-        postfixSet[letter, default: 0] -= 1
+        postfixDict[letter, default: 0] -= 1
 
-        if postfixSet[letter] == 0 {
-            postfixSet.removeValue(forKey: letter)
-        }
+        if postfixDict[letter] == 0 { postfixDict.removeValue(forKey: letter) }
 
-        for i in 0..<26 {
-            let alpha = Character(UnicodeScalar("a".unicodeScalars.first!.value + UInt32(i))!)
+        for i in 1..<27 {
+            let alpha = Character(UnicodeScalar(UInt8(96 + i)))
 
-            if prefixSet.contains(alpha) && postfixSet.keys.contains(alpha) {
-                result.insert(CharPair(first: alpha, second: letter))
+            if prefixSet.contains(alpha), postfixDict.keys.contains(alpha) {
+                result.insert("\(alpha)\(letter)\(alpha)")
             }
         }
 

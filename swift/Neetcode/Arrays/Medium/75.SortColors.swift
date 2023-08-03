@@ -5,18 +5,17 @@
 //white, and blue, respectively.
 
 func sortColors(_ nums: inout [Int]) {
+    var left = 0, right = nums.count - 1
     var index = 0
-    var left = 0
-    var right = nums.count - 1
 
     while index <= right {
-        if nums[index] == 2 {
+        if nums[index] == 0 {
+            nums.swapAt(left, index)
+            left += 1
+            index += 1
+        } else if nums[index] == 2 {
             nums.swapAt(index, right)
             right -= 1
-        } else if nums[index] == 0 {
-            nums.swapAt(index, left)
-            index += 1
-            left += 1
         } else {
             index += 1
         }
