@@ -45,7 +45,7 @@ Dictionary:
 
     dict.values.allSatisfy { $0 == 0 }
 
-    count += dict[key] ?? 0
+    dict.removeValue(forKey: key) / dict[key] = nil
 
 
 Set:

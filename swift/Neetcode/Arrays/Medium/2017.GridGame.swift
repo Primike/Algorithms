@@ -5,22 +5,13 @@
 //If both robots play optimally, return the number of points collected by the second robot.
 
 func gridGame(_ grid: [[Int]]) -> Int {
-    var topPrefix = grid[0]
-    var bottomPrefix = grid[1]
-
-    for i in 1..<topPrefix.count {
-        topPrefix[i] += topPrefix[i - 1]
-        bottomPrefix[i] += bottomPrefix[i - 1]
-    }
-
+    var topRow = grid[0].reduce(0, +), bottomRow = 0
     var result = Int.max
 
     for i in 0..<grid[0].count {
-        let topSum = topPrefix.last! - topPrefix[i]
-        let bottomSum = i > 0 ? bottomPrefix[i - 1] : 0
-        let secondRobot = max(topSum, bottomSum)
-        
-        result = min(result, secondRobot)
+        topRow -= grid[0][i]
+        result = min(result, max(topRow, bottomRow))
+        bottomRow += grid[1][i]
     }
 
     return result

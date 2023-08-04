@@ -8,7 +8,7 @@ Arrays:
 
     Medium: [
         bucketSort,
-        use pre/postfix products/sums,
+        use pre/postfix products/sums var/array,
         sudoku use / 3 for i manipulation,
         to find consecutive sequences find leftmost in hashSet,
         palindromes use asscci and post/prefix hashes
@@ -21,7 +21,7 @@ Arrays:
         try prefixSum in dict for subarray,
     ]
 
-    Medium: 238, 560, 1930, 1963!, 2017!, 438, 523, 179!, 665
+    Medium: 238, 560, 1930, 1963, 2002!!, 438, 523, 179!, 665
 
 
 Two Pointers:
