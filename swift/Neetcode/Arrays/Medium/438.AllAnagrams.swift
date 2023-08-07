@@ -7,21 +7,19 @@ func findAnagrams(_ s: String, _ p: String) -> [Int] {
     let s = Array(s)
     var sDict = s.prefix(p.count).reduce(into: [:]) { $0[$1, default: 0] += 1 }
     var pDict = Array(p).reduce(into: [:]) { $0[$1, default: 0] += 1 }
-    var result = sDict == pDict ? [0] : []
+
+    var result = [Int]()
 
     for i in p.count..<s.count {
-        var leftIndex = i - p.count
+        if sDict == pDict { result.append(i - p.count) }
+
+        sDict[s[i - p.count], default: 0] -= 1
         sDict[s[i], default: 0] += 1
-        sDict[s[leftIndex]]? -= 1
 
-        if sDict[s[leftIndex]] == 0 {
-            sDict.removeValue(forKey: s[leftIndex])
-        }
-
-        if sDict == pDict {
-            result.append(leftIndex + 1)
-        }
+        if sDict[s[i - p.count]] == 0 { sDict[s[i - p.count]] = nil}
     }
+
+    if sDict == pDict { result.append(s.count - p.count) }
 
     return result
 }

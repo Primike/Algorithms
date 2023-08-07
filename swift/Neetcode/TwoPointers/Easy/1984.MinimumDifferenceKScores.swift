@@ -2,13 +2,12 @@
 //between the highest and the lowest of the k scores is minimized.
 
 func minimumDifference(_ nums: [Int], _ k: Int) -> Int {
-    var nums = nums
-    nums.sort()
-    var left = 0
+    var nums = nums.sorted()
     var result = Int.max
+    var left = 0
 
     for i in (k - 1)..<nums.count {
-        result = min(result, (nums[i] - nums[left]))
+        result = min(result, nums[i] - nums[left])
         left += 1
     }
 

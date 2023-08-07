@@ -2,19 +2,18 @@
 //deleting at most one character from it.
 
 func validPalindrome(_ s: String) -> Bool {
-    let s = Array(s)
-    var left = 0
-    var right = s.count - 1
+    var left = s.startIndex, right = s.index(before: s.endIndex)
 
-    while left < right {
+    while left <= right {
         if s[left] != s[right] {
-            let lRemove = String(s[(left + 1)...right])
+            let lRemove = String(s[(s.index(after: left))...right])
             let rRemove = String(s[left..<(right)])
+            
             return lRemove == String(lRemove.reversed()) || rRemove == String(rRemove.reversed())
         }
         
-        left += 1
-        right -= 1
+        left = s.index(after: left)
+        right = s.index(before: right)
     }
     
     return true

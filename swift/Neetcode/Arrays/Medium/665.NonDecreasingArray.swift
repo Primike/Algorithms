@@ -24,3 +24,5 @@ func checkPossibility(_ nums: [Int]) -> Bool {
 
 print(checkPossibility([4,2,3]))
 print(checkPossibility([4,2,1]))
+print(checkPossibility([1,2,3,2,1]))
+print(checkPossibility([1,3,3,2,3,3]))

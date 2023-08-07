@@ -4,20 +4,19 @@
 //Merge nums1 and nums2 into a single array sorted in non-decreasing order.
 
 func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
-    var last = nums1.count - 1
-    var m = m - 1
-    var n = n - 1
+    var m = m - 1, n = n - 1
+    var index = nums1.count - 1
 
-    while last >= 0 {
-        if m >= 0 && (n < 0 || nums1[m] > nums2[n]) {
-            nums1[last] = nums1[m]
+    while n >= 0 {
+        if m >= 0, nums1[m] > nums2[n] {
+            nums1[index] = nums1[m]
             m -= 1
         } else {
-            nums1[last] = nums2[n]
+            nums1[index] = nums2[n]
             n -= 1
         }
 
-        last -= 1
+        index -= 1
     }
 }
 

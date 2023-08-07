@@ -19,6 +19,8 @@ Strings:
 
     second = string.index(after: first)
 
+    while index != string.endIndex 
+
     string.isNumber/isLetter
 
 
@@ -36,6 +38,8 @@ Array:
     array.removeLast/First() 
 
     array.popLast() //returns optional
+
+    array.joined(separator: ", ") / () / String() for Chars
 
 
 Dictionary:

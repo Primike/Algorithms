@@ -3,6 +3,27 @@
 //once in a DNA molecule. You may return the answer in any order.
 
 func findRepeatedDnaSequences(_ s: String) -> [String] {
+    if s.count < 10 { return [] }
+    
+    let sArray = Array(s)
+    var currentDNA = String(s.prefix(10))
+    var dnaDict = [currentDNA: 1]
+
+    for i in 10..<sArray.count {
+        currentDNA.removeFirst()
+        currentDNA += String(sArray[i])
+
+        dnaDict[currentDNA, default: 0] += 1
+    }
+
+    return dnaDict.filter { $0.value > 1 }.map { $0.key }
+}
+
+print(findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"))
+print(findRepeatedDnaSequences("AAAAAAAAAAAAA"))
+
+//leetcode problem
+func findRepeatedDnaSequences2(_ s: String) -> [String] {
     var dnaSet = Set<String>()
     var result = Set<String>()
     let sArray = Array(s)
@@ -19,6 +40,3 @@ func findRepeatedDnaSequences(_ s: String) -> [String] {
 
     return Array(result)
 }
-
-print(findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"))
-print(findRepeatedDnaSequences("AAAAAAAAAAAAA"))

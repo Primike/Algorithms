@@ -5,36 +5,28 @@
 
 func firstMissingPositive(_ nums: [Int]) -> Int {
     var nums = nums
-    var left = 0
-    var right = nums.count - 1
 
-    //make negatives = zero on first loop(better)
-    while left <= right {
-        if nums[left] <= 0 {
-            nums.swapAt(left, right)
-            right -= 1
-        } else {
-            left += 1
-        }
+    for i in 0..<nums.count {
+        if nums[i] < 0 { nums[i] = 0 }
     }
 
-    for i in 0..<right+1 {
-        var number = abs(nums[i]) - 1
-        if number < right+1 {
-            let value = nums[number]
-            if value > 0 {
-                nums[number] = -value
+    for i in 0..<nums.count {
+        let number = abs(nums[i])
+
+        if 1 <= number, number <= nums.count {
+            if nums[number - 1] > 0 {
+                nums[number - 1] *= -1
+            } else if nums[number - 1] == 0 {
+                nums[number - 1] = -1 * (nums.count + 1)
             }
         }
     }
 
-    for i in 0..<right+1 {
-        if nums[i] > 0 {
-            return i + 1
-        }
+    for i in 1...nums.count {
+        if nums[i - 1] >= 0 { return i }
     }
 
-    return right + 2
+    return nums.count + 1
 }
 
 print(firstMissingPositive([1,2,0]))

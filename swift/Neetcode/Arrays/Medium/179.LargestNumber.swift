@@ -5,6 +5,7 @@
 func largestNumber(_ nums: [Int]) -> String {
     var nums = nums.map { String($0) }
     
+    //lexicographically
     nums.sort { (n1, n2) -> Bool in
         return n1 + n2 > n2 + n1
     }
