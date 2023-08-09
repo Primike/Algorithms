@@ -21,13 +21,16 @@ Arrays:
 
 Two Pointers:
     Medium: [
+        Replace instead of swap,
+        Update pointers instead of using a Set
+
         Iterate through the duplicates count,
         try to inverse array multiple times,
         two pointer shuffle,
     ]
 
     Easy: 125?, 680?, 26,
-    Medium: 80!, 15!, 18!!, 189!, 1968
+    Medium: 80, 15?, 18!!, 189!, 1968
 
 
 Sliding Window: 

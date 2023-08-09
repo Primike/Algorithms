@@ -4,31 +4,26 @@
 //and nums[i] + nums[j] + nums[k] == 0.
 
 func threeSum(_ nums: [Int]) -> [[Int]] {
-    var nums = nums
-    nums.sort()
+    var nums = nums.sorted()
     var result = [[Int]]()
 
-    for (i, number) in nums.enumerated() {
-        if i != 0 && nums[i - 1] == number {
-            continue
-        }
+    for i in 0..<nums.count - 2 {
+        if i > 0, nums[i - 1] == nums[i] { continue }
 
-        var left = i + 1, right = nums.count - 1
+        var left = i + 1, right = nums.count - 1 
+        
+        while left < right, right < nums.count {
+            var sum = nums[i] + nums[left] + nums[right]
 
-        while left < right {
-            let triplet = number + nums[left] + nums[right]
+            if sum == 0 {
+                result.append([nums[i], nums[left], nums[right]])
+                left += 1
 
-            if triplet > 0 {
+                while left < right, nums[left] == nums[left - 1] { left += 1 }
+            } else if sum > 0 {
                 right -= 1
-            } else if triplet < 0 {
-                left += 1
             } else {
-                result.append([number, nums[left], nums[right]])
                 left += 1
-
-                while left < right && nums[left] == nums[left - 1] {
-                    left += 1
-                }
             }
         }
     }
