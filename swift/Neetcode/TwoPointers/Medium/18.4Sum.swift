@@ -7,25 +7,22 @@
 
 
 func fourSum(_ nums: [Int], _ target: Int) -> [[Int]] {
-    if nums.count < 4 {
-        return []
-    }
+    if nums.count < 4 { return [] }
 
-    var nums = nums
-    nums.sort()
+    var nums = nums.sorted()
 
-    var result = [[Int]](), kArray = [Int]()
+    var result = [[Int]](), nArray = [Int]()
 
-    func kSum(_ k: Int, _ start: Int, _ target: Int) {
-        if k != 2 {
-            for i in start..<(nums.count - k + 1) {
+    func nSum(_ n: Int, _ start: Int, _ target: Int) {
+        if n != 2 {
+            for i in start..<(nums.count - n + 1) {
                 if i > start && nums[i] == nums[i - 1] {
                     continue
                 }
 
-                kArray.append(nums[i])
-                kSum(k - 1, i + 1, target - nums[i])
-                kArray.removeLast()
+                nArray.append(nums[i])
+                nSum(n - 1, i + 1, target - nums[i])
+                nArray.removeLast()
             }
 
             return
@@ -39,7 +36,7 @@ func fourSum(_ nums: [Int], _ target: Int) -> [[Int]] {
             } else if nums[left] + nums[right] > target {
                 right -= 1
             } else {
-                result.append(kArray + [nums[left], nums[right]])
+                result.append(nArray + [nums[left], nums[right]])
                 left += 1
 
                 while left < right && nums[left] == nums[left - 1] {
@@ -49,7 +46,7 @@ func fourSum(_ nums: [Int], _ target: Int) -> [[Int]] {
         }
     }
 
-    kSum(4, 0, target)
+    nSum(4, 0, target)
     return result
 }
 

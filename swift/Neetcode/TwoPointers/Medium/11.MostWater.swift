@@ -4,8 +4,8 @@
 //Return the maximum amount of water a container can store.
 
 func maxArea(_ height: [Int]) -> Int {
-    var result = 0
     var left = 0, right = height.count - 1
+    var result = 0
 
     while left < right {
         var area = min(height[left], height[right]) * (right - left)
