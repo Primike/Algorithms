@@ -30,7 +30,7 @@ Two Pointers:
     ]
 
     Easy: 125?, 680?, 26,
-    Medium: 80, 15?, 18!!, 189!, 1968
+    Medium: 80, 18!, 189!, 1968
 
 
 Sliding Window: 
