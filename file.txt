@@ -23,7 +23,8 @@ Two Pointers:
     Medium: [
         Replace instead of swap,
         Update pointers instead of using a Set
-
+        Look for closed cycles they dont interact,
+        
         Iterate through the duplicates count,
         try to inverse array multiple times,
         two pointer shuffle,
