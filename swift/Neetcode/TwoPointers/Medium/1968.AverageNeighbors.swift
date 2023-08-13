@@ -3,8 +3,7 @@
 //in the rearranged array is not equal to the average of its neighbors.
 
 func rearrangeArray(_ nums: [Int]) -> [Int] {
-    var nums = nums
-    nums.sort()
+    var nums = nums.sorted()
     var result = [Int]()
     var left = 0, right = nums.count - 1
 
