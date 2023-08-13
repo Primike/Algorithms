@@ -1,23 +1,26 @@
-func trap(_ height: [Int]) -> Int {
-    if height.isEmpty {
-        return 0
-    }
+// Given n non-negative integers representing an elevation map where the 
+// width of each bar is 1, compute how much water it can trap after raining.
 
-    var l = 0, r = height.count - 1
-    var leftMax = height[l], rightMax = height[r]
-    var res = 0
-    while l < r {
+func trap(_ height: [Int]) -> Int {
+    if height.isEmpty { return 0 }
+
+    var left = 0, right = height.count - 1
+    var leftMax = height[left], rightMax = height[right]
+    var result = 0
+
+    while left < right {
         if leftMax < rightMax {
-            l += 1
-            leftMax = max(leftMax, height[l])
-            res += leftMax - height[l]
+            left += 1
+            leftMax = max(leftMax, height[left])
+            result += leftMax - height[left]
         } else {
-            r -= 1
-            rightMax = max(rightMax, height[r])
-            res += rightMax - height[r]
+            right -= 1
+            rightMax = max(rightMax, height[right])
+            result += rightMax - height[right]
         }
     }
-    return res
+
+    return result
 }
 
 print(trap([0,1,0,2,1,0,1,3,2,1,2,1]))

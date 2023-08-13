@@ -33,12 +33,12 @@ Two Pointers:
 
 
 Sliding Window: 
-    Easy: [
-        can use while/for
+    Medium: [
+        Sometimes not necessary to decrease window
     ]
 
     Easy: 219?
-    Medium: 567?
+    Medium: 3?, 424?
 
 
 Stack:

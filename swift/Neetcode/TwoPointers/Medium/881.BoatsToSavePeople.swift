@@ -5,15 +5,12 @@
 //Return the minimum number of boats to carry every given person.
 
 func numRescueBoats(_ people: [Int], _ limit: Int) -> Int {
-    var people = people
-    people.sort()
-    var boats = 0
+    var people = people.sorted()
     var left = 0, right = people.count - 1
+    var boats = 0
 
     while left <= right {
-        if people[right] + people[left] <= limit {
-            left += 1
-        } 
+        if people[left] + people[right] <= limit { left += 1 } 
 
         right -= 1
         boats += 1

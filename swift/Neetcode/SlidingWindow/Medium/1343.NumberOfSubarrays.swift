@@ -3,23 +3,19 @@
 //and average greater than or equal to threshold.
 
 func numOfSubarrays(_ arr: [Int], _ k: Int, _ threshold: Int) -> Int {
+    var currentSum = 0
+    var left = 0
     var result = 0
-    var sum = 0
-    var left = 0, right = 0
 
-    while right < arr.count {
-        sum += arr[right]
-        right += 1
-
-        if right - left < k {
+    for (i, number) in arr.enumerated() {
+        if i - left < k - 1 {
+            currentSum += number
             continue
         }
 
-        if sum / k >= threshold {
-            result += 1
-        }
-
-        sum -= arr[left]
+        currentSum += number
+        if currentSum / k >= threshold { result += 1 }
+        currentSum -= arr[left]
         left += 1
     }
 

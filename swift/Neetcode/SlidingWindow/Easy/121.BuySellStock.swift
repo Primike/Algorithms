@@ -4,15 +4,18 @@
 //and choosing a different day in the future to sell that stock.
 
 func maxProfit(_ prices: [Int]) -> Int {
-    var profit = 0
-    var minimum = Int.max
+    var left = prices[0]
+    var result = 0
 
-    for (i, number) in prices.enumerated() {
-        minimum = min(minimum, number)
-        profit = max(profit, number - minimum)
+    for price in prices {
+        if price >= left {
+            result = max(result, price - left)
+        } else {
+            left = price
+        }
     }
 
-    return profit
+    return result
 }
 
 print(maxProfit([7,1,5,3,6,4]))

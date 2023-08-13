@@ -5,18 +5,19 @@
 
 func maxFrequency(_ nums: [Int], _ k: Int) -> Int {
     let nums = nums.sorted()
-    var total = 0
     var left = 0
-    var result = 1
-    
-    for right in 1..<nums.count {
-        total += (nums[right] - nums[right - 1]) * (right - left)
-        while total > k {
-            total -= nums[right] - nums[left]
+    var currentSum = 0
+    var result = 0
+
+    for i in 0..<nums.count {
+        currentSum += nums[i]
+
+        if (nums[i] * (i - left + 1) - currentSum) > k {
+            currentSum -= nums[left]
             left += 1
         }
-        
-        result = max(result, right - left + 1)
+
+        result = max(result, i + 1 - left)
     }
     
     return result

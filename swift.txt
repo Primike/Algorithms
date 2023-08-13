@@ -23,13 +23,15 @@ Strings:
 
     string.isNumber/isLetter
 
+    let alpha = Character(UnicodeScalar(UInt8(96 + i)))
+
 
 Array:
     array.swapAt(left, right)
 
     var array: [[Int]] = Array(repeating: [], count: 5)
 
-    let index = Int(letter.unicodeScalars.first!.value) - Int(Unicode.Scalar("a").value)
+    let index = Int(s1[i].asciiValue!) - Int(Character("a").asciiValue!)
 
     array.isEmpty
 
