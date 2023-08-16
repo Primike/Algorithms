@@ -6,6 +6,7 @@ func findClosestElements(_ arr: [Int], _ k: Int, _ x: Int) -> [Int] {
     var left = 0, right = arr.count - 1
 
     while left < right {
+        //Overflow
         let midpoint = left + (right - left) / 2
 
         if arr[midpoint] >= x {

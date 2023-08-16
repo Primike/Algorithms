@@ -2,19 +2,21 @@
 //'(', ')', '{', '}', '[' and ']', determine if the input string is valid.
 
 func isValid(_ s: String) -> Bool {
-    let dict: [Character: Character] = [")": "(", "]": "[", "}": "{"]
+    var s = Array(s)
     var stack = [Character]()
+    var parentheses: [Character: Character] = [")" : "(", "}": "{", "]": "["]
 
-    for item in s {
-        if let bracket = dict[item] {
-            if stack.last == bracket {
-                stack.removeLast()
-            } else {
-                return false
-            }
-        } else {
-            stack.append(item)
+    for bracket in s {
+        if parentheses.values.contains(bracket) { 
+            stack.append(bracket) 
+            continue
         }
+
+        if stack.isEmpty { return false }
+
+        if let last = stack.popLast(), last != parentheses[bracket, default: "x"] {
+            return false
+        } 
     }
 
     return stack.isEmpty

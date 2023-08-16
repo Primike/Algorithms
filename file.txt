@@ -38,7 +38,7 @@ Sliding Window:
     ]
 
     Easy: 219?
-    Medium: 3?, 424?
+    Medium: 3?, 424?, 658
 
 
 Stack:
