@@ -4,16 +4,16 @@
 //If there is no future day for which this is possible, keep answer[i] == 0 instead.
 
 func dailyTemperatures(_ temperatures: [Int]) -> [Int] {
-    var stack = [Int]()
     var result = Array(repeating: 0, count: temperatures.count)
+    var stack = [Int]()
 
-    for (i, temp) in temperatures.enumerated() {
-        while let last = stack.last, temp > temperatures[last] { 
-            result[last] = i - last 
+    for (i, day) in temperatures.enumerated() {
+        while let last = stack.last, temperatures[last] < day {
+            result[last] = i - last
             stack.removeLast()
         }
 
-        stack.append(i) 
+        stack.append(i)
     }
 
     return result

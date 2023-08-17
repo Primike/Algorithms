@@ -2,32 +2,31 @@
 //in a Reverse Polish Notation.
 //Evaluate the expression. Return an integer that represents the value of the expression.
 
-
 func evalRPN(_ tokens: [String]) -> Int {
     var stack = [Int]()
 
     for token in tokens {
-        if let num = Int(token) {
-            stack.append(num)
+        if let number = Int(token) {
+            stack.append(number)
         } else {
-            let second = stack.removeLast()
-            let first = stack.removeLast()
+            let x = stack.removeLast()  
+            let y = stack.removeLast()
 
             switch token {
             case "+":
-                stack.append(first + second)
+                stack.append(x + y)
             case "-":
-                stack.append(first - second)
+                stack.append(y - x)
             case "*":
-                stack.append(first * second)
+                stack.append(x * y)
             case "/":
-                stack.append(first / second)
+                stack.append(y / x)
             default:
                 break
             }
         }
     }
-    
+
     return stack.last ?? 0
 }
 

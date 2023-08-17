@@ -42,8 +42,7 @@ Sliding Window:
 
 
 Stack:
-    Easy: 
-    Medium: 22!
+    Medium: 22?, 735?, 901?, 853?
 
 
 Binary Search:

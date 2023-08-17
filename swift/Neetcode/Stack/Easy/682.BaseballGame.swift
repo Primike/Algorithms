@@ -5,21 +5,29 @@
 //Return the sum of all the scores on the record after applying all the operations.
 
 func calPoints(_ operations: [String]) -> Int {
-    var stack = [Int]()
+    var result = [Int]()
+    var currentSum = 0
 
     for operation in operations {
-        if operation == "+" {
-            stack.append(stack[stack.count - 2] + stack[stack.count - 1])
-        } else if operation == "D" {
-            stack.append((stack.last ?? 0) * 2)
-        } else if operation == "C" {
-            stack.removeLast()
-        } else if let number = Int(operation) {
-            stack.append(number)
+        if let number = Int(operation) {
+            result.append(number)
+            currentSum += number
+        } else if operation == "C", let last = result.popLast() {
+            currentSum -= last
+        } else if operation == "D", let last = result.last {
+            let doubled = last * 2
+            result.append(doubled)
+            currentSum += doubled
+        } else if operation == "+" {
+            if result.count >= 2 {
+                let sum = result[result.count - 1] + result[result.count - 2]
+                result.append(sum)
+                currentSum += sum
+            }
         }
     }
 
-    return stack.reduce(0, +)
+    return currentSum
 }
 
 print(calPoints(["5","2","C","D","+"]))

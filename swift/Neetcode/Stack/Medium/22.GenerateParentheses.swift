@@ -2,28 +2,23 @@
 //combinations of well-formed parentheses.
 
 func generateParenthesis(_ n: Int) -> [String] {
-    var stack = [String]()
     var result = [String]()
 
-    func backtrack(_ opened: Int, _ closed: Int) {
-        if opened == closed, closed == n {
-            result.append(stack.joined())
+    func backtrack(_ string: String, _ opened: Int, _ closed: Int) {
+        if opened == n, closed == n {
+            result.append(string)
+            return
         }
 
         if opened < n {
-            stack.append("(")
-            backtrack(opened + 1, closed)
-            stack.removeLast()
+            backtrack(string + "(", opened + 1, closed)
         }
-
         if closed < opened {
-            stack.append(")")
-            backtrack(opened, closed + 1)
-            stack.removeLast()
+            backtrack(string + ")", opened, closed + 1)
         }
     }
 
-    backtrack(0, 0)
+    backtrack("", 0, 0)
     return result
 }
 

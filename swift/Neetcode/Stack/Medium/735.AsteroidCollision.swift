@@ -5,30 +5,30 @@
 //Two asteroids moving in the same direction will never meet.
 
 func asteroidCollision(_ asteroids: [Int]) -> [Int] {
-    var stack = [Int]()
+    var result = [Int]()
     
     for asteroid in asteroids {
-        var newAsteroid = asteroid
+        var current = asteroid
         
-        while let last = stack.last, newAsteroid < 0, last > 0 {
-            let difference = newAsteroid + last
+        while let last = result.last, last > 0, current < 0{
+            let difference = current + last
             
             if difference < 0 {
-                stack.removeLast()
+                result.removeLast()
             } else if difference > 0 {
-                newAsteroid = 0
+                current = 0
             } else {
-                newAsteroid = 0
-                stack.removeLast()
+                current = 0
+                result.removeLast()
             }
         }
         
-        if newAsteroid != 0 {
-            stack.append(newAsteroid)
+        if current != 0 {
+            result.append(current)
         }
     }
     
-    return stack
+    return result
 }
 
 print(asteroidCollision([5,10,-5]))

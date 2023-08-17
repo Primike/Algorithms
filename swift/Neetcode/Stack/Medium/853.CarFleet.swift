@@ -6,28 +6,23 @@
 // Return the number of car fleets that will arrive at the destination.
 
 func carFleet(_ target: Int, _ position: [Int], _ speed: [Int]) -> Int {
-    var array = Array(repeating: (x: 0, v: 0.0), count: target)
+    var times = Array(repeating: 0.0, count: target)
 
     for i in 0..<position.count {
-        array[position[i]] = (x: position[i], v: Double(speed[i]))
+        times[position[i]] = Double(target - position[i]) / Double(speed[i])
     }
 
-    var lastTime = 0.0
-    var result = 0
+    var result = [Double]()
 
-    for car in array.reversed() {
-        if car.v == 0 {
-            continue
-        }
-
-        let time = Double(target - car.x) / car.v
-        if time > lastTime {
-            lastTime = time
-            result += 1
-        }
+    for time in times.reversed() {
+        if time == 0 { continue }
+        
+        if let last = result.last, last >= time { continue }
+        
+        result.append(time)
     }
 
-    return result
+    return result.count
 }
 
 print(carFleet(12, [10,8,0,5,3], [2,4,1,1,3]))
