@@ -42,7 +42,11 @@ Sliding Window:
 
 
 Stack:
-    Medium: 22?, 735?, 901?, 853?
+    Medium: [
+        Iterate through backwards and forwards with bounds
+    ]
+
+    Medium: 22?, 735?, 901?, 853?, 394!, 1209, 132!
 
 
 Binary Search:

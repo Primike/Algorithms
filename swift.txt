@@ -21,7 +21,7 @@ Strings:
 
     while index != string.endIndex 
 
-    string.isNumber/isLetter
+    character.isNumber/isLetter
 
     let alpha = Character(UnicodeScalar(UInt8(96 + i)))
 
@@ -42,6 +42,8 @@ Array:
     array.popLast() //returns optional
 
     array.joined(separator: ", ") / () / String() for Chars
+
+    array.remove(at: 1)
 
 
 Dictionary:
@@ -97,6 +99,8 @@ Functions:
     let doubleArray = Array(repeating: array, count: 2).flatMap { $0 }
 
     let arrayWithoutNil = arrayWithNil.compactMap { $0 }
+
+    cars.sort(by: { $0.position > $1.position })
 
 
 NSCountedSet:
