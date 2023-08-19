@@ -25,6 +25,8 @@ Strings:
 
     let alpha = Character(UnicodeScalar(UInt8(96 + i)))
 
+    can compare only characters like ints
+
 
 Array:
     array.swapAt(left, right)

@@ -46,11 +46,12 @@ Stack:
         Iterate through backwards and forwards with bounds
     ]
 
-    Medium: 22?, 735?, 901?, 853?, 394!, 1209, 132!
+    Medium: 22?, 735?, 901?, 853?, 394!, 402, 1209, 132!
 
 
 Binary Search:
-    Medium: 33
+    Easy: 977?
+    Medium: 530?, 33
 
 
 BinaryTree:
