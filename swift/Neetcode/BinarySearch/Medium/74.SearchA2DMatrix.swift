@@ -6,18 +6,18 @@
 
 func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
     var left = 0, right = matrix.count - 1
-    var index = 0
+    var row = 0
 
     while left <= right {
-        index = (right + left) / 2
+        row = (right + left) / 2
 
-        if let last = matrix[index].last, last < target {
-            left = index + 1
-        } else if matrix[index][0] > target {
-            right = index - 1
+        if let last = matrix[row].last, last < target {
+            left = row + 1
+        } else if matrix[row][0] > target {
+            right = row - 1
         } else {
             left = 0
-            right = matrix[index].count - 1
+            right = matrix[row].count - 1
             break
         }
     }
@@ -25,9 +25,9 @@ func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
     while left <= right {
         var midpoint = (right + left) / 2
 
-        if matrix[index][midpoint] < target {
+        if matrix[row][midpoint] < target {
             left = midpoint + 1
-        } else if matrix[index][midpoint] > target {
+        } else if matrix[row][midpoint] > target {
             right = midpoint - 1
         } else {
             return true

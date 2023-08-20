@@ -47,6 +47,8 @@ Array:
 
     array.remove(at: 1)
 
+    array.max()
+
 
 Dictionary:
     dict[key, default: []].append(string)

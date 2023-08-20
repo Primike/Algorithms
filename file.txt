@@ -51,7 +51,7 @@ Stack:
 
 Binary Search:
     Easy: 977?
-    Medium: 530?, 33
+    Medium: 530?, 33, 162
 
 
 BinaryTree:
