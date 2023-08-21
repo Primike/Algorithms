@@ -5,26 +5,24 @@
 // the bananas within h hours.
 
 func minEatingSpeed(_ piles: [Int], _ h: Int) -> Int {
-    var left = 1, right = piles.max() ?? 0
-    var result = right
+    var left = 1, right = piles.reduce(0, +) 
 
     while left <= right {
-        let k = (right + left) / 2
-        var time = 0
-        
+        let bananas = (right + left) / 2
+        var hours = 0
+
         for pile in piles {
-            time += Int(ceil(Double(pile) / Double(k)))
+            hours += (pile + bananas - 1) / bananas
         }
-        
-        if time <= h {
-            result = min(result, k)
-            right = k - 1
+
+        if hours > h {
+            left = bananas + 1
         } else {
-            left = k + 1
+            right = bananas - 1
         }
     }
-    
-    return result
+
+    return left
 }
 
 print(minEatingSpeed([3,6,7,11], 8))

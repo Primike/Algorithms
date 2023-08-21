@@ -50,8 +50,13 @@ Stack:
 
 
 Binary Search:
+    Medium: [
+        if midpoint w/o +/- 1, <= should be < else infinite loop,
+        try to split into 2 logic then split more
+    ]
+
     Easy: 977?
-    Medium: 530?, 33, 162
+    Medium: 530?, 33, 162, 875?, 33, 34
 
 
 BinaryTree:
