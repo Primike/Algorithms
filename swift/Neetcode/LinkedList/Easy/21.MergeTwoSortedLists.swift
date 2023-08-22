@@ -3,39 +3,25 @@
 //The list should be made by splicing together the nodes of the first two lists.
 //Return the head of the merged linked list.
 
-class ListNode {
-    var val: Int
-    var next: ListNode?
-
-    init(_ val: Int) {
-        self.val = val
-        self.next = nil
-    }
-}
-
 func mergeTwoLists(_ list1: ListNode?, _ list2: ListNode?) -> ListNode? {
-    let newNode = ListNode(0)
+    var newNode = ListNode()
     var current = newNode
-    var list1 = list1
-    var list2 = list2
+    var list1 = list1, list2 = list2
 
-    while let l1 = list1, let l2 = list2 {
-        if l1.val < l2.val {
-            current.next = l1
-            list1 = l1.next
+    while let node1 = list1, let node2 = list2 {
+        if node1.val > node2.val {
+            current.next = node2
+            current = node2
+            list2 = node2.next
         } else {
-            current.next = l2
-            list2 = l2.next
+            current.next = node1
+            current = node1
+            list1 = node1.next
         }
-
-        current = current.next!
     }
 
-    if let l1 = list1 {
-        current.next = l1
-    } else if let l2 = list2 {
-        current.next = l2
-    }
+    if let node1 = list1 { current.next = node1 }
+    if let node2 = list2 { current.next = node2 }
 
     return newNode.next
 }
