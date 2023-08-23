@@ -3,41 +3,36 @@
 //Reorder the list to be on the following form:
 //L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
 
-class ListNode {
-    var val: Int
-    var next: ListNode?
-    
-    init(_ val: Int, _ next: ListNode? = nil) {
-        self.val = val
-        self.next = next
-    }
-}
-
+//both sides end at the middle node
 func reorderList(_ head: ListNode?) {
     var slow = head, fast = head
 
-    while let f = fast, let next = f.next {
+    while let fastNode = fast, let next = fastNode.next {
         slow = slow?.next
         fast = next.next
     }
 
-    var newNode: ListNode?
-    while let _ = slow {
-        var next = slow?.next
-        slow?.next = newNode
-        newNode = slow
+    var previous: ListNode? = nil
+
+    while let current = slow {
+        var next = current.next
+        current.next = previous
+        previous = current
         slow = next
     }
 
-    var left = head, right = newNode
-    while let r = right, let next = r.next {
-        var nextRight = right?.next
-        var nextLeft = left?.next
+    var left = head, right = previous
 
-        left?.next = right
-        right?.next = nextLeft
+    while let leftNode = left, let rightNode = right {
+        var nextLeft = leftNode.next 
+        var nextRight = rightNode.next
+        leftNode.next = rightNode
+        rightNode.next = nextLeft
 
         left = nextLeft
         right = nextRight
     }
+
+    //for even lists the last node points to itself
+    if let leftNode = left { leftNode.next = nil }
 }

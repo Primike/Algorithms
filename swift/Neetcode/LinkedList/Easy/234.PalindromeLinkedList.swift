@@ -1,6 +1,7 @@
 // Given the head of a singly linked list, return true if it is a 
 // palindrome or false otherwise.
 
+//End node is shared both lists converge to last node
 func isPalindrome(_ head: ListNode?) -> Bool {
     var slow = head, fast = head
 
@@ -11,10 +12,10 @@ func isPalindrome(_ head: ListNode?) -> Bool {
 
     var previous: ListNode? = nil
 
-    while let slowNode = slow {
-        var next = slowNode.next
-        slowNode.next = previous
-        previous = slowNode
+    while let current = slow {
+        var next = current.next
+        current.next = previous
+        previous = current
         slow = next
     }
 

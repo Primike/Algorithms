@@ -19,6 +19,7 @@ Arrays:
     Medium: 238, 560, 1930, 1963, 2002!!, 438, 179, 523, 838!, 665
 
 
+
 Two Pointers:
     Medium: [
         Replace instead of swap,
@@ -32,6 +33,7 @@ Two Pointers:
     Medium: 80, 18!, 189?, 1968?
 
 
+
 Sliding Window: 
     Medium: [
         Sometimes not necessary to decrease window
@@ -41,12 +43,14 @@ Sliding Window:
     Medium: 3?, 424?, 658
 
 
+
 Stack:
     Medium: [
         Iterate through backwards and forwards with bounds
     ]
 
     Medium: 22?, 735?, 901?, 853?, 394!, 402, 1209, 132!
+
 
 
 Binary Search:
@@ -59,9 +63,25 @@ Binary Search:
     Medium: 530?, 33, 162, 875?, 33, 34
 
 
+
+LinkedList:
+    Easy: [
+        Cyclical search switch lists variable once nil reached
+    ]
+
+    Medium: [
+        Reverse list on the way to the center if need to expand outward,
+        try separating 1 loop into 2
+    ]
+
+    Medium: 143??, 1721, 138?
+
+
+
 BinaryTree:
     Easy: 543
     Medium: 199, 1448!, 98!
+
 
 
 BackTracking:
@@ -73,6 +93,8 @@ BackTracking:
         Modify given array each iteration,
     ]
     Medium: 39
+
+
 
 1D:
     Easy: 70
