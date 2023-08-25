@@ -116,3 +116,7 @@ NSCountedSet:
 Math:
     Combinatorics: C(n, k) = n! / k!(n - k)! 
         n = count, k = pair size
+
+
+Other:
+    === used to compare instances

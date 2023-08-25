@@ -74,7 +74,7 @@ LinkedList:
         try separating 1 loop into 2
     ]
 
-    Medium: 143??, 1721, 138?
+    Medium: 143??, 1721, 138?, 2, 287!, 24, 61
 
 
 
