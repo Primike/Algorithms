@@ -1,5 +1,6 @@
 //Given the root of a binary tree, invert the tree, and return its root.
 
+//Swap/recursion order does not matter
 func invertTree(_ root: TreeNode?) -> TreeNode? {
     guard let root = root else { return nil }
 
@@ -11,4 +12,3 @@ func invertTree(_ root: TreeNode?) -> TreeNode? {
 
     return root
 }
-

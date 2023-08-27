@@ -19,3 +19,20 @@ func isBalanced(_ root: TreeNode?) -> Bool {
     checkBalance(root)
     return balanced
 }
+
+func isBalanced(_ root: TreeNode?) -> Bool {
+    var result = 0
+
+    func depthFirst(_ root: TreeNode?) -> Int {
+        guard let root = root else { return 0 }
+
+        let left = depthFirst(root.left)
+        let right = depthFirst(root.right)
+
+        result = max(result, abs(left - right))
+        return max(left, right) + 1
+    }
+
+    depthFirst(root)
+    return result <= 1
+}

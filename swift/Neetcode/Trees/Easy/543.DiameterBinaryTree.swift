@@ -10,7 +10,6 @@ func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
         let right = longestPath(root.right)
 
         result = max(result, left + right)
-
         return max(left, right) + 1
     }
 

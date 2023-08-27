@@ -79,7 +79,11 @@ LinkedList:
 
 
 BinaryTree:
-    Easy: 543
+    Easy: [
+        Use while loops to go left deep,
+    ]
+
+    Easy: 145?
     Medium: 199, 1448!, 98!
 
 
