@@ -83,8 +83,12 @@ BinaryTree:
         Use while loops to go left deep,
     ]
 
+    Medium: [
+        For BST delete find the second largest/smallest child to replace
+    ]
+
     Easy: 145?, 108, 606?
-    Medium: 199, 1448!, 98!
+    Medium: 235, 450, 199, 1448!, 98!
 
 
 

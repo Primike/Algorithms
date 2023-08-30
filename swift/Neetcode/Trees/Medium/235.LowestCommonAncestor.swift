@@ -5,16 +5,14 @@
 // No duplicates unless sepcified
 
 func lowestCommonAncestor(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> TreeNode? {
-    guard let pVal = p?.val, let qVal = q?.val else {
-        return nil
-    }
+    guard let pVal = p?.val, let qVal = q?.val else { return nil }
 
     var current = root
 
-    while let currentVal = current?.val {
-        if pVal > currentVal && qVal > currentVal {
+    while let value = current?.val {
+        if pVal > value && qVal > value {
             current = current?.right
-        } else if pVal < currentVal && qVal < currentVal {
+        } else if pVal < value && qVal < value {
             current = current?.left
         } else {
             return current
