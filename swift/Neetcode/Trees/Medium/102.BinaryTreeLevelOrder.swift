@@ -3,28 +3,24 @@
 // (i.e., from left to right, level by level).
 
 func levelOrder(_ root: TreeNode?) -> [[Int]] {
-    var result = [[Int]]()
-    var queue = [TreeNode]()
+    guard let root = root else { return [] }
 
-    if let root = root { queue.append(root) }
+    var result = [[Int]]()
+    var queue = [root]
 
     while !queue.isEmpty {
-        var values = [Int]()
+        var array = [Int]()
 
-        for _ in 0..<queue.count {
-            let popped = queue.removeFirst()
-            values.append(popped.val)
+        for i in 0..<queue.count {
+            let node = queue.removeFirst()
+            array.append(node.val)
 
-            if let left = popped.left {
-                queue.append(left)
-            }
-            if let right = popped.right {
-                queue.append(right)
-            }
+            if let left = node.left { queue.append(left) }
+            if let right = node.right { queue.append(right) }
         }
-        
-        result.append(values)
+
+        result.append(array)
     }
-    
+
     return result
 }
