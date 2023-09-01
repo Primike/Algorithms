@@ -84,11 +84,13 @@ BinaryTree:
     ]
 
     Medium: [
-        For BST delete find the second largest/smallest child to replace
+        For BST delete find the second largest/smallest child to replace,
+        Use boundaries left and right dfs,
+        Exit early with a count in dfs
     ]
 
     Easy: 145?, 108, 606?, 783, 101?
-    Medium: 235, 450, 199, 958?, 1448!, 98!
+    Medium: 235, 450, 199, 958?, 652!, 106!, 98!
 
 
 
