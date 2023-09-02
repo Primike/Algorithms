@@ -7,15 +7,13 @@ func subsetsWithDup(_ nums: [Int]) -> [[Int]] {
     var nums = nums.sorted()
     var result = [[Int]]()
 
-    func backtrack(_ index: Int, _ subset: [Int]) {
-        result.append(subset)
+    func backtrack(_ index: Int, _ current: [Int]) {
+        result.append(current)
 
         for i in index..<nums.count {
-            if i > index, nums[i] == nums[i - 1] {
-                continue
-            }
+            if i > index, nums[i] == nums[i - 1] { continue }
 
-            backtrack(i + 1, subset + [nums[i]])
+            backtrack(i + 1, current + [nums[i]])
         }
     }
 

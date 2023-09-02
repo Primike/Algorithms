@@ -90,19 +90,20 @@ BinaryTree:
     ]
 
     Easy: 145?, 108, 606?, 783, 101?
-    Medium: 235, 450, 199, 958?, 652!, 106!, 98!
+    Medium: 235, 450, 199, 958?, 652!, 106!, 98!, 105!, 951?
 
 
 
 BackTracking:
     [
-        Build up for subsets maybe pass in first empty,
-        Append parameter at the start of the func,
         Pass in array being built up,
-        Increment index each iteration,
-        Modify given array each iteration,
+        Pass and ncrement index each iteration,
+        Use pointers incrementation,
+        Swap elements for premutations,
+        sort array
     ]
-    Medium: 39
+
+    Medium: 77?, 46, 90
 
 
 
