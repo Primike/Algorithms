@@ -1,0 +1,22 @@
+// Return the probability that Alice has n or fewer points.
+
+func new21Game(_ n: Int, _ k: Int, _ maxPts: Int) -> Double {
+    if k == 0 || n >= k + maxPts { return 1.0 }
+    
+    var tab = Array(repeating: 0.0, count: n + 1)
+    tab[0] = 1.0    
+    var sum = 1.0
+    
+    for i in 1...n {
+        tab[i] = sum / Double(maxPts)
+        
+        if i < k { sum += tab[i] }
+        if i >= maxPts { sum -= tab[i - maxPts] }
+    }
+    
+    return tab[k...n].reduce(0, +)
+}
+
+print(new21Game(10, 1, 10))
+print(new21Game(6, 1, 10))
+print(new21Game(21, 17, 10))
