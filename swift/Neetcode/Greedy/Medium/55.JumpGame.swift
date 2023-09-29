@@ -4,15 +4,15 @@
 // Return true if you can reach the last index, or false otherwise.
 
 func canJump(_ nums: [Int]) -> Bool {
-    var left = nums.count - 1
+    var jumpPoint = 0
 
-    for i in stride(from: nums.count - 2, to: -1, by: -1) {
-        if i + nums[i] >= left {
-            left = i
-        }
+    for (i, number) in nums.enumerated() {
+        if jumpPoint < i { return false }
+        
+        jumpPoint = max(jumpPoint, i + number)
     }
 
-    return left == 0
+    return jumpPoint >= nums.count - 1
 }
 
 print(canJump([2,3,1,1,4]))

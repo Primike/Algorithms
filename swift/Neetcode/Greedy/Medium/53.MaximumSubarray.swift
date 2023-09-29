@@ -6,9 +6,7 @@ func maxSubArray(_ nums: [Int]) -> Int {
     var currentSum = 0
 
     for number in nums {
-        if currentSum < 0 {
-            currentSum = 0
-        } 
+        if currentSum < 0 { currentSum = 0 } 
 
         currentSum += number
         result = max(result, currentSum)
