@@ -19,3 +19,23 @@ func findBottomLeftValue(_ root: TreeNode?) -> Int {
 
     return leftValue
 }
+
+func findBottomLeftValue2(_ root: TreeNode?) -> Int {
+    var level = 0
+    var result = 0
+
+    func dfs(_ node: TreeNode?, _ current: Int) {
+        guard let node = node else { return }
+
+        if current > level {
+            level = current
+            result = node.val
+        }
+
+        dfs(node.left, current + 1)
+        dfs(node.right, current + 1)
+    }
+
+    dfs(root, 1)
+    return result
+}
