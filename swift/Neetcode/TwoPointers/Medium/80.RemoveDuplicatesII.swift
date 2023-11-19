@@ -8,7 +8,7 @@ func removeDuplicates(_ nums: inout [Int]) -> Int {
     while right < nums.count {
         var count = 1
 
-        while right < nums.count - 1 && nums[right] == nums[right + 1] {
+        while right < nums.count - 1, nums[right] == nums[right + 1] {
             right += 1
             count += 1
         }
