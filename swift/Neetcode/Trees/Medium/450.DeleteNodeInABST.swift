@@ -2,39 +2,44 @@
 // given key in the BST. Return the root node reference (possibly updated) of the BST.
 
 func deleteNode(_ root: TreeNode?, _ key: Int) -> TreeNode? {
-    var root = root
+    var newTree = TreeNode(0, root, nil)
+    var previous: TreeNode? = newTree
+    var current = root
 
-    if (root?.val ?? 0) > key {
-        root?.left = deleteNode(root?.left, key)
-    } else if (root?.val ?? 0) < key {
-        root?.right = deleteNode(root?.right, key)
-    } else {
-        if root?.left == nil && root?.right == nil {
-            root = nil
-        } else if root?.right == nil {
-            root = root?.left
-        } else if root?.left == nil {
-            root = root?.right
+    while current != nil && current!.val != key {
+        previous = current
+
+        if let currentValue = current?.val, currentValue > key {
+            current = current?.left
         } else {
-            var previous: TreeNode? = root
-            var current = root?.right
-
-            while let node = current, let left = node.left {
-                previous = current
-                current = current?.left
-            }
-
-            if previous === root {
-                current?.left = root?.left
-            } else {
-                previous?.left = current?.right
-                current?.right = root?.right
-                current?.left = root?.left
-            }
-            
-            root = current
+            current = current?.right
         }
     }
 
-    return root
+    if current == nil { return newTree.left }
+
+    if let left = current?.left {
+        if previous?.left === current {
+            previous?.left = left
+        } else {
+            previous?.right = left
+        }
+
+        var leftLargest = left
+
+        while let nextLargest = leftLargest.right {
+            leftLargest = nextLargest
+        }
+
+        leftLargest.right = current?.right
+    } else {
+        if previous?.left === current {
+            previous?.left = current?.right
+        } else {
+            previous?.right = current?.right
+        }
+    }
+
+    return newTree.left
 }
+
