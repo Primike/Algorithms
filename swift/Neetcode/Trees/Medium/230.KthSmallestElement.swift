@@ -13,14 +13,10 @@ func kthSmallest(_ root: TreeNode?, _ k: Int) -> Int {
             current = node.left
         }
         
-        guard let node = stack.popLast() else {
-            break
-        }
+        guard let node = stack.popLast() else { break }
         
         count -= 1
-        if count == 0 {
-            return node.val
-        }
+        if count == 0 { return node.val }
         
         current = node.right
     }

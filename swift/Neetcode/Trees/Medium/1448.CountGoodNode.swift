@@ -3,19 +3,17 @@
 // Return the number of good nodes in the binary tree.
 
 func goodNodes(_ root: TreeNode?) -> Int {
-    guard let root = root else { return 0 }
-
     var result = 0
 
-    func dfs(_ root: TreeNode?, _ maximum: Int) {
-        guard let root = root else { return }
+    func dfs(_ node: TreeNode?, _ prevMax: Int) {
+        guard let node = node else { return }
 
-        if root.val >= maximum { result += 1 }
-
-        dfs(root.left, max(root.val, maximum))
-        dfs(root.right, max(root.val, maximum))
+        if prevMax <= node.val { result += 1 }
+        
+        dfs(node.left, max(prevMax, node.val))
+        dfs(node.right, max(prevMax, node.val))
     }
 
-    dfs(root, root.val)
+    dfs(root, .min)
     return result
 }
