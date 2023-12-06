@@ -5,7 +5,7 @@ func inorderTraversal(_ root: TreeNode?) -> [Int] {
     var stack = [TreeNode?]()
     var current = root
 
-    while current != nil || !stack.isEmpty {
+    while !stack.isEmpty || current != nil {
         while current != nil {
             stack.append(current)
             current = current?.left

@@ -4,18 +4,18 @@
 
 func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
     let inorderDict = inorder.enumerated().reduce(into: [:]) { $0[$1.element] = $1.offset }
-    var p = 0
+    var pIndex = 0
 
     func construct(_ left: Int, _ right: Int) -> TreeNode? {
         if left > right { return nil }
 
-        let value = preorder[p]
+        let value = preorder[pIndex]
         let node = TreeNode(value)
-        p += 1
+        pIndex += 1
 
-        let i = inorderDict[value]!
-        node.left = construct(left, i - 1)
-        node.right = construct(i + 1, right)
+        let iIndex = inorderDict[value]!
+        node.left = construct(left, iIndex - 1)
+        node.right = construct(iIndex + 1, right)
 
         return node
     }
