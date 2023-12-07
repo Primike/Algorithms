@@ -3,21 +3,21 @@
 
 class StockSpanner {
 
-    private var prices: [(price: Int, span: Int)]
+    private var prices: [(Int, Int)]
 
     init() {
-        self.prices = []
+        prices = []
     }
-
+    
     func next(_ price: Int) -> Int {
-        var span = 1
+        var days = 1
 
-        while let last = prices.last, last.price <= price {
-            let popped = prices.removeLast()
-            span += popped.span
+        while let last = prices.last, price >= last.0 {
+            days += last.1
+            prices.removeLast()
         }
-        
-        prices.append((price: price, span: span))
-        return span
+
+        prices.append((price, days))
+        return days
     }
 }

@@ -6,6 +6,37 @@
 // Return the number of car fleets that will arrive at the destination.
 
 func carFleet(_ target: Int, _ position: [Int], _ speed: [Int]) -> Int {
+    var cars = [(Int, Double)]()
+    
+    for i in 0..<position.count {
+        let time = Double(target - position[i]) / Double(speed[i])
+        cars.append((position[i], time))
+    }
+
+    cars.sort { $0.0 > $1.0 }
+    var result = 0
+    var i = 0
+
+    while i < cars.count {
+        let (position, time) = cars[i]
+        i += 1
+
+        while i < cars.count, time >= cars[i].1 {
+            i += 1
+        }
+
+        result += 1
+    }
+
+    return result
+}
+
+print(carFleet(12, [10,8,0,5,3], [2,4,1,1,3]))
+print(carFleet(10, [3], [3]))
+print(carFleet(100, [0,2,4], [4,2,1]))
+
+
+func carFleet2(_ target: Int, _ position: [Int], _ speed: [Int]) -> Int {
     var cars = [(position: Int, time: Double)]()
 
     for (x, v) in zip(position, speed) {
@@ -27,12 +58,7 @@ func carFleet(_ target: Int, _ position: [Int], _ speed: [Int]) -> Int {
     return fleets
 }
 
-print(carFleet(12, [10,8,0,5,3], [2,4,1,1,3]))
-print(carFleet(10, [3], [3]))
-print(carFleet(100, [0,2,4], [4,2,1]))
-
-
-func carFleet(_ target: Int, _ position: [Int], _ speed: [Int]) -> Int {
+func carFleet3(_ target: Int, _ position: [Int], _ speed: [Int]) -> Int {
     var times = Array(repeating: 0.0, count: target)
 
     for i in 0..<position.count {

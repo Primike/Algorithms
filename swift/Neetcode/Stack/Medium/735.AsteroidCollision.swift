@@ -10,7 +10,7 @@ func asteroidCollision(_ asteroids: [Int]) -> [Int] {
     for asteroid in asteroids {
         var current = asteroid
         
-        while let last = result.last, last > 0, current < 0{
+        while let last = result.last, last > 0, current < 0 {
             let difference = current + last
             
             if difference < 0 {
