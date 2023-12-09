@@ -3,47 +3,48 @@
 // Return any possible rearrangement of s or return "" if not possible.
 
 struct Alpha: Comparable {
-    let alpha: Character
+    let letter: Character
     let count: Int
-    
-    static func < (lhs: Alpha, rhs: Alpha) -> Bool {
-        return lhs.count < rhs.count
+
+    static func <(left: Alpha, right: Alpha) -> Bool {
+        return left.count < right.count
     }
 }
 
+// Time: nlog(26), Space: n
 func reorganizeString(_ s: String) -> String {
-    var dict = Array(s).reduce(into: [:]) { $0[$1, default: 0] += 1 }
-    var maxHeap = Heap<Alpha>(type: .maxHeap)
+    var dict = Array(s).reduce(into: [:]) { $0[$1, default: 0] += 1 }  
+    var heap = Heap<Alpha>(type: .maxHeap)
 
-    for (key, value) in dict {
-        maxHeap.push(Alpha(alpha: key, count: value))
+    for (letter, count) in dict {
+        heap.push(Alpha(letter: letter, count: count))
     }
 
-    var result = ""
+    var result = [Character]()
 
-    while maxHeap.size() > 1 {
-        let first = maxHeap.pop()!
-        let second = maxHeap.pop()!
+    while heap.count > 1 {
+        let first = heap.pop()!
+        let second = heap.pop()!
 
-        result += String(first.alpha)
-        result += String(second.alpha)
+        result.append(first.letter)
+        result.append(second.letter)
 
-        if first.count > 1 {
-            maxHeap.push(Alpha(alpha: first.alpha, count: first.count - 1))
+        if first.count != 1 {
+            heap.push(Alpha(letter: first.letter, count: first.count - 1))
         }
 
-        if second.count > 1 {
-            maxHeap.push(Alpha(alpha: second.alpha, count: second.count - 1))
+        if second.count != 1 {
+            heap.push(Alpha(letter: second.letter, count: second.count - 1))
         }
     }
 
-    if let last = maxHeap.pop() {
-        if last.count > 1 { return "" }
-        
-        result += String(last.alpha)
+    if let first = heap.pop() {
+        if first.count > 1 { return "" }
+
+        result.append(first.letter)
     }
 
-    return result
+    return String(result)
 }
 
 print(reorganizeString("aab"))

@@ -5,28 +5,28 @@ struct PointMagnitude: Comparable {
     let point: [Int]
     let magnitude: Int
 
-    static func <(lhs: PointMagnitude, rhs: PointMagnitude) -> Bool {
-        return lhs.magnitude < rhs.magnitude
+    static func <(left: PointMagnitude, right: PointMagnitude) -> Bool {
+        return left.magnitude < right.magnitude
     }
 }
 
+// Time: nlog(k), Space: k
 func kClosest(_ points: [[Int]], _ k: Int) -> [[Int]] {
     var heap = Heap<PointMagnitude>(type: .maxHeap)
 
     for point in points {
         let magnitude = point[0] * point[0] + point[1] * point[1]
         let pointMagnitude = PointMagnitude(point: point, magnitude: magnitude)
-
-        if heap.size() < k {
+        if heap.count < k {
             heap.push(pointMagnitude)
-        } else if let top = heap.peek(), pointMagnitude < top {
+        } else if let first = heap.peek(), pointMagnitude < first {
             heap.pop()
             heap.push(pointMagnitude)
         }
     }
 
-    var result: [[Int]] = []
-    
+    var result = [[Int]]()
+
     while let popped = heap.pop() {
         result.append(popped.point)
     }

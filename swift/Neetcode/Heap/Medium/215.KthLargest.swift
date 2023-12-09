@@ -1,12 +1,17 @@
 // Given an integer array nums and an integer k, return the kth largest element in the array.
 
+// Time: nlog(k), Space: k
 func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
-    var heap = Heap(array: Array(nums.prefix(k)), type: .minHeap)
+    var heap = Heap<Int>(type: .minHeap)
 
-    for i in k..<nums.count {
-        if let first = heap.peek(), first < nums[i] {
-            heap.pop()
-            heap.push(nums[i])
+    for number in nums {
+        if heap.count < k {
+            heap.push(number)
+        } else {
+            if let last = heap.peek(), last < number {
+                heap.pop()
+                heap.push(number)
+            }
         }
     }
 
