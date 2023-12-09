@@ -4,17 +4,15 @@
 func lengthOfLongestSubstring(_ s: String) -> Int {
     var s = Array(s)
     var window = Set<Character>()
-    var left = 0
     var result = 0
 
-    for (i, number) in s.enumerated() {
-        while window.contains(number) {
-            window.remove(s[left])
-            left += 1 
+    for (i, character) in s.enumerated() {
+        while window.contains(character) {
+            window.remove(s[i - window.count])
         }
 
-        window.insert(number)
-        result = max(result, i - left + 1)
+        window.insert(character)
+        result = max(result, window.count)
     }
 
     return result

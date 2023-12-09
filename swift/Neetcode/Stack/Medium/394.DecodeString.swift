@@ -1,27 +1,26 @@
 // Given an encoded string, return its decoded string.
 
 func decodeString(_ s: String) -> String {
-    var stack: [String] = []
+    var stack = [String]()
 
-    for char in s {
-        if char != "]" {
-            stack.append(String(char))
-        } else {
-            var string = ""
-            while let last = stack.last, last != "[" {
-                string = stack.removeLast() + string
-            }
-            stack.removeLast()
+    for letter in s {
+        if letter != "]" {
+            stack.append(String(letter))
+            continue
+        } 
 
-            var number = ""
-            while let last = stack.last, Character(last).isNumber {
-                number = stack.removeLast() + number
-            }
-
-            if let multiplier = Int(number) {
-                stack.append(String(repeating: string, count: multiplier))
-            }
+        var string = ""
+        while let last = stack.last, last != "[" {
+            string = stack.removeLast() + string
         }
+
+        stack.removeLast()
+        var number = ""
+        while let last = stack.last, Character(last).isNumber {
+            number = stack.removeLast() + number
+        }
+
+        stack.append(String(repeating: string, count: Int(number)!))
     }
 
     return stack.joined()

@@ -4,26 +4,19 @@
 // Return the final string after all such duplicate removals have been made. 
 
 func removeDuplicates(_ s: String, _ k: Int) -> String {
-    var stack: [(Character, Int)] = []
+    var stack = [(Character, Int)]()
 
     for letter in s {
         if let last = stack.last, last.0 == letter {
-            stack[stack.count-1].1 += 1
+            stack[stack.count - 1].1 += 1
         } else {
             stack.append((letter, 1))
         }
 
-        if let last = stack.last, last.1 == k {
-            stack.removeLast()
-        }
+        if let last = stack.last, last.1 == k { stack.removeLast() }
     }
 
-    var result = ""
-    for (letter, count) in stack {
-        result += String(repeating: letter, count: count)
-    }
-
-    return result
+    return stack.reduce(into: "") { $0 += String(repeating: $1.0, count: $1.1) }
 }
 
 print(removeDuplicates("abcd", 2))
