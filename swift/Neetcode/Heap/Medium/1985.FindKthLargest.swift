@@ -2,36 +2,33 @@
 // Each string in nums represents an integer without leading zeros.
 // Return the string that represents the kth largest integer in nums.
 
-struct CustomString: Comparable {
+struct BigNumber: Comparable {
     let value: String
 
-    init(_ value: String) {
-        self.value = value
-    }
-
-    static func < (lhs: CustomString, rhs: CustomString) -> Bool {
-        if lhs.value.count == rhs.value.count {
-            return lhs.value < rhs.value
+    static func <(left: BigNumber, right: BigNumber) -> Bool {
+        if left.value.count != right.value.count {
+            return left.value.count < right.value.count 
         }
 
-        return lhs.value.count < rhs.value.count
+        return left.value < right.value
     }
 }
 
 func kthLargestNumber(_ nums: [String], _ k: Int) -> String {
-    let strings = nums.map { CustomString($0) }
-    var minHeap = Heap<CustomString>(type: .minHeap)
+    var strings = nums.map { BigNumber(value: $0) }
+    var heap = Heap<BigNumber>(type: .minHeap)
 
     for number in strings {
-        if minHeap.size() < k {
-            minHeap.push(number)
-        } else if number > minHeap.peek()! {
-            minHeap.pop()
-            minHeap.push(number)
+        if heap.count < k {
+            heap.push(number)
+            continue
+        } else if number > heap.peek()! {
+            heap.pop()
+            heap.push(number)
         }
     }
 
-    return minHeap.pop()!.value
+    return heap.peek()!.value
 }
 
 print(kthLargestNumber(["3","6","7","10"], 4))

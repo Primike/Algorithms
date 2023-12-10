@@ -22,7 +22,7 @@ struct Heap<T: Comparable> {
         return items.isEmpty
     }
 
-    func size() -> Int {
+    var count: Int {
         return items.count
     }
 

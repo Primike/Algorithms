@@ -3,45 +3,42 @@
 // If there is no such string, return the empty string "".
 
 struct Alpha: Comparable {
-    let alpha: Character
-    let count: Int
-    
-    static func < (lhs: Alpha, rhs: Alpha) -> Bool {
-        return lhs.count < rhs.count
+    let letter: Character
+    var count: Int
+
+    static func <(left: Alpha, right: Alpha) -> Bool {
+        return left.count < right.count
     }
 }
 
 func longestDiverseString(_ a: Int, _ b: Int, _ c: Int) -> String {
-    var maxHeap = Heap<Alpha>(type: .maxHeap)
-    if a > 0 { maxHeap.push(Alpha(alpha: "a", count: a)) }
-    if b > 0 { maxHeap.push(Alpha(alpha: "b", count: b)) }
-    if c > 0 { maxHeap.push(Alpha(alpha: "c", count: c)) }
+    var heap = Heap<Alpha>(type: .maxHeap)
+
+    if a != 0 { heap.push(Alpha(letter: "a", count: a)) }
+    if b != 0 { heap.push(Alpha(letter: "b", count: b)) }
+    if c != 0 { heap.push(Alpha(letter: "c", count: c)) }
 
     var result = [Character]()
 
-    while !maxHeap.isEmpty {
-        var first = maxHeap.pop()!
-        var change = 0
+    while !heap.isEmpty {
+        var first = heap.pop()!
 
-        if result.count > 1, result.last! == first.alpha, result[result.count - 2] == first.alpha {
-            if maxHeap.isEmpty { break }
+        if result.count > 1, result.last! == first.letter, result[result.count - 2] == first.letter {
+            if heap.isEmpty { return String(result) }
 
-            let second = maxHeap.pop()!
-            result.append(second.alpha)
+            var second = heap.pop()!
+            result.append(second.letter)
+            second.count -= 1
 
-            if second.count - 1 > 0 {
-                maxHeap.push(Alpha(alpha: second.alpha, count: second.count - 1))
-            }
+            if second.count > 0 { heap.push(second) }
+            heap.push(first)
         } else {
-            result.append(first.alpha)
-            change += 1
-        }
-
-        if first.count - change > 0 {
-            maxHeap.push(Alpha(alpha: first.alpha, count: first.count - change))
+            result.append(first.letter)
+            first.count -= 1
+            if first.count > 0 { heap.push(first) }
         }
     }
-    
+
     return String(result)
 }
 

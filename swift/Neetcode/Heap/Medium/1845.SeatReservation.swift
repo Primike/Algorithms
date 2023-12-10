@@ -1,3 +1,5 @@
+// Init - Time: nlog(n), Space: n
+// Functions - Time log(n), Space: n
 class SeatManager {
     var minHeap: Heap<Int>
 
