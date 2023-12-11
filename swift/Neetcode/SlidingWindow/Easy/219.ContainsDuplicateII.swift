@@ -10,9 +10,7 @@ func containsNearbyDuplicate(_ nums: [Int], _ k: Int) -> Bool {
 
         window.insert(number)
 
-        if i >= k {
-            window.remove(nums[i - k])
-        }
+        if i >= k { window.remove(nums[i - k]) }
     }
 
     return false

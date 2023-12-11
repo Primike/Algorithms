@@ -5,11 +5,11 @@
 func minWindow(_ s: String, _ t: String) -> String {
     if t.count > s.count { return "" }
 
-    var sArray = Array(s), tArray = Array(t)
+    var s = Array(s), t = Array(t)
     var sDict = [Character: Int](), tDict = [Character: Int]()
 
-    for char in tArray {
-        tDict[char, default: 0] += 1
+    for letter in t {
+        tDict[letter, default: 0] += 1
     }
 
     var left = 0
@@ -17,8 +17,8 @@ func minWindow(_ s: String, _ t: String) -> String {
     var count = 0
     var currentLength = Int.max
 
-    for i in 0..<sArray.count {
-        let letter = sArray[i]
+    for i in 0..<s.count {
+        let letter = s[i]
 
         if tDict.keys.contains(letter) {
             sDict[letter, default: 0] += 1
@@ -33,10 +33,10 @@ func minWindow(_ s: String, _ t: String) -> String {
                 end = i
             }
 
-            if sDict.keys.contains(sArray[left]) {
-                sDict[sArray[left], default: 0] -= 1
+            if sDict.keys.contains(s[left]) {
+                sDict[s[left], default: 0] -= 1
 
-                if sDict[sArray[left], default: 0] < tDict[sArray[left], default: 0] {
+                if sDict[s[left], default: 0] < tDict[s[left], default: 0] {
                     count -= 1
                 }
             }
@@ -45,7 +45,7 @@ func minWindow(_ s: String, _ t: String) -> String {
         }
     }
 
-    if currentLength < Int.max { return String(sArray[start...end]) }
+    if currentLength < Int.max { return String(s[start...end]) }
     
     return ""
 }

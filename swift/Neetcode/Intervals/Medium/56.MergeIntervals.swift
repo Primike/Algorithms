@@ -4,24 +4,23 @@
 
 func merge(_ intervals: [[Int]]) -> [[Int]] {
     var intervals = intervals.sorted { i, j in 
-        if i[0] == j[0] {
-            return i[1] < j[1]
-        } else {
-            return i[0] < j[0]
-        }
-    }
+        if i[0] == j[0] { return i[1] < j[1] }
+        return i[0] < j[0]
+    }        
 
     var result = [[Int]]()
+    var i = 0
 
-    for (i, interval) in intervals.enumerated() {
-        if let last = result.last, last[1] >= interval[1] {
-            continue
-        } else if let last = result.last, last[1] >= interval[0] {
-            let old = result.removeLast()
-            result.append([old[0], interval[1]])
-        } else {
-            result.append(interval)
+    while i < intervals.count {
+        var new = intervals[i]
+        i += 1
+
+        while i < intervals.count, new[1] >= intervals[i][0] {
+            new = [new[0], max(new[1], intervals[i][1])]
+            i += 1
         }
+
+        result.append(new)
     }
 
     return result

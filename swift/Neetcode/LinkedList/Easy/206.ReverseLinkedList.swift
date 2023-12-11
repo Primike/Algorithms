@@ -5,11 +5,11 @@ func reverseList(_ head: ListNode?) -> ListNode? {
     var previous: ListNode? = nil
     var current = head
 
-    while let currentNode = current {
-        let next = currentNode.next
-        currentNode.next = previous
+    while let node = current {
+        let next = node.next
+        node.next = previous
 
-        previous = currentNode
+        previous = node
         current = next
     }
 

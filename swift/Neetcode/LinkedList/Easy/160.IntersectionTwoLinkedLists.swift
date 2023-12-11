@@ -7,8 +7,8 @@ func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
     var listB = headB
 
     while listA !== listB {
-        listA = (listA != nil) ? listA?.next : headB
-        listB = (listB != nil) ? listB?.next : headA
+        listA = listA != nil ? listA?.next : headB
+        listB = listB != nil ? listB?.next : headA
     }
 
     return listA
