@@ -8,44 +8,39 @@
 // If this is impossible, return -1.
 
 func orangesRotting(_ grid: [[Int]]) -> Int {
-    var grid = grid
-    let rows = grid.count, cols = grid[0].count
+    let rows = grid.count, cols = grid[0].count 
     var queue = [(Int, Int)]()
-    var time = 0, fresh = 0
+    var fresh = Set<String>()
 
     for i in 0..<rows {
         for j in 0..<cols {
-            if grid[i][j] == 1 {
-                fresh += 1
-            } else if grid[i][j] == 2 {
-                queue.append((i, j))
-            }
+            if grid[i][j] == 2 { queue.append((i, j)) }
+            if grid[i][j] == 1 { fresh.insert("\(i),\(j)") }
         }
     }
 
-    let directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+    var result = 0
 
-    while !queue.isEmpty, fresh > 0 {
-        for _ in 0..<queue.count {
+    while !queue.isEmpty, fresh.count > 0 {
+        result += 1
+        var count = queue.count
+
+        for _ in 0..<count {
             let (i, j) = queue.removeFirst()
+            let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
 
-            for direction in directions {
-                let row = i + direction[0], col = j + direction[1]
+            for (di, dj) in directions {
+                let key = ("\(di),\(dj)")
 
-                if (row < 0 || row == rows) || (col < 0 || col == cols) || grid[row][col] != 1 {
-                    continue
+                if di >= 0, di < rows, dj >= 0, dj < cols, fresh.contains(key) {
+                    fresh.remove(key)
+                    queue.append((di, dj))
                 }
-
-                grid[row][col] = 2
-                queue.append((row, col))
-                fresh -= 1
             }
         }
-
-        time += 1
     }
 
-    return fresh == 0 ? time : -1
+    return fresh.isEmpty ? result : -1
 }
 
 print(orangesRotting([[2,1,1],[0,1,1],[1,0,1]]))

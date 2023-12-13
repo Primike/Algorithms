@@ -1,14 +1,14 @@
 // Return the weight of the last remaining stone. If there are no stones left, return 0.
 
+//Time: nlog(n), Space: n
 func lastStoneWeight(_ stones: [Int]) -> Int {
     var heap = Heap(array: stones, type: .maxHeap)
 
-    while heap.size() > 1 {
-        let stone1 = heap.pop()!
-        let stone2 = heap.pop()!
+    while heap.count > 1 {
+        let first = heap.pop()!, second = heap.pop()!
 
-        if stone1 != stone2 { heap.push(stone1 - stone2) }
-    }
+        if first != second { heap.push(first - second) }
+    }  
 
     return heap.peek() ?? 0
 }

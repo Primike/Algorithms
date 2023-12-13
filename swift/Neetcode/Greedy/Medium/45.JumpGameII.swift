@@ -2,21 +2,17 @@
 // The test cases are generated such that you can reach nums[n - 1].
 
 func jump(_ nums: [Int]) -> Int {
-    var left = 0, right = 0
-    var result = 0
+    var result = 0, currentEnd = 0, farthest = 0
 
-    while right < (nums.count - 1) {
-        var maxJump = 0
+    for i in 0..<nums.count - 1 {
+        farthest = max(farthest, i + nums[i])
 
-        for i in left...right {
-            maxJump = max(maxJump, i + nums[i])
+        if i == currentEnd {
+            result += 1
+            currentEnd = farthest
         }
-
-        left = right + 1
-        right = maxJump
-        result += 1
     }
-    
+
     return result
 }
 

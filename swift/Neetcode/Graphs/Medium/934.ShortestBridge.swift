@@ -2,68 +2,61 @@
 // Return the smallest number of 0's you must flip to connect the two islands.
 
 func shortestBridge(_ grid: [[Int]]) -> Int {
-    var n = grid.count
-    let directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    let rows = grid.count, cols = grid[0].count 
     var visited = Set<String>()
-
-    func isOutOfBounds(_ i: Int, _ j: Int) -> Bool {
-        return i < 0 || i >= n || j < 0 || j >= n
-    }
+    var queue = [(Int, Int)]()
 
     func dfs(_ i: Int, _ j: Int) {
-        if isOutOfBounds(i, j) || grid[i][j] != 1 || visited.contains("\(i),\(j)") {
-            return
-        }
+        let key = "\(i),\(j)"
 
-        visited.insert("\(i),\(j)")
+        if i < 0 || i >= rows || j < 0 || j >= cols { return }
+        if visited.contains(key) || grid[i][j] == 0 { return }
+
+        visited.insert(key)
+        queue.append((i, j))
+        let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
+
         for (di, dj) in directions {
-            dfs(i + di, j + dj)
+            dfs(di, dj)
         }
     }
 
-    var result = 0
-
-    func bfs() -> Int {
-        var queue = Array(visited)
+    func bfs(_ i: Int, _ j: Int) -> Int {
+        dfs(i, j)
+        var count = 0
 
         while !queue.isEmpty {
-            for i in 0..<queue.count {
-                let first = queue.removeFirst()
-                let position = first.split(separator: ",").map { Int($0)! }
+            for _ in 0..<queue.count {
+                let (r, c) = queue.removeFirst()
+                let directions = [(r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)]
 
                 for (di, dj) in directions {
-                    var x = position[0] + di, y = position[1] + dj
+                    let key = "\(di),\(dj)"
 
-                    if isOutOfBounds(x, y) || visited.contains("\(x),\(y)") {
-                        continue
-                    }
+                    if di < 0 || di >= rows || dj < 0 || dj >= cols { continue }
+                    if visited.contains(key) { continue }
+                    if grid[di][dj] == 1 { return count }
 
-                    if grid[x][y] == 1 {
-                        return result
-                    }
-
-                    queue.append("\(x),\(y)")
-                    visited.insert("\(x),\(y)")
+                    visited.insert(key)
+                    queue.append((di, dj))
                 }
             }
 
-            result += 1
+            count += 1
         }
 
-        return result
+        return count
     }
 
-    for i in 0..<n {
-        for j in 0..<n {
-            if grid[i][j] == 1 {
-                dfs(i, j)
-                return bfs()
-            }
+    for i in 0..<rows {
+        for j in 0..<cols {
+            if grid[i][j] == 1 { return bfs(i, j) }
         }
     }
 
-    return result
+    return 0
 }
+
 
 print(shortestBridge([[0,1],[1,0]]))
 print(shortestBridge([[0,1,0],[0,0,0],[0,0,1]]))
