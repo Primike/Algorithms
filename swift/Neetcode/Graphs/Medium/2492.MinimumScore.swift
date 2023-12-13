@@ -11,12 +11,12 @@ func minScore(_ n: Int, _ roads: [[Int]]) -> Int {
     var result = Int.max
     var visited = Set<Int>()
 
-    func dfs(_ node: Int) {
-        if visited.contains(node) { return }
+    func dfs(_ n: Int) {
+        if visited.contains(n) { return }
 
-        visited.insert(node)
+        visited.insert(n)
 
-        for neighbor in neighbors[node] {
+        for neighbor in neighbors[n] {
             result = min(result, neighbor.1)
             dfs(neighbor.0)
         }

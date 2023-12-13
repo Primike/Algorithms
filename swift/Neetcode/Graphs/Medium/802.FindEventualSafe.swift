@@ -4,23 +4,24 @@
 // The answer should be sorted in ascending order.
 
 func eventualSafeNodes(_ graph: [[Int]]) -> [Int] {
-    var n = graph.count
-    var safe = [Int: Bool]()
+    var isSafe = [Int: Bool]()
 
     func dfs(_ i: Int) -> Bool {
-        if let isSafe = safe[i] { return isSafe }
+        if let node = isSafe[i] { return node }
 
-        safe[i] = false
+        isSafe[i] = false
+
         for path in graph[i] {
-            if !dfs(path) { return safe[i, default: false] }
+            if !dfs(path) { return isSafe[i, default: false] }
         }
-        safe[i] = true
-        return safe[i, default: true]
+
+        isSafe[i] = true
+        return isSafe[i, default: true]
     }
 
     var result = [Int]()
 
-    for i in 0..<n {
+    for i in 0..<graph.count {
         if dfs(i) { result.append(i) }
     }
     

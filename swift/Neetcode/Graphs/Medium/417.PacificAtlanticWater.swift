@@ -3,37 +3,42 @@
 // touches the island's left and top edges, 
 // and the Atlantic Ocean touches the island's right and bottom edges.
 
+// Time: n * m, Space: 2 * n * m
 func pacificAtlantic(_ heights: [[Int]]) -> [[Int]] {
     let rows = heights.count, cols = heights[0].count
     var pacific = Set<String>(), atlantic = Set<String>()
 
-    func dfs(_ i: Int, _ j: Int, _ visited: inout Set<String>, _ prevHeight: Int) {
-        if i < 0 || j < 0 || i >= rows || j >= cols || visited.contains("\(i),\(j)") || heights[i][j] < prevHeight {
-            return
+    func dfs(_ i: Int, _ j: Int, _ last: Int, _ ocean: inout Set<String>) {
+        let key = "\(i),\(j)"
+
+        if i < 0 || i >= rows || j < 0 || j >= cols { return }
+        if last > heights[i][j] || ocean.contains(key) { return }
+
+        ocean.insert(key)
+        let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
+
+        for (di, dj) in directions {
+            dfs(di, dj, heights[i][j], &ocean)
         }
-
-        visited.insert("\(i),\(j)")
-        dfs(i + 1, j, &visited, heights[i][j])
-        dfs(i - 1, j, &visited, heights[i][j])
-        dfs(i, j + 1, &visited, heights[i][j])
-        dfs(i, j - 1, &visited, heights[i][j])
     }
 
+    for i in 0..<cols {
+        dfs(0, i, -1, &pacific)
+        dfs(rows - 1, i, -1, &atlantic)
+    }
+            
     for i in 0..<rows {
-        dfs(i, 0, &pacific, heights[i][0])
-        dfs(i, cols - 1, &atlantic, heights[i][cols - 1])
-    }
-
-    for j in 0..<cols {
-        dfs(0, j, &pacific, heights[0][j])
-        dfs(rows - 1, j, &atlantic, heights[rows - 1][j])
+        dfs(i, 0, -1, &pacific)
+        dfs(i, cols - 1, -1, &atlantic)
     }
 
     var result = [[Int]]()
 
     for i in 0..<rows {
         for j in 0..<cols {
-            if pacific.contains("\(i),\(j)") && atlantic.contains("\(i),\(j)") {
+            let key = "\(i),\(j)"
+            
+            if pacific.contains(key), atlantic.contains(key) {
                 result.append([i, j])
             }
         }

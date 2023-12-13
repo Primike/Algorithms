@@ -14,15 +14,13 @@ func minimumFuelCost(_ roads: [[Int]], _ seats: Int) -> Int {
         var passengers = 0
 
         for neighbor in neighbors[node, default: []] {
-            if neighbor != parent {
-                var p = dfs(neighbor, node)
-                passengers += p
-                
-                let fullTrips = p / seats
-                let partialTrip = p % seats > 0 ? 1 : 0
-                
-                result += fullTrips + partialTrip
-            }
+            if neighbor == parent { continue }
+            
+            let currentPassengers = dfs(neighbor, node)
+            passengers += currentPassengers
+            
+            let fuel = (currentPassengers + seats - 1) / seats
+            result += fuel
         }
 
         return passengers + 1

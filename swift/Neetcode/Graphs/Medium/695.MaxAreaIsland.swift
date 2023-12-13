@@ -3,32 +3,39 @@
 // 4-directionally (horizontal or vertical.) 
 // You may assume all four edges of the grid are surrounded by water.
 
+// Time: 2 * n * m, Space: n * m
 func maxAreaOfIsland(_ grid: [[Int]]) -> Int {
-    if grid.isEmpty { return 0 }
-
-    var visited = Set<(String)>()
-    var result = 0
+    let rows = grid.count, cols = grid[0].count
+    var visited = Set<String>()
 
     func dfs(_ i: Int, _ j: Int) -> Int {
-        if i < 0 || i >= grid.count || j < 0 || j >= grid[0].count || visited.contains(("\(i),\(j)")) || grid[i][j] == 0 {
-            return 0
-        } 
+        let key = "\(i),\(j)"
 
-        visited.insert("\(i),\(j)")
-        return 1 + dfs(i + 1, j) + dfs(i - 1, j) + dfs(i, j + 1) + dfs(i, j - 1)
+        if i < 0 || i >= rows || j < 0 || j >= cols { return 0 }
+        if grid[i][j] == 0 || visited.contains(key) { return 0 }
+
+        visited.insert(key)
+        let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
+        var area = 0
+
+        for (di, dj) in directions {
+            area += dfs(di, dj)
+        }
+
+        return area + 1
     }
 
-    for i in 0..<grid.count {
-        for j in 0..<grid[0].count {
-            if visited.contains("\(i),\(j)") {
-                continue
+    var result = 0
+
+    for i in 0..<rows {
+        for j in 0..<cols {
+            if grid[i][j] == 1, !visited.contains("\(i),\(j)") {
+                result = max(result, dfs(i, j))
             }
-
-            result = max(result, dfs(i, j))
         }
-    }  
+    }
 
-    return result  
+    return result
 }
 
 print(maxAreaOfIsland([
@@ -42,3 +49,46 @@ print(maxAreaOfIsland([
     [0,0,0,0,0,0,0,1,1,0,0,0,0]]))
 
 print(maxAreaOfIsland([[0,0,0,0,0,0,0,0]]))
+
+
+
+func maxAreaOfIsland2(_ grid: [[Int]]) -> Int {
+    let rows = grid.count, cols = grid[0].count 
+    var visited = Set<String>()
+
+    func bfs(_ i: Int, _ j: Int) -> Int {
+        visited.insert("\(i),\(j)")
+        var queue = [(i, j)]
+        var area = 1
+
+        while !queue.isEmpty {
+            let (r, c) = queue.removeFirst()
+            let directions = [(r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)]               
+
+            for (di, dj) in directions {
+                let key = "\(di),\(dj)"
+
+                if di < 0 || di >= rows || dj < 0 || dj >= cols { continue }
+                if grid[di][dj] == 0 || visited.contains(key) { continue }
+
+                queue.append((di, dj))
+                visited.insert(key)
+                area += 1
+            }
+        }
+
+        return area
+    }
+
+    var result = 0
+
+    for i in 0..<rows {
+        for j in 0..<cols {
+            if grid[i][j] == 1, !visited.contains("\(i),\(j)") {
+                result = max(result, bfs(i, j))
+            }
+        }
+    }
+
+    return result
+}

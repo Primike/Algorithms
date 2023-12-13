@@ -1,46 +1,53 @@
 // Given a target representing the value of the wheels that will unlock the lock, 
 // return the minimum total number of turns required to open the lock, or -1 if it is impossible.
 
+// Time: 10^4, Space: 10^4
 func openLock(_ deadends: [String], _ target: String) -> Int {
     if deadends.contains("0000") { return -1 }
 
-    func combinations(_ current: String) -> [String] {
-        var result = [String]()
-        var current = Array(current).map { Int(String($0))! }
-
-        for i in 0..<4 {
-            let digit = current[i]
-            
-            current[i] = (digit + 1) % 10
-            result.append(current.map { String($0) }.joined())
-            
-            current[i] = (digit + 9) % 10
-            result.append(current.map { String($0) }.joined())
-            
-            current[i] = digit 
-        }
-        
-        return result
-    }
-
-    var queue = [(String, Int)]()
-    var visited = Set(deadends)
-    queue.append(("0000", 0))
+    var deadends = Set(deadends)
+    deadends.insert("0000")
+    var queue = ["0000"]
+    var result = 0
 
     while !queue.isEmpty {
-        let (current, turns) = queue.removeFirst()
-        if current == target { return turns }
+        for _ in 0..<queue.count {
+            let first = queue.removeFirst()
+            if first == target { return result }
 
-        for combination in combinations(current) {
-            if !visited.contains(combination) {
-                visited.insert(combination)
-                queue.append((combination, turns + 1))
+            let array = first.map { Int(String($0))! }
+
+            for i in 0..<4 {
+                var forward = array
+                var backward = array
+
+                forward[i] += 1
+                if forward[i] == 10 { forward[i] = 0 }
+
+                backward[i] -= 1
+                if backward[i] == -1 { backward[i] = 9 }
+
+                let string1 = forward.map { String($0) }.joined()
+                let string2 = backward.map { String($0) }.joined()
+
+                if !deadends.contains(string1) {
+                    queue.append(string1)
+                    deadends.insert(string1)
+                }
+
+                if !deadends.contains(string2) {
+                    queue.append(string2)
+                    deadends.insert(string2)
+                }
             }
         }
+
+        result += 1
     }
 
     return -1
 }
+
 
 print(openLock(["0201","0101","0102","1212","2002"], "0202"))
 print(openLock(["8888"], "0009"))
