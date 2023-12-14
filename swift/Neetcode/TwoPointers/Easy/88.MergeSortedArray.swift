@@ -1,7 +1,7 @@
-//You are given two integer arrays nums1 and nums2, 
-//sorted in non-decreasing order, and two integers m and n, 
-//representing the number of elements in nums1 and nums2 respectively.
-//Merge nums1 and nums2 into a single array sorted in non-decreasing order.
+// You are given two integer arrays nums1 and nums2, 
+// sorted in non-decreasing order, and two integers m and n, 
+// representing the number of elements in nums1 and nums2 respectively.
+// Merge nums1 and nums2 into a single array sorted in non-decreasing order.
 
 func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
     var m = m - 1, n = n - 1

@@ -4,21 +4,17 @@
 // Return the merged string.
 
 func mergeAlternately(_ word1: String, _ word2: String) -> String {
-    var index1 = word1.startIndex, index2 = word2.startIndex
+    let word1 = Array(word1), word2 = Array(word2)
+    var left = 0, right = 0
     var result = ""
 
-    while index1 != word1.endIndex || index2 != word2.endIndex {
-        if index1 != word1.endIndex {
-            result += String(word1[index1])
-            index1 = word1.index(after: index1)
-        }
-
-        if index2 != word2.endIndex {
-            result += String(word2[index2])
-            index2 = word2.index(after: index2)
-        }
+    while left < word1.count, right < word2.count {
+        result += String(word1[left]) + String(word2[right])
+        left += 1
+        right += 1
     }
 
+    result += String(word1[left...]) + String(word2[right...])
     return result
 }
 
