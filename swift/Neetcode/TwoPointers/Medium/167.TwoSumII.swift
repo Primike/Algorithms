@@ -1,6 +1,6 @@
-//Given a 1-indexed array of integers 
-//numbers that is already sorted in non-decreasing order, 
-//find two numbers such that they add up to a specific target number.
+// Given a 1-indexed array of integers 
+// numbers that is already sorted in non-decreasing order, 
+// find two numbers such that they add up to a specific target number.
 
 func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
     var left = 0, right = numbers.count - 1

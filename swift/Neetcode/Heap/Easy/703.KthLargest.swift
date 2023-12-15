@@ -1,3 +1,4 @@
+//Time: nlog(k), Space: k
 class KthLargest {
     private var k: Int
     private var minHeap: Heap<Int>
@@ -6,13 +7,13 @@ class KthLargest {
         self.k = k
         self.minHeap = Heap(type: .minHeap)
         
-        for num in nums {
-            add(num)
+        for number in nums {
+            add(number)
         }
     }
 
     func add(_ val: Int) -> Int {
-        if minHeap.size() < k {
+        if minHeap.count < k {
             minHeap.push(val)
         } else if let smallest = minHeap.peek(), val > smallest {
             minHeap.pop()

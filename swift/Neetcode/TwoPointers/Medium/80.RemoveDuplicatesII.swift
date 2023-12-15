@@ -1,24 +1,17 @@
-//Given an integer array nums sorted in non-decreasing order, 
-//remove some duplicates in-place such that each unique element appears at most twice.
-//The relative order of the elements should be kept the same.
+// Given an integer array nums sorted in non-decreasing order, 
+// remove some duplicates in-place such that each unique element appears at most twice.
+// The relative order of the elements should be kept the same.
 
 func removeDuplicates(_ nums: inout [Int]) -> Int {
-    var left = 0, right = 0
+    if nums.count <= 2 { return nums.count }
 
-    while right < nums.count {
-        var count = 1
+    var left = 2
 
-        while right < nums.count - 1, nums[right] == nums[right + 1] {
-            right += 1
-            count += 1
-        }
-
-        for _ in 0..<min(2, count) {
-            nums[left] = nums[right]
+    for i in 2..<nums.count {
+        if nums[i] != nums[left - 2] {
+            nums[left] = nums[i]
             left += 1
         }
-
-        right += 1
     }
 
     return left
