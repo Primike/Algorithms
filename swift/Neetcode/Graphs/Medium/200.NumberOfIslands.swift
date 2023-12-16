@@ -1,37 +1,31 @@
-// Given an m x n 2D binary grid grid which represents a map of 
+// Given an m r n 2D binary grid grid which represents a map of 
 // '1's (land) and '0's (water), return the number of islands.
 
+// Time: 2 * n * m, Space: n * m
 func numIslands(_ grid: [[Character]]) -> Int {
-    if grid.isEmpty { return 0 }
-
+    let rows = grid.count, cols = grid[0].count 
     var visited = Set<String>()
-    var result = 0
+    
+    func dfs(_ i: Int, _ j: Int) {
+        let key = "\(i),\(j)"
 
-    func bfs(_ i: Int, _ j: Int) {
-        let directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-        var queue = [(Int, Int)]()
+        if i < 0 || i >= rows || j < 0 || j >= cols { return }
+        if visited.contains(key) || grid[i][j] == "0" { return }
 
-        visited.insert("\(i),\(j)")
-        queue.append((i, j))
+        visited.insert(key)
+        let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
 
-        while !queue.isEmpty {
-            let (row, col) = queue.removeFirst()
-
-            for direction in directions {
-                let x = row + direction[0], y = col + direction[1]
-
-                if x >= 0, x < grid.count, y >= 0, y < grid[0].count, grid[x][y] == "1", !visited.contains("\(x),\(y)") {
-                    queue.append((x, y))
-                    visited.insert("\(x),\(y)")
-                }
-            }
+        for (di, dj) in directions {
+            dfs(di, dj)
         }
     }
 
-    for i in 0..<grid.count {
-        for j in 0..<grid[0].count {
+    var result = 0
+
+    for i in 0..<rows {
+        for j in 0..<cols {
             if grid[i][j] == "1", !visited.contains("\(i),\(j)") {
-                bfs(i, j)
+                dfs(i, j)
                 result += 1
             }
         }
@@ -52,3 +46,39 @@ print(numIslands([
   ["0","0","1","0","0"],
   ["0","0","0","1","1"]
 ]))
+
+
+func numIslands2(_ grid: [[Character]]) -> Int {
+    var rows = grid.count, cols = grid[0].count
+    var visited = Set<String>()
+
+    func bfs(_ i: Int, _ j: Int) {
+        var queue = [(i, j)]
+
+        while !queue.isEmpty {
+            let (r, c) = queue.removeFirst()
+            visited.insert("\(r),\(c)")
+            let directions = [(r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)]
+    
+            for (di, dj) in directions {
+                if i < 0 || i >= rows || j < 0 || j >= cols { continue }
+                if visited.contains(key) || grid[i][j] == "0" { continue }
+
+                queue.append((di, dj))
+            }
+        }
+    }
+
+    var result = 0
+
+    for i in 0..<rows {
+        for j in 0..<cols {
+            if grid[i][j] == "1", !visited.contains("\(i),\(j)") {
+                bfs(i, j)
+                result += 1
+            }
+        }
+    }
+
+    return result
+}

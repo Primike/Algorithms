@@ -4,37 +4,31 @@
 // return the node with the smallest index, and if no possible answer exists, return -1.
 
 func closestMeetingNode(_ edges: [Int], _ node1: Int, _ node2: Int) -> Int {
-    func bfs(_ node: Int, _ distanceMap: inout [Int: Int]) {
-        var queue = [(node, 0)]
-        distanceMap[node] = 0
+    func dfs(_ n: Int, _ count: Int, _ visited: inout [Int: Int]) {
+        if n == -1 || visited.keys.contains(n) { return }
 
-        while !queue.isEmpty {
-            let (node, distance) = queue.removeFirst()
-
-            if edges[node] != -1 , !distanceMap.keys.contains(edges[node]) {
-                queue.append((edges[node], distance + 1))
-                distanceMap[edges[node]] = distance + 1
-            }
-        }
+        visited[n] = count
+        dfs(edges[n], count + 1, &visited)
     }
 
-    var node1Dist = [Int: Int](), node2Dist = [Int: Int]()
-    bfs(node1, &node1Dist)
-    bfs(node2, &node2Dist)
-
-    var result = -1, resultDistance = Int.max
+    var node1Paths = [Int: Int](), node2Paths = [Int: Int]()
+    dfs(node1, 0, &node1Paths)
+    dfs(node2, 0, &node2Paths)
+    
+    var length = Int.max
+    var result = -1
 
     for i in 0..<edges.count {
-        if let d1 = node1Dist[i], let d2 = node2Dist[i] {
-            var distance = max(d1, d2)
+        if let path1 = node1Paths[i], let path2 = node2Paths[i] {
+            let distance = max(path1, path2)
 
-            if distance < resultDistance {
+            if distance < length {
                 result = i
-                resultDistance = distance
+                length = distance
             }
         }
     }
-
+    
     return result
 }
 

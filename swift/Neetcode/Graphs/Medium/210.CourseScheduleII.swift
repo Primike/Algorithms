@@ -3,28 +3,28 @@
 // If it is impossible to finish all courses, return an empty array.
 
 func findOrder(_ numCourses: Int, _ prerequisites: [[Int]]) -> [Int] {
-    var neighbors = Array(repeating: [Int](), count: numCourses)
+    var paths = Array(repeating: [Int](), count: numCourses)
 
-    for prerequisite in prerequisites {
-        neighbors[prerequisite[0]].append(prerequisite[1])
+    for path in prerequisites {
+        paths[path[0]].append(path[1])
     }
 
     var visited = Set<Int>(), completed = Set<Int>()
     var result = [Int]()
 
-    func dfs(_ course: Int) -> Bool {
-        if visited.contains(course) { return false }
-        if completed.contains(course) { return true }
+    func dfs(_ n: Int) -> Bool {
+        if visited.contains(n) { return false }
+        if completed.contains(n) { return true }
 
-        visited.insert(course)
+        visited.insert(n)
 
-        for neighbor in neighbors[course] {
-            if !dfs(neighbor) { return false }
+        for path in paths[n] {
+            if !dfs(path) { return false }
         }
 
-        visited.remove(course)
-        completed.insert(course)
-        result.append(course)
+        visited.remove(n)
+        completed.insert(n)
+        result.append(n)
         
         return true
     }

@@ -1,7 +1,7 @@
-//Given an integer array nums, 
-//return all the triplets [nums[i], nums[j], nums[k]] 
-//such that i != j, i != k, and j != k, 
-//and nums[i] + nums[j] + nums[k] == 0.
+// Given an integer array nums, 
+// return all the triplets [nums[i], nums[j], nums[k]] 
+// such that i != j, i != k, and j != k, 
+// and nums[i] + nums[j] + nums[k] == 0.
 
 func threeSum(_ nums: [Int]) -> [[Int]] {
     var nums = nums.sorted()
@@ -19,7 +19,9 @@ func threeSum(_ nums: [Int]) -> [[Int]] {
                 result.append([nums[i], nums[left], nums[right]])
                 left += 1
 
-                while left < right, nums[left] == nums[left - 1] { left += 1 }
+                while left < right, nums[left] == nums[left - 1] { 
+                    left += 1 
+                }
             } else if sum > 0 {
                 right -= 1
             } else {

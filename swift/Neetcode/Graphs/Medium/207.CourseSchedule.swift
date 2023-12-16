@@ -5,30 +5,31 @@
 // Return true if you can finish all courses. Otherwise, return false.
 
 func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
-    var preMap = Array(repeating: [Int](), count: numCourses)
+    var edges = Array(repeating: [Int](), count: numCourses)
 
-    for prerequisite in prerequisites {
-        preMap[prerequisite[0]].append(prerequisite[1])
+    for path in prerequisites {
+        edges[path[1]].append(path[0])
     }
 
     var visited = Set<Int>()
 
-    func dfs(_ course: Int) -> Bool {
-        if visited.contains(course) { return false }
-        if preMap[course].isEmpty { return true }
+    func dfs(_ n: Int) -> Bool {
+        if visited.contains(n) { return false }
+        if edges[n].isEmpty { return true }
 
-        visited.insert(course)
+        visited.insert(n)
 
-        for prerequisite in preMap[course] {
-            if !dfs(prerequisite) { return false }
+        for edge in edges[n] {
+            if !dfs(edge) { return false }
         }
 
-        visited.remove(course)
-        preMap[course] = []
+        visited.remove(n)
+        edges[n] = []
+
         return true
     }
 
-    for i in 0..<numCourses {
+    for i in 0..<edges.count {
         if !dfs(i) { return false }
     }
 

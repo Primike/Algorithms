@@ -4,7 +4,7 @@
 // Since the answer may be too large, return it modulo 109 + 7.
 
 func numSubseq(_ nums: [Int], _ target: Int) -> Int {
-    var nums = nums.sorted()
+    let nums = nums.sorted()
     let modulo = Int(1e9 + 7)
     var powersOfTwo: [Int] = Array(repeating: 0, count: nums.count)
     powersOfTwo[0] = 1

@@ -5,30 +5,27 @@
 // nums[a] + nums[b] + nums[c] + nums[d] == target
 // You may return the answer in any order.
 
-
 func fourSum(_ nums: [Int], _ target: Int) -> [[Int]] {
     if nums.count < 4 { return [] }
 
-    var nums = nums.sorted()
+    let nums = nums.sorted()
+    var result = [[Int]]()
+    var array = [Int]()
 
-    var result = [[Int]](), nArray = [Int]()
-
-    func nSum(_ n: Int, _ start: Int, _ target: Int) {
+    func nSum(_ n: Int, _ index: Int, _ target: Int) {
         if n != 2 {
-            for i in start..<(nums.count - n + 1) {
-                if i > start && nums[i] == nums[i - 1] {
-                    continue
-                }
+            for i in index..<(nums.count - n + 1) {
+                if i > index, nums[i] == nums[i - 1] { continue }
 
-                nArray.append(nums[i])
+                array.append(nums[i])
                 nSum(n - 1, i + 1, target - nums[i])
-                nArray.removeLast()
+                array.removeLast()
             }
 
             return
         }
 
-        var left = start, right = nums.count - 1
+        var left = index, right = nums.count - 1
 
         while left < right {
             if nums[left] + nums[right] < target {
@@ -36,10 +33,10 @@ func fourSum(_ nums: [Int], _ target: Int) -> [[Int]] {
             } else if nums[left] + nums[right] > target {
                 right -= 1
             } else {
-                result.append(nArray + [nums[left], nums[right]])
+                result.append(array + [nums[left], nums[right]])
                 left += 1
 
-                while left < right && nums[left] == nums[left - 1] {
+                while left < right, nums[left] == nums[left - 1] {
                     left += 1
                 }
             }
