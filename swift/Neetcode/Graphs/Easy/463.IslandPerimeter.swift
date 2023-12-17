@@ -2,6 +2,7 @@
 // represents land and grid[i][j] = 0 represents water.
 // Determine the perimeter of the island.
 
+// Time: n * m, Space: 1
 func islandPerimeter(_ grid: [[Int]]) -> Int {
     var rows = grid.count, cols = grid[0].count
     var perimeter = 0

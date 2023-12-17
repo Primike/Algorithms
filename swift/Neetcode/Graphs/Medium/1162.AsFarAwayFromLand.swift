@@ -3,12 +3,12 @@
 // return the distance. If no land or water exists in the grid, return -1.
 
 func maxDistance(_ grid: [[Int]]) -> Int {
-    var rows = grid.count, cols = grid[0].count
+    var n = grid.count
     var visited = Set<String>()
     var queue = [(Int, Int)]()
 
-    for i in 0..<rows {
-        for j in 0..<cols {
+    for i in 0..<n {
+        for j in 0..<n {
             if grid[i][j] == 1 { 
                 queue.append((i, j))
                 visited.insert("\(i),\(j)") 
@@ -16,30 +16,29 @@ func maxDistance(_ grid: [[Int]]) -> Int {
         }
     }
 
-    if queue.count == rows * cols { return -1 }
-    var count = -1
+    if queue.count == n * n { return -1 }
+    var result = -1
 
     while !queue.isEmpty {
         for _ in 0..<queue.count {
             let (i, j) = queue.removeFirst()
-            let directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+            let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
 
             for (di, dj) in directions {
-                let x = i + di, y = j + dj
+                let key = "\(di),\(dj)"
 
-                if x < 0 || x >= rows || y < 0 || y >= cols || visited.contains("\(x),\(y)") {
-                    continue
-                }
+                if di < 0 || di >= n || dj < 0 || dj >= n { continue }
+                if visited.contains(key) { continue }
 
-                queue.append((x, y))
-                visited.insert("\(x),\(y)")
+                visited.insert(key)
+                queue.append((di, dj))
             }
         }
 
-        count += 1
+        result += 1
     }
 
-    return count
+    return result
 }
 
 print(maxDistance([[1,0,1],[0,0,0],[1,0,1]]))

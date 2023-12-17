@@ -1,20 +1,18 @@
-//You are given a 0-indexed array nums of distinct integers. 
-//You want to rearrange the elements in the array such that every element 
-//in the rearranged array is not equal to the average of its neighbors.
+// You are given a 0-indexed array nums of distinct integers. 
+// You want to rearrange the elements in the array such that every element 
+// in the rearranged array is not equal to the average of its neighbors.
 
 func rearrangeArray(_ nums: [Int]) -> [Int] {
-    var nums = nums.sorted()
+    let nums = nums.sorted()
     var result = [Int]()
     var left = 0, right = nums.count - 1
 
-    while result.count != nums.count {
+    while left <= right {
         result.append(nums[left])
-        left += 1
+        if right != left { result.append(nums[right]) }
 
-        if left <= right {
-            result.append(nums[right])
-            right -= 1 
-        }
+        left += 1
+        right -= 1
     }
 
     return result

@@ -2,33 +2,33 @@
 // If there is no clear path, return -1.
 
 func shortestPathBinaryMatrix(_ grid: [[Int]]) -> Int {
-    if grid[0][0] == 1 { return -1 }
+    var n = grid.count
+    if grid[n - 1][n - 1] == 1 || grid[0][0] == 1 { return -1 }
 
-    var rows = grid.count, cols = grid[0].count
-    let directions = [(1, 0), (-1, 0), (0, 1), (0, -1), (-1, -1), (-1, 1), (1, 1), (1, -1)] 
     var queue = [(0, 0)]
     var visited: Set<String> = ["0,0"]
-    var count = 1
-    
+    let directions = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1)]
+    var result = 1
+
     while !queue.isEmpty {
+
         for _ in 0..<queue.count {
             let (i, j) = queue.removeFirst()
-
-            if (i, j) == (rows - 1, cols - 1) { return count }
+            if i == n - 1, j == n - 1 { return result }
 
             for (di, dj) in directions {
-                var x = i + di, y = j + dj
+                var r = i + di, c = j + dj
+                let key = "\(r),\(c)"
 
-                if x < 0 || x >= rows || y < 0 || y >= cols || visited.contains("\(x),\(y)") || grid[x][y] == 1 {
-                    continue
-                }
+                if r < 0 || r >= n || c < 0 || c >= n { continue }
+                if grid[r][c] == 1 || visited.contains(key) { continue }
 
-                visited.insert("\(x),\(y)")
-                queue.append((x, y))
+                visited.insert(key)
+                queue.append((r, c))
             }
         }
 
-        count += 1
+        result += 1
     }
 
     return -1

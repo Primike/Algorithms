@@ -1,29 +1,32 @@
 // Return the number of closed islands 0.
 
 func closedIsland(_ grid: [[Int]]) -> Int {
-    var grid = grid
-    var rows = grid.count, cols = grid[0].count
+    var rows = grid.count, cols = grid[0].count 
+    var visited = Set<String>()
 
     func dfs(_ i: Int, _ j: Int) -> Bool {
-        if i < 0 || i >= rows || j < 0 || j >= cols { return false }  
-        if grid[i][j] == 1 { return true }
-
-        grid[i][j] = 1
-
-        let top = dfs(i - 1, j)
-        let bottom = dfs(i + 1, j)
-        let left = dfs(i, j - 1)
-        let right = dfs(i, j + 1)
+        let key = "\(i),\(j)"
         
-        return top && bottom && left && right
+        if i < 0 || i >= rows || j < 0 || j >= cols { return false }
+        if grid[i][j] == 1 || visited.contains(key) { return true }
+
+        visited.insert(key)
+        let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
+        var closed = true
+
+        for (di, dj) in directions {
+            if !dfs(di, dj) { closed = false }
+        }
+
+        return closed
     }
 
     var result = 0
 
     for i in 0..<rows {
         for j in 0..<cols {
-            if grid[i][j] == 0 && dfs(i, j) {
-                result += 1
+            if grid[i][j] == 0, !visited.contains("\(i),\(j)") {
+                result += dfs(i, j) ? 1 : 0
             }
         }
     }
