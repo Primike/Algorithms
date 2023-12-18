@@ -5,24 +5,22 @@
 // Return the max sliding window.
 
 func maxSlidingWindow(_ nums: [Int], _ k: Int) -> [Int] {
+    var queue = [(Int, Int)]()
     var result = [Int]()
-    var queue = [Int]()
-    var left = 0
 
-    for i in 0..<nums.count {
-        while let last = queue.last, nums[last] < nums[i] {
+    for (i, number) in nums.enumerated() {
+        while let last = queue.last, last.1 < number {
             queue.removeLast()
         }
 
-        queue.append(i)
+        queue.append((i, number))
 
-        if let first = queue.first, left > first {
+        if let first = queue.first, first.0 <= i - k {
             queue.removeFirst()
         }
 
-        if (i + 1) >= k {
-            result.append(nums[queue[0]])
-            left += 1
+        if i >= k - 1 {
+            result.append(queue.first!.1)
         }
     }
 
