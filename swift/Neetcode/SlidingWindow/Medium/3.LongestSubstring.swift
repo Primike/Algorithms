@@ -1,5 +1,5 @@
-//Given a string s, find the length of the longest substring
-//without repeating characters.
+// Given a string s, find the length of the longest substring
+// without repeating characters.
 
 func lengthOfLongestSubstring(_ s: String) -> Int {
     var s = Array(s)

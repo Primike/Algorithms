@@ -1,41 +1,20 @@
-//Given an array of integers arr and two integers k and threshold, 
-//return the number of sub-arrays of size k 
-//and average greater than or equal to threshold.
+// Given an array of integers arr and two integers k and threshold, 
+// return the number of sub-arrays of size k 
+// and average greater than or equal to threshold.
 
 func numOfSubarrays(_ arr: [Int], _ k: Int, _ threshold: Int) -> Int {
-    var currentSum = 0
-    var left = 0
     var result = 0
+    var left = 0, current = 0
 
     for (i, number) in arr.enumerated() {
-        if i - left < k - 1 {
-            currentSum += number
-            continue
-        }
+        current += number
+        if i + 1 < k { continue }
 
-        currentSum += number
-        if currentSum / k >= threshold { result += 1 }
-        currentSum -= arr[left]
+        if current / k >= threshold { result += 1 }
+        current -= arr[left]
         left += 1
     }
 
-    return result
-}
-
-func numOfSubarrays2(_ arr: [Int], _ k: Int, _ threshold: Int) -> Int {
-    var result = 0
-    var currentSum = arr.prefix(k - 1).reduce(0, +)
-    
-    for i in 0..<(arr.count - k + 1) {
-        currentSum += arr[i + k - 1]
-
-        if currentSum / k >= threshold {
-            result += 1
-        }
-
-        currentSum -= arr[i]
-    }
-    
     return result
 }
 

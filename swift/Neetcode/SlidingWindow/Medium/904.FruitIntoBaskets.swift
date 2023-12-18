@@ -5,20 +5,20 @@
 // Given the integer array fruits, return the maximum number of fruits you can pick.
 
 func totalFruit(_ fruits: [Int]) -> Int {
-    var fruitDict = [Int: Int]()
-    var left = 0
+    var window = [Int: Int]()
     var result = 0
+    var left = 0
 
-    for i in 0..<fruits.count {
-        fruitDict[fruits[i], default: 0] += 1
+    for (i, fruit) in fruits.enumerated() {
+        window[fruit, default: 0] += 1
 
-        if fruitDict.keys.count > 2 {
-            fruitDict[fruits[left], default: 0] -= 1
-            if fruitDict[fruits[left], default: 0] == 0 { fruitDict[fruits[left]] = nil }
+        if window.keys.count > 2 { 
+            window[fruits[left]]! -= 1
+            if window[fruits[left]]! == 0 { window[fruits[left]] = nil }
             left += 1
+        } else {
+            result = max(result, i - left + 1) 
         }
-
-        if fruitDict.keys.count <= 2 { result = max(result, i + 1 - left) }
     }
 
     return result

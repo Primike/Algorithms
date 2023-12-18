@@ -7,9 +7,8 @@
 
 func minOperations(_ nums: [Int], _ x: Int) -> Int {
     let target = nums.reduce(0, +) - x
-    var result = Int.max
-    var current = 0
-    var left = 0
+    var result = Int.min
+    var left = 0, current = 0
 
     for (i, number) in nums.enumerated() {
         current += number
@@ -18,11 +17,11 @@ func minOperations(_ nums: [Int], _ x: Int) -> Int {
             current -= nums[left]
             left += 1
         }
-        
-        if target == current { result = min(result, nums.count - (i - left + 1)) }
+
+        if current == target { result = max(result, i - left + 1) }
     }
 
-    return result == .max ? -1 : result
+    return result == .min ? -1 : nums.count - result
 }
 
 print(minOperations([1,1,4,2,3], 5))

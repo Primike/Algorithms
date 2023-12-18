@@ -2,15 +2,13 @@
 // vowel letters in any substring of s with length k.
 
 func maxVowels(_ s: String, _ k: Int) -> Int {
-    var s = Array(s)
+    let s = Array(s)
     var vowels: Set<Character> = Set("aeiou")
-    var left = 0
-    var count = 0
+    var left = 0, count = 0
     var result = 0
 
     for i in 0..<s.count {
         if vowels.contains(s[i]) { count += 1 }
-
         if i - left < k - 1 { continue }
 
         result = max(result, count)
