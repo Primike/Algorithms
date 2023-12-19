@@ -1,15 +1,15 @@
-//Given an array arr, replace every element in that array 
-//with the greatest element among the elements to its right, 
-//and replace the last element with -1.
+// Given an array arr, replace every element in that array 
+// with the greatest element among the elements to its right, 
+// and replace the last element with -1.
 
 func replaceElements(_ arr: [Int]) -> [Int] {
     var arr = arr
     var greatest = -1
     
     for i in stride(from: arr.count - 1, to: -1, by: -1) {
-        var current = arr[i]
+        let temp = arr[i]
         arr[i] = greatest
-        greatest = max(greatest, current)
+        greatest = max(greatest, temp)
     }
 
     return arr

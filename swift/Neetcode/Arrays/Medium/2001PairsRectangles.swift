@@ -1,7 +1,7 @@
-//Two rectangles i and j (i < j) are considered interchangeable if they have the same 
-//width-to-height ratio. More formally, two rectangles are interchangeable if 
-//widthi/heighti == widthj/heightj (using decimal division, not integer division).
-//Return the number of pairs of interchangeable rectangles in rectangles.
+// Two rectangles i and j (i < j) are considered interchangeable if they have the same 
+// width-to-height ratio. More formally, two rectangles are interchangeable if 
+// widthi/heighti == widthj/heightj (using decimal division, not integer division).
+// Return the number of pairs of interchangeable rectangles in rectangles.
 
 func interchangeableRectangles(_ rectangles: [[Int]]) -> Int {
     var ratios = [Double: Int]()

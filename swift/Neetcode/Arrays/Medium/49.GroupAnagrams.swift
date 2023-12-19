@@ -1,23 +1,21 @@
-//Given an array of strings strs, group the anagrams together. 
-//You can return the answer in any order.
+// Given an array of strings strs, group the anagrams together. 
+// You can return the answer in any order.
 
 func groupAnagrams(_ strs: [String]) -> [[String]] {
-    var result = [String: [String]]()
+    var dict = [String: [String]]()
 
     for string in strs {
-        var alpha = Array(repeating: 0, count: 26)
+        var count = Array(repeating: 0, count: 26)
 
         for letter in string {
-            let index = Int(letter.unicodeScalars.first!.value) - Int(Unicode.Scalar("a").value)
-            alpha[index] += 1
+            count[Int(letter.asciiValue! - 97)] += 1
         }
 
-        //comma to avoid 112 11,2 1,12
-        let key = alpha.map { String($0) }.joined(separator: ",")
-        result[key, default: []].append(string)
+        let key = count.map { String($0) }.joined(separator: ",")
+        dict[key, default: []].append(string)
     }
 
-    return Array(result.values)
+    return Array(dict.values)
 }
 
 print(groupAnagrams(["eat","tea","tan","ate","nat","bat"]))

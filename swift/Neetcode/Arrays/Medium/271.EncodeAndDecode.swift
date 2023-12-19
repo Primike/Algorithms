@@ -15,19 +15,19 @@ class Codec {
     }
 
     func decode(_ s: String) -> [String] {
-        let sArray = Array(s)
+        let s = Array(s)
         var decoded = [String]()
         var i = 0
 
-        while i < sArray.count {
+        while i < s.count {
             var j = i
 
-            while sArray[j] != "#" {
+            while s[j] != "#" {
                 j += 1
             }
 
-            let length = Int(String(sArray[i..<j]))!
-            decoded.append(String(sArray[j + 1..<j + 1 + length]))
+            let length = Int(String(s[i..<j]))!
+            decoded.append(String(s[j + 1..<j + 1 + length]))
             
             i = j + 1 + length
         }

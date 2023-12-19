@@ -2,14 +2,16 @@
 //return the total number of subarrays whose sum equals to k.
 
 func subarraySum(_ nums: [Int], _ k: Int) -> Int {
-    var dict = [0: 1]
+    var dict = [Int: Int]()
     var result = 0
-    var prefixSum = 0
+    var currentSum = 0
 
     for number in nums {
-        prefixSum += number
-        result += dict[prefixSum - k, default: 0]
-        dict[prefixSum, default: 0] += 1
+        currentSum += number
+        if currentSum == k { result += 1 }
+        
+        result += dict[currentSum - k, default: 0]
+        dict[currentSum, default: 0] += 1
     }
 
     return result

@@ -3,6 +3,34 @@
 // The two subsequences are disjoint if they do not both pick a character at the same index.
 
 func maxProduct(_ s: String) -> Int {
+    let s = Array(s)
+    var result = 0
+
+    func backtrack(_ i: Int, _ subseq1: [Character], _ subseq2: [Character]) {
+        if i == s.count {
+            if subseq1 == Array(subseq1.reversed()), subseq2 == Array(subseq2.reversed()) {
+                result = max(result, subseq1.count * subseq2.count)
+            }
+            
+            return
+        }
+
+        backtrack(i + 1, subseq1 + [s[i]], subseq2)
+        backtrack(i + 1, subseq1, subseq2 + [s[i]])
+        backtrack(i + 1, subseq1, subseq2)
+    }
+
+    backtrack(0, [], [])
+    return result
+}
+
+
+print(maxProduct("leetcodecom"))
+print(maxProduct("bb"))
+print(maxProduct("accbcaxxcxx"))
+
+
+func maxProduct2(_ s: String) -> Int {
     let n = s.count
     let sArray = Array(s)
     var first = [Int](repeating: 0, count: 1 << n)
@@ -41,7 +69,3 @@ func maxProduct(_ s: String) -> Int {
 
     return ans
 }
-
-print(maxProduct("leetcodecom"))
-print(maxProduct("bb"))
-print(maxProduct("accbcaxxcxx"))

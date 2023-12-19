@@ -3,27 +3,22 @@
 //You must implement an algorithm that runs in 
 //O(n) time and uses constant extra space.
 
+// Time: n, Space: 1
 func firstMissingPositive(_ nums: [Int]) -> Int {
     var nums = nums
 
     for i in 0..<nums.count {
-        if nums[i] < 0 { nums[i] = 0 }
+        if nums[i] <= 0 { nums[i] = nums.count + 1 }
+    }
+
+    for n in nums {
+        let number = abs(n)
+
+        if number <= nums.count { nums[number - 1] = -abs(nums[number - 1]) }
     }
 
     for i in 0..<nums.count {
-        let number = abs(nums[i])
-
-        if 1 <= number, number <= nums.count {
-            if nums[number - 1] > 0 {
-                nums[number - 1] *= -1
-            } else if nums[number - 1] == 0 {
-                nums[number - 1] = -1 * (nums.count + 1)
-            }
-        }
-    }
-
-    for i in 1...nums.count {
-        if nums[i - 1] >= 0 { return i }
+        if nums[i] > 0 { return i + 1 }
     }
 
     return nums.count + 1

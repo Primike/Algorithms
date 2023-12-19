@@ -1,5 +1,5 @@
-//Given a string s consisting of words and spaces, 
-//return the length of the last word in the string.
+// Given a string s consisting of words and spaces, 
+// return the length of the last word in the string.
 
 func lengthOfLastWord(_ s: String) -> Int {
     var length = 0

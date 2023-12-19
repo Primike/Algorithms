@@ -1,6 +1,6 @@
-//Given a pattern and a string s, find if s follows the same pattern.
-//Here follow means a full match, such that there is 
-//a bijection between a letter in pattern and a non-empty word in s.
+// Given a pattern and a string s, find if s follows the same pattern.
+// Here follow means a full match, such that there is 
+// a bijection between a letter in pattern and a non-empty word in s.
 
 func wordPattern(_ pattern: String, _ s: String) -> Bool {
     var sArray = s.components(separatedBy: " ")

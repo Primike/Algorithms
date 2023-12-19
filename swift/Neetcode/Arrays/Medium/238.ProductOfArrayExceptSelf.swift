@@ -3,17 +3,17 @@
 
 func productExceptSelf(_ nums: [Int]) -> [Int] {
     var result = [Int](repeating: 1, count: nums.count)
+    var left = 0, right = nums.count - 1
+    var preProduct = 1, postProduct = 1
 
-    var leftProduct = 1
-    for i in 0..<nums.count {
-        result[i] *= leftProduct
-        leftProduct *= nums[i]
-    }
+    while left < nums.count, right >= 0 {
+        result[left] *= preProduct
+        result[right] *= postProduct
+        preProduct *= nums[left]
+        postProduct *= nums[right]
 
-    var rightProduct = 1
-    for i in (0..<nums.count).reversed() {
-        result[i] *= rightProduct
-        rightProduct *= nums[i]
+        left += 1
+        right -= 1
     }
 
     return result

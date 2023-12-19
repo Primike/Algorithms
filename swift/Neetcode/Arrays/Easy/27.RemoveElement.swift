@@ -1,6 +1,6 @@
-//Given an integer array nums and an integer val,
-//remove all occurrences of val in nums in-place. 
-//The relative order of the elements may be changed.
+// Given an integer array nums and an integer val,
+// remove all occurrences of val in nums in-place. 
+// The relative order of the elements may be changed.
 
 func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
     var left = 0, right = nums.count - 1

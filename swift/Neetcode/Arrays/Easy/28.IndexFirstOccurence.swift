@@ -1,7 +1,7 @@
-//Given two strings needle and haystack, 
-//return the index of the first occurrence of needle in haystack, or -1 
-//if needle is not part of haystack.
-//KMP
+// Given two strings needle and haystack, 
+// return the index of the first occurrence of needle in haystack, or -1 
+// if needle is not part of haystack.
+// KMP
 
 func strStr(_ haystack: String, _ needle: String) -> Int {
     var haystack = haystack

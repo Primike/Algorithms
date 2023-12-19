@@ -1,25 +1,29 @@
 class NumMatrix {
 
-    var prefixSum: [[Int]]
+    var sumMatrix: [[Int]]
 
     init(_ matrix: [[Int]]) {
-        let rows = matrix.count, cols = matrix[0].count
-        prefixSum = Array(repeating: Array(repeating: 0, count: cols + 1), count: rows + 1)
+        self.sumMatrix = matrix
 
-        for i in 0..<rows {
-            var currentSum = 0
+        for i in 0..<matrix.count {
+            var prefixSum = 0
+            
+            for j in 0..<matrix[0].count {
+                prefixSum += matrix[i][j]
+                sumMatrix[i][j] = prefixSum
 
-            for j in 0..<cols {
-                currentSum += matrix[i][j]
-                let above = prefixSum[i][j + 1]
-                prefixSum[i + 1][j + 1] = currentSum + above
+                if i > 0 { sumMatrix[i][j] += sumMatrix[i - 1][j] }
             }
         }
     }
 
     func sumRegion(_ row1: Int, _ col1: Int, _ row2: Int, _ col2: Int) -> Int {
-        let sum2 = prefixSum[row2 + 1][col2 + 1] - prefixSum[row1][col2 + 1]
-        let sum1 = prefixSum[row2 + 1][col1] - prefixSum[row1][col1]
-        return sum2 - sum1
+        var result = sumMatrix[row2][col2]
+        
+        if row1 > 0 { result -= sumMatrix[row1 - 1][col2] }
+        if col1 > 0 { result -= sumMatrix[row2][col1 - 1] }
+        if row1 > 0, col1 > 0 { result += sumMatrix[row1 - 1][col1 - 1] }
+
+        return result
     }
 }

@@ -1,8 +1,8 @@
-//You are given a 0-indexed 2D array grid of size 2 x n, 
-//Two robots are playing a game on this matrix.
-//The first robot wants to minimize the number of points collected by the second robot. 
-//In contrast, the second robot wants to maximize the number of points it collects. 
-//If both robots play optimally, return the number of points collected by the second robot.
+// You are given a 0-indexed 2D array grid of size 2 x n, 
+// Two robots are playing a game on this matrix.
+// The first robot wants to minimize the number of points collected by the second robot. 
+// In contrast, the second robot wants to maximize the number of points it collects. 
+// If both robots play optimally, return the number of points collected by the second robot.
 
 func gridGame(_ grid: [[Int]]) -> Int {
     var topRow = grid[0].reduce(0, +), bottomRow = 0

@@ -3,6 +3,7 @@
 // and small, with a fixed number of slots for each size.
 
 class ParkingSystem {
+    
     private var slots: [Int]
     private var capacity: [Int]
 
@@ -12,7 +13,7 @@ class ParkingSystem {
     }
     
     func addCar(_ carType: Int) -> Bool {
-        guard carType >= 1 && carType <= 3 else {
+        guard carType >= 1, carType <= 3 else {
             return false
         }
 

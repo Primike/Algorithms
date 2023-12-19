@@ -1,25 +1,27 @@
-//Given two strings s and p, return an array of all the start indices of 
-//p's anagrams in s. You may return the answer in any order.
+// Given two strings s and p, return an array of all the start indices of 
+// p's anagrams in s. You may return the answer in any order.
 
 func findAnagrams(_ s: String, _ p: String) -> [Int] {
     if p.count > s.count { return [] }
 
-    let s = Array(s)
-    var sDict = s.prefix(p.count).reduce(into: [:]) { $0[$1, default: 0] += 1 }
-    var pDict = Array(p).reduce(into: [:]) { $0[$1, default: 0] += 1 }
-
+    var s = Array(s), p = Array(p)
+    var sArray = Array(repeating: 0, count: 27)
+    var pArray = Array(repeating: 0, count: 27)
     var result = [Int]()
 
-    for i in p.count..<s.count {
-        if sDict == pDict { result.append(i - p.count) }
-
-        sDict[s[i - p.count], default: 0] -= 1
-        sDict[s[i], default: 0] += 1
-
-        if sDict[s[i - p.count]] == 0 { sDict[s[i - p.count]] = nil}
+    for i in 0..<p.count {
+        sArray[Int(s[i].asciiValue!) - 97] += 1
+        pArray[Int(p[i].asciiValue!) - 97] += 1
     }
 
-    if sDict == pDict { result.append(s.count - p.count) }
+    for i in p.count..<s.count {
+        if sArray == pArray { result.append(i - p.count) }
+
+        sArray[Int(s[i - p.count].asciiValue!) - 97] -= 1
+        sArray[Int(s[i].asciiValue!) - 97] += 1
+    }
+
+    if sArray == pArray { result.append(s.count - p.count) }
 
     return result
 }

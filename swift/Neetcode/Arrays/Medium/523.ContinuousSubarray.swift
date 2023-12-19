@@ -6,16 +6,15 @@
 
 func checkSubarraySum(_ nums: [Int], _ k: Int) -> Bool {
     var dict: [Int: Int] = [0: -1]
-    var count = 0
+    var currentSum = 0
 
     for (i, number) in nums.enumerated() {
-        count += number
-        let remainder = count % k
+        currentSum += number
 
-        if let index = dict[remainder], i - index >= 2 {
+        if let index = dict[currentSum % k], i - index >= 2 {
             return true
-        } else if dict[remainder] == nil {
-            dict[remainder] = i
+        } else if dict[currentSum % k] == nil {
+            dict[currentSum % k] = i
         }
     }
 

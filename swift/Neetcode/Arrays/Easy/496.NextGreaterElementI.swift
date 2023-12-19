@@ -1,5 +1,5 @@
-//The next greater element of some element x in an array is the 
-//first greater element that is to the right of x in the same array.
+// The next greater element of some element x in an array is the 
+// first greater element that is to the right of x in the same array.
 
 func nextGreaterElement(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
     var dict = [Int: Int]()
@@ -17,7 +17,7 @@ func nextGreaterElement(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
     var result = nums1
 
     for (i, number) in result.enumerated() {
-        result[i] = dict[number] ?? -1
+        result[i] = dict[number, default: -1]
     }
 
     return result
