@@ -1,5 +1,5 @@
-//Given n pairs of parentheses, write a function to generate all 
-//combinations of well-formed parentheses.
+// Given n pairs of parentheses, write a function to generate all 
+// combinations of well-formed parentheses.
 
 func generateParenthesis(_ n: Int) -> [String] {
     var result = [String]()
@@ -10,12 +10,8 @@ func generateParenthesis(_ n: Int) -> [String] {
             return
         }
 
-        if opened < n {
-            backtrack(string + "(", opened + 1, closed)
-        }
-        if closed < opened {
-            backtrack(string + ")", opened, closed + 1)
-        }
+        if opened < n { backtrack(string + "(", opened + 1, closed) }
+        if closed < opened { backtrack(string + ")", opened, closed + 1) }
     }
 
     backtrack("", 0, 0)

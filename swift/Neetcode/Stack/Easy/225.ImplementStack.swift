@@ -3,6 +3,7 @@
 // (push, top, pop, and empty).
 
 class MyStack {
+    
     private var queue: [Int] = []
 
     func push(_ x: Int) {
@@ -22,9 +23,9 @@ class MyStack {
             push(queue.removeFirst())
         }
         
-        let res = queue.first!
+        let result = queue.first!
         push(queue.removeFirst())
-        return res
+        return result
     }
 
     func empty() -> Bool {

@@ -3,14 +3,13 @@
 // Return the string after all stars have been removed.
 
 func removeStars(_ s: String) -> String {
-    var s = Array(s)
-    var stack: [Character] = []
+    var stack = [Character]()
 
-    for char in s {
-        if char == "*" {
-            stack.removeLast()
+    for letter in s {
+        if letter.isLetter {
+            stack.append(letter)
         } else {
-            stack.append(char)
+            stack.removeLast()
         }
     }
 

@@ -1,27 +1,31 @@
-//Design a stack that supports push, pop, top, 
-//and retrieving the minimum element in constant time.
+// Design a stack that supports push, pop, top, 
+// and retrieving the minimum element in constant time.
 
 class MinStack {
-    private var stack = [Int]()
-    private var stackMin = [Int]()
+    
+    private var stack: [(Int, Int)]
+
+    init() {
+        self.stack = []
+    }
     
     func push(_ val: Int) {
-        stack.append(val)
-
-        var currentMin = min(val, stackMin.last ?? val)
-        stackMin.append(currentMin)
+        if let last = stack.last, val > last.1 {
+            stack.append((val, last.1))
+        } else {
+            stack.append((val, val))
+        }
     }
     
     func pop() {
-        stack.removeLast()
-        stackMin.removeLast()
+        if !stack.isEmpty { stack.removeLast() }
     }
     
     func top() -> Int {
-        return stack.last ?? 0
+        return stack.last?.0 ?? 0
     }
     
     func getMin() -> Int {
-        return stackMin.last ?? 0
+        return stack.last?.1 ?? 0
     }
 }

@@ -13,15 +13,15 @@ func carFleet(_ target: Int, _ position: [Int], _ speed: [Int]) -> Int {
         cars.append((position[i], time))
     }
 
-    cars.sort { $0.0 > $1.0 }
+    cars.sort { $0 > $1 }
+
     var result = 0
     var i = 0
 
     while i < cars.count {
-        let (position, time) = cars[i]
-        i += 1
+        let currentTime = cars[i].1
 
-        while i < cars.count, time >= cars[i].1 {
+        while i < cars.count, currentTime >= cars[i].1 {
             i += 1
         }
 

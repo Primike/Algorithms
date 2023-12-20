@@ -1,6 +1,6 @@
-//You are given an array of strings tokens that represents an arithmetic expression 
-//in a Reverse Polish Notation.
-//Evaluate the expression. Return an integer that represents the value of the expression.
+// You are given an array of strings tokens that represents an arithmetic expression 
+// in a Reverse Polish Notation.
+// Evaluate the expression. Return an integer that represents the value of the expression.
 
 func evalRPN(_ tokens: [String]) -> Int {
     var stack = [Int]()
@@ -9,20 +9,17 @@ func evalRPN(_ tokens: [String]) -> Int {
         if let number = Int(token) {
             stack.append(number)
         } else {
-            let x = stack.removeLast()  
-            let y = stack.removeLast()
+            let last = stack.removeLast()
+            let secondLast = stack.removeLast()
 
-            switch token {
-            case "+":
-                stack.append(x + y)
-            case "-":
-                stack.append(y - x)
-            case "*":
-                stack.append(x * y)
-            case "/":
-                stack.append(y / x)
-            default:
-                break
+            if token == "+" {
+                stack.append(last + secondLast)
+            } else if token == "-" {
+                stack.append(secondLast - last)
+            } else if token == "*" {
+                stack.append(last * secondLast)
+            } else if token == "/" {
+                stack.append(secondLast / last)
             }
         }
     }

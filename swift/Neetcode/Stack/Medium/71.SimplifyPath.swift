@@ -3,22 +3,20 @@
 // simplified canonical path.
 
 func simplifyPath(_ path: String) -> String {
-    var stack = [String]()
+    let path = path.components(separatedBy: "/")
+    var result = [String]()
 
-    for i in path.split(separator: "/") {
-        let segment = String(i)
-
-        if segment == ".." {
-            if !stack.isEmpty { stack.removeLast() }
-        } else if segment == "." || segment.isEmpty {
+    for item in path {
+        if item == "." || item == "" {
             continue
+        } else if item == ".." {
+            if !result.isEmpty { result.removeLast() }
         } else {
-            stack.append(segment)
+            result.append(item)
         }
     }
-
-    let res = "/" + stack.joined(separator: "/")
-    return res
+    
+    return "/" + result.joined(separator: "/")
 }
 
 print(simplifyPath("/home/"))

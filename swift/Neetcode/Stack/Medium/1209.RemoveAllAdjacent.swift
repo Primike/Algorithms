@@ -13,7 +13,7 @@ func removeDuplicates(_ s: String, _ k: Int) -> String {
             stack.append((letter, 1))
         }
 
-        if let last = stack.last, last.1 == k { stack.removeLast() }
+        if stack.last!.1 == k { stack.removeLast() }
     }
 
     return stack.reduce(into: "") { $0 += String(repeating: $1.0, count: $1.1) }

@@ -1,33 +1,25 @@
-//An integer x. Record a new score of x.
-//'+'. Record a new score that is the sum of the previous two scores.
-//'D'. Record a new score that is the double of the previous score.
-//'C'. Invalidate the previous score, removing it from the record.
-//Return the sum of all the scores on the record after applying all the operations.
+// An integer x. Record a new score of x.
+// '+'. Record a new score that is the sum of the previous two scores.
+// 'D'. Record a new score that is the double of the previous score.
+// 'C'. Invalidate the previous score, removing it from the record.
+// Return the sum of all the scores on the record after applying all the operations.
 
 func calPoints(_ operations: [String]) -> Int {
-    var result = [Int]()
-    var currentSum = 0
+    var stack = [Int]()
 
     for operation in operations {
         if let number = Int(operation) {
-            result.append(number)
-            currentSum += number
-        } else if operation == "C", let last = result.popLast() {
-            currentSum -= last
-        } else if operation == "D", let last = result.last {
-            let doubled = last * 2
-            result.append(doubled)
-            currentSum += doubled
-        } else if operation == "+" {
-            if result.count >= 2 {
-                let sum = result[result.count - 1] + result[result.count - 2]
-                result.append(sum)
-                currentSum += sum
-            }
+            stack.append(number)
+        } else if operation == "+", stack.count >= 2 {
+            stack.append(stack[stack.count - 1] + stack[stack.count - 2])
+        } else if operation == "D", !stack.isEmpty {
+            stack.append(stack.last! * 2)
+        } else if operation == "C", !stack.isEmpty {
+            stack.removeLast()
         }
     }
 
-    return currentSum
+    return stack.reduce(0, +)
 }
 
 print(calPoints(["5","2","C","D","+"]))

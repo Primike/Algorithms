@@ -1,29 +1,31 @@
 // Given an encoded string, return its decoded string.
 
 func decodeString(_ s: String) -> String {
-    var stack = [String]()
+    var result = [String]()
 
-    for letter in s {
-        if letter != "]" {
-            stack.append(String(letter))
-            continue
-        } 
+    for char in s {
+        if char != "]" {
+            result.append(String(char))
+            continue 
+        }
 
         var string = ""
-        while let last = stack.last, last != "[" {
-            string = stack.removeLast() + string
+
+        while let last = result.last, last != "[" {
+            string = result.removeLast() + string
         }
 
-        stack.removeLast()
+        result.removeLast()
         var number = ""
-        while let last = stack.last, Character(last).isNumber {
-            number = stack.removeLast() + number
+
+        while let last = result.last, let _ = Int(last) {
+            number = result.removeLast() + number
         }
 
-        stack.append(String(repeating: string, count: Int(number)!))
+        result.append(String(repeating: string, count: Int(number) ?? 0))
     }
 
-    return stack.joined()
+    return result.joined()
 }
 
 print(decodeString("3[a]2[bc]"))
