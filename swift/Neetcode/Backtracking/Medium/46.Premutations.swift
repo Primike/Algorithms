@@ -2,8 +2,8 @@
 // permutations. You can return the answer in any order.
 
 func permute(_ nums: [Int]) -> [[Int]] {
-    var result = [[Int]]()
     var nums = nums
+    var result = [[Int]]()
 
     func backtrack(_ left: Int) {
         if left == nums.count {

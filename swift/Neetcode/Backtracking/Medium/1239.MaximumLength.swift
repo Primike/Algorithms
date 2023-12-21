@@ -6,28 +6,26 @@ func maxLength(_ arr: [String]) -> Int {
     var result = 0
 
     func backtrack(_ index: Int, _ current: Set<Character>) {
-        if index == arr.count {
-            result = max(result, current.count)
-            return
-        }
-        
-        backtrack(index + 1, current)
+        result = max(result, current.count)
 
-        var newSet = current
-        var duplicate = false
-
-        for letter in arr[index] {
-            if newSet.contains(letter) {
-                duplicate = true
-                break
-            }
+        for i in index..<arr.count {
+            var newSet = current
             
-            newSet.insert(letter)
-        }
+            for letter in arr[i] {
+                if newSet.contains(letter) { break }
+                newSet.insert(letter)
+            }
 
-        if !duplicate { backtrack(index + 1, newSet) }
+            if newSet.count == current.count + arr[i].count {
+                backtrack(i + 1, newSet)
+            }
+        }
     }
 
     backtrack(0, [])
     return result
 }
+
+print(maxLength(["un","iq","ue"]))
+print(maxLength(["cha","r","act","ers"]))
+print(maxLength(["abcdefghijklmnopqrstuvwxyz"]))

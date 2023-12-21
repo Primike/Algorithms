@@ -3,7 +3,7 @@
 // The solution set must not contain duplicate subsets. 
 // Return the solution in any order.
 
-// O(n*2^n), O(n)
+// Time: 2^n, Space: n*2^n
 func subsets(_ nums: [Int]) -> [[Int]] {
     var result = [[Int]]()
 

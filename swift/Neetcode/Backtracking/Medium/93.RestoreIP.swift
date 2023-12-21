@@ -6,8 +6,8 @@ func restoreIpAddresses(_ s: String) -> [String] {
     var s = Array(s)
     var result = [String]()
 
-    func backtrack(_ left: Int, _ ip: String, _ dots: Int) {
-        if dots == 4, left == s.count {
+    func backtrack(_ index: Int, _ ip: String, _ dots: Int) {
+        if dots == 4, index == s.count {
             var ip = String(ip.dropLast())
             result.append(ip)
             return
@@ -15,10 +15,10 @@ func restoreIpAddresses(_ s: String) -> [String] {
 
         if dots > 4 { return }
 
-        for i in left..<min(left + 3, s.count) {
-            let number = String(s[left...i])
+        for i in index..<min(index + 3, s.count) {
+            let number = String(s[index...i])
 
-            if Int(number)! <= 255 && (i == left || number.first! != "0") {
+            if Int(number)! <= 255 && (i == index || number.first! != "0") {
                 backtrack(i + 1, ip + number +  ".", dots + 1)
             }
         }

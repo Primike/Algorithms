@@ -2,6 +2,7 @@
 // return a list of all unique combinations of candidates where the 
 // chosen numbers sum to target. You may return the combinations in any order.
 
+// Time: n^m, Space: n * m
 func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
     var result = [[Int]]()
 

@@ -1,6 +1,7 @@
 // Given two integers n and k, return all possible combinations of 
 // k numbers chosen from the range [1, n].
 
+// Time: n!, Space: n!
 func combine(_ n: Int, _ k: Int) -> [[Int]] {
     var result = [[Int]]()
 

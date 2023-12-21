@@ -3,17 +3,18 @@
 // The solution set must not contain duplicate subsets. 
 // Return the solution in any order.
 
+// Time: 2^n, Space: n * 2^n
 func subsetsWithDup(_ nums: [Int]) -> [[Int]] {
     var nums = nums.sorted()
     var result = [[Int]]()
 
-    func backtrack(_ index: Int, _ current: [Int]) {
-        result.append(current)
+    func backtrack(_ index: Int, _ subset: [Int]) {
+        result.append(subset)
 
         for i in index..<nums.count {
             if i > index, nums[i] == nums[i - 1] { continue }
 
-            backtrack(i + 1, current + [nums[i]])
+            backtrack(i + 1, subset + [nums[i]])
         }
     }
 
