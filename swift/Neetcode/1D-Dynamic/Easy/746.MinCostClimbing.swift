@@ -5,13 +5,13 @@
 // Return the minimum cost to reach the top of the floor.
 
 func minCostClimbingStairs(_ cost: [Int]) -> Int {
-    var cost = cost
-    
-    for i in stride(from: cost.count - 3, to: -1, by: -1) {
-        cost[i] += min(cost[i + 1], cost[i + 2])
+    var tab = Array(repeating: 0, count: cost.count + 1)
+
+    for i in 2..<tab.count {
+        tab[i] = min(tab[i - 2] + cost[i - 2], tab[i - 1] + cost[i - 1])
     }
 
-    return min(cost[0], cost[1])
+    return tab[tab.count - 1]
 }
 
 print(minCostClimbingStairs([10,15,20]))

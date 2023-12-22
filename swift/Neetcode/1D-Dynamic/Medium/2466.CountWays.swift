@@ -6,12 +6,10 @@ func countGoodStrings(_ low: Int, _ high: Int, _ zero: Int, _ one: Int) -> Int {
     tab[0] = 1
     let mod = 1_000_000_007
 
-    for i in 0..<tab.count {
-        let index1 = i + zero
-        let index2 = i + one
-
-        if index1 < tab.count { tab[index1] = (tab[index1] + tab[i]) % mod }
-        if index2 < tab.count { tab[index2] = (tab[index2] + tab[i]) % mod }
+    //Skip 0s not needed
+    for i in 0..<high {
+        if i + zero <= high { tab[i + zero] += (tab[i] % mod) }
+        if i + one <= high { tab[i + one] += (tab[i] % mod) }
     }
 
     return tab[low...high].reduce(0) { ($0 + $1) % mod }

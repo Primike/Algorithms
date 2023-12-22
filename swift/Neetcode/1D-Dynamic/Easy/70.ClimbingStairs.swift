@@ -3,15 +3,15 @@
 // In how many distinct ways can you climb to the top?
 
 func climbStairs(_ n: Int) -> Int {
-    var one = 1, two = 1
-
-    for _ in 0..<(n - 1) {
-        var number = one
-        one = one + two
-        two = number
+    var previous = 0, current = 1
+    
+    for _ in 0..<n {
+        let temp = current
+        current += previous
+        previous = temp
     }
-
-    return one
+    
+    return current
 }
 
 print(climbStairs(2))
