@@ -18,3 +18,28 @@ func maxProfit(_ prices: [Int]) -> Int {
 
 print(maxProfit([1,2,3,0,2]))
 print(maxProfit([1]))
+
+
+func maxProfit2(_ prices: [Int]) -> Int {
+    var memo = [String: Int]()
+
+    func dp(_ i: Int, _ isBuying: Bool) -> Int {
+        let key = "\(i),\(isBuying)"
+
+        if i >= prices.count { return 0 }
+        if let value = memo[key] { return value }
+
+        var result = dp(i + 1, isBuying)
+
+        if isBuying {
+            result = max(result, dp(i + 1, !isBuying) - prices[i])
+        } else {
+            result = max(result, dp(i + 2, !isBuying) + prices[i])
+        }
+
+        memo[key] = result
+        return result
+    }
+
+    return dp(0, true)
+}

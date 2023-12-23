@@ -17,9 +17,11 @@ func isInterleave(_ s1: String, _ s2: String, _ s3: String) -> Bool {
     return tab[0][0]
 }
 
+
 print(isInterleave("aabcc", "dbbca", "aadbbcbcac"))
 print(isInterleave("aabcc", "dbbca", "aadbbbaccc"))
 print(isInterleave("", "", ""))
+
 
 func isInterleave2(_ s1: String, _ s2: String, _ s3: String) -> Bool {
     if s1.count + s2.count != s3.count { return false }
@@ -28,13 +30,15 @@ func isInterleave2(_ s1: String, _ s2: String, _ s3: String) -> Bool {
     var memo = [String: Bool]()
 
     func dp(_ i: Int, _ j: Int) -> Bool {
-        if let stored = memo["\(i),\(j)"] { return stored }
+        let key = "\(i),\(j)"
+
+        if let stored = memo[key] { return stored }
         if i == s1.count, j == s2.count { return true }
 
         if i < s1.count, s1[i] == s3[i + j], dp(i + 1, j) { return true }
         if j < s2.count, s2[j] == s3[i + j], dp(i, j + 1) { return true }
 
-        memo["\(i),\(j)"] = false
+        memo[key] = false
         return false
     }
 

@@ -3,13 +3,19 @@
 func findTargetSumWays(_ nums: [Int], _ target: Int) -> Int {
     var memo = [String: Int]()
 
-    func dp(_ i: Int, _ current: Int) -> Int {
-        let key = "\(i)_\(current)"
-        if let previous = memo[key] { return previous }
-        if i >= nums.count { return current == target ? 1 : 0 }
+    func dp(_ index: Int, _ current: Int) -> Int {
+        let key = "\(index),\(current)"
 
-        memo[key] = dp(i + 1, current + nums[i]) + dp(i + 1, current - nums[i])
-        return memo[key, default: 0]
+        if index == nums.count { return current == target ? 1 : 0 }
+        if let value = memo[key] { return value }
+
+        var result = 0
+
+        result += dp(index + 1, current + nums[index])
+        result += dp(index + 1, current - nums[index])
+
+        memo[key] = result
+        return result
     }
 
     return dp(0, 0)

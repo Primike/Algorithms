@@ -5,22 +5,16 @@
 
 func uniquePathsWithObstacles(_ obstacleGrid: [[Int]]) -> Int {
     let rows = obstacleGrid.count, cols = obstacleGrid[0].count
-    if obstacleGrid[0][0] == 1  { return 0 }
+    if obstacleGrid[0][0] == 1  || obstacleGrid[rows - 1][cols - 1] == 1 { return 0 }
 
     var tab = Array(repeating: Array(repeating: 0, count: cols), count: rows)
     tab[0][0] = 1
-
+    
     for i in 0..<rows {
         for j in 0..<cols {
-            if obstacleGrid[i][j] == 1 { 
-                tab[i][j] = 0
-                continue 
-            }
-
-            let current = tab[i][j] 
-
-            if i + 1 < rows { tab[i + 1][j] += current }
-            if j + 1 < cols { tab[i][j + 1] += current }
+            if obstacleGrid[i][j] == 1 { continue }
+            if j < cols - 1 { tab[i][j + 1] += tab[i][j] }
+            if i < rows - 1 { tab[i + 1][j] += tab[i][j] }
         }
     }
 
