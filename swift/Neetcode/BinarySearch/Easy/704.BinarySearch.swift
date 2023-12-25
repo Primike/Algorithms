@@ -1,6 +1,6 @@
-//Given an array of integers nums which is sorted in ascending order, 
-//and an integer target, write a function to search target in nums. 
-//If target exists, then return its index. Otherwise, return -1.
+// Given an array of integers nums which is sorted in ascending order, 
+// and an integer target, write a function to search target in nums. 
+// If target exists, then return its index. Otherwise, return -1.
 
 func search(_ nums: [Int], _ target: Int) -> Int {
     var left = 0, right = nums.count - 1

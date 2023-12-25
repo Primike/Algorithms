@@ -2,13 +2,15 @@
 // We define the maximum of an empty set to be zero.
 
 func minimizeMax(_ nums: [Int], _ p: Int) -> Int {
-    var nums = nums.sorted { $0 < $1 }
+    if p == 0 { return 0 }
+    
+    var nums = nums.sorted()
 
-    func isValid(_ guess: Int) -> Bool {
+    func checkDifference(_ guess: Int) -> Bool {
         var i = 0, count = 0
 
         while i < nums.count - 1 {
-            if abs(nums[i] - nums[i + 1]) <= guess {
+            if nums[i + 1] - nums[i] <= guess {
                 count += 1
                 i += 2
             } else {
@@ -22,20 +24,18 @@ func minimizeMax(_ nums: [Int], _ p: Int) -> Int {
     }
 
     var left = 0, right = nums[nums.count - 1] - nums[0]
-    var result = 0
-
-    while left <= right {
+    
+    while left < right {
         let mid = (right + left) / 2
 
-        if isValid(mid) {
-            result = mid
-            right = mid - 1
+        if checkDifference(mid) {
+            right = mid
         } else {
             left = mid + 1
         }
     }
 
-    return result
+    return left
 }
 
 print(minimizeMax([10,1,2,7,1,3], 2))

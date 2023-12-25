@@ -4,39 +4,35 @@
 // Return the maximum k you can choose such that p is still a 
 // subsequence of s after the removals.
 
+// right + 1 b/c they want k not index
 func maximumRemovals(_ s: String, _ p: String, _ removable: [Int]) -> Int {
     var s = Array(s), p = Array(p)
 
-    func isSubsequence(_ skip: Set<Int>) -> Bool {
-        var index = 0
+    func isSubsequence(_ indices: Set<Int>) -> Bool {
+        var j = 0
 
         for (i, number) in s.enumerated() {
-            if skip.contains(i) { continue }
-
-            if index < p.count, number == p[index] { index += 1 }
-
-            if index == p.count { break }
+            if j == p.count { break }
+            if indices.contains(i) { continue }
+            if number == p[j] { j += 1 }
         }
 
-        return index == p.count
+        return j == p.count
     }
 
     var left = 0, right = removable.count - 1
-    var result = 0
 
     while left <= right {
         let mid = (right + left) / 2
-        let subsequence = isSubsequence(Set(removable[0...mid]))
 
-        if subsequence {
-            result = max(result, mid + 1)
+        if isSubsequence(Set(removable[0...mid])) {
             left = mid + 1
         } else {
             right = mid - 1
         }
     }
 
-    return result
+    return right >= 0 ? right + 1 : 0
 }
 
 print(maximumRemovals("abcacb", "ab", [3,1,0]))

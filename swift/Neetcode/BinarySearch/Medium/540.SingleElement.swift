@@ -33,21 +33,25 @@ print(singleNonDuplicate([3,3,7,7,10,11,11]))
 func singleNonDuplicate2(_ nums: [Int]) -> Int {
     var left = 0, right = nums.count - 1
 
-    while left <= right {
-        var mid = left + ((right - left) / 2)
+    while left < right {
+        let mid = (right + left) / 2
 
-        if (mid - 1 < 0 || nums[mid - 1] != nums[mid]), (mid + 1 == nums.count || nums[mid] != nums[mid + 1]) {
+        if mid > 0, nums[mid] == nums[mid - 1] {
+            if mid % 2 == 0 {
+                right = mid - 1
+            } else {
+                left = mid + 1
+            }
+        } else if mid < nums.count - 1, nums[mid] == nums[mid + 1] {
+            if mid % 2 != 0 {
+                right = mid - 1
+            } else {
+                left = mid + 1
+            }
+        } else {    
             return nums[mid]
-        }
-
-        var leftSize = nums[mid - 1] == nums[mid] ? mid - 1 : mid
-
-        if leftSize % 2 != 0 {
-            right = mid - 1
-        } else {
-            left = mid + 1
         }
     }
 
-    return nums[right]
+    return nums[left]
 }

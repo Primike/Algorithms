@@ -1,34 +1,34 @@
-//You are given an m x n integer matrix matrix with the following two properties:
-//Each row is sorted in non-decreasing order.
-//The first integer of each row is greater than the last integer of the previous row.
-//Given an integer target, return true if target is in matrix or false otherwise.
-//You must write a solution in O(log(m * n)) time complexity.
+// You are given an m x n integer matrix matrix with the following two properties:
+// Each row is sorted in non-decreasing order.
+// The first integer of each row is greater than the last integer of the previous row.
+// Given an integer target, return true if target is in matrix or false otherwise.
+// You must write a solution in O(log(m * n)) time complexity.
 
 func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
-    var left = 0, right = matrix.count - 1
-    var row = 0
+    let rows = matrix.count, cols = matrix[0].count
+    var left = 0, right = rows - 1
 
-    while left <= right {
-        row = (right + left) / 2
+    while left < right {
+        let mid = (right + left) / 2
 
-        if let last = matrix[row].last, last < target {
-            left = row + 1
-        } else if matrix[row][0] > target {
-            right = row - 1
+        if matrix[mid][cols - 1] >= target {
+            right = mid
         } else {
-            left = 0
-            right = matrix[row].count - 1
-            break
+            left = mid + 1
         }
     }
 
-    while left <= right {
-        var midpoint = (right + left) / 2
+    let row = left
+    left = 0
+    right = cols - 1
 
-        if matrix[row][midpoint] < target {
-            left = midpoint + 1
-        } else if matrix[row][midpoint] > target {
-            right = midpoint - 1
+    while left <= right {
+        var mid = (right + left) / 2
+
+        if matrix[row][mid] < target {
+            left = mid + 1
+        } else if matrix[row][mid] > target {
+            right = mid - 1
         } else {
             return true
         }

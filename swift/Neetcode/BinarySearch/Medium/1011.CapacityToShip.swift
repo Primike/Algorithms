@@ -4,33 +4,29 @@
 // all the packages on the conveyor belt being shipped within days days.
 
 func shipWithinDays(_ weights: [Int], _ days: Int) -> Int {
-    var lower = weights.max() ?? 0, upper = weights.reduce(0, +)
+    var left = weights.max() ?? 0, right = weights.reduce(0, +)
 
-    while lower <= upper {
-        let mid = (upper + lower) / 2
-
-        var currentWeight = 0
-        var totalDays = 0
+    while left < right {
+        let mid = (right + left) / 2
+        var current = 0, count = 1
 
         for weight in weights {
-            if currentWeight + weight > mid {
-                totalDays += 1
-                currentWeight = 0
+            current += weight
+
+            if current > mid {
+                current = weight
+                count += 1
             }
-
-            currentWeight += weight
         }
-        
-        if currentWeight > 0 { totalDays += 1 }
 
-        if totalDays > days {
-            lower = mid + 1
+        if count <= days {
+            right = mid 
         } else {
-            upper = mid - 1
+            left = mid + 1
         }
     }
 
-    return lower
+    return right
 }
 
 print(shipWithinDays([1,2,3,4,5,6,7,8,9,10], 5))

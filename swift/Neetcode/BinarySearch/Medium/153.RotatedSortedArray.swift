@@ -1,5 +1,5 @@
-//Given the sorted rotated array nums of unique elements, 
-//return the minimum element of this array.
+// Given the sorted rotated array nums of unique elements, 
+// return the minimum element of this array.
 
 func findMin(_ nums: [Int]) -> Int {
     var left = 0, right = nums.count - 1

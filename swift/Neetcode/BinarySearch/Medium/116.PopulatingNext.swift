@@ -4,27 +4,32 @@
 // the next pointer should be set to NULL.
 
 func connect(_ root: Node?) -> Node? {
-    guard let root = root else { return nil }
+    var node = root
+    var nextLevel = node?.left
 
-    var current: Node? = root
-    var next = root.left
+    while node !== nil, nextLevel !== nil  {
+        node!.left?.next = node!.right
+        node!.right?.next = node!.next?.left
 
-    while let currentLevelNode = current, next != nil {
-        if let left = currentLevelNode.left, let right = currentLevelNode.right {
-            left.next = right
+        node = node!.next
 
-            if let nextNode = currentLevelNode.next {
-                right.next = nextNode.left
-            }
-        }
-        
-        current = currentLevelNode.next
-
-        if current == nil {
-            current = next
-            next = current?.left
+        if node === nil {
+            node = nextLevel
+            nextLevel = node?.left
         }
     }
+
+    return root
+}
+
+func connect(_ root: Node?) -> Node? {
+    guard let root = root else { return root }
+
+    root.right?.next = root.next?.left
+    root.left?.next = root.right
+
+    connect(root.left)
+    connect(root.right)
 
     return root
 }

@@ -9,14 +9,14 @@ func search(_ nums: [Int], _ target: Int) -> Bool {
 
         if nums[mid] == target {
             return true
-        } else if nums[left] < nums[mid] {
-            if nums[left] <= target, target < nums[mid] {
+        } else if nums[mid] > nums[left] {
+            if target >= nums[left], target < nums[mid] {
                 right = mid - 1
             } else {
                 left = mid + 1
             }
-        } else if nums[left] > nums[mid] {
-            if nums[mid] < target, target <= nums[right] {
+        } else if nums[mid] < nums[left] {
+            if target <= nums[right], target > nums[mid] {
                 left = mid + 1
             } else {
                 right = mid - 1
