@@ -5,13 +5,33 @@
 func deleteDuplicates(_ head: ListNode?) -> ListNode? {
     var current = head
 
-    while let currentNode = current {
-        while let next = currentNode.next, next.val == currentNode.val {
-            currentNode.next = next.next
+    while let node = current, let next = node.next {
+        if node.val == next.val {
+            current?.next = next.next
+        } else {
+            current = next
         }
-
-        current = currentNode.next
     }
 
     return head
+}
+
+func deleteDuplicates(_ head: ListNode?) -> ListNode? {
+    let newHead = ListNode(0, head)
+    var previous: ListNode? = head
+    var current = head?.next
+
+    while let node = current {
+        let next = node.next
+
+        if node.val == previous!.val {
+            previous?.next = next
+            current = next
+        } else {
+            previous = current
+            current = next
+        }
+    }
+
+    return newHead.next
 }

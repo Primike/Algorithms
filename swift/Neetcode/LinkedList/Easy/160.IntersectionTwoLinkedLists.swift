@@ -13,4 +13,3 @@ func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
 
     return listA
 }
-

@@ -4,7 +4,7 @@
 func middleNode(_ head: ListNode?) -> ListNode? {
     var slow = head, fast = head
 
-    while let fastNode = fast, let next = fastNode.next {
+    while let next = fast?.next {
         slow = slow?.next
         fast = next.next
     }

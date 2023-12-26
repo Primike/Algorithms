@@ -1,33 +1,32 @@
 // Given the head of a singly linked list, return true if it is a 
 // palindrome or false otherwise.
 
-//End node is shared both lists converge to last node
+// End node shared both but while logic checks it for even/odd
 func isPalindrome(_ head: ListNode?) -> Bool {
     var slow = head, fast = head
 
-    while let fastNode = fast, let nextNode = fastNode.next {
+    while let next = fast?.next {
         slow = slow?.next
-        fast = nextNode.next
+        fast = next.next
     }
 
     var previous: ListNode? = nil
+    var current = slow 
 
-    while let current = slow {
-        var next = current.next
-        current.next = previous
+    while current != nil {
+        var next = current?.next
+        current?.next = previous
         previous = current
-        slow = next
+        current = next
     }
 
     var left = head, right = previous
 
-    while let leftNode = left, let rightNode = right {
-        if leftNode.val != rightNode.val {
-            return false
-        }
+    while let node1 = left, let node2 = right {
+        if node1.val != node2.val { return false }
 
-        left = leftNode.next
-        right = rightNode.next
+        left = node1.next
+        right = node2.next
     }
 
     return true

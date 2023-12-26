@@ -3,19 +3,21 @@
 // and return the new head.
 
 func removeElements(_ head: ListNode?, _ val: Int) -> ListNode? {
-    var newNode = ListNode()
-    var previous = newNode
+    let newHead = ListNode(0, head)
+    var previous: ListNode? = newHead
     var current = head
 
-    while let currentNode = current {
-        if currentNode.val != val {
-            previous.next = currentNode
-            previous = currentNode
+    while let node = current {
+        let next = node.next
+
+        if node.val == val {
+            previous?.next = next
+        } else {
+            previous = current
         }
 
-        current = currentNode.next
+        current = next
     }
 
-    previous.next = nil
-    return newNode.next
+    return newHead.next
 }
