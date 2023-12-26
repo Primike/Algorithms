@@ -3,6 +3,46 @@
 // to color color is a legal move, or false if it is not legal.
 
 func checkMove(_ board: [[Character]], _ rMove: Int, _ cMove: Int, _ color: Character) -> Bool {
+    let rows = board.count, cols = board[0].count
+
+    func checkLegal(_ i: Int, _ j: Int, _ dr: (Int, Int), _ count: Int) -> Bool {
+        if i < 0 || i >= rows || j < 0 || j >= cols { return false }
+        if board[i][j] == "." { return false }
+        if board[i][j] == color { return count >= 2 }
+
+        return checkLegal(i + dr.0, j + dr.1, dr, count + 1)
+    }
+
+    let directions = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1)]
+
+    for (di, dj) in directions {
+        if checkLegal(rMove + di, cMove + dj, (di, dj), 1) { return true }
+    }
+
+    return false
+}
+
+print(checkMove(
+    [[".",".",".","B",".",".",".","."],
+    [".",".",".","W",".",".",".","."],
+    [".",".",".","W",".",".",".","."],
+    [".",".",".","W",".",".",".","."],
+    ["W","B","B",".","W","W","W","B"],
+    [".",".",".","B",".",".",".","."],
+    [".",".",".","B",".",".",".","."],
+    [".",".",".","W",".",".",".","."]], 4, 3, "B"))
+print(checkMove(
+    [[".",".",".",".",".",".",".","."],
+    [".","B",".",".","W",".",".","."],
+    [".",".","W",".",".",".",".","."],
+    [".",".",".","W","B",".",".","."],
+    [".",".",".",".",".",".",".","."],
+    [".",".",".",".","B","W",".","."],
+    [".",".",".",".",".",".","W","."],
+    [".",".",".",".",".",".",".","B"]], 4, 4, "W"))
+
+
+func checkMove2(_ board: [[Character]], _ rMove: Int, _ cMove: Int, _ color: Character) -> Bool {
     var rows = board.count, cols = board[0].count 
     
     func dfs(_ dr: (Int, Int)) -> Bool {
@@ -30,22 +70,3 @@ func checkMove(_ board: [[Character]], _ rMove: Int, _ cMove: Int, _ color: Char
 
     return false
 }
-
-print(checkMove(
-    [[".",".",".","B",".",".",".","."],
-    [".",".",".","W",".",".",".","."],
-    [".",".",".","W",".",".",".","."],
-    [".",".",".","W",".",".",".","."],
-    ["W","B","B",".","W","W","W","B"],
-    [".",".",".","B",".",".",".","."],
-    [".",".",".","B",".",".",".","."],
-    [".",".",".","W",".",".",".","."]], 4, 3, "B"))
-print(checkMove(
-    [[".",".",".",".",".",".",".","."],
-    [".","B",".",".","W",".",".","."],
-    [".",".","W",".",".",".",".","."],
-    [".",".",".","W","B",".",".","."],
-    [".",".",".",".",".",".",".","."],
-    [".",".",".",".","B","W",".","."],
-    [".",".",".",".",".",".","W","."],
-    [".",".",".",".",".",".",".","B"]], 4, 4, "W"))

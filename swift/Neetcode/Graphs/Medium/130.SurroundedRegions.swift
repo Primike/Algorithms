@@ -4,38 +4,33 @@
 func solve(_ board: inout [[Character]]) {
     let rows = board.count, cols = board[0].count
 
-    func capture(_ i: Int, _ j: Int) {
-        if i < 0 || i >= rows || j < 0 || j >= cols || board[i][j] != "O" {
-            return
-        }
+    func dfs(_ i: Int, _ j: Int) {
+        if i < 0 || i >= rows || j < 0 || j >= cols { return }
+        if board[i][j] != "O" { return }
 
         board[i][j] = "T"
+        let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
 
-        capture(i + 1, j)
-        capture(i - 1, j)
-        capture(i, j + 1)
-        capture(i, j - 1)
+        for (dx, dy) in directions {
+            dfs(dx, dy)
+        }
     }
 
     for i in 0..<rows {
-        for j in 0..<cols {
-            if board[i][j] == "O", (i == 0 || i == rows - 1 || j == 0 || j == cols - 1) {
-                capture(i, j)
-            }
-        }
+        dfs(i, 0)
+        dfs(i, cols - 1)
+    }
+
+    for j in 0..<cols {
+        dfs(0, j)
+        dfs(rows - 1, j)
     }
 
     for i in 0..<rows {
         for j in 0..<cols {
             if board[i][j] == "O" {
                 board[i][j] = "X"
-            }
-        }
-    }
-
-    for i in 0..<rows {
-        for j in 0..<cols {
-            if board[i][j] == "T" {
+            } else if board[i][j] == "T" {
                 board[i][j] = "O"
             }
         }
@@ -49,3 +44,41 @@ print(solve([
     ["X","O","X","X"]]))
 
 print(solve([["X"]]))
+
+
+
+func solve(_ board: inout [[Character]]) {
+    var rows = board.count, cols = board[0].count
+    var skipSet = Set<String>()
+
+    func dfs(_ i: Int, _ j: Int) {
+        if i < 0 || i >= rows || j < 0 || j >= cols || board[i][j] == "X" || skipSet.contains("\(i),\(j)") {
+            return
+        }
+
+        skipSet.insert("\(i),\(j)")
+        let directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+        for (dx, dy) in directions {
+            dfs(i + dx, j + dy)
+        }
+    }
+
+    for i in 0..<cols {
+        if board[0][i] == "O" { dfs(0, i) }
+        if board[rows - 1][i] == "O" { dfs(rows - 1, i) }
+    }
+
+    for i in 0..<rows {
+        if board[i][0] == "O" { dfs(i, 0) } 
+        if board[i][cols - 1] == "O" { dfs(i, cols - 1) } 
+    }
+
+    for i in 0..<rows {
+        for j in 0..<cols {
+            if board[i][j] == "O", !skipSet.contains("\(i),\(j)") {
+                board[i][j] = "X"
+            }
+        }
+    }
+}

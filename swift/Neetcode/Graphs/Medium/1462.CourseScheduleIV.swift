@@ -3,33 +3,34 @@
 // Return a boolean array answer, where answer[j] is the answer to the jth query.
 
 func checkIfPrerequisite(_ numCourses: Int, _ prerequisites: [[Int]], _ queries: [[Int]]) -> [Bool] {
-    var neighbors = Array(repeating: [Int](), count: numCourses)
+    var paths = Array(repeating: Set<Int>(), count: numCourses)
 
-    for prerequisite in prerequisites {
-        neighbors[prerequisite[1]].append(prerequisite[0])            
+    for courses in prerequisites {
+        paths[courses[0]].insert(courses[1])
     }
 
-    var prereq = Array(repeating: Set<Int>(), count: numCourses)
+    var visited = Set<Int>()
 
     func dfs(_ course: Int) -> Set<Int> {
-        if prereq[course].isEmpty {
-            for neighbor in neighbors[course] {
-                prereq[course].formUnion(dfs(neighbor))
-            }
+        if visited.contains(course) { return paths[course] }
+
+        visited.insert(course)
+
+        for next in paths[course] {
+            paths[course].formUnion(dfs(next)) 
         }
 
-        prereq[course].insert(course)
-        return prereq[course]
+        return paths[course]
     }
 
-    for course in 0..<numCourses {
+    for course in 0..<paths.count {
         dfs(course)
     }
 
     var result = [Bool]()
 
     for query in queries {
-        result.append(prereq[query[1]].contains(query[0]))
+        result.append(paths[query[0]].contains(query[1]))
     }
 
     return result

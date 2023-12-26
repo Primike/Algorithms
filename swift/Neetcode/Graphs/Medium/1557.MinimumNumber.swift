@@ -10,8 +10,8 @@ func findSmallestSetOfVertices(_ n: Int, _ edges: [[Int]]) -> [Int] {
 
     var result = [Int]()
 
-    for (i, incoming) in neighbors.enumerated() {
-        if incoming.isEmpty { result.append(i) }
+    for (n, incoming) in neighbors.enumerated() {
+        if incoming.isEmpty { result.append(n) }
     }
 
     return result
