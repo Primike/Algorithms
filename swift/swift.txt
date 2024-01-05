@@ -1,0 +1,177 @@
+Strings:
+    string.prefix(i)/suffix(i)
+
+    string.hasPrefix(subString)
+
+    string.dropFirst()
+
+    string.split(separator: "@")  -> [SubString] removes all consecutive no ""
+
+    string.components(separatedBy: "/")  -> [String] if consecutive adds "" for each
+
+    string.replacingOccurrences(of: "x", with: "")
+
+    String(repeating: "a", count: 4)
+
+
+
+Character:
+
+    let alpha = Character(UnicodeScalar(UInt8(96 + i)))
+
+    let arrayIndex = Int(letter.asciiValue!) - 97 /ascii of A
+
+    character.isNumber/isLetter
+
+    String([Character])
+
+    can compare only characters like ints
+
+    char.wholeNumberValue
+
+
+
+Array:
+    var array = Array(0..<nums.count + 1)
+
+    var array = Array(repeating: [], count: 5)
+
+    array.isEmpty/last/first
+
+    array.removeLast/First()/dropLast 
+
+    array.joined(separator: ", ") / () / String() for Chars
+
+    array.swapAt(left, right)
+
+    array.remove(at: 1)
+
+    array.max()
+
+    array[1...] 
+
+
+
+Dictionary:
+    dict[key, default: []].append(string)
+
+    dict.keys.contains(key)
+
+    dict.values.allSatisfy { $0 == 0 }
+
+    dict.removeValue(forKey: key) / dict[key] = nil
+
+
+
+Set:
+    Set(array)
+
+    hashSet.insert/remove
+
+    !hashSet.contains(item)
+
+    let newSet = set1.union(set2)/intersection
+
+    set1.formUnion(set2)
+
+    create hashable struct for tuples
+
+    !set1.isDisjoint(with: set2)
+
+
+
+Loops:
+    for i in (0..<array.count).reversed() // if reversing array i starts from 0 not last
+
+    for (key, value) in dict
+
+    for (i, j) in zip(s, t)
+
+    for i in stride(from: array.count - 1, to: -1, by: -1) 
+
+
+
+Functions:
+    let totalSum = array.reduce(0, +)
+
+    let sum = nums[left...right].reduce(0, +)
+
+    let dict = array.reduce(into: [:]) { currentDict, item in
+        currentDict[item, default: 0] += 1
+    }
+
+    let dict = array.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+
+    let dict = array.enumerated().reduce(into: [:]) { $0[$1.element] = $1.offset }
+    let dict = array.enumerated().reduce(into: [Int: Int]()) { (dict, pair) in
+        dict[pair.element] = pair.offset
+    }
+
+    let key = array.map { String($0) }.joined(separator: ",")
+
+    let wordsArray = words.map { Array($0) }
+
+    string.filter { $0.isLetter || $0.isNumber }.lowercased()
+
+    let doubleArray = Array(repeating: array, count: 2).flatMap { $0 }
+
+    let arrayWithoutNil = arrayWithNil.compactMap { $0 }
+
+    let array = array.sorted { $0.position > $1.position }
+
+    intervals.sorted { ($0[0], -$0[1]) < ($1[0], -$1[1]) }
+
+    return current.contains { $0.isEndOfWord }
+
+
+
+NSCountedSet:
+    var arrayCount = NSCountedSet(array: Array(string))
+
+    arrayCount.count(for: letter)
+
+
+
+Math:
+    Combinatorics: C(n, k) = n! / k!(n - k)!  - factorial
+        n = count, k = pair size
+
+    (numerator + denominator - 1) / denominator - round up
+
+    i % j = i for j > i
+
+
+
+Other:
+    ===/!== used to compare instances
+
+    if multiple &&/|| needed separate into variables
+    swift exists early for these multiple conditions
+
+    to compare number-strings lexicographically check sizes 
+    if equal sizes then use >/<
+
+    Int(ceil(Double(1) / Double(2)))
+
+    Int.random(in: 0..<10) 
+
+    @discardableResult -- do nothing with function return
+
+    sets need hashable, heap - comparable
+
+    for _ in 0..<(max(0, count - 1)) - avoid crashes
+
+
+
+////////////////////////////////////////////////////////////////
+No-Use:
+
+    string.index(string.startIndex, offsetBy: i) // used for string subscript
+
+    left = string.startIndex 
+
+    right = string.index(before: string.endIndex)
+
+    second = string.index(after: first)
+
+    while index != string.endIndex 

@@ -4,38 +4,47 @@ class TrieNode {
 }
 
 class Trie {
-    let root = TrieNode()
+    let head: TrieNode
 
+    init() {
+        self.head = TrieNode()
+    }
+    
     func insert(_ word: String) {
-        var node = root
-        for char in word {
-            if node.children[char] == nil {
-                node.children[char] = TrieNode()
-            }
-            node = node.children[char]!
-        }
-        node.isEndOfWord = true
-    }
+        var current = head
 
+        for letter in word {
+            if let node = current.children[letter] {
+                current = node
+            } else {
+                let new = TrieNode()
+                current.children[letter] = new
+                current = new
+            }
+        }
+
+        current.isEndOfWord = true
+    }
+    
     func search(_ word: String) -> Bool {
-        var node = root
-        for char in word {
-            guard let nextNode = node.children[char] else {
-                return false
-            }
-            node = nextNode
-        }
-        return node.isEndOfWord
-    }
+        var current = head
 
-    func startsWith(_ prefix: String) -> Bool {
-        var node = root
-        for char in prefix {
-            guard let nextNode = node.children[char] else {
-                return false
-            }
-            node = nextNode
+        for letter in word {
+            guard let node = current.children[letter] else { return false }
+            current = node
         }
+
+        return current.isEndOfWord
+    }
+    
+    func startsWith(_ prefix: String) -> Bool {
+        var current = head
+
+        for letter in prefix {
+            guard let node = current.children[letter] else { return false }
+            current = node
+        }
+
         return true
     }
 }
