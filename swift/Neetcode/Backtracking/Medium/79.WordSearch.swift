@@ -1,36 +1,40 @@
 // Given an m x n grid of characters board and a string word, 
 // return true if word exists in the grid.
 
-// Time: n^2 * m^2, Space: n + m + w
+// Time: O(n * m * 4^n), Space: O(n + m)
 func exist(_ board: [[Character]], _ word: String) -> Bool {
-    let rows = board.count, cols = board[0].count
-    var board = board
     let word = Array(word)
+    let rows = board.count, cols = board[0].count
+    var visited = Set<String>()
 
-    func dfs(_ i: Int, _ j: Int, _ n: Int) -> Bool {
-        if n == word.count { return true }
+    func dfs(_ i: Int, _ j: Int, _ k: Int) -> Bool {
+        let key = "\(i),\(j)"
 
-        if i < 0 || i >= rows || j < 0 || j >= cols || board[i][j] != word[n] {
-            return false
-        }
+        if k == word.count { return true }
+        if i < 0 || i >= rows || j < 0 || j >= cols { return false }
+        if board[i][j] != word[k] || visited.contains(key) { return false }
 
-        let letter = board[i][j]
-        board[i][j] = "*" 
+        visited.insert(key)
         let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
-
+    
         for (di, dj) in directions {
-            if dfs(di, dj, n + 1) { return true } 
+            if dfs(di, dj, k + 1) { return true }
         }
 
-        board[i][j] = letter 
+        visited.remove(key)
         return false
     }
 
     for i in 0..<rows {
         for j in 0..<cols {
             if dfs(i, j, 0) { return true }
+            visited = [] 
         }
     }
 
-    return false
+    return false 
 }
+
+print(exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "ABCCED"))
+print(exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "SEE"))
+print(exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "ABCB"))

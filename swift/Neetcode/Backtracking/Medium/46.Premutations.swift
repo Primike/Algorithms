@@ -5,16 +5,16 @@ func permute(_ nums: [Int]) -> [[Int]] {
     var nums = nums
     var result = [[Int]]()
 
-    func backtrack(_ left: Int) {
-        if left == nums.count {
+    func backtrack(_ index: Int) {
+        if index == nums.count {
             result.append(nums)
             return
         }
 
-        for i in left..<nums.count {
-            nums.swapAt(i, left)
-            backtrack(left + 1)
-            nums.swapAt(i, left)  
+        for i in index..<nums.count {
+            nums.swapAt(i, index)
+            backtrack(index + 1)
+            nums.swapAt(i, index)  
         }
     }
 
@@ -27,19 +27,18 @@ print(premutate([0,1]))
 print(premutate([1]))
 
 
-func permute2(_ nums: [Int]) -> [[Int]] {
+func permute(_ nums: [Int]) -> [[Int]] {
     var result = [[Int]]()
 
-    func backtrack(_ nums: [Int], _ permutation: [Int]) {
-        if nums.count == 0 {
+    func backtrack(_ numbers: [Int], _ permutation: [Int]) {
+        if permutation.count == nums.count { 
             result.append(permutation)
-            return
+            return 
         }
 
-        for i in 0..<nums.count {
-            var newNums = nums
-            let number = newNums.remove(at: i)
-            backtrack(newNums, permutation + [number])
+        for i in 0..<numbers.count {
+            let newNums = Array(numbers[(i + 1)...] + numbers[..<i])
+            backtrack(newNums, permutation + [numbers[i]])
         }
     }
 

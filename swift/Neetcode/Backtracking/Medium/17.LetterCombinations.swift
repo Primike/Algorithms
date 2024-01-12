@@ -2,6 +2,7 @@
 // return all possible letter combinations that the number could represent. 
 // Return the answer in any order.
 
+// Time: O(4^n), Space: O(4^n)
 func letterCombinations(_ digits: String) -> [String] {
     if digits.count == 0 { return [] }
 

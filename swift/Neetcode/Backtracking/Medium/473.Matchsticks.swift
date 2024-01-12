@@ -4,32 +4,29 @@
 // and each matchstick must be used exactly one time.
 // Return true if you can make this square and false otherwise.
 
+// Time: O(4^n), Space: O(n)
 func makesquare(_ matchsticks: [Int]) -> Bool {
-    let total = matchsticks.reduce(0, +)
-
-    if total % 4 != 0 { return false }
-
+    let sum = matchsticks.reduce(0, +)
+    if sum % 4 != 0 { return false }
     let matchsticks = matchsticks.sorted { $0 > $1 }
-    let length = total / 4
-    
+    var target = sum / 4
+
     func backtrack(_ index: Int, _ sides: [Int]) -> Bool {
-        if index == matchsticks.count {
-            return sides[0] == length && sides[1] == length && sides[2] == length && sides[3] == length
+        if index == matchsticks.count { return sides.allSatisfy { $0 == target } }
+
+        for (i, side) in sides.enumerated() {
+            if side + matchsticks[index] > target { continue }
+
+            var newSides = sides
+            newSides[i] += matchsticks[index]
+
+            if backtrack(index + 1, newSides) { return true }
         }
-        
-        for i in 0..<4 {
-            if sides[i] + matchsticks[index] <= length {
-                var newSides = sides
-                newSides[i] += matchsticks[index]
-                
-                if backtrack(index + 1, newSides) { return true }
-            }
-        }
-        
+
         return false
     }
-    
-    return backtrack(0, [0, 0, 0, 0])
+
+    return backtrack(0, Array(repeating: 0, count: 4))
 }
 
 print(makesquare([1,1,2,2,2]))

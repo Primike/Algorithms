@@ -3,7 +3,7 @@
 // the candidate numbers sum to target.
 // Each number in candidates may only be used once in the combination.
 
-// Time: 2^n, Space: 2^n
+// Time: O(2^n), Space: O(2^n)
 func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
     var nums = candidates.sorted()
     var result = [[Int]]()
@@ -17,7 +17,6 @@ func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
 
         for i in index..<nums.count {
             if i > index, nums[i] == nums[i - 1] { continue }
-
             backtrack(i + 1, combination + [nums[i]], target - nums[i])
         }
     }

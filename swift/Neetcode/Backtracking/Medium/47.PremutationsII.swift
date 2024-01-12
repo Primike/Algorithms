@@ -1,23 +1,22 @@
 // Given a collection of numbers, nums, that might contain duplicates, 
 // return all possible unique permutations in any order.
 
-// Time: n!, Space: n * n!
+// Time: O(n!), Space: O(n * n!)
 func permuteUnique(_ nums: [Int]) -> [[Int]] {
-    var nums = nums.sorted { $0 < $1 }
+    let nums = nums.sorted()
     var result = [[Int]]()
 
-    func backtrack(_ nums: [Int], _ current: [Int]) {
-        if nums.count == 0 { 
-            result.append(current)
-            return
+    func backtrack(_ numbers: [Int], _ permutation: [Int]) {
+        if permutation.count == nums.count { 
+            result.append(permutation)
+            return 
         }
 
-        for (i, number) in nums.enumerated() {
-            if i > 0, number == nums[i - 1] { continue }
+        for i in 0..<numbers.count {
+            if i > 0, numbers[i] == numbers[i - 1] { continue }
 
-            var newNums = nums
-            newNums.remove(at: i)
-            backtrack(newNums, current + [number])
+            let newNums = Array(numbers[..<i] + numbers[(i + 1)...])
+            backtrack(newNums, permutation + [numbers[i]])
         }
     }
 

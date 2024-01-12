@@ -1,21 +1,20 @@
 // Given a string s, partition s such that every substring of the partition 
 // is a palindrome. Return all possible palindrome partitioning of s.
 
+// Optimize by saving know palindromes
+// Time: O(n * 2^n), Space: O(n)
 func partition(_ s: String) -> [[String]] {
-    var s = Array(s)
+    let s = Array(s)
     var result = [[String]]()
 
     func backtrack(_ index: Int, _ current: [String]) {
-        if index == s.count {
-            result.append(current)
-            return
-        }
+        if index == s.count { result.append(current) }
 
         for i in index..<s.count {
-            let substring = String(s[index...i])
-            
-            if substring == String(substring.reversed()) {
-                backtrack(i + 1, current + [substring])
+            let string = String(s[index...i])
+
+            if string == String(string.reversed()) { 
+                backtrack(i + 1, current + [string]) 
             }
         }
     }
@@ -23,3 +22,6 @@ func partition(_ s: String) -> [[String]] {
     backtrack(0, [])
     return result
 }
+
+print(partition("aab"))
+print(partition("a"))

@@ -3,7 +3,7 @@
 // The solution set must not contain duplicate subsets. 
 // Return the solution in any order.
 
-// Time: 2^n, Space: n*2^n
+// Time: O(2^n), Space: O(2^n)
 func subsets(_ nums: [Int]) -> [[Int]] {
     var result = [[Int]]()
 
@@ -21,3 +21,20 @@ func subsets(_ nums: [Int]) -> [[Int]] {
 
 print(subsets([1,2,3]))
 print(subsets([0]))
+
+func subsets2(_ nums: [Int]) -> [[Int]] {
+    var result = [[Int]]()
+
+    func backtrack(_ i: Int, _ subset: [Int]) {
+        if i == nums.count { 
+            result.append(subset) 
+            return
+        }
+
+        backtrack(i + 1, subset)
+        backtrack(i + 1, subset + [nums[i]])
+    }
+
+    backtrack(0, [])
+    return result
+}

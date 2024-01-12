@@ -2,6 +2,7 @@
 // concatenation of a subsequence of arr that has unique characters.
 // Return the maximum possible length of s.
 
+// Time: O(n * 2^n), Space: O(n)
 func maxLength(_ arr: [String]) -> Int {
     var result = 0
 
