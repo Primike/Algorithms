@@ -1,5 +1,6 @@
 // Given the root of a binary tree, return the maximum width of the given tree.
 
+// Time: O(n), Space: O(w)
 func widthOfBinaryTree(_ root: TreeNode?) -> Int {
     guard let root = root else { return 0 }
 

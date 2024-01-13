@@ -1,73 +1,63 @@
 class LockingTree {
-    let parent: [Int]
-    var locked: [Int: Int]
-    var edges: [[Int]]
+
+    var locks: [Int: Int]
+    var paths: [[Int]]
+    var parent: [Int]
 
     init(_ parent: [Int]) {
+        self.locks = [:]
+        self.paths = Array(repeating: [], count: parent.count)
         self.parent = parent
-        self.locked = [:]
-        self.edges = Array(repeating: [Int](), count: parent.count)
 
-        for (i, n) in parent.enumerated() {
-            if n != -1 { edges[n].append(i) }
+        for (i, node) in parent.enumerated() {
+            if node == -1 { continue }
+            paths[node].append(i)
         }
     }
     
     func lock(_ num: Int, _ user: Int) -> Bool {
-        if locked.keys.contains(num) { return false }
+        if locks.keys.contains(num) { return false }
 
-        locked[num] = user
+        locks[num] = user
         return true
     }
     
     func unlock(_ num: Int, _ user: Int) -> Bool {
-        if !locked.keys.contains(num) { return false }
-
-        if locked[num]! == user {
-            locked.removeValue(forKey: num)
+        if let value = locks[num], user == value {
+            locks[num] = nil
             return true
-        } else {
-            return false
         }
+
+        return false
     }
     
     func upgrade(_ num: Int, _ user: Int) -> Bool {
-        if locked.keys.contains(num) { return false }
-        if !checkAncestors(num) { return false }
-        if !checkAndUnlockDecendants(num) { return false }
-
-        locked[num] = user
-        return true
-    }
-
-    func checkAncestors(_ n: Int) -> Bool {
-        var current = n
+        var current = num
 
         while current != -1 {
-            let ancestor = parent[current]
-            if locked.keys.contains(ancestor) { return false }
-            current = ancestor
+            if locks.keys.contains(current) { return false }
+            current = parent[current]
         }
 
-        return true
-    }
-
-    func checkAndUnlockDecendants(_ n: Int) -> Bool {
-        var queue = [n]
-        var isLocked = false
+        var queue = [num], locked = false
 
         while !queue.isEmpty {
             for _ in 0..<queue.count {
                 let first = queue.removeFirst()
-                if locked.keys.contains(first) { isLocked = true }
-                locked.removeValue(forKey: first)
 
-                for node in edges[first] {
+                for node in paths[first] {
                     queue.append(node)
+                    if locks.keys.contains(node) {
+                        locked = true
+                        locks[node] = nil
+                    }
                 }
             }
         }
 
-        return isLocked
+        if locked == false { return false }
+
+        locks[num] = user
+        return true
     }
 }

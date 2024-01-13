@@ -2,6 +2,7 @@
 // imagine yourself standing on the right side of it, 
 // return the values of the nodes you can see ordered from top to bottom.
 
+// Time: O(n), Space: O(w)
 func rightSideView(_ root: TreeNode?) -> [Int] {
     guard let root = root else { return [] }
 
@@ -9,15 +10,14 @@ func rightSideView(_ root: TreeNode?) -> [Int] {
     var queue = [root]
 
     while !queue.isEmpty {
-        let currentCount = queue.count - 1
+        let count = queue.count
 
-        for i in 0..<queue.count {
-            let node = queue.removeFirst()
+        for i in 0..<count {
+            let first = queue.removeFirst()
 
-            if let left = node.left { queue.append(left) }
-            if let right = node.right { queue.append(right) }
-
-            if i == currentCount { result.append(node.val) }
+            if let left = first.left { queue.append(left) }
+            if let right = first.right { queue.append(right) }
+            if i == count - 1 { result.append(first.val) }
         }
     }
 

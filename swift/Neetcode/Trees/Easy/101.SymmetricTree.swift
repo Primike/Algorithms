@@ -1,15 +1,13 @@
 // Given the root of a binary tree, check whether it is a mirror of itself
 
+// Time: O(n), Space: O(h)
 func isSymmetric(_ root: TreeNode?) -> Bool {
-    guard let root = root else { return true }
-
-    func depthFirst(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
+    func dfs(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
         if p == nil, q == nil { return true }
-        if p == nil || q == nil { return false }
-        if p!.val != q!.val { return false}
-        
-        return depthFirst(p?.left, q?.right) && depthFirst(p?.right, q?.left)
+        guard let p = p, let q = q, p.val == q.val else { return false }
+
+        return dfs(p.left, q.right) && dfs(p.right, q.left)
     }
 
-    return depthFirst(root.left, root.right)
+    return dfs(root?.left, root?.right)
 }

@@ -1,16 +1,17 @@
 // Given the root of a binary tree, return the postorder traversal of its nodes' values.
 
+// Time: O(n), Space: O(h)
 func postorderTraversal(_ root: TreeNode?) -> [Int] {
     var result = [Int]()
     
-    func depthFirst(_ root: TreeNode?) {
+    func dfs(_ root: TreeNode?) {
         guard let root = root else { return }
 
-        depthFirst(root.left)
-        depthFirst(root.right)
+        dfs(root.left)
+        dfs(root.right)
         result.append(root.val)
     }
 
-    depthFirst(root)
+    dfs(root)
     return result
 }

@@ -4,6 +4,7 @@
 // Return the minimum time in seconds you have to spend to collect 
 // all apples in the tree, starting at vertex 0 and coming back to this vertex.
 
+// Time: O(n), Space: O(h)
 func minTime(_ n: Int, _ edges: [[Int]], _ hasApple: [Bool]) -> Int {
     var neighbors = Array(repeating: [Int](), count: n)
     
@@ -12,28 +13,19 @@ func minTime(_ n: Int, _ edges: [[Int]], _ hasApple: [Bool]) -> Int {
         neighbors[edge[1]].append(edge[0])
     }
 
-    var visited = Set<Int>()
-
-    func dfs(_ n: Int, _ count: Int) -> (Bool, Int) {
-        if visited.contains(n) { return (false, count) }
-
-        visited.insert(n)
-        var apple = hasApple[n]
-        var path = count + 1
-
-        for neighbor in neighbors[n] {
-            let (containsApple, value) = dfs(neighbor, 1)
-            
-            if containsApple { 
-                path += value 
-                apple = true
-            }
+    func dfs(_ i: Int, _ parent: Int) -> Int {
+        var time = 0
+        
+        for node in neighbors[i] {
+            if node == parent { continue }
+            time += dfs(node, i)
         }
 
-        return apple ? (true, path) : (false, path)
+        if i != 0, (hasApple[i] || time > 0) { time += 2 }
+        return time
     }
 
-    return dfs(0, 0).1 - 1
+    return dfs(0, -1)
 }
 
 print(minTime(7,

@@ -1,5 +1,6 @@
 // Given the root of a binary tree, return the inorder traversal of its nodes' values.
 
+// Time: O(n), Space: O(h)
 func inorderTraversal(_ root: TreeNode?) -> [Int] {
     var result = [Int]()
     var stack = [TreeNode?]()
@@ -22,15 +23,14 @@ func inorderTraversal(_ root: TreeNode?) -> [Int] {
 func inorderTraversal(_ root: TreeNode?) -> [Int] {
     var result = [Int]()
 
-    func depthFirst(_ root: TreeNode?) {
+    func dfs(_ root: TreeNode?) {
         guard let root = root else { return }
 
-        depthFirst(root.left)
+        dfs(root.left)
         result.append(root.val)
-        depthFirst(root.right)
+        dfs(root.right)
     }
 
-    depthFirst(root)
+    dfs(root)
     return result
 }
-

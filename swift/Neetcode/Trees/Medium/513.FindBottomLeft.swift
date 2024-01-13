@@ -1,13 +1,15 @@
-// Given the root of a binary tree, return the leftmost value in the last row of the tree.
+// Given the root of a binary tree, return the leftmost value 
+// in the last row of the tree.
 
+// Time: O(n), Space: O(w)
 func findBottomLeftValue(_ root: TreeNode?) -> Int {
     guard let root = root else { return 0 }
 
     var queue = [root]
-    var leftValue = root.val
+    var result = root.val
 
     while !queue.isEmpty {
-        leftValue = queue[0].val
+        result = queue[0].val
 
         for _ in 0..<queue.count {
             let node = queue.removeFirst()
@@ -17,7 +19,7 @@ func findBottomLeftValue(_ root: TreeNode?) -> Int {
         }
     }
 
-    return leftValue
+    return result
 }
 
 func findBottomLeftValue2(_ root: TreeNode?) -> Int {

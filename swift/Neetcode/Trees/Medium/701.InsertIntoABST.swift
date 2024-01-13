@@ -5,31 +5,6 @@
 func insertIntoBST(_ root: TreeNode?, _ val: Int) -> TreeNode? {
     guard let root = root else { return TreeNode(val) }
 
-    var previous: TreeNode? = nil
-    var current: TreeNode? = root
-
-    while let value = current?.val {
-        previous = current
-
-        if val > value {
-            current = current?.right
-        } else {
-            current = current?.left
-        }
-    }
-
-    if (previous?.val ?? 0) > val {
-        previous?.left = TreeNode(val)
-    } else {
-        previous?.right = TreeNode(val)
-    }
-
-    return root
-}
-
-func insertIntoBST2(_ root: TreeNode?, _ val: Int) -> TreeNode? {
-    guard let root = root else { return TreeNode(val) }
-
     if root.val > val {
         root.left = insertIntoBST(root.left, val)
     } else {

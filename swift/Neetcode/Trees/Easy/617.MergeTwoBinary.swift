@@ -1,5 +1,6 @@
 // You are given two binary trees root1 and root2. Return the merged tree.
 
+// Time: O(n), Space: O(h)
 func mergeTrees(_ root1: TreeNode?, _ root2: TreeNode?) -> TreeNode? {
     if root1 == nil, root2 == nil { return nil }
     if root1 == nil { return root2 }

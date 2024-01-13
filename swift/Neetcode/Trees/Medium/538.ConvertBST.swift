@@ -2,6 +2,7 @@
 // such that every key of the original BST is changed to the original key 
 // plus the sum of all keys greater than the original key in BST.
 
+// Time: O(n), Space: O(n)
 func convertBST(_ root: TreeNode?) -> TreeNode? {
     guard let root = root else { return nil }
     

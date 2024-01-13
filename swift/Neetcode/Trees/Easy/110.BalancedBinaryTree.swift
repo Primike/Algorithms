@@ -1,36 +1,18 @@
-//Given a binary tree, determine if it is height-balanced.
+// Given a binary tree, determine if it is height-balanced.
 
-func isBalanced(_ root: TreeNode?) -> Bool {
-    var result = true
-
-    func dfs(_ node: TreeNode?) -> Int {
-        guard let node = node else { return 0 }
-
-        let left = dfs(node.left)
-        let right = dfs(node.right)
-
-        if abs(left - right) > 1 { result = false }
-
-        return 1 + max(left, right)
-    }
-
-    dfs(root)
-    return result
-}
-
+// Time: O(n), Space: O(h)
 func isBalanced(_ root: TreeNode?) -> Bool {
     var result = 0
 
-    func depthFirst(_ root: TreeNode?) -> Int {
+    func dfs(_ root: TreeNode?) -> Int {
         guard let root = root else { return 0 }
 
-        let left = depthFirst(root.left)
-        let right = depthFirst(root.right)
+        let left = dfs(root.left), right = dfs(root.right)
+        result = max(result, abs(right - left))
 
-        result = max(result, abs(left - right))
         return max(left, right) + 1
     }
 
-    depthFirst(root)
+    dfs(root)
     return result <= 1
 }

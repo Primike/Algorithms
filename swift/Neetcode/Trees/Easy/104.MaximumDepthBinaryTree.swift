@@ -1,5 +1,6 @@
-//Given the root of a binary tree, return its maximum depth.
+// Given the root of a binary tree, return its maximum depth.
 
+// Time: O(n), Space: O(h)
 func maxDepth(_ root: TreeNode?) -> Int {
     guard let root = root else { return 0 }
 

@@ -12,7 +12,7 @@ class BSTIterator {
     }
     
     func next() -> Int {
-        var next = self.stack.popLast()
+        var next = self.stack.removeLast()
         var current = next?.right
 
         while let node = current {

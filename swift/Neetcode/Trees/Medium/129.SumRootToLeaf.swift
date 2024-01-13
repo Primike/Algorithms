@@ -1,6 +1,7 @@
 // You are given the root of a binary tree containing digits from 0 to 9 only.
 // Return the total sum of all root-to-leaf numbers
 
+// Time: O(n), Space: O(h)
 func sumNumbers(_ root: TreeNode?) -> Int {
     var result = 0
     

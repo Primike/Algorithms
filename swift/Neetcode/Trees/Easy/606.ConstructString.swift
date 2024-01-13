@@ -2,17 +2,19 @@
 // parenthesis and integers from a binary tree with the preorder traversal way, 
 // and return it.
 
-func tree2str(_ root: TreeNode?) -> String {
+// Time: O(n), Space: O(h)
+func tree2str(_ root: TreeNode?) -> String {    
     guard let root = root else { return "" }
-    
-    var result = "\(root.val)"
+
+    var current = "\(root.val)"
     let left = tree2str(root.left)
     let right = tree2str(root.right)
+
+    if right != "" { 
+        current += "(\(left))(\(right))" 
+    } else if left != "" {
+        current += "(\(left))" 
+    }
     
-
-    if left == "", right == "" { return result }
-    if left == "" { return result + "()(\(right))" } 
-    if right == "" { return result + "(\(left))" } 
-
-    return result + "(\(left))(\(right))"
+    return current
 }

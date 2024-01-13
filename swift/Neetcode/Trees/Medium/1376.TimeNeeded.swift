@@ -1,25 +1,26 @@
 // Return the number of minutes needed to inform all the employees about the urgent news.
 
+// Time: O(n), Space: O(n)
 func numOfMinutes(_ n: Int, _ headID: Int, _ manager: [Int], _ informTime: [Int]) -> Int {
-    var subordinates = Array(repeating: [Int](), count: n)
+    var paths = Array(repeating: [Int](), count: n)
 
-    for (n, id) in manager.enumerated() {
-        if id != -1 { subordinates[id].append(n) }
+    for i in 0..<manager.count {
+        if manager[i] == -1 { continue }
+        paths[manager[i]].append(i)
     }
 
-    func dfs(_ id: Int, _ time: Int) -> Int {
-        if subordinates[id].isEmpty { return time }
+    var result = 0
 
-        var longestTime = 0
-
-        for n in subordinates[id] {
-            longestTime = max(longestTime, dfs(n, time + informTime[id]))
+    func dfs(_ i: Int, _ time: Int) {
+        for worker in paths[i] {
+            dfs(worker, time + informTime[i])
         }
 
-        return longestTime
+        result = max(result, time)
     }
-    
-    return dfs(headID, 0)
+
+    dfs(headID, 0)
+    return result
 }
 
 print(numOfMinutes(1, 0, [-1], [0]))
