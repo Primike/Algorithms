@@ -1,47 +1,43 @@
 // Return the minimum cost to make all points connected. All points are connected 
 // if there is exactly one simple path between any two points.
 
-struct Cost: Comparable {
+struct Point: Comparable {
+    let n: Int
     let cost: Int
-    let vertex: Int
 
-    static func <(left: Cost, right: Cost) -> Bool {
-        return left.cost < right.cost
+    static func < (_ l: Point, _ r: Point) -> Bool {
+        return l.cost < r.cost
     }
 }
 
+// Time: O(n^2 * logn), Space: O(n^2)
 func minCostConnectPoints(_ points: [[Int]]) -> Int {
     let points = points.map { ($0[0], $0[1]) }
-    var heap = Heap<Cost>(type: .minHeap)
-    var visited = Set<Int>()
+    var heap = Heap<Point>(.minHeap)
+    var visited = Set([0])
     var result = 0
 
-    func manhattanDistance(_ a: (Int, Int), _ b: (Int, Int)) -> Int {
-        return abs(a.0 - b.0) + abs(a.1 - b.1)
-    }
-
-    visited.insert(0)
-    
     for i in 1..<points.count {
-        let cost = manhattanDistance(points[0], points[i])
-        heap.push(Cost(cost: cost, vertex: i))
+        let cost = abs(points[0].0 - points[i].0) + abs(points[0].1 - points[i].1)
+        heap.push(Point(n: i, cost: cost))
     }
 
     while !heap.isEmpty, visited.count < points.count {
-        let first = heap.pop()!
-        if visited.contains(first.vertex) { continue }
+        let closest = heap.pop()!
+        if visited.contains(closest.n) { continue }
 
-        result += first.cost
-        visited.insert(first.vertex)
+        result += closest.cost
+        visited.insert(closest.n)
+        let n = closest.n
 
         for i in 0..<points.count {
-            if !visited.contains(i) {
-                let newCost = manhattanDistance(points[first.vertex], points[i])
-                heap.push(Cost(cost: newCost, vertex: i))
-            }
+            if visited.contains(i) { continue }
+
+            let cost = abs(points[n].0 - points[i].0) + abs(points[n].1 - points[i].1)
+            heap.push(Point(n: i, cost: cost))
         }
     }
-    
+
     return result
 }
 
