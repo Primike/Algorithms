@@ -1,5 +1,6 @@
-Return the maximum points you can earn for the exam.
+// Return the maximum points you can earn for the exam.
 
+// Time: O(n), Space: O(n)
 func mostPoints(_ questions: [[Int]]) -> Int {
     var tab = [Int: Int]()
 
@@ -14,7 +15,7 @@ print(mostPoints([[3,2],[4,3],[4,4],[2,5]]))
 print(mostPoints([[1,1],[2,2],[3,3],[4,4],[5,5]]))
 
 
-func mostPoints(_ questions: [[Int]]) -> Int {
+func mostPoints2(_ questions: [[Int]]) -> Int {
     var memo = [Int: Int]()
 
     func dp(_ i: Int) -> Int {

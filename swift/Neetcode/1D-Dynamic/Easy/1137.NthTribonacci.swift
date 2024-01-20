@@ -1,5 +1,6 @@
 // Given n, return the value of Tn.
 
+// Time: O(n), Space: O(1)
 func tribonacci(_ n: Int) -> Int {
     if n == 0 { return 0 }
     if n <= 2 { return 1 }

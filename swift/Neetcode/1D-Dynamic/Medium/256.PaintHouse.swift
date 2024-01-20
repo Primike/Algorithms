@@ -3,6 +3,7 @@
 // You have to paint all the houses such that no two adjacent houses have the same color.
 // Return the minimum cost to paint all houses.
 
+// Time: O(n), Space: O(1)
 func minCost(_ costs: [[Int]]) -> Int {
     var tab = [0, 0, 0]
 
@@ -21,27 +22,36 @@ func minCost(_ costs: [[Int]]) -> Int {
 print(minCost([[17,2,17],[16,16,5],[14,3,19]]))
 print(minCost([[7,6,2]]))
 
-
 func minCost2(_ costs: [[Int]]) -> Int {
+    var tab = Array(repeating: [0, 0, 0], count: costs.count + 1)
+
+    for i in 0..<costs.count {
+        tab[i + 1][0] = min(tab[i][1], tab[i][2]) + costs[i][0]
+        tab[i + 1][1] = min(tab[i][0], tab[i][2]) + costs[i][1]
+        tab[i + 1][2] = min(tab[i][0], tab[i][1]) + costs[i][2]
+    }
+
+    return tab[tab.count - 1].min() ?? 0
+}
+
+func minCost3(_ costs: [[Int]]) -> Int {
     var memo = [String: Int]()
 
-    func dp(_ index: Int, _ color: Int) -> Int {
-        let key = "\(index),\(color)"
+    func dp(_ i: Int, _ previous: Int) -> Int {
+        let key = "\(i),\(previous)"
 
-        if index >= costs.count { return 0 }
+        if i >= costs.count { return 0 }
         if let value = memo[key] { return value }
 
         var result = Int.max
 
-        for i in 0..<3 {
-            if i == color { continue }
-
-            result = min(result, dp(index + 1, i) + costs[index][i])
-        }
+        if previous != 0 { result = min(result, dp(i + 1, 0) + costs[i][0]) }
+        if previous != 1 { result = min(result, dp(i + 1, 1) + costs[i][1]) }
+        if previous != 2 { result = min(result, dp(i + 1, 2) + costs[i][2]) }
 
         memo[key] = result
         return result
     }
-    
+
     return dp(0, -1)
 }

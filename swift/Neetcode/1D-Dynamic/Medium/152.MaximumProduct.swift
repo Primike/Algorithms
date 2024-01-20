@@ -1,14 +1,16 @@
 // Given an integer array nums, find a subarray
 // that has the largest product, and return the product.
 
-//negative and currentMax swap at negatives
+// Time: O(n), Space: O(1)
 func maxProduct(_ nums: [Int]) -> Int {
     var result = nums[0]
-    var negative = 1, currentMax = 1
+    var currentMin = 1, currentMax = 1
 
-    for n in nums {
-        currentMax = max(n * currentMax, n * negative, n)
-        negative = min(n * currentMax, n * negative, n)
+    for number in nums {
+        let temp = currentMax * number
+
+        currentMax = max(number * currentMax, number * currentMin, number)
+        currentMin = min(temp, number * currentMin, number)
 
         result = max(result, currentMax)
     }

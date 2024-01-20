@@ -1,5 +1,6 @@
 // Given a string s, return the number of palindromic substrings in it.
 
+// Time: O(n), Space: O(1)
 func countSubstrings(_ s: String) -> Int {
     var s = Array(s)
     var result = 0

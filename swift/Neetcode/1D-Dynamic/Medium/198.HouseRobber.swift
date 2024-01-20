@@ -1,7 +1,7 @@
 // Given an integer array nums representing the amount of money of each house, 
 // return the maximum amount of money you can rob tonight.
 
-//Time: n, Space: 1
+//Time: O(n), Space: O(1)
 func rob(_ nums: [Int]) -> Int {
     var previous = 0, current = 0
 
@@ -18,16 +18,12 @@ print(rob([1,2,3,1]))
 print(rob([2,7,9,3,1]))
 
 func rob2(_ nums: [Int]) -> Int {
-    if nums.count == 1 { return nums[0] }
-    
-    var tab = Array(repeating: 0, count: nums.count)
-    tab[0] = nums[0]
-    tab[1] = max(nums[0], nums[1])
-    
-    for i in 2..<nums.count {
-        tab[i] = max(tab[i - 1], tab[i - 2] + nums[i])
+    var tab = Array(repeating: 0, count: nums.count + 2)
+
+    for i in 0..<nums.count {
+        tab[i + 2] = max(tab[i] + nums[i], tab[i + 1])
     }
-    
+
     return tab[tab.count - 1]
 }
 

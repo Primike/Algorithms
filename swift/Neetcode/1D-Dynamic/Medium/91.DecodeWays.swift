@@ -1,5 +1,6 @@
 // Given a string s containing only digits, return the number of ways to decode it.
 
+// Time: O(n), Space: O(n)
 func numDecodings(_ s: String) -> Int {
     if s.first == "0" { return 0 }
     

@@ -1,5 +1,6 @@
 // Given a string s, return the longest palindromic substring in s.
 
+// Time: O(n^2), Space: O(1)
 func longestPalindrome(_ s: String) -> String {
     let s = Array(s)
     var start = 0, end = 0

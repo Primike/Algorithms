@@ -4,14 +4,17 @@
 // You can either start from the step with index 0, or the step with index 1.
 // Return the minimum cost to reach the top of the floor.
 
+// Time: O(n), Space: O(1)
 func minCostClimbingStairs(_ cost: [Int]) -> Int {
-    var tab = Array(repeating: 0, count: cost.count + 1)
+    var cost1 = 0, cost2 = 0
 
-    for i in 2..<tab.count {
-        tab[i] = min(tab[i - 2] + cost[i - 2], tab[i - 1] + cost[i - 1])
+    for i in 2...cost.count {
+        let temp = cost2
+        cost2 = min(cost[i - 1] + cost2, cost[i - 2] + cost1)
+        cost1 = temp
     }
 
-    return tab[tab.count - 1]
+    return cost2
 }
 
 print(minCostClimbingStairs([10,15,20]))

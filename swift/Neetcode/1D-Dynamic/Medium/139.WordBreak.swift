@@ -2,6 +2,7 @@
 // return true if s can be segmented into a space-separated sequence 
 // of one or more dictionary words.
 
+// Time: O(s * n), Space: O(s)
 func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
     var s = Array(s)
     var tab = Array(repeating: false, count: s.count + 1)
