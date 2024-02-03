@@ -2,6 +2,7 @@
 // you should answer whether course uj is a prerequisite of course vj or not.
 // Return a boolean array answer, where answer[j] is the answer to the jth query.
 
+// Time: O(n + e), Space: O(n)
 func checkIfPrerequisite(_ numCourses: Int, _ prerequisites: [[Int]], _ queries: [[Int]]) -> [Bool] {
     var paths = Array(repeating: Set<Int>(), count: numCourses)
 

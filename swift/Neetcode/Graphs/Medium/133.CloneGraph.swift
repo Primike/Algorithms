@@ -3,7 +3,7 @@
 // Each node in the graph contains a value (int) and a list
 // (List[Node]) of its neighbors.
 
-// Time: n * e, Space: n
+// Time: O(n * e), Space: O(n)
 func cloneGraph(_ node: Node?) -> Node? {
     var nodes = [Int: Node]()
 

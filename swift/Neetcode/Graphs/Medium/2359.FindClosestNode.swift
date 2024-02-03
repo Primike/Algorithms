@@ -3,6 +3,7 @@
 // and from node2 to that node is minimized. If there are multiple answers, 
 // return the node with the smallest index, and if no possible answer exists, return -1.
 
+// Time: O(n), Space: O(n)
 func closestMeetingNode(_ edges: [Int], _ node1: Int, _ node2: Int) -> Int {
     func dfs(_ n: Int, _ count: Int, _ visited: inout [Int: Int]) {
         if n == -1 || visited.keys.contains(n) { return }

@@ -3,7 +3,7 @@
 // 4-directionally (horizontal or vertical.) 
 // You may assume all four edges of the grid are surrounded by water.
 
-// Time: 2 * n * m, Space: n * m
+// Time: O(2 * n * m), Space: O(n * m)
 func maxAreaOfIsland(_ grid: [[Int]]) -> Int {
     let rows = grid.count, cols = grid[0].count
     var visited = Set<String>()

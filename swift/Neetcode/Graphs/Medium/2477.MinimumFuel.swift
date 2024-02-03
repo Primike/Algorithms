@@ -1,29 +1,28 @@
 // Return the minimum number of liters of fuel to reach the capital city 0.
 
+// Time: O(n), Space: O(n)
 func minimumFuelCost(_ roads: [[Int]], _ seats: Int) -> Int {
-    var neighbors = [Int: [Int]]()
+    var neighbors = Array(repeating: [Int](), count: roads.count + 1)
 
-    for path in roads {
-        neighbors[path[0], default: []].append(path[1])
-        neighbors[path[1], default: []].append(path[0])
+    for road in roads {
+        neighbors[road[0]].append(road[1])
+        neighbors[road[1]].append(road[0])
     }
 
     var result = 0
 
-    func dfs(_ node: Int, _ parent: Int) -> Int {
-        var passengers = 0
+    func dfs(_ n: Int, _ parent: Int) -> Int {            
+        var passengers = 1
 
-        for neighbor in neighbors[node, default: []] {
-            if neighbor == parent { continue }
-            
-            let currentPassengers = dfs(neighbor, node)
-            passengers += currentPassengers
-            
-            let fuel = (currentPassengers + seats - 1) / seats
-            result += fuel
+        for node in neighbors[n] {
+            if parent == node { continue }
+
+            let people = dfs(node, n)
+            result += (people + seats - 1) / seats
+            passengers += people
         }
 
-        return passengers + 1
+        return passengers
     }
 
     dfs(0, -1)

@@ -1,5 +1,6 @@
 // Return the number of closed islands 0.
 
+// Time: O(n * m), Space: O(n * m)
 func closedIsland(_ grid: [[Int]]) -> Int {
     var rows = grid.count, cols = grid[0].count 
     var visited = Set<String>()

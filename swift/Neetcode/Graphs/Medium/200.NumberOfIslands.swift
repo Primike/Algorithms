@@ -1,7 +1,7 @@
 // Given an m r n 2D binary grid grid which represents a map of 
 // '1's (land) and '0's (water), return the number of islands.
 
-// Time: 2 * n * m, Space: n * m
+// Time: O(2 * n * m), Space: O(n * m)
 func numIslands(_ grid: [[Character]]) -> Int {
     let rows = grid.count, cols = grid[0].count 
     var visited = Set<String>()

@@ -3,7 +3,7 @@
 // touches the island's left and top edges, 
 // and the Atlantic Ocean touches the island's right and bottom edges.
 
-// Time: n * m, Space: 2 * n * m
+// Time: O(n * m), Space: O(2 * n * m)
 func pacificAtlantic(_ heights: [[Int]]) -> [[Int]] {
     let rows = heights.count, cols = heights[0].count
     var pacific = Set<String>(), atlantic = Set<String>()

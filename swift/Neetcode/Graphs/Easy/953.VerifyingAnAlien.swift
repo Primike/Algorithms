@@ -2,7 +2,7 @@
 // alphabet, return true if and only if the given words are sorted lexicographically 
 // in this alien language.
 
-// Time: char, Space: 26
+// Time: O(n), Space: O(26)
 func isAlienSorted(_ words: [String], _ order: String) -> Bool {
     let dict = Dictionary(uniqueKeysWithValues: order.enumerated().map { ($1, $0) })
     let wordsArray = words.map { Array($0) }

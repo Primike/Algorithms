@@ -2,6 +2,7 @@
 // you are playing as (white or black), return true if changing cell (rMove, cMove) 
 // to color color is a legal move, or false if it is not legal.
 
+// Time: O(n), Space: O(n)
 func checkMove(_ board: [[Character]], _ rMove: Int, _ cMove: Int, _ color: Character) -> Bool {
     let rows = board.count, cols = board[0].count
 

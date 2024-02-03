@@ -1,13 +1,13 @@
 // Given a target representing the value of the wheels that will unlock the lock, 
 // return the minimum total number of turns required to open the lock, or -1 if it is impossible.
 
-// Time: 10^4, Space: 10^4
+// Time: O(10^4), Space: O(10^4)
 func openLock(_ deadends: [String], _ target: String) -> Int {
     if deadends.contains("0000") { return -1 }
-
-    var deadends = Set(deadends)
-    deadends.insert("0000")
-    var queue = ["0000"]
+    
+    var deadends = Set(deadends.map { $0.map { Int(String($0)) ?? 0 } })
+    let target = target.map { Int(String($0)) ?? 0 }
+    var queue = [[0,0,0,0]]
     var result = 0
 
     while !queue.isEmpty {
@@ -15,29 +15,19 @@ func openLock(_ deadends: [String], _ target: String) -> Int {
             let first = queue.removeFirst()
             if first == target { return result }
 
-            let array = first.map { Int(String($0))! }
-
             for i in 0..<4 {
-                var forward = array
-                var backward = array
+                var forward = first, backward = first
+                forward[i] = (forward[i] + 1) % 10
+                backward[i] = (backward[i] - 1 + 10) % 10
 
-                forward[i] += 1
-                if forward[i] == 10 { forward[i] = 0 }
-
-                backward[i] -= 1
-                if backward[i] == -1 { backward[i] = 9 }
-
-                let string1 = forward.map { String($0) }.joined()
-                let string2 = backward.map { String($0) }.joined()
-
-                if !deadends.contains(string1) {
-                    queue.append(string1)
-                    deadends.insert(string1)
+                if !deadends.contains(forward) {
+                    deadends.insert(forward)
+                    queue.append(forward)
                 }
 
-                if !deadends.contains(string2) {
-                    queue.append(string2)
-                    deadends.insert(string2)
+                if !deadends.contains(backward) {
+                    deadends.insert(backward)
+                    queue.append(backward)
                 }
             }
         }

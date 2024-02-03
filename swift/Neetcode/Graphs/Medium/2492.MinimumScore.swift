@@ -1,5 +1,6 @@
 // Return the minimum possible score of a path between cities 1 and n.
 
+// Time: O(n), Space: O(n)
 func minScore(_ n: Int, _ roads: [[Int]]) -> Int {
     var neighbors = Array(repeating: [(Int, Int)](), count: n + 1)
 
@@ -8,22 +9,22 @@ func minScore(_ n: Int, _ roads: [[Int]]) -> Int {
         neighbors[road[1]].append((road[0], road[2]))
     }
 
-    var result = Int.max
     var visited = Set<Int>()
 
-    func dfs(_ n: Int) {
-        if visited.contains(n) { return }
+    func dfs(_ n: Int) -> Int {
+        if visited.contains(n) { return .max }
 
         visited.insert(n)
+        var result = Int.max
 
-        for neighbor in neighbors[n] {
-            result = min(result, neighbor.1)
-            dfs(neighbor.0)
+        for (node, cost) in neighbors[n] {
+            result = min(result, dfs(node), cost)
         }
+
+        return result
     }
 
-    dfs(1)
-    return result
+    return dfs(1)
 }
 
 print(minScore(4, [[1,2,9],[2,3,6],[2,4,5],[1,4,7]]))

@@ -1,6 +1,7 @@
 // Return the number of land cells in grid for which we cannot walk off the 
 // boundary of the grid in any number of moves.
 
+// Time: O(m * n), Space: O(m * n)
 func numEnclaves(_ grid: [[Int]]) -> Int {
     var rows = grid.count, cols = grid[0].count
     var visited = Set<String>()
@@ -51,29 +52,29 @@ print(numEnclaves(
     [0,0,0,0]]))
 
 
-
-func numEnclaves(_ grid: [[Int]]) -> Int {
-    let rows = grid.count, cols = grid[0].count
+func numEnclaves2(_ grid: [[Int]]) -> Int {
+    let rows = grid.count, cols = grid[0].count 
     var visited = Set<String>()
 
-    func dfs(_ i: Int, _ j: Int) -> (Int, Bool) {
+    func dfs(_ i: Int, _ j: Int) -> (Bool, Int) {
         let key = "\(i),\(j)"
 
-        if i < 0 || i >= rows || j < 0 || j >= cols { return (0, false) }
-        if grid[i][j] == 0 || visited.contains(key) { return (0, true) }
+        if i < 0 || i >= rows || j < 0 || j >= cols { return (false, 0) }
+        if visited.contains(key) || grid[i][j] == 0 { return (true, 0) }
 
         visited.insert(key)
         let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
-        var count = 1
-        var bool = true
+        var isInside = true
+        var cells = 1
 
         for (di, dj) in directions {
-            let (cells, isEnclosed) = dfs(di, dj)
-            count += cells
-            bool = bool && isEnclosed
+            let (bool, count) = dfs(di, dj)
+
+            if !bool { isInside = false }
+            cells += count
         }
 
-        return (count, bool)
+        return (isInside, cells)
     }
 
     var result = 0
@@ -81,8 +82,8 @@ func numEnclaves(_ grid: [[Int]]) -> Int {
     for i in 0..<rows {
         for j in 0..<cols {
             if grid[i][j] == 1, !visited.contains("\(i),\(j)") {
-                let (count, bool) = dfs(i, j)
-                if bool { result += count }
+                let (isInside, cells) = dfs(i, j)
+                result += isInside ? cells : 0
             }
         }
     }

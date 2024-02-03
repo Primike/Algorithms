@@ -1,31 +1,32 @@
 // Return the number of connected components in the graph.
 
+// Time: O(n + e), Space: O(n)
 func countComponents(_ n: Int, _ edges: [[Int]]) -> Int {
-    var parents = Array(0..<n)
+    var root = Array(0..<n)
     var rank = Array(repeating: 1, count: n)
 
-    func find(_ n: Int) -> Int {
-        var result = n
+    func getRoot(_ n: Int) -> Int {
+        var n = root[n]
 
-        while result != parents[result] {
-            parents[result] = parents[parents[result]]
-            result = parents[result]
+        while n != root[n] {
+            root[n] = root[root[n]]
+            n = root[n]
         }
 
-        return result
+        return n
     }
 
-    func union(_ n1: Int, _ n2: Int) -> Int {
-        var p1 = find(n1), p2 = find(n2)
+    func mergeRoots(_ n1: Int, _ n2: Int) -> Int {
+        let p1 = getRoot(n1), p2 = getRoot(n2)
 
         if p1 == p2 { return 0 }
 
-        if rank[p2] > rank[p1] {
-            parents[p1] = p2
-            rank[p2] += rank[p1]
-        } else {
-            parents[p2] = p1
+        if rank[p1] >= rank[p2] {
+            root[p2] = p1
             rank[p1] += rank[p2]
+        } else {
+            root[p1] = p2
+            rank[p2] += rank[p1]
         }
 
         return 1
@@ -34,7 +35,7 @@ func countComponents(_ n: Int, _ edges: [[Int]]) -> Int {
     var result = n
 
     for edge in edges {
-        result -= union(edge[0], edge[1])
+        result -= mergeRoots(edge[0], edge[1])
     }
 
     return result

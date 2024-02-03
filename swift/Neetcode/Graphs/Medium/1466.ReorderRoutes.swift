@@ -1,32 +1,32 @@
 // Your task consists of reorienting some roads such that each city can visit the city 0. 
 // Return the minimum number of edges changed.
 
-// Time: n + e, Space: n + e
+// Time: O(n), Space: O(n)
 func minReorder(_ n: Int, _ connections: [[Int]]) -> Int {
-    var neighbors = Array(repeating: [Int](), count: n)
-    var edges = Set<String>()
+    var neighbors = Array(repeating: [(Int, Bool)](), count: n)
 
     for connection in connections {
-        neighbors[connection[0]].append(connection[1])
-        neighbors[connection[1]].append(connection[0])
-        edges.insert("\(connection[1]),\(connection[0])")
-    }        
-
-    var visited = Set<Int>()
-    var result = 0
-    
-    func dfs(_ n: Int) {
-        visited.insert(n)
-
-        for neighbor in neighbors[n] {
-            if visited.contains(neighbor) { continue }
-            if !edges.contains("\(n),\(neighbor)") { result += 1 }
-            dfs(neighbor)
-        }
+        neighbors[connection[0]].append((connection[1], false))
+        neighbors[connection[1]].append((connection[0], true))
     }
 
-    dfs(0)
-    return result
+    var visited = Set<Int>()
+
+    func dfs(_ n: Int) -> Int {
+        visited.insert(n)
+        var result = 0
+
+        for (node, isPathFrom) in neighbors[n] {
+            if visited.contains(node) { continue }
+            if !isPathFrom { result += 1 }
+
+            result += dfs(node)
+        }
+
+        return result
+    }
+
+    return dfs(0)
 }
 
 print(minReorder(6, [[0,1],[1,3],[2,3],[4,0],[4,5]]))

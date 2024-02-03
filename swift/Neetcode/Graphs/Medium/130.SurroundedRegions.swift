@@ -1,6 +1,7 @@
 // Given an m x n matrix board containing 'X' and 'O', 
 // capture all regions that are 4-directionally surrounded by 'X'.
 
+// Time: O(m * n), Space: O(1)
 func solve(_ board: inout [[Character]]) {
     let rows = board.count, cols = board[0].count
 
@@ -11,8 +12,8 @@ func solve(_ board: inout [[Character]]) {
         board[i][j] = "T"
         let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
 
-        for (dx, dy) in directions {
-            dfs(dx, dy)
+        for (di, dj) in directions {
+            dfs(di, dj)
         }
     }
 
@@ -59,8 +60,8 @@ func solve(_ board: inout [[Character]]) {
         skipSet.insert("\(i),\(j)")
         let directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
-        for (dx, dy) in directions {
-            dfs(i + dx, j + dy)
+        for (di, dj) in directions {
+            dfs(i + di, j + dj)
         }
     }
 

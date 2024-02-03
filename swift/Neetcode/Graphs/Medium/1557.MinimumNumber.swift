@@ -1,20 +1,15 @@
 // Find the smallest set of vertices from which all nodes in the graph are reachable. 
 // It's guaranteed that a unique solution exists.
 
+// Time: O(n + e), Space: O(n)
 func findSmallestSetOfVertices(_ n: Int, _ edges: [[Int]]) -> [Int] {
-    var neighbors = Array(repeating: [Int](), count: n)
+    var visited = Set(Array(0..<n))
 
     for edge in edges {
-        neighbors[edge[1]].append(edge[0])
+        visited.remove(edge[1])
     }
 
-    var result = [Int]()
-
-    for (n, incoming) in neighbors.enumerated() {
-        if incoming.isEmpty { result.append(n) }
-    }
-
-    return result
+    return Array(visited)
 }
 
 print(findSmallestSetOfVertices(6, [[0,1],[0,2],[2,5],[3,4],[4,2]]))

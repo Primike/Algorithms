@@ -1,6 +1,6 @@
 // Return the number of islands in grid2 that are considered sub-islands.
 
-// Time: 2 * n * m, Space: n * m
+// Time: O(2 * n * m), Space: O(n * m)
 func countSubIslands(_ grid1: [[Int]], _ grid2: [[Int]]) -> Int {
     let rows = grid2.count, cols = grid2[0].count
     var visited = Set<String>()

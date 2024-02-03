@@ -1,6 +1,7 @@
 // You are given an n x n binary matrix grid where 1 represents land and 0 represents water.
 // Return the smallest number of 0's you must flip to connect the two islands.
 
+// Time: O(m * n), Space: O(m * n)
 func shortestBridge(_ grid: [[Int]]) -> Int {
     let rows = grid.count, cols = grid[0].count 
     var visited = Set<String>()
@@ -56,7 +57,6 @@ func shortestBridge(_ grid: [[Int]]) -> Int {
 
     return 0
 }
-
 
 print(shortestBridge([[0,1],[1,0]]))
 print(shortestBridge([[0,1,0],[0,0,0],[0,0,1]]))

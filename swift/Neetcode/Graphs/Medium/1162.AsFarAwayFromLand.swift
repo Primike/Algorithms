@@ -2,6 +2,7 @@
 // find a water cell such that its distance to the nearest land cell is maximized, and 
 // return the distance. If no land or water exists in the grid, return -1.
 
+// Time: O(n^2), Space: O(n^2)
 func maxDistance(_ grid: [[Int]]) -> Int {
     var n = grid.count
     var visited = Set<String>()

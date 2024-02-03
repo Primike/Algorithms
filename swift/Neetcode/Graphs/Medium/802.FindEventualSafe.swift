@@ -3,20 +3,24 @@
 // Return an array containing all the safe nodes of the graph. 
 // The answer should be sorted in ascending order.
 
+// Time: O(n + e), Space: O(n)
 func eventualSafeNodes(_ graph: [[Int]]) -> [Int] {
-    var isSafe = [Int: Bool]()
+    var safeNodes = [Int: Bool]()
+    var visited = Set<Int>()
 
-    func dfs(_ i: Int) -> Bool {
-        if let node = isSafe[i] { return node }
+    func dfs(_ n: Int) -> Bool {
+        if let value = safeNodes[n] { return value }
+        if visited.contains(n) { return false }
 
-        isSafe[i] = false
+        visited.insert(n)
+        var isSafe = true
 
-        for path in graph[i] {
-            if !dfs(path) { return isSafe[i, default: false] }
+        for node in graph[n] {
+            isSafe = isSafe && dfs(node)
         }
 
-        isSafe[i] = true
-        return isSafe[i, default: true]
+        safeNodes[n] = isSafe
+        return isSafe
     }
 
     var result = [Int]()
@@ -24,7 +28,7 @@ func eventualSafeNodes(_ graph: [[Int]]) -> [Int] {
     for i in 0..<graph.count {
         if dfs(i) { result.append(i) }
     }
-    
+
     return result
 }
 
