@@ -7,17 +7,18 @@
 // u prefers x over v.
 // Return the number of unhappy friends.
 
+// Time: O(n * m), Space: O(n * m)
 func unhappyFriends(_ n: Int, _ preferences: [[Int]], _ pairs: [[Int]]) -> Int {
-    var dict = [Int: [Int: Int]]()
+    var biases = [Int: [Int: Int]]()
 
     for i in 0..<n {
-        var map = [Int: Int]()
+        var preference = [Int: Int]()
 
-        for (j, friend) in preferences[i].enumerated() {
-            map[friend] = j
+        for (pair, friend) in preferences[i].enumerated() {
+            preference[friend] = pair
         }
 
-        dict[i] = map
+        biases[i] = preference
     }
 
     var pairDict = [Int: Int]()
@@ -30,19 +31,17 @@ func unhappyFriends(_ n: Int, _ preferences: [[Int]], _ pairs: [[Int]]) -> Int {
     var result = 0
 
     for i in 0..<n {
-        let y = pairDict[i]!
+        let pair = pairDict[i]!
 
-        for u in preferences[i] {
-            if u == y { break }
+        for friend in preferences[i] {
+            if friend == pair { break }
 
-            let v = pairDict[u]!
+            let friendPair = pairDict[friend]!
 
-            if let iPrefU = dict[i]?[u], let uPrefI = dict[u]?[i], 
-                let iPrefY = dict[i]?[y], let uPrefV = dict[u]?[v] {
-                if iPrefU < iPrefY, uPrefI < uPrefV {
-                    result += 1
-                    break
-                }
+            if biases[i]![friend]! < biases[i]![pair]!, 
+                biases[friend]![i]! < biases[friend]![friendPair]! {
+                result += 1
+                break
             }
         }
     }

@@ -6,6 +6,7 @@
 // if at any time you are on a location you have previously visited. 
 // Return false otherwise.
 
+// Time: O(n), Space: O(n)
 func isPathCrossing(_ path: String) -> Bool {
     var visited = Set([[0, 0]])
     var current = [0 ,0]

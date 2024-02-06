@@ -2,6 +2,7 @@
 // obtained by a single child in the distribution.
 // Return the minimum unfairness of all distributions.
 
+// Time: O(k^n), Space: O(n + k)
 func distributeCookies(_ cookies: [Int], _ k: Int) -> Int {
     var children = Array(repeating: 0, count: k)
     var result = Int.max

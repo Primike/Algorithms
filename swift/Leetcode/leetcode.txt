@@ -1,0 +1,46 @@
+Array:
+    Medium: 418!, 1583
+    Tricks: e232, m1041
+
+
+Backtracking:
+    Hard: 1088!
+
+
+Binary Search:
+    Medium: 852?
+
+
+Graph:
+    Medium: 2115?, 2812!
+    Tricks: m1319
+
+
+Stack: 
+    Hard: 224!
+
+
+Greedy: 
+    Hard: 871?
+
+2D-DP:
+    Medium: 486?, 1027!
+
+Premutations: 
+    Medium: 31!
+
+Prefix:
+    Hard: 1074
+
+Matrix:
+    Medium: 54?, 48?
+
+Math: 
+    Medium: 856?
+    Hard: 2366?
+
+Sliding Window: 
+    Hard: 2009!, 1297?
+
+Tree:
+    Medium: 666?, 314?, 333?, 1530!

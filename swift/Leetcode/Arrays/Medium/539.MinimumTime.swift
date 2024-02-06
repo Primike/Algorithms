@@ -1,6 +1,7 @@
 // Given a list of 24-hour clock time points in "HH:MM" format, 
 // return the minimum minutes difference between any two time-points in the list.
 
+// Time: O(n * logn), Space: O(n)
 func findMinDifference(_ timePoints: [String]) -> Int {
     var times = timePoints.map { $0.split(separator: ":").compactMap { Int($0) } }.map { $0[0] * 60 + $0[1] }
     times.sort { $0 < $1 }

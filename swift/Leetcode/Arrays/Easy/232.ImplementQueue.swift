@@ -1,3 +1,4 @@
+// Time: O(1), Space: O(n)
 class MyQueue {
     private var stack1: [Int] = []
     private var stack2: [Int] = []

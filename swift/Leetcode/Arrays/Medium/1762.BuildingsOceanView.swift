@@ -7,6 +7,7 @@
 // Return a list of indices (0-indexed) of buildings that have an ocean view, 
 // sorted in increasing order.
 
+// Time: O(n), Space: O(n)
 func findBuildings(_ heights: [Int]) -> [Int] {
     var result = [Int]()
     var tallest = 0

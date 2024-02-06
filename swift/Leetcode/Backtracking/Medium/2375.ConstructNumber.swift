@@ -3,37 +3,44 @@
 // If pattern[i] == 'D', then num[i] > num[i + 1].
 // Return the lexicographically smallest possible string num that meets the conditions.
 
+// Time: O(9!), Space: O(pattern)
 func smallestNumber(_ pattern: String) -> String {
     let pattern = Array(pattern)
-    let nums: [Character] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    var result = String(repeating: "9", count: pattern.count + 1)
+    let numbers: [Character] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    var numSet = Set<Character>()
+    var current = [Character]()
+    var result = "999999999"
 
-    func backtracking(_ index: Int, _ numbers: Set<Character>, _ current: String) {
-        if index == pattern.count { 
-            result = min(result, current)
-            return
+    func backtrack(_ index: Int) {
+        if index == pattern.count {
+            if String(current) < result { result = String(current) }
+            return 
         }
 
-        let char = pattern[index]
-        let last = current.last!
+        for n in numbers {
+            if numSet.contains(n) { continue }
+            
+            let last = current.last!
+            numSet.insert(n)
+            current.append(n)
 
-        for number in nums {
-            if char == "I", !numbers.contains(number), last < number {
-                var hashSet = numbers
-                hashSet.insert(number)
-                backtracking(index + 1, hashSet, current + String(number))
-            } else if char == "D", !numbers.contains(number), last > number {
-                var hashSet = numbers
-                hashSet.insert(number)
-                backtracking(index + 1, hashSet, current + String(number))
+            if pattern[index] == "I", n > last {
+                backtrack(index + 1)
+            } else if pattern[index] == "D", n < last {
+                backtrack(index + 1)
             }
+            
+            current.removeLast()
+            numSet.remove(n)
         }
     }
 
-    for number in nums {
-        var hashSet = Set<Character>()
-        hashSet.insert(number)
-        backtracking(0, hashSet, String(number))
+    for n in numbers {
+        numSet.insert(n)
+        current.append(n)
+        backtrack(0)
+        current.removeLast()
+        numSet.remove(n)
     }
 
     return result

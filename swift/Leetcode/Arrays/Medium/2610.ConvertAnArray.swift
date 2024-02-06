@@ -5,6 +5,7 @@
 // The number of rows in the 2D array should be minimal.
 // Return the resulting array. If there are multiple answers, return any of them.
 
+// Time: O(n), Space: O(n)
 func findMatrix(_ nums: [Int]) -> [[Int]] {
     let dict = nums.reduce(into: [:]) { $0[$1, default: 0] += 1 }
     var result = Array(repeating: [Int](), count: dict.values.max() ?? 1)

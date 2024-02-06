@@ -3,7 +3,6 @@
 // For each row i where r1 < i < r2, there are no security devices in the ith row.
 // Return the total number of laser beams in the bank.
 
-
 // Time: O(n * m), Space: O(n)
 func numberOfBeams(_ bank: [String]) -> Int {
     var lasers = [Int]()

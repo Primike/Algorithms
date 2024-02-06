@@ -5,6 +5,7 @@
 // A non-empty array is semi-decreasing if its first element is 
 // strictly greater than its last element.
 
+// Time: O(n * logn), Space: O(n)
 func maxSubarrayLength(_ nums: [Int]) -> Int {
     var nums = nums.enumerated().map { ($0.element, $0.offset) }
     nums.sort { $0.0 < $1.0 }

@@ -2,6 +2,7 @@
 // Return true if and only if there exists a circle in the plane such that 
 // the robot never leaves the circle.
 
+// Time: O(n), Space: O(1)
 func isRobotBounded(_ instructions: String) -> Bool {
     let instructions = Array(instructions)
     let directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]

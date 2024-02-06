@@ -4,24 +4,20 @@
 // The score after splitting a string is the number of zeros in 
 // the left substring plus the number of ones in the right substring.
 
+// Time: O(n), Space: O(1)
 func maxScore(_ s: String) -> Int {
     let s = Array(s)
-    var ones = 0, zeros = 0
-    var netZeros = Int.min
+    var zeros = s[0] == "0" ? 1 : 0
+    var ones = s[1...].filter { $0 == "1" }.count
+    var result = zeros + ones
 
-    for i in 0..<(s.count - 1) {
-        if s[i] == "1" {
-            ones += 1
-        } else {
-            zeros += 1
-        }
-
-        netZeros = max(netZeros, zeros - ones)
+    for i in 1..<(s.count - 1) {
+        if s[i] == "1" { ones -= 1 }
+        if s[i] == "0" { zeros += 1 }
+        result = max(result, zeros + ones)
     }
-
-    if s[s.count - 1] == "1" { ones += 1 }
-
-    return netZeros + ones
+    
+    return result
 }
 
 print(maxScore("011101"))

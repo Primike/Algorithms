@@ -3,6 +3,7 @@
 // Otherwise if it does occur, replace that substring with targets[i].
 // Return the resulting string after performing all replacement operations on s.
 
+// Time: O(n * logn), Space: O(n)
 func findReplaceString(_ s: String, _ indices: [Int], _ sources: [String], _ targets: [String]) -> String {
     var info = [(Int, String, String)]()
 
@@ -11,41 +12,23 @@ func findReplaceString(_ s: String, _ indices: [Int], _ sources: [String], _ tar
     }
 
     info.sort { $0.0 < $1.0 }
-
     let s = Array(s)
     var result = ""
     var i = 0, j = 0
 
     while i < s.count {
-        if j >= info.count || i != info[j].0 { 
+        if j >= info.count || i < info[j].0 {
             result += String(s[i])
             i += 1
-            continue 
-        }
+        } else {
+            let string = String(s[i..<(min(i + info[j].1.count, s.count))])
 
-        var found = false
-        var index = i
-
-        while j < info.count, info[j].0 == index {
-            if i + info[j].1.count > s.count { 
-                j += 1 
-                continue
-            }
-
-            let prefixString = String(s[i..<(i + info[j].1.count)])
-
-            if prefixString == info[j].1 { 
-                result += info[j].2
-                found = true
-                i += prefixString.count
+            if string == info[j].1 { 
+                result += info[j].2 
+                i += string.count
             }
 
             j += 1
-        }
-
-        if !found { 
-            result += String(s[i])
-            i += 1
         }
     }
 

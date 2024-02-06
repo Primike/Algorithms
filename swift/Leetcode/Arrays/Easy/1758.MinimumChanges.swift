@@ -4,6 +4,7 @@
 // For example, the string "010" is alternating, while the string "0100" is not.
 // Return the minimum number of operations needed to make s alternating.
 
+// Time: O(n), Space: O(1)
 func minOperations(_ s: String) -> Int {
     let s = Array(s)
     var zeros = 0, ones = 0

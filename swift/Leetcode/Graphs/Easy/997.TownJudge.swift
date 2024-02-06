@@ -6,28 +6,23 @@
 // Return the label of the town judge if the town judge exists 
 // and can be identified, or return -1 otherwise.
 
+// Time: O(n), Space: O(n)
 func findJudge(_ n: Int, _ trust: [[Int]]) -> Int {
     if trust.isEmpty, n == 1 { return n }
-
-    var paths = Array(repeating: [Int](), count: n + 1)
+    
+    var trusts = Array(repeating: [Int](), count: n + 1)
+    var trustees = Array(repeating: 0, count: n + 1)
 
     for path in trust {
-        paths[path[0]].append(path[1])
+        trusts[path[0]].append(path[1])
+        trustees[path[1]] += 1
     }
 
-    var deadEnds = [Int: Int]()
+    var maximum = trustees.max() ?? 1
+    if maximum < n - 1 || trustees.filter { $0 == maximum }.count != 1 { return -1 }
 
-    for i in 1..<paths.count {
-        if !paths[i].isEmpty { continue }
-        deadEnds[i] = 0
-    }
-
-    for node in paths {
-        for path in node {
-            if !deadEnds.keys.contains(path) { continue }
-            deadEnds[path, default: 0] += 1
-            if deadEnds[path]! == n - 1 { return path }
-        }
+    for i in 1...n {
+        if trusts[i].isEmpty, trustees[i] == maximum { return i }
     }
 
     return -1
