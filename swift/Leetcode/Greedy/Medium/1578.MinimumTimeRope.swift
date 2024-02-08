@@ -6,6 +6,7 @@
 // remove the ith balloon from the rope.
 // Return the minimum time Bob needs to make the rope colorful.
 
+// Time: O(n), Space: O(1)
 func minCost(_ colors: String, _ neededTime: [Int]) -> Int {
     let colors = Array(colors)
     var result = 0

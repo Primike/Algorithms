@@ -1,6 +1,7 @@
 // Given an array of integers arr and an integer k. 
 // Find the least number of unique integers after removing exactly k elements.
 
+// Time: O(n * logn), Space: O(n)
 func findLeastNumOfUniqueInts(_ arr: [Int], _ k: Int) -> Int {
     var arr = arr.reduce(into: [:]) { $0[$1, default: 0] += 1 }
     var counts = arr.values.sorted { $0 < $1 }

@@ -1,6 +1,7 @@
 // Assuming Alice and Bob play optimally, return true if Alice wins, 
 // or return false if Bob wins.
 
+// Time: O(n), Space: O(1)
 func winnerOfGame(_ colors: String) -> Bool {
     if colors.count == 1 { return false }
     
