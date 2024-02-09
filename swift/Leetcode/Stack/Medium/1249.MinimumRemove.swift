@@ -3,38 +3,27 @@
 // ( '(' or ')', in any positions ) so that the resulting parentheses string 
 // is valid and return any valid string.
 
-
-
+// Time: O(n), Space: O(n)
 func minRemoveToMakeValid(_ s: String) -> String {
-    var s = Array(s)
-    var stack = [Character]()
-    var count = 0
+    let s = Array(s)
+    var stack = [Int]()
 
-    for letter in s {
-        if letter == "(" { 
-            count += 1 
-        } else if letter == ")" { 
-            if count <= 0 { continue }
-            count -= 1
+    for i in 0..<s.count {
+        if s[i].isLetter { continue }
+
+        if let last = stack.last, s[last] == "(", s[i] == ")" {
+            stack.removeLast()
+        } else {
+            stack.append(i)
         }
-
-        stack.append(letter)
     }
 
-    s = stack.reversed()
-    stack = []
-    count = 0
+    var indexToRemove = Set(stack)
+    var result = ""
 
-    for letter in s {
-        if letter == ")" { 
-            count += 1 
-        } else if letter == "(" { 
-            if count <= 0 { continue }
-            count -= 1
-        }
-
-        stack.append(letter)
+    for i in 0..<s.count {
+        if !indexToRemove.contains(i) { result += String(s[i]) }
     }
 
-    return String(stack.reversed())
+    return result
 }

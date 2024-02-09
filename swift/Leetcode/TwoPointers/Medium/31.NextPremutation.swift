@@ -1,5 +1,6 @@
 // Given an array of integers nums, find the next permutation of nums.
 
+// Time: O(n), Space: O(1)
 func nextPermutation(_ nums: inout [Int]) {
     if nums.count <= 1 { return }
 

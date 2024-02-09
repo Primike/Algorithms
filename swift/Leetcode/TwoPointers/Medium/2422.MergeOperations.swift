@@ -4,6 +4,7 @@
 // For example, if nums = [1,2,3,1], you can apply one operation to make it [1,5,1].
 // Return the minimum number of operations needed to turn the array into a palindrome.
 
+// Time: O(n), Space: O(1)
 func minimumOperations(_ nums: [Int]) -> Int {
     var nums = nums
     var left = 0, right = nums.count - 1

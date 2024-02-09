@@ -4,24 +4,23 @@
 // less than or equal to maxLetters.
 // The substring size must be between minSize and maxSize inclusive.
 
+// Time: O(n), Space: O(n)
 func maxFreq(_ s: String, _ maxLetters: Int, _ minSize: Int, _ maxSize: Int) -> Int {
-    let s = Array(s)
     var substrings = [String: Int]()
     var window = [Character: Int](), string = [Character]()
 
-    for (i, letter) in s.enumerated() {
+    for letter in s {
         string.append(letter)
         window[letter, default: 0] += 1
+        if string.count < minSize { continue }
 
-        while string.count > minSize || window.keys.count > maxLetters {
-            let first = string.first!
-            window[first]! -= 1
-            if window[first, default: 0] == 0 { window[first] = nil }
-            string.removeFirst()
+        if window.keys.count <= maxLetters { 
+            substrings[String(string), default: 0] += 1
         }
 
-        if string.count < minSize { continue }
-        substrings[String(string), default: 0] += 1
+        let char = string.removeFirst()
+        window[char, default: 0] -= 1
+        if window[char, default: 0] == 0 { window[char] = nil }
     }
 
     return substrings.values.max() ?? 0

@@ -1,5 +1,16 @@
+1D-DP:
+    Medium: 1043!
+    Hard: 1235, 2355
+
+
+2D-DP:
+    Medium: 486?, 1027!
+    Hard: 403, 446
+
+
 Array:
     Medium: 418!, 1583
+    Hard: 2781
     Tricks: e232, m1041
 
 
@@ -12,35 +23,51 @@ Binary Search:
 
 
 Graph:
-    Medium: 2115?, 2812!
+    Medium: 2115?, 2812!!
     Tricks: m1319
 
 
-Stack: 
-    Hard: 224!
-
-
 Greedy: 
-    Hard: 871?
+    Medium: 2870
+    Hard: 871?, 1326
 
-2D-DP:
-    Medium: 486?, 1027!
 
-Premutations: 
-    Medium: 31!
+Intervals:
 
-Prefix:
-    Hard: 1074
 
-Matrix:
-    Medium: 54?, 48?
+LinkedList:
+
 
 Math: 
     Medium: 856?
     Hard: 2366?
 
-Sliding Window: 
-    Hard: 2009!, 1297?
 
-Tree:
+Matrix:
+    Medium: 54?, 48?
+
+
+Prefix:
+    Hard: 1074
+
+
+Sliding Window: 
+    Hard: 632, 2009!
+    Tricks: 1297
+
+
+Stack: 
+    Medium: 907
+    Hard: 224!
+
+
+Trees:
     Medium: 666?, 314?, 333?, 1530!
+    Hard: 987
+
+
+Two Pointers:
+    Medium: 31
+
+
+2811
