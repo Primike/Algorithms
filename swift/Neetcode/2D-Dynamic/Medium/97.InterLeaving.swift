@@ -32,7 +32,7 @@ func isInterleave2(_ s1: String, _ s2: String, _ s3: String) -> Bool {
     func dp(_ i: Int, _ j: Int) -> Bool {
         let key = "\(i),\(j)"
 
-        if let stored = memo[key] { return stored }
+        if let value = memo[key] { return value }
         if i == s1.count, j == s2.count { return true }
 
         if i < s1.count, s1[i] == s3[i + j], dp(i + 1, j) { return true }

@@ -1,6 +1,7 @@
 // Return true if it is possible to obtain the target triplet [x, y, z] 
 // as an element of triplets, or false otherwise.
 
+// Time: O(n), Space: O(1)
 func mergeTriplets(_ triplets: [[Int]], _ target: [Int]) -> Bool {
     var good = Set<Int>()
 

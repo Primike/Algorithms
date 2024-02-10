@@ -3,26 +3,25 @@
 // Given an integer array hand where hand[i] is the value written on the ith card 
 // and an integer groupSize, return true if she can rearrange the cards, or false otherwise.
 
-// Use Heap for better min
+// Use heap instead of min
+
+// Time: O(n^2), Space: O(n)
 func isNStraightHand(_ hand: [Int], _ groupSize: Int) -> Bool {
     if hand.count % groupSize != 0 { return false }
 
     var dict = hand.reduce(into: [:]) { $0[$1, default: 0] += 1 }
-    var count = 0
+    let partitions = hand.count / groupSize
 
-    while count < hand.count {
-        var current = dict.keys.min() ?? -1
+    for i in 0..<partitions {
+        var smallest = dict.keys.min() ?? 0
 
-        for i in 0..<groupSize {
-            if !dict.keys.contains(current) { return false }
+        for j in smallest..<(smallest + groupSize) {
+            if !dict.keys.contains(j) { return false }
 
-            dict[current, default: 1] -= 1
-            if dict[current, default: 0] == 0 { dict[current] = nil }
+            dict[j, default: 0] -= 1
 
-            current += 1
-        } 
-
-        count += groupSize
+            if dict[j, default: 0] == 0 { dict[j] = nil }
+        }
     }
 
     return true

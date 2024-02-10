@@ -1,21 +1,28 @@
-// Given a circular integer array nums of length n, return the maximum 
-// possible sum of a non-empty subarray of nums.
+// Given a circular integer array nums of length n, return the  
+// maximum possible sum of a non-empty subarray of nums.
 
+// For loops are kadanes for largest and smallest
+// If all numbers are negative if returns the largest
+// Otherwise it returns either a middle maximum
+// or returns the wrap around the smallest subarray
+
+// Time: O(n), Space: O(1)
 func maxSubarraySumCircular(_ nums: [Int]) -> Int {
-    var globalMax = nums[0], globalMin = nums[0]
+    var maximum = Int.min, minimum = Int.max
     var currentMax = 0, currentMin = 0
 
     for number in nums {
         currentMax = max(currentMax + number, number)
         currentMin = min(currentMin + number, number)
 
-        globalMax = max(currentMax, globalMax)
-        globalMin = min(currentMin, globalMin)
+        maximum = max(maximum, currentMax)
+        minimum = min(minimum, currentMin)
     }
 
-    var total = nums.reduce(0, +)
+    let total = nums.reduce(0, +)
+    if minimum == total { return maximum }
 
-    return globalMax > 0 ? max(globalMax, total - globalMin) : globalMax
+    return max(maximum, total - minimum)
 }
 
 print(maxSubarraySumCircular([1,-2,3,-2]))

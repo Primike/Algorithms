@@ -1,6 +1,7 @@
 // Return the maximum number of monsters that you can eliminate before you lose, 
 // or n if you can eliminate all the monsters before they reach the city.
 
+// Time: O(n * logn), Space: O(n)
 func eliminateMaximum(_ dist: [Int], _ speed: [Int]) -> Int {
     var time = [Double]()
 

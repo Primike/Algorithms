@@ -2,6 +2,7 @@
 // index if you can travel around the circuit once in the clockwise direction, 
 // otherwise return -1. If there exists a solution, it is guaranteed to be unique
 
+// Time: O(n), Space: O(1)
 func canCompleteCircuit(_ gas: [Int], _ cost: [Int]) -> Int {
     if gas.reduce(0, +) < cost.reduce(0, +) { return -1 }
 

@@ -1,6 +1,10 @@
 // Return the minimum number of jumps to reach nums[n - 1]. 
 // The test cases are generated such that you can reach nums[n - 1].
 
+// Delays updating currentEnd until all possible 
+// farthest have been maximized
+
+// Time: O(n), Space: O(1)
 func jump(_ nums: [Int]) -> Int {
     var result = 0, currentEnd = 0, farthest = 0
 

@@ -4,6 +4,7 @@
 // Return the minimum cost to fly every person to a city such that exactly 
 // n people arrive in each city.
 
+// Time: O(n * logn), Space: O(n)
 func twoCitySchedCost(_ costs: [[Int]]) -> Int {
     var cities = [(Int, Int, Int)]()
 

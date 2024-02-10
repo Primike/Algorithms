@@ -4,6 +4,7 @@
 // i + minJump <= j <= min(i + maxJump, s.length - 1), and s[j] == '0'.
 // Return true if you can reach index s.length - 1 in s, or false otherwise.
 
+// Time: O(n), Space: O(n)
 func canReach(_ s: String, _ minJump: Int, _ maxJump: Int) -> Bool {
     let s = Array(s)
     var tab = Array(repeating: false, count: s.count)
@@ -11,8 +12,8 @@ func canReach(_ s: String, _ minJump: Int, _ maxJump: Int) -> Bool {
     var count = 0
     
     for i in 1..<s.count {
-        if i >= minJump { count += tab[i - minJump] ? 1 : 0 }
-        if i > maxJump { count -= tab[i - maxJump - 1] ? 1 : 0 }
+        if i >= minJump, tab[i - minJump] { count += 1 }
+        if i > maxJump, tab[i - maxJump - 1] { count -= 1 }
         if s[i] == "0", count > 0 { tab[i] = true }
     }
 

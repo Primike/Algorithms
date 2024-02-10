@@ -5,6 +5,7 @@
 // Return the minimum possible value of the maximum integer 
 // of nums after performing any number of operations.
 
+// Time: O(n), Space: O(1)
 func minimizeArrayValue(_ nums: [Int]) -> Int {
     var result = nums[0], current = nums[0]
 

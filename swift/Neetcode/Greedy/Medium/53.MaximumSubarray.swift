@@ -1,15 +1,16 @@
 // Given an integer array nums, find the subarray
 // with the largest sum, and return its sum.
 
+// Time: O(n), Space: O(1)
 func maxSubArray(_ nums: [Int]) -> Int {
     var result = Int.min
-    var currentSum = 0
+    var current = 0
 
     for number in nums {
-        if currentSum < 0 { currentSum = 0 } 
+        current += number
+        result = max(result, current)
 
-        currentSum += number
-        result = max(result, currentSum)
+        if current < 0 { current = 0 }
     }
 
     return result

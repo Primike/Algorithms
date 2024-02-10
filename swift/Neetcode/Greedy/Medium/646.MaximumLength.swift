@@ -4,6 +4,7 @@
 // if b < c. A chain of pairs can be formed in this fashion.
 // Return the length longest chain which can be formed.
 
+// Time: O(n * logn), Space: O(n)
 func findLongestChain(_ pairs: [[Int]]) -> Int {
     let pairs = pairs.sorted { $0[1] < $1[1] }
     var result = [pairs[0]]

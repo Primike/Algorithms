@@ -3,16 +3,16 @@
 // in the array represents your maximum jump length at that position.
 // Return true if you can reach the last index, or false otherwise.
 
+// Time: O(n), Space: O(1)
 func canJump(_ nums: [Int]) -> Bool {
-    var jumpPoint = 0
+    var farthest = 0
 
     for (i, number) in nums.enumerated() {
-        if jumpPoint < i { return false }
-        
-        jumpPoint = max(jumpPoint, i + number)
+        if farthest < i { return false }
+        farthest = max(farthest, i + number)
     }
 
-    return jumpPoint >= nums.count - 1
+    return true
 }
 
 print(canJump([2,3,1,1,4]))

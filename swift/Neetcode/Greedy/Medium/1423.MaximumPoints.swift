@@ -5,14 +5,15 @@
 // Given the integer array cardPoints and the integer k, 
 // return the maximum score you can obtain.
 
+// Time: O(n), Space: O(k)
 func maxScore(_ cardPoints: [Int], _ k: Int) -> Int {
-    var result = Array(cardPoints[0..<k]).reduce(0, +)
-    var current = result
+    var window = Array(cardPoints[..<k]).reduce(0, +)
     var left = k - 1, right = cardPoints.count - 1
+    var result = window
 
-    while left >= 0 {
-        current += cardPoints[right] - cardPoints[left]
-        result = max(result, current)
+    for i in 0..<k {
+        window += cardPoints[right] - cardPoints[left]
+        result = max(result, window)
 
         left -= 1
         right -= 1
