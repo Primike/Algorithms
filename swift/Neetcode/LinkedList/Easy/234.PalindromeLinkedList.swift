@@ -2,6 +2,7 @@
 // palindrome or false otherwise.
 
 // End node shared both but while logic checks it for even/odd
+// Time: O(n), Space: O(1)
 func isPalindrome(_ head: ListNode?) -> Bool {
     var slow = head, fast = head
 

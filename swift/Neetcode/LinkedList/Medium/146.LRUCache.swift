@@ -1,72 +1,74 @@
 class Node {
-    var key: Int
-    var val: Int
+    let key: Int
+    var value: Int
     var previous: Node?
     var next: Node?
 
-    init(_ key: Int, _ val: Int, _ previous: Node?, _ next: Node?) {
+    init(_ key: Int, _ value: Int, _ previous: Node? = nil, _ next: Node? = nil ) {
         self.key = key
-        self.val = val
+        self.value = value
         self.previous = previous
         self.next = next
     }
 }
 
 class LRUCache {
-    var capacity: Int
+    let capacity: Int
+    var count: Int
     var cache: [Int: Node]
-    var left: Node
-    var right: Node
+    let head: Node
+    let tail: Node
 
     init(_ capacity: Int) {
         self.capacity = capacity
+        self.count = 0
         self.cache = [:]
+        self.head = Node(0, 0)
+        self.tail = Node(0, 0)
 
-        self.left = Node(0, 0, nil, nil)
-        self.right = Node(0, 0, nil, nil)
-
-        self.left.next = self.right
-        self.right.previous = self.left
+        self.head.next = self.tail
+        self.tail.previous = self.head
     }
     
-    func remove(_ node: Node?) {
-        var previous = node?.previous
-        var next = node?.next
+    func remove(_ old: Node?) {
+        let previous = old?.previous
+        let next = old?.next
 
         previous?.next = next
         next?.previous = previous
+        count -= 1
     }
 
-    func insert(_ node: Node) {
-        node.previous = self.right.previous
-        node.next = self.right
+    func insert(_ old: Node) {
+        let last = self.tail.previous
+        old.previous = last
+        old.next = self.tail
 
-        self.right.previous?.next = node
-        self.right.previous = node
+        last?.next = old
+        self.tail.previous = old
+        count += 1
     }
 
     func get(_ key: Int) -> Int {
-        if let node = self.cache[key] {
-            self.remove(node)
-            self.insert(node)
-            return node.val
+        if let old = self.cache[key] {
+            self.remove(old)
+            self.insert(old)
+            return old.value
         } 
 
         return -1
     }
     
     func put(_ key: Int, _ value: Int) {
-        if let existingNode = self.cache[key] {
-            self.remove(existingNode)
-        }
+        if let old = self.cache[key] { self.remove(old) }
 
-        let newNode = Node(key, value, nil, nil)
-        self.insert(newNode)
-        self.cache[key] = newNode
+        let new = Node(key, value, nil, nil)
+        self.insert(new)
+        self.cache[key] = new
 
-        if self.cache.count > self.capacity, let lru = self.left.next {
+        if self.count > self.capacity, let lru = self.head.next {
             self.remove(lru)
-            self.cache.removeValue(forKey: lru.key)
+            self.cache[lru.key] = nil
         }
     }
 }

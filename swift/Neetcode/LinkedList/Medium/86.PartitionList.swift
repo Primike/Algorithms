@@ -26,3 +26,29 @@ func partition(_ head: ListNode?, _ x: Int) -> ListNode? {
 
     return leftList.next
 }
+
+func partition2(_ head: ListNode?, _ x: Int) -> ListNode? {
+    let newHead = ListNode(.min, head)
+    var left: ListNode? = nil
+    var current: ListNode? = newHead
+
+    while let node = current, node.val < x {
+        left = node
+        current = node.next
+    }
+
+    while let next = current?.next {
+        if next.val < x {
+            let next2 = next.next
+            let right = left?.next
+            left?.next = next
+            next.next = right
+            current?.next = next2
+            left = left?.next
+        } else {
+            current = current?.next
+        }
+    }
+
+    return newHead.next
+}

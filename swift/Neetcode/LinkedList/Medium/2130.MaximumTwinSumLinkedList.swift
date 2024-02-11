@@ -7,20 +7,20 @@ func pairSum(_ head: ListNode?) -> Int {
     var slow = head, fast = head
     var previous: ListNode? = nil
 
-    while let fastNode = fast, let next = fastNode.next {
-        var slowNext = slow?.next
+    while let next2 = fast?.next {
+        var next1 = slow?.next
         slow?.next = previous
         previous = slow
-        slow = slowNext
-        fast = next.next
+        slow = next1
+        fast = next2.next
     }
 
     var result = 0
 
-    while let slowNode = slow, let previousNode = previous {
-        result = max(result, slowNode.val + previousNode.val)
-        slow = slowNode.next
-        previous = previousNode.next
+    while let node1 = slow, let node2 = previous {
+        result = max(result, node1.val + node2.val)
+        slow = node1.next
+        previous = node2.next
     }
 
     return result

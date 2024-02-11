@@ -1,19 +1,22 @@
+// Given the head of a singly linked list, sort the list using 
+// insertion sort, and return the sorted list's head.
+
 func insertionSortList(_ head: ListNode?) -> ListNode? {
-    let newNode = ListNode(0)
+    let newHead = ListNode()
     var current = head
 
-    while current != nil {
-        let nextNode = current?.next
-        var position: ListNode? = newNode
+    while let node = current {
+        let listNext = node.next
+        var sorted = newHead
 
-        while let next = position?.next, next.val < current!.val {
-            position = position?.next
+        while let next = sorted.next, next.val <= node.val {
+            sorted = next
         }
 
-        current?.next = position?.next
-        position?.next = current
-        current = nextNode
+        current?.next = sorted.next
+        sorted.next = current
+        current = listNext
     }
 
-    return newNode.next
+    return newHead.next
 }

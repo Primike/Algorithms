@@ -3,21 +3,19 @@
 // in the list's nodes (i.e., only nodes themselves may be changed.)
 
 func swapPairs(_ head: ListNode?) -> ListNode? {
-    let newNode = ListNode(0, head)
-    var previous: ListNode? = newNode
-    var current: ListNode? = head
+    let newHead = ListNode(0, head)
+    var previous: ListNode? = newHead, current = head
 
-    while let currentNode = current, let next = currentNode.next {
-        let nextPair = next.next
-        let nextNode = next
+    while let node = current?.next {
+        let next = node.next
 
-        previous?.next = nextNode
-        nextNode.next = currentNode
-        currentNode.next = nextPair
+        previous?.next = node
+        node.next = current 
+        current?.next = next
 
-        previous = currentNode
-        current = nextPair
+        previous = current
+        current = current?.next
     }
 
-    return newNode.next
+    return newHead.next
 }

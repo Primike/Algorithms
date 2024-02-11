@@ -3,25 +3,24 @@
 // position left to position right, and return the reversed list.
 
 func reverseBetween(_ head: ListNode?, _ left: Int, _ right: Int) -> ListNode? {
-    let newList = ListNode(0, head)
-    var leftNode: ListNode? = newList, current = head
+    let newHead = ListNode(0, head)
+    var start: ListNode? = newHead
 
     for _ in 0..<(left - 1) {
-        leftNode = current
-        current = current?.next
+        start = start?.next
     }
 
-    var previous: ListNode? = nil
+    var previous: ListNode? = nil, end = start?.next
 
-    for _ in 0...(right - left) {
-        let next = current?.next
-        current?.next = previous
-        previous = current
-        current = next
+    for _ in left...right {
+        let next = end?.next
+        end?.next = previous
+        previous = end
+        end = next
     }
 
-    leftNode?.next?.next = current
-    leftNode?.next = previous
+    start?.next?.next = end
+    start?.next = previous
 
-    return newList.next
+    return newHead.next
 }

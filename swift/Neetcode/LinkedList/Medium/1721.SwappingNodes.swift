@@ -11,15 +11,15 @@ func swapNodes(_ head: ListNode?, _ k: Int) -> ListNode? {
 
     var left = head, right = current 
 
-    while let rightNode = right, let next = rightNode.next {
+    while let next = right?.next {
         left = left?.next
         right = next
     }
 
-    if let currentNode = current, let leftNode = left {
-        let value = leftNode.val
-        leftNode.val = currentNode.val
-        currentNode.val = value
+    if let node1 = current, let node2 = left {
+        let value = node2.val
+        node2.val = node1.val
+        node1.val = value
     }
 
     return head

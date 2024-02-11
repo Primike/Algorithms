@@ -1,27 +1,26 @@
-//You are given two non-empty linked lists representing two non-negative integers. 
-//The digits are stored in reverse order, and each of their nodes contains a single digit. 
-//Add the two numbers and return the sum as a linked list.
+// You are given two non-empty linked lists representing two non-negative integers. 
+// The digits are stored in reverse order, and each of their nodes contains a single digit. 
+// Add the two numbers and return the sum as a linked list.
 
 func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
-    let newList = ListNode(0)
-    var current = newList
-    var list1 = l1, list2 = l2
+    var l1 = l1, l2 = l2
+    let newHead = ListNode(0) 
+    var current: ListNode? = newHead
     var carry = 0
 
-    while list1 != nil || list2 != nil || carry != 0 {
-        let value1 = list1?.val ?? 0
-        let value2 = list2?.val ?? 0
+    while l1 != nil || l2 != nil || carry != 0 {
+        var sum = carry
 
-        let total = value1 + value2 + carry
-        carry = total / 10
+        if let node = l1 { sum += node.val }
+        if let node = l2 { sum += node.val }
 
-        let newNode = ListNode(total % 10)
-        current.next = newNode
-        current = newNode
+        current?.next = ListNode(sum % 10)
+        current = current?.next
+        l1 = l1?.next
+        l2 = l2?.next
 
-        list1 = list1?.next
-        list2 = list2?.next
+        carry = sum >= 10 ? 1 : 0
     }
 
-    return newList.next
+    return newHead.next
 }

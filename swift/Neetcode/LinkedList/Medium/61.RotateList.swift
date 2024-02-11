@@ -3,26 +3,25 @@
 func rotateRight(_ head: ListNode?, _ k: Int) -> ListNode? {
     if head == nil { return nil }
 
-    var count = 1
-    var endNode = head
+    var length = 1, end = head
 
-    while let node = endNode, let next = node.next {
-        endNode = next
-        count += 1
+    while end?.next != nil {
+        length += 1
+        end = end?.next
     }
 
-    if k % count == 0 { return head }
+    if k % length == 0 { return head }
 
-    count = count - k % count - 1
+    let n = length - k % length - 1     
     var current = head
 
-    for i in 0..<count {
+    for _ in 0..<n {
         current = current?.next
     }
 
-    var newNode = current?.next
-    endNode?.next = head
+    var newHead = current?.next
+    end?.next = head
     current?.next = nil
 
-    return newNode
+    return newHead
 }

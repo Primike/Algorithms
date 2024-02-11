@@ -4,35 +4,22 @@
 
 func copyRandomList(_ head: Node?) -> Node? {
     guard let head = head else { return nil }
-    
-    var map: [Node: Node] = [:]
+
+    var nodes = [Node: Node]()
     var current: Node? = head
 
-    while let currentNode = current {
-        if map[currentNode] == nil {
-            map[currentNode] = Node(currentNode.val)
-        }
-        
-        if let next = currentNode.next {
-            if map[next] == nil {
-                map[next] = Node(next.val)
-            }
-            if let mappedCurrent = map[currentNode], let mappedNext = map[next] {
-                mappedCurrent.next = mappedNext
-            }
-        }
-        
-        if let random = currentNode.random {
-            if map[random] == nil {
-                map[random] = Node(random.val)
-            }
-            if let mappedCurrent = map[currentNode], let mappedRandom = map[random] {
-                mappedCurrent.random = mappedRandom
-            }
-        }
-        
-        current = currentNode.next
+    while let node = current {
+        nodes[node] = Node(node.val)
+        current = current?.next
     }
-    
-    return map[head]
+
+    current = head
+
+    while let node = current {
+        if let next = node.next { nodes[node]?.next = nodes[next] }
+        if let random = node.random { nodes[node]?.random = nodes[random] }
+        current = current?.next
+    }
+
+    return nodes[head] 
 }

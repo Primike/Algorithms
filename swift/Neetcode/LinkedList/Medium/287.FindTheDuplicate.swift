@@ -21,3 +21,18 @@ func findDuplicate(_ nums: [Int]) -> Int {
 
 print(findDuplicate([1,3,4,2,2]))
 print(findDuplicate([3,1,3,4,2]))
+
+
+func findDuplicate2(_ nums: [Int]) -> Int {
+    var nums = nums
+
+    for i in 0..<nums.count {
+        let index = abs(nums[i]) - 1
+
+        if nums[index] < 0 { return abs(nums[i]) }
+
+        nums[index] *= -1
+    }
+
+    return -1
+}

@@ -1,10 +1,10 @@
-class DLL {
-    let url: String
-    weak var previous: DLL?
-    var next: DLL?
+class Node {
+    let value: String
+    let previous: Node?
+    var next: Node?
 
-    init(_ url: String, _ previous: DLL?, _ next: DLL?) {
-        self.url = url
+    init(_ value: String, _ previous: Node? = nil, _ next: Node? = nil) {
+        self.value = value
         self.previous = previous
         self.next = next
     }
@@ -12,39 +12,39 @@ class DLL {
 
 class BrowserHistory {
 
-    var head: DLL
-    var current: DLL
+    var head: Node
+    var current: Node
 
     init(_ homepage: String) {
-        self.head = DLL(homepage, nil, nil)
-        self.current = head
+        self.head = Node(homepage)
+        self.current = self.head
     }
     
     func visit(_ url: String) {
-        let new = DLL(url, self.current, nil)
-        self.current.next = new
-        self.current = new
+        let new = Node(url, current, nil)
+        current.next = new
+        current = new
     }
     
     func back(_ steps: Int) -> String {
-        var count = steps
-        
-        while count > 0, self.current !== self.head {
-            self.current = self.current.previous!
-            count -= 1
+        var i = steps
+
+        while i > 0, let previous = current.previous {
+            current = previous
+            i -= 1
         }
 
-        return self.current.url
+        return current.value
     }
     
     func forward(_ steps: Int) -> String {
-        var count = 0
+        var i = steps
 
-        while count < steps, let next = self.current.next {
-            self.current = next
-            count += 1
+        while i > 0, let next = current.next {
+            current = next
+            i -= 1
         }
 
-        return self.current.url
+        return current.value 
     }
 }
