@@ -2,49 +2,43 @@
 // two adjacent characters are not the same.
 // Return any possible rearrangement of s or return "" if not possible.
 
-struct Alpha: Comparable {
+struct Letter: Comparable {
     let letter: Character
-    let count: Int
+    var count: Int
 
-    static func <(left: Alpha, right: Alpha) -> Bool {
-        return left.count < right.count
+    static func <(_ l: Letter, _ r: Letter) -> Bool {
+        return (l.count, l.letter) < (r.count, r.letter)
     }
 }
 
-// Time: nlog(26), Space: n
+// Time: O(n * log26), Space: O(n)
 func reorganizeString(_ s: String) -> String {
-    var dict = Array(s).reduce(into: [:]) { $0[$1, default: 0] += 1 }  
-    var heap = Heap<Alpha>(type: .maxHeap)
+    var dict = Array(s).reduce(into: [:]) { $0[$1, default: 0] += 1 }
+    var heap = Heap<Letter>(.maxHeap)
 
-    for (letter, count) in dict {
-        heap.push(Alpha(letter: letter, count: count))
+    for (key, value) in dict {
+        heap.push(Letter(letter: key, count: value))
     }
 
-    var result = [Character]()
+    var result = ""
 
     while heap.count > 1 {
-        let first = heap.pop()!
-        let second = heap.pop()!
+        var first = heap.pop()!, second = heap.pop()!
 
-        result.append(first.letter)
-        result.append(second.letter)
+        result += String(first.letter) + String(second.letter)
+        first.count -= 1
+        second.count -= 1
 
-        if first.count != 1 {
-            heap.push(Alpha(letter: first.letter, count: first.count - 1))
-        }
-
-        if second.count != 1 {
-            heap.push(Alpha(letter: second.letter, count: second.count - 1))
-        }
+        if first.count > 0 { heap.push(first) }
+        if second.count > 0 { heap.push(second) }
     }
 
     if let first = heap.pop() {
         if first.count > 1 { return "" }
-
-        result.append(first.letter)
+        result += String(first.letter)
     }
 
-    return String(result)
+    return result
 }
 
 print(reorganizeString("aab"))

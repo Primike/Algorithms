@@ -2,28 +2,29 @@
 // If there are multiple longest happy strings, return any of them. 
 // If there is no such string, return the empty string "".
 
-struct Alpha: Comparable {
+struct Letter: Comparable {
     let letter: Character
     var count: Int
 
-    static func <(left: Alpha, right: Alpha) -> Bool {
-        return left.count < right.count
+    static func <(_ l: Letter, _ r: Letter) -> Bool {
+        return (l.count, l.letter) < (r.count, r.letter)
     }
 }
 
+// Time: O(n), Space: O(n)
 func longestDiverseString(_ a: Int, _ b: Int, _ c: Int) -> String {
-    var heap = Heap<Alpha>(type: .maxHeap)
-
-    if a != 0 { heap.push(Alpha(letter: "a", count: a)) }
-    if b != 0 { heap.push(Alpha(letter: "b", count: b)) }
-    if c != 0 { heap.push(Alpha(letter: "c", count: c)) }
+    var heap = Heap<Letter>(.maxHeap)
+    if a != 0 { heap.push(Letter(letter: "a", count: a)) }
+    if b != 0 { heap.push(Letter(letter: "b", count: b)) }
+    if c != 0 { heap.push(Letter(letter: "c", count: c)) }
 
     var result = [Character]()
 
     while !heap.isEmpty {
+        let length = result.count
         var first = heap.pop()!
 
-        if result.count > 1, result.last! == first.letter, result[result.count - 2] == first.letter {
+        if length > 1, result.last! == first.letter, result[length - 2] == first.letter {
             if heap.isEmpty { return String(result) }
 
             var second = heap.pop()!

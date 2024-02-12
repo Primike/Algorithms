@@ -3,22 +3,23 @@
 // Return true if it is possible to pick up and drop off all passengers 
 // for all the given trips, or false otherwise.
 
+// Time: O(n * logn), Space: O(n)
 func carPooling(_ trips: [[Int]], _ capacity: Int) -> Bool {
-    var timeline = [(Int, Int)]()
+    var stations = [(Int, Int)]()
 
     for trip in trips {
-        let (num, start, end) = (trip[0], trip[1], trip[2])
-        timeline.append((start, num))
-        timeline.append((end, -num))
+        stations.append((trip[1], trip[0])) 
+        stations.append((trip[2], -trip[0]))
     }
 
-    timeline.sort { $0.0 < $1.0 || ($0.0 == $1.0 && $0.1 < $1.1) }
-    var currentPassengers = 0
+    stations.sort { ($0.0, $0.1) < ($1.0, $1.1) }
+    var passengers = 0
 
-    for event in timeline {
-        currentPassengers += event.1
-        if currentPassengers > capacity { return false }
+    for station in stations {
+        passengers += station.1
+        if passengers > capacity { return false }
     }
+
     return true
 }
 

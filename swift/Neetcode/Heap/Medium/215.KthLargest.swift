@@ -2,16 +2,14 @@
 
 // Time: nlog(k), Space: k
 func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
-    var heap = Heap<Int>(type: .minHeap)
+    var heap = Heap<Int>(.minHeap)
 
     for number in nums {
         if heap.count < k {
             heap.push(number)
-        } else {
-            if let last = heap.peek(), last < number {
-                heap.pop()
-                heap.push(number)
-            }
+        } else if let first = heap.peek(), first < number {
+            heap.pop()
+            heap.push(number)
         }
     }
 

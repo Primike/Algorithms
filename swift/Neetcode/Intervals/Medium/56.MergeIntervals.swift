@@ -2,25 +2,17 @@
 // merge all overlapping intervals, and return an array of the non-overlapping 
 // intervals that cover all the intervals in the input.
 
+// Time: O(n * logn), Space: O(n)
 func merge(_ intervals: [[Int]]) -> [[Int]] {
-    var intervals = intervals.sorted { i, j in 
-        if i[0] == j[0] { return i[1] < j[1] }
-        return i[0] < j[0]
-    }        
+    let intervals = intervals.sorted { $0[0] < $1[0] }
+    var result = [intervals[0]]
 
-    var result = [[Int]]()
-    var i = 0
-
-    while i < intervals.count {
-        var new = intervals[i]
-        i += 1
-
-        while i < intervals.count, new[1] >= intervals[i][0] {
-            new = [new[0], max(new[1], intervals[i][1])]
-            i += 1
+    for interval in intervals {
+        if result[result.count - 1][1] >= interval[0] {
+            result[result.count - 1][1] = max(result[result.count - 1][1], interval[1])
+        } else {
+            result.append(interval)
         }
-
-        result.append(new)
     }
 
     return result

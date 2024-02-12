@@ -2,7 +2,13 @@
 // a positive integer k. You must choose a subsequence of indices from nums1 of length k.
 // Return the maximum possible score.
 
-//Time: nlog(n), Space: n
+/* 
+If number is immediately popped doesnt matter because array
+is sorted so the previous multiple (already calculated) is 
+larger than the current multiple
+*/
+
+// Time: O(n * logn), Space: O(n)
 func maxScore(_ nums1: [Int], _ nums2: [Int], _ k: Int) -> Int {
     var numbers = [(Int, Int)]()
 
@@ -11,20 +17,16 @@ func maxScore(_ nums1: [Int], _ nums2: [Int], _ k: Int) -> Int {
     }
 
     numbers.sort { $0.1 > $1.1 }
-    var heap = Heap<Int>(type: .minHeap)
+    var heap = Heap<Int>(.minHeap)
     var result = 0
-    var currentSum = 0
+    var current = 0
 
-    for (n1, n2) in numbers {
-        currentSum += n1
-        heap.push(n1)
+    for (number, multiple) in numbers {
+        current += number
+        heap.push(number)
 
-        if heap.count > k {
-            var minimum = heap.pop()!
-            currentSum -= minimum
-        }
-
-        result = max(result, currentSum * n2)
+        if heap.count > k { current -= heap.pop()! }
+        if heap.count == k { result = max(result, current * multiple) }
     }
 
     return result

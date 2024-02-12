@@ -2,6 +2,7 @@
 // ascending order by starti and intervals still does not have any overlapping 
 // intervals (merge overlapping intervals if necessary).
 
+// Time: O(n), Space: O(n)
 func insert(_ intervals: [[Int]], _ newInterval: [Int]) -> [[Int]] {
     var result = [[Int]]()
     var newInterval = newInterval

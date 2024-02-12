@@ -1,6 +1,7 @@
 // Given an array of meeting time intervals where intervals[i] = [starti, endi], 
 // determine if a person could attend all meetings.
 
+// Time: O(n * logn), Space: O(1)
 func canAttendMeetings(_ intervals: [[Int]]) -> Bool {
     var intervals = intervals.sorted { $0[0] < $1[0] }
     var previous = [-1, -1]

@@ -1,21 +1,18 @@
-// Init - Time: nlog(n), Space: n
-// Functions - Time log(n), Space: n
+// Init - Time: O(n * logn), Space: O(n)
+// Functions - Time O(logn), Space: O(n)
 class SeatManager {
-    var minHeap: Heap<Int>
+
+    private var heap: Heap<Int>
 
     init(_ n: Int) {
-        self.minHeap = Heap(type: .minHeap)
-        
-        for i in 1...n {
-            self.minHeap.push(i)
-        }
+        self.heap = Heap(.minHeap, Array(1...n))
     }
     
     func reserve() -> Int {
-        return self.minHeap.pop()!
+        return heap.pop() ?? -1
     }
     
     func unreserve(_ seatNumber: Int) {
-        self.minHeap.push(seatNumber)
+        heap.push(seatNumber)
     }
 }

@@ -1,0 +1,231 @@
+Arrays:
+    Easy: [
+        Moores voting algorithm,
+    ]
+
+    Medium: [
+        bucketSort for k frequent numbers,
+        use pre/postfix products/sums var/array,
+        to find consecutive sequences find leftmost in hashSet,
+        palindromes use asscci and post/prefix hashes
+    ]
+
+    Easy: Designs
+    Medium: 2002?, 280?, 304?, 665?, 2483?
+    Tricks: 179, 838
+
+
+
+Two Pointers:
+    Medium: [
+        Update pointers instead of using a Set,
+        subsequence vs subsets - may be multiple copies b/c of index,
+        rotate array - there may be more than 1 independent cycle,
+        for n-matrix rotations use reversing or reflection/transpose,
+    ]
+
+    Medium: 80?, 18?, 1498?, 189??
+
+
+
+Sliding Window: 
+    Medium: [
+        Sometimes not necessary to decrease window,
+        double the input and search window,
+        search inner/outer window
+    ]
+
+    Hard: [
+        Use a count to compare dict matches,
+        double ended queue
+    ]
+
+    Medium: 1888!
+
+
+
+Stack:
+    Medium: [
+        Iterate through backwards and forwards with checks,
+        stack with tuples,
+        Monotomic increasing/decreasing stack,
+    ]
+
+    Medium: 456?
+
+
+
+Binary Search ?:
+    Easy: [
+        Search for the largest not the smallest value,
+        good for guessing numbers,
+    ]
+
+    Medium: [
+        Use when answer has a numeric upper bound,
+        Use even/odd indicies,
+        right = mid, left < right: no specific target / always in bounds,
+        right = mid - 1, left <= right: for unknown count / need ouside bounds,
+        if searching i < i + 1 use left < right,
+        split rotated array in sections,
+        careful with returning index vs first-k
+    ]
+
+    Medium: 540?, 162?, 2300?, 2616?, 33?, 81?, 1898?, 116?, 1268?
+
+
+
+LinkedList:
+    Easy: [
+        floyds - use while next = fast?.next
+        Cyclical search switch lists variable once nil reached
+    ]
+
+    Medium: [
+        Reverse list during tortoise-hare if can expand middle to sides,
+        try separating 1 loop into 2
+    ]
+
+    Easy: 234?, 160?
+    Medium: 138?, 146?, 622?
+    Tricks: 287, 86
+
+
+
+BinaryTree:
+    Easy: [
+        Space complexity for recursion is logn...n || h,
+        Use while loops and current to go left deep on traversal,
+        Keep a previous node for bst traversal comparison,
+        Use two pointers on array to build tree,
+    ]
+
+    Medium: [
+        For BST try binary search,
+        For BST delete replace value with leftmost right,
+        Use index for post/pre tree construction
+        Run both flipped and unflipped,
+    ]
+
+    Easy: 112?, 783?, 101?
+    Medium: 701?, 450, 1443?, 427?, 662?, 106?, 96, 95!, 894, 337?, 173?
+    Tricks: 652
+
+
+
+Tries: 
+    Medium: [
+        Add isEndOfWord = true to last letter node in insert
+    ]
+
+    Medium: 2707
+
+
+
+Heap: 
+    Medium: [
+        Only have the heap hold the amount needed,
+        Use a queue to hold temporary heap pops,
+        When there is a best (k) to choose use a heap,
+        When items need to be in queue use heap,
+        Use 2 heaps,
+        for passengers add both count and -count sorted by -,
+    ]
+    
+    Medium: 621, 2542, 1882?, 1405, 1094?
+
+
+
+BackTracking:
+    [
+        Be carful with for loops maybe cause duplicate branches,
+        Best to use for loops in BackTracking if array available,
+        Add to result as its array is being build,
+        sort array to avoid duplicates and skip if previous ==,
+        DP may not be possible even for same inputs if parents differ,
+        during sort/build-array try minimize recursive calls,
+    ]
+
+    Medium: 131?, 93?, 1849
+    Tricks: 46, 698
+
+
+
+Graphs:
+    [
+        Remember to check the entire island dont return instantly if not needed (&&), 
+        If problem involves edges of grid try out to in instead,
+        create a neightbors/edges array,
+        topological sort, which order to take class,
+        Union find if same parents there is a cycle, 
+        find all nodes a node can reach then compare
+        bfs for shortest path,
+        use an outside variable for dfs if tuple return,
+        maybe pass in a parent node to avoid visited set,
+        Khans algorithm
+    ]
+
+    Medium: 133?, 1958?, 721!, 2359?, 1129?, 2477?, 785, 399
+    Tricks: 207, 323, 1020
+
+
+
+Advanced Graphs:
+    Prims/Kruskals: Minimum Spanning Tree vertices connected with least weight
+
+    Medium: 1584, 787
+
+
+
+1D:
+    [
+        for palindromes expand outward even/odd,        
+        Manachers algorithm,
+        center expansion / back-forth,
+        for subsequence use loop up to current i,
+        iterate backwards to avoid multiple stacking changes,
+        create sequential tab regardless if some are not in nums,
+        for loop faster than skip/take with static i,
+        remember LIS,
+        Euclidian Algorithm
+    ]
+
+    Medium: 152!, 740, 673, 1035?, 2140, 837, 1626?
+    Tricks: 91, 300, 416, 983, 343
+
+
+
+2D: 
+    [
+        Bounded Knapsack,
+        for combinations tab loop goes inside, memo -> index..<n
+        for premutations tab first duplicates rearranged,
+        dimensions in dp are aligned with key tuple size,
+        if current doesnt need mod just return next recursion,
+    ]
+
+    Medium: 1049!, 221?, 1140?, 926?
+    Study: 309, 494, 97, 877, 474, 1911, 72
+
+
+
+Greedy:
+    Medium [
+        Kadanes Algorithm,
+        For circular use sliding window or max/min,
+        Try heaps,
+        use negatives for sorting tuples
+    ]
+
+    Medium: 918, 45?, 1871!, 134?, 2439?, 763
+    Study: 678, 1029
+
+
+
+Intervals:
+    Medium: 57?, 435
+
+
+
+Other: 
+    Prefix Sum, Monotomic Stack, Tries, 2D Tabulation

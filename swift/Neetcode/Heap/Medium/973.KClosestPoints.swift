@@ -1,34 +1,37 @@
 // Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane 
 // and an integer k, return the k closest points to the origin (0, 0).
 
-struct PointMagnitude: Comparable {
-    let point: [Int]
-    let magnitude: Int
+struct Point: Comparable {
+    let x: Int
+    let y: Int
 
-    static func <(left: PointMagnitude, right: PointMagnitude) -> Bool {
-        return left.magnitude < right.magnitude
+    static func < (_ l: Point, _ r: Point) -> Bool {
+        let left = l.x * l.x + l.y * l.y
+        let right = r.x * r.x + r.y * r.y
+        
+        return left < right
     }
 }
 
 // Time: nlog(k), Space: k
 func kClosest(_ points: [[Int]], _ k: Int) -> [[Int]] {
-    var heap = Heap<PointMagnitude>(type: .maxHeap)
+    var heap = Heap<Point>(.maxHeap)
 
     for point in points {
-        let magnitude = point[0] * point[0] + point[1] * point[1]
-        let pointMagnitude = PointMagnitude(point: point, magnitude: magnitude)
+        let point = Point(x: point[0], y: point[1])
+        
         if heap.count < k {
-            heap.push(pointMagnitude)
-        } else if let first = heap.peek(), pointMagnitude < first {
+            heap.push(point)
+        } else if let first = heap.peek(), first > point {
             heap.pop()
-            heap.push(pointMagnitude)
+            heap.push(point)
         }
     }
 
     var result = [[Int]]()
 
-    while let popped = heap.pop() {
-        result.append(popped.point)
+    while let point = heap.pop() {
+        result.append([point.x, point.y])
     }
 
     return result

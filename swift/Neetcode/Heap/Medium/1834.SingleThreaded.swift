@@ -1,48 +1,36 @@
-struct CPUTask: Comparable {
-    enum TaskType {
-        case enqueue
-        case process
-    }
-
-    let eqT: Int
-    let psT: Int
+struct Task: Comparable {
     let index: Int
-    var type: TaskType = .enqueue
+    let pTime: Int
 
-    static func <(left: CPUTask, right: CPUTask) -> Bool {
-        switch left.type {
-        case .enqueue:
-            return (left.eqT, left.psT, left.index) < (right.eqT, right.psT, right.index)
-        case .process:
-            return (left.psT, left.index) < (right.psT, right.index)
-        }
+    static func <(_ l: Task, _ r: Task) -> Bool {
+        return (l.pTime, l.index) < (r.pTime, r.index)
     }
 }
 
 // Time: nlog(n), Space: n
 func getOrder(_ tasks: [[Int]]) -> [Int] {
-    var enqueueHeap = Heap<CPUTask>(type: .minHeap)
-    var processHeap = Heap<CPUTask>(type: .minHeap)
+    var queue = [(Int, Int, Int)]()
 
     for (i, task) in tasks.enumerated() {
-        enqueueHeap.push(CPUTask(eqT: task[0], psT: task[1], index: i))
+        queue.append((task[0], task[1], i))
     }
 
+    queue.sort { $0 < $1 }
+    var heap = Heap<Task>(.minHeap)
     var result = [Int]()
-    var time = 0
+    var time = queue[0].0, i = 0 
 
-    while !enqueueHeap.isEmpty || !processHeap.isEmpty {
-        while var task = enqueueHeap.peek(), task.eqT <= time {
-            task.type = .process
-            processHeap.push(task)
-            enqueueHeap.pop()
+    while i < queue.count || !heap.isEmpty {
+        while i < queue.count, queue[i].0 <= time {
+            heap.push(Task(index: queue[i].2, pTime: queue[i].1))
+            i += 1
         }
 
-        if let task = processHeap.pop() {
-            time += task.psT
-            result.append(task.index)
+        if let first = heap.pop() {
+            result.append(first.index)
+            time += first.pTime
         } else {
-            time = enqueueHeap.peek()?.eqT ?? 0
+            time = queue[i].0
         }
     }
 

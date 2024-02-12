@@ -4,30 +4,26 @@ struct Heap<T: Comparable> {
         case minHeap
     }
 
-    var items: [T] = []
     let type: HeapType
+    var items: [T] = []
     
-    init(type: HeapType) {
+    init(_ type: HeapType) {
         self.type = type
     }
 
-    init(array: [T], type: HeapType) {
+    init(_ type: HeapType, _ array: [T]) {
         self.type = type
+
         for item in array {
             push(item)
         }
     }
 
-    var isEmpty: Bool {
-        return items.isEmpty
-    }
+    var isEmpty: Bool { return items.isEmpty }
+    var count: Int { return items.count }
 
-    var count: Int {
-        return items.count
-    }
-
-    func peek() -> T? {
-        return items.first
+    func peek() -> T? { 
+        return items.first 
     }
 
     private func compare(_ a: T, _ b: T) -> Bool {
@@ -41,30 +37,34 @@ struct Heap<T: Comparable> {
 
     mutating func push(_ item: T) {
         items.append(item)
-        var index = items.count - 1
-        while index > 0 && compare(items[(index - 1) / 2], items[index]) {
-            items.swapAt((index - 1) / 2, index)
-            index = (index - 1) / 2
+        var i = items.count - 1
+
+        while i > 0, compare(items[(i - 1) / 2], items[i]) {
+            items.swapAt((i - 1) / 2, i)
+            i = (i - 1) / 2
         }
     }
 
     mutating func pop() -> T? {
         guard !items.isEmpty else { return nil }
-        let topValue = items[0]
+
+        let first = items[0]
         items[0] = items.last!
         items.removeLast()
-        var index = 0
-        while 2 * index + 1 < items.count {
-            var selectedChildIndex = 2 * index + 1
-            if 2 * index + 2 < items.count && compare(items[2 * index + 1], items[2 * index + 2]) {
-                selectedChildIndex = 2 * index + 2
+        var i = 0
+
+        while 2 * i + 1 < items.count {
+            var index = 2 * i + 1
+
+            if index + 1 < items.count, compare(items[index], items[index + 1]) {
+                index += 1
             }
-            if !compare(items[index], items[selectedChildIndex]) {
-                break
-            }
-            items.swapAt(index, selectedChildIndex)
-            index = selectedChildIndex
+
+            if !compare(items[i], items[index]) { break }
+            items.swapAt(i, index)
+            i = index
         }
-        return topValue
+
+        return first
     }
 }

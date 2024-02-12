@@ -2,6 +2,7 @@
 // return the minimum number of intervals you need to remove to make the 
 // rest of the intervals non-overlapping.
 
+// Time: O(n), Space: O(1)
 func eraseOverlapIntervals(_ intervals: [[Int]]) -> Int {        
     var intervals = intervals.sorted { $0[1] < $1[1] }
     var previous = intervals[0][0]

@@ -3,32 +3,24 @@
 // Return the string that represents the kth largest integer in nums.
 
 struct BigNumber: Comparable {
-    let value: String
+    let number: String
 
-    static func <(left: BigNumber, right: BigNumber) -> Bool {
-        if left.value.count != right.value.count {
-            return left.value.count < right.value.count 
-        }
-
-        return left.value < right.value
+    static func <(_ l: BigNumber, _ r: BigNumber) -> Bool {
+        if l.number.count == r.number.count { return l.number < r.number }
+        return l.number.count < r.number.count
     }
 }
 
+// Time: O(n * logk), Space: O(k)
 func kthLargestNumber(_ nums: [String], _ k: Int) -> String {
-    var strings = nums.map { BigNumber(value: $0) }
-    var heap = Heap<BigNumber>(type: .minHeap)
+    var heap = Heap<BigNumber>(.minHeap)
 
-    for number in strings {
-        if heap.count < k {
-            heap.push(number)
-            continue
-        } else if number > heap.peek()! {
-            heap.pop()
-            heap.push(number)
-        }
+    for number in nums {
+        heap.push(BigNumber(number: number))
+        if heap.count > k { heap.pop() }
     }
 
-    return heap.peek()!.value
+    return heap.peek()?.number ?? ""
 }
 
 print(kthLargestNumber(["3","6","7","10"], 4))
