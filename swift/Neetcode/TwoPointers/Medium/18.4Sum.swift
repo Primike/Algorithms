@@ -5,6 +5,7 @@
 // nums[a] + nums[b] + nums[c] + nums[d] == target
 // You may return the answer in any order.
 
+// Time: (n^(m - 1)), Space: O(n^(m - 1))
 func fourSum(_ nums: [Int], _ target: Int) -> [[Int]] {
     if nums.count < 4 { return [] }
 
