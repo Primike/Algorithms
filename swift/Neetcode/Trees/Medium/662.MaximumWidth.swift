@@ -8,16 +8,17 @@ func widthOfBinaryTree(_ root: TreeNode?) -> Int {
     var queue = [(root, 0)]
 
     while !queue.isEmpty {
-        let left = queue.first!.1, right = queue.last!.1
+        let start = queue.first!.1
+        let end = queue.last!.1
 
-        result = max(result, Int(right - left + 1))
+        result = max(result, Int(end - start + 1))
 
         for _ in 0..<queue.count {
             var (node, i) = queue.removeFirst()
-            i = i - left
+            i = i - start
 
-            if let left = node.left { queue.append((left, 2 * i)) }
-            if let right = node.right { queue.append((right, 2 * i + 1)) }
+            if let left = node.left { queue.append((left, i * 2)) }
+            if let right = node.right { queue.append((right, i * 2 + 1)) }
         }
     }
 

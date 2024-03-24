@@ -2,40 +2,34 @@
 // We want to represent grid with a Quad-Tree.
 // Return the root of the Quad-Tree representing grid.
 
-// Time: O(n^2 * logn), Space: O(logn)
+// Time: O(n^2), Space: O(logn)
 func construct(_ grid: [[Int]]) -> Node? {
-    func isUniform(_ r: Int, _ c: Int, _ size: Int) -> Bool {
-        let value = grid[r][c]
+    if grid.isEmpty { return nil }
 
-        for i in r..<r + size {
-            for j in c..<c + size {
-                if grid[i][j] != value { return false }
-            }
-        }
+    func build(_ grid: [[Int]]) -> Node {
+        if grid.count == 1 { return Node(grid[0][0] == 1, true) }
 
-        return true
+        let half = grid.count / 2
+        let topLeft = build(Array(grid[0..<half].map { Array($0[0..<half]) }))
+        let topRight = build(Array(grid[0..<half].map { Array($0[half...]) }))
+        let bottomLeft = build(Array(grid[half...].map { Array($0[0..<half]) }))
+        let bottomRight = build(Array(grid[half...].map { Array($0[half...]) }))
+
+        if topLeft.isLeaf, topRight.isLeaf, bottomLeft.isLeaf, bottomRight.isLeaf,
+            topLeft.val == topRight.val, topLeft.val == bottomLeft.val, topLeft.val == bottomRight.val {
+            return Node(topRight.val, true)
+        } 
+
+        let node = Node(true, false)
+        node.topLeft = topLeft
+        node.topRight = topRight
+        node.bottomLeft = bottomLeft
+        node.bottomRight = bottomRight
+
+        return node
     }
 
-    func constructQuadTree(_ r: Int, _ c: Int, _ size: Int) -> Node? {
-        if size == 0 { return nil }
-        if isUniform(r, c, size) { return Node(grid[r][c] == 1, true) }
-
-        let mid = size / 2
-        let topLeft = constructQuadTree(r, c, mid)
-        let topRight = constructQuadTree(r, c + mid, mid)
-        let bottomLeft = constructQuadTree(r + mid, c, mid)
-        let bottomRight = constructQuadTree(r + mid, c + mid, mid)
-        let new = Node(true, false)
-
-        new.topLeft = topLeft
-        new.topRight = topRight
-        new.bottomLeft = bottomLeft
-        new.bottomRight = bottomRight
-
-        return new
-    }
-
-    return constructQuadTree(0, 0, grid.count)
+    return build(grid)
 }
 
 print(construct([[0,1],[1,0]]))

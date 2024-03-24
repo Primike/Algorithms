@@ -6,18 +6,18 @@
 
 // Time: O(2^n), Space: O(2^n)
 func allPossibleFBT(_ n: Int) -> [TreeNode?] {
-    if n % 2 == 0 { return [] }
     if n == 1 { return [TreeNode(0)] }
+    if n % 2 == 0 || n < 1 { return [] }
 
     var result = [TreeNode?]()
 
-    for leftNodes in stride(from: 1, to: n, by: 2) {
-        let rightNodes = n - 1 - leftNodes
+    for i in stride(from: 1, to: n, by: 2) {
+        let leftTrees = allPossibleFBT(i)
+        let rightTrees = allPossibleFBT(n - i - 1)
 
-        for left in allPossibleFBT(leftNodes) {
-            for right in allPossibleFBT(rightNodes) {
-                let root = TreeNode(0, left, right) 
-                result.append(root)
+        for left in leftTrees {
+            for right in rightTrees {
+                result.append(TreeNode(0, left, right))
             }
         }
     }

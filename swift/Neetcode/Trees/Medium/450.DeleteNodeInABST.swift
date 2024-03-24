@@ -1,7 +1,7 @@
 // Given a root node reference of a BST and a key, delete the node with the 
 // given key in the BST. Return the root node reference (possibly updated) of the BST.
 
-// Replaces Value
+// Replaces Value, 2 elses reached one for key another for copy
 func deleteNode(_ root: TreeNode?, _ key: Int) -> TreeNode? {
     guard let root = root else { return nil }
 

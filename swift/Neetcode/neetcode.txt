@@ -5,14 +5,13 @@ Arrays:
 
     Medium: [
         bucketSort for k frequent numbers,
-        use pre/postfix products/sums var/array,
+        use pre/postfix products/sums,
         to find consecutive sequences find leftmost in hashSet,
         palindromes use asscci and post/prefix hashes
     ]
 
     Easy: Designs
-    Medium: 2002?, 280?, 304?, 665?, 2483?
-    Tricks: 179, 838
+    Tricks: m179, m838, m2002, m280, m304, m665, m2483
 
 
 
@@ -24,7 +23,7 @@ Two Pointers:
         for n-matrix rotations use reversing or reflection/transpose,
     ]
 
-    Medium: 80?, 18?, 1498?, 189??
+    Tricks: m80, m1498, m189
 
 
 
@@ -40,7 +39,7 @@ Sliding Window:
         double ended queue
     ]
 
-    Medium: 1888!
+    Tricks: m1888
 
 
 
@@ -51,7 +50,7 @@ Stack:
         Monotomic increasing/decreasing stack,
     ]
 
-    Medium: 456?
+    Tricks: m456
 
 
 
@@ -63,15 +62,13 @@ Binary Search ?:
 
     Medium: [
         Use when answer has a numeric upper bound,
-        Use even/odd indicies,
-        right = mid, left < right: no specific target / always in bounds,
-        right = mid - 1, left <= right: for unknown count / need ouside bounds,
         if searching i < i + 1 use left < right,
         split rotated array in sections,
         careful with returning index vs first-k
     ]
 
-    Medium: 540?, 162?, 2300?, 2616?, 33?, 81?, 1898?, 116?, 1268?
+    Medium: 540?, 2616?, 33?, 81?, 1898?
+    Tricks: m162, m116, m1268
 
 
 
@@ -86,13 +83,12 @@ LinkedList:
         try separating 1 loop into 2
     ]
 
-    Easy: 234?, 160?
-    Medium: 138?, 146?, 622?
-    Tricks: 287, 86
+    Medium: 138?, 622?, 146?
+    Tricks: e160, m287, m86
 
 
 
-BinaryTree:
+Trees:
     Easy: [
         Space complexity for recursion is logn...n || h,
         Use while loops and current to go left deep on traversal,
@@ -107,18 +103,8 @@ BinaryTree:
         Run both flipped and unflipped,
     ]
 
-    Easy: 112?, 783?, 101?
-    Medium: 701?, 450, 1443?, 427?, 662?, 106?, 96, 95!, 894, 337?, 173?
-    Tricks: 652
-
-
-
-Tries: 
-    Medium: [
-        Add isEndOfWord = true to last letter node in insert
-    ]
-
-    Medium: 2707
+    Medium: 450?, 427?, 106?, 96?, 95, 894?, 337?
+    Tricks: m1443, m652, m662, m173
 
 
 
@@ -129,10 +115,10 @@ Heap:
         When there is a best (k) to choose use a heap,
         When items need to be in queue use heap,
         Use 2 heaps,
-        for passengers add both count and -count sorted by -,
     ]
     
-    Medium: 621, 2542, 1882?, 1405, 1094?
+    Medium: 2542?, 1405
+    Tricks: m621, m1882, m1094
 
 
 
@@ -146,8 +132,16 @@ BackTracking:
         during sort/build-array try minimize recursive calls,
     ]
 
-    Medium: 131?, 93?, 1849
-    Tricks: 46, 698
+    Tricks: m46, m131, m698
+
+
+
+Tries: 
+    Medium: [
+        Add isEndOfWord = true to last letter node in insert
+    ]
+
+    Medium: 2707
 
 
 
@@ -157,7 +151,6 @@ Graphs:
         If problem involves edges of grid try out to in instead,
         create a neightbors/edges array,
         topological sort, which order to take class,
-        Union find if same parents there is a cycle, 
         find all nodes a node can reach then compare
         bfs for shortest path,
         use an outside variable for dfs if tuple return,
@@ -165,8 +158,8 @@ Graphs:
         Khans algorithm
     ]
 
-    Medium: 133?, 1958?, 721!, 2359?, 1129?, 2477?, 785, 399
-    Tricks: 207, 323, 1020
+    Medium: 1958?, 1129?, 785?
+    Tricks: m207, m323, m721, m1020, m399
 
 
 
@@ -190,13 +183,14 @@ Advanced Graphs:
         Euclidian Algorithm
     ]
 
-    Medium: 152!, 740, 673, 1035?, 2140, 837, 1626?
-    Tricks: 91, 300, 416, 983, 343
+    Medium: 152?, 740?, 673?, 1035?, 837
+    Tricks: m91, m300, m416, m983, m343, m2140
 
 
 
 2D: 
     [
+        Time depends on params b/c memo only visit each combo once
         Bounded Knapsack,
         for combinations tab loop goes inside, memo -> index..<n
         for premutations tab first duplicates rearranged,
@@ -204,7 +198,7 @@ Advanced Graphs:
         if current doesnt need mod just return next recursion,
     ]
 
-    Medium: 1049!, 221?, 1140?, 926?
+    Medium: 1049?, 221?, 1140?, 926?
     Study: 309, 494, 97, 877, 474, 1911, 72
 
 
@@ -217,7 +211,7 @@ Greedy:
         use negatives for sorting tuples
     ]
 
-    Medium: 918, 45?, 1871!, 134?, 2439?, 763
+    Medium: 918?, 45?, 1871!, 134?, 2439?, 763?
     Study: 678, 1029
 
 
