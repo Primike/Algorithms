@@ -1,31 +1,30 @@
 class FreqStack {
 
-    var dict: [Int: Int]
-    var stack: [(Int, Int)]
+    var frequency: [Int: Int]
+    var stacks: [Int: [Int]]
+    var largest: Int
 
     init() {
-        self.dict = [Int: Int]()
-        self.stack = [(Int, Int)]()
+        frequency = [:]
+        stacks = [:]
+        largest = 0
     }
-    
-    func push(_ val: Int) {
-        dict[val, default: 0] += 1
-        stack.append((val, dict[val, default: 1]))
+
+    func push(_ x: Int) {
+        frequency[x, default: 0] += 1
+
+        if let count = frequency[x], count > largest { largest = count }
+
+        stacks[frequency[x]!, default: []].append(x)
     }
-    
+
     func pop() -> Int {
-        var maximum = dict.values.max()
-        var value = 0
+        guard let x = stacks[largest]?.popLast() else { return 0 }
 
-        for i in stride(from: stack.count - 1, to: -1, by: -1) {
-            if stack[i].1 == maximum {
-                value = stack[i].0
-                dict[stack[i].0, default: 1] -= 1
-                stack.remove(at: i)
-                break
-            }
-        }
+        frequency[x, default: 1] -= 1
 
-        return value
+        if stacks[largest]?.isEmpty == true { largest -= 1 }
+        
+        return x
     }
 }

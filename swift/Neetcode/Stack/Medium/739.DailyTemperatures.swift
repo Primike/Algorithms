@@ -3,6 +3,7 @@
 // the number of days you have to wait after the ith day to get a warmer temperature. 
 // If there is no future day for which this is possible, keep answer[i] == 0 instead.
 
+// Time: O(n), Space: O(n)
 func dailyTemperatures(_ temperatures: [Int]) -> [Int] {
     var result = Array(repeating: 0, count: temperatures.count)
     var stack = [Int]()

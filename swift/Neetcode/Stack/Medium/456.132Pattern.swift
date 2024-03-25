@@ -3,21 +3,21 @@
 // i < j < k and nums[i] < nums[k] < nums[j].
 // Return true if there is a 132 pattern in nums, otherwise, return false.
 
+// Time: O(n), Space: O(n)
 func find132pattern(_ nums: [Int]) -> Bool {
     var stack = [(Int, Int)]()
-    var currentMin = nums[0]
 
-    for i in 1..<nums.count {
-        while let last = stack.last, nums[i] >= last.0 {
+    for number in nums {
+        var smallest = Int.max
+
+        while let last = stack.last, last.0 <= number {
             stack.removeLast()
+            smallest = min(smallest, last.0, last.1)
         }
 
-        if let last = stack.last, nums[i] > last.1 {
-            return true
-        }
+        if let last = stack.last, last.1 < number { return true }
 
-        stack.append((nums[i], currentMin))
-        currentMin = min(currentMin, nums[i])
+        stack.append((number, smallest))
     }
 
     return false
