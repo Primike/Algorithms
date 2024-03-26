@@ -5,6 +5,7 @@
 // Return the minimum number of type-2 operations you need to 
 // perform such that s becomes alternating.
 
+// Time: O(n), Space: O(n)
 func minFlips(_ s: String) -> Int {
     let s2 = Array(s + s), n = s.count
     var zeroStart = [Character](), oneStart = [Character]()
