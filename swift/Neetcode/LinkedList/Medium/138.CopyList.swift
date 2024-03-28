@@ -2,6 +2,7 @@
 // random pointer, which could point to any node in the list, or null.
 // Construct a deep copy of the list.
 
+// Time: O(n), Space: O(n)
 func copyRandomList(_ head: Node?) -> Node? {
     guard let head = head else { return nil }
 

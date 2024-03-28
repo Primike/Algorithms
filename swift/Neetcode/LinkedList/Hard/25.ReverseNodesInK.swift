@@ -1,36 +1,37 @@
 // Given the head of a linked list, reverse the nodes of the list k at a time, 
 // and return the modified list.
 
+// Time: O(n), Space: O(1)
 func reverseKGroup(_ head: ListNode?, _ k: Int) -> ListNode? {
-    var newNode = ListNode(0, head)
-    var left: ListNode? = newNode, right = head
+    let newHead = ListNode(0, head)
+    var previous: ListNode? = newHead
+    var current = head
 
-    for i in 0..<(k - 1) {
-        right = right?.next
-    }
+    while current != nil {
+        var temp = current
 
-    while right != nil {
-        var newLeft = left?.next
-        var current = left?.next
-        var previous: ListNode? = nil
-
-        for _ in 0..<k {
-            var next = current?.next 
-            current?.next = previous
-            previous = current
-            current = next 
+        for i in 0..<(k - 1) {
+            temp = temp?.next
         }
 
-        left?.next?.next = current
-        left?.next = previous
+        if temp == nil { return newHead.next }
 
-        left = newLeft
-        right = current
+        var left = previous
+        var i = 0
 
-        for _ in 0..<(k - 1) {
-            right = right?.next
+        while let node = current, i < k {
+            let next = node.next
+            node.next = left
+            left = current 
+            current = next
+            i += 1
         }
+        
+        let right = previous?.next
+        previous?.next = left
+        right?.next = current
+        previous = right
     }
-    
-    return newNode.next
+
+    return newHead.next
 }
