@@ -4,28 +4,19 @@
 
 //Time: nlog(n), Space(n)
 func maxPerformance(_ n: Int, _ speed: [Int], _ efficiency: [Int], _ k: Int) -> Int {
-    var engineers = [(Int, Int)]()
-
-    for i in 0..<speed.count {
-        engineers.append((speed[i], efficiency[i]))
-    }
-
-    engineers.sort { $0.1 > $1.1 }
-    var heap = Heap<Int>(type: .minHeap)
+    let team = zip(speed, efficiency).map { ($0.0, $0.1) }.sorted { $0.1 > $1.1 }
+    var heap = Heap<Int>(.minHeap)
     var result = 0
-    var currentSum = 0
+    var current = 0
 
-    for (speed, efficiency) in engineers {
-        currentSum += speed
-        heap.push(speed)
+    for engineer in team {
+        current += engineer.0
+        heap.push(engineer.0)
 
-        if heap.count > k {
-            let minimum = heap.pop()!
-            currentSum -= minimum
-        }
-        
-        result = max(result, currentSum * efficiency)
+        if heap.count > k { current -= heap.pop()! }
+
+        result = max(result, current * engineer.1)
     }
-
-    return result % (Int(pow(10, 9.0)) + 7)
+    
+    return result % 1_000_000_007
 }

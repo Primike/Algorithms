@@ -1,30 +1,42 @@
 class MedianFinder {
 
-    var smallHeap: Heap<Int>
-    var largeHeap: Heap<Int>
+    private var minHeap: Heap<Int>
+    private var maxHeap: Heap<Int>
 
     init() {
-        self.smallHeap = Heap(type: .maxHeap)
-        self.largeHeap = Heap(type: .minHeap)
+        self.minHeap = Heap<Int>(.minHeap)
+        self.maxHeap = Heap<Int>(.maxHeap)
     }
     
-    //Time: log(n), Space: n
     func addNum(_ num: Int) {
-        smallHeap.push(num)          
-        largeHeap.push(smallHeap.pop()!) 
-        
-        if largeHeap.count > smallHeap.count {
-            smallHeap.push(largeHeap.pop()!)
+        if let first = maxHeap.peek(), first >= num {
+            maxHeap.push(num)
+        } else {
+            minHeap.push(num)
         }
+
+        balanceHeaps()
     }
     
     func findMedian() -> Double {
-        if largeHeap.count > smallHeap.count {
-            return Double(largeHeap.peek()!)
-        } else if largeHeap.count < smallHeap.count {
-            return Double(smallHeap.peek()!)
+        if maxHeap.isEmpty { return Double(minHeap.peek() ?? 0) }
+
+        if minHeap.count > maxHeap.count {
+            return Double(minHeap.peek() ?? 0)
+        } else if maxHeap.count > minHeap.count {
+            return Double(maxHeap.peek() ?? 0)
         } else {
-            return Double((largeHeap.peek()! + smallHeap.peek()!)) / 2
+            return (Double(minHeap.peek() ?? 0) + Double(maxHeap.peek() ?? 0)) / 2.0
+        }
+    }
+
+    private func balanceHeaps() {
+        while minHeap.count > maxHeap.count + 1 {
+            maxHeap.push(minHeap.pop()!)
+        }
+
+        while maxHeap.count > minHeap.count + 1 {
+            minHeap.push(maxHeap.pop()!)
         }
     }
 }

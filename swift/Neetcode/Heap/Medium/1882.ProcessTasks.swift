@@ -1,43 +1,43 @@
 struct Server: Comparable {
-    let index: Int
+    let i: Int
     let weight: Int
     var time = 0
     var isUsed = false
 
-    static func <(_ l: Server, _ r: Server) -> Bool {
-        if l.isUsed { return (l.time) < (r.time) }
-        return (l.weight, l.index) < (r.weight, r.index)
-    }
+    static func < (_ l: Server, _ r: Server) -> Bool {
+        if l.isUsed { return (l.time) < (r.time) } 
+        return (l.weight, l.i) < (r.weight, r.i)
+    }    
 }
 
 // Time: O(m * n * logn), Space: O(n + m)
 func assignTasks(_ servers: [Int], _ tasks: [Int]) -> [Int] {
-    var usedHeap = Heap<Server>(.minHeap)
-    var freeHeap = Heap<Server>(.minHeap)
+    var availableServers = Heap<Server>(.minHeap)
+    var usedServers = Heap<Server>(.minHeap)
 
-    for (i, server) in servers.enumerated() {
-        freeHeap.push(Server(index: i, weight: server))
+    for (i, weight) in servers.enumerated() {
+        availableServers.push(Server(i: i, weight: weight))
     }
 
     var result = [Int]()
-    var time = 0, i = 0
+    var time = 0, index = 0
 
-    while i < tasks.count {
-        if freeHeap.isEmpty { time = usedHeap.peek()!.time }
+    while index < tasks.count {
+        if availableServers.isEmpty { time = usedServers.peek()!.time }
 
-        while var first = usedHeap.peek(), first.time <= time {
-            usedHeap.pop()
+        while var first = usedServers.peek(), first.time <= time {
+            usedServers.pop()
             first.isUsed = false
-            freeHeap.push(first)
+            availableServers.push(first)
         }
 
-        while i < tasks.count, time >= i, !freeHeap.isEmpty {
-            var freeServer = freeHeap.pop()!
-            freeServer.time = time + tasks[i]
-            freeServer.isUsed = true
-            usedHeap.push(freeServer)
-            result.append(freeServer.index)
-            i += 1
+        while index < tasks.count, time >= index, !availableServers.isEmpty {
+            var server = availableServers.pop()!
+            server.time = time + tasks[index]
+            server.isUsed = true
+            usedServers.push(server)
+            result.append(server.i)
+            index += 1
         }
 
         time += 1
