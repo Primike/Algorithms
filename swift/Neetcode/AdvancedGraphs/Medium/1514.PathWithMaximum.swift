@@ -4,12 +4,12 @@
 // if it differs from the correct answer by at most 1e-5.
 
 struct Node: Comparable {
-    let i: Int
-    let probability: Double
+    let n: Int
+    let probability: Double 
 
     static func < (_ l: Node, _ r: Node) -> Bool {
         return l.probability < r.probability
-    }    
+    }
 }
 
 // Time: O(e * logn), Space: O(n + e)
@@ -21,21 +21,22 @@ func maxProbability(_ n: Int, _ edges: [[Int]], _ succProb: [Double], _ start_no
         neighbors[edges[i][1]].append((edges[i][0], succProb[i]))
     }
 
-    var heap = Heap<Node>(.maxHeap, [Node(i: start_node, probability: 1.0)])
+    var heap = Heap<Node>(.maxHeap, [Node(n: start_node, probability: 1.0)])
     var visited = Set<Int>()
-    
+
     while !heap.isEmpty {
-        let best = heap.pop()!
+        let mostProbable = heap.pop()!
 
-        if visited.contains(best.i) { continue }
-        if best.i == end_node { return best.probability }
+        if mostProbable.n == end_node { return mostProbable.probability }
+        if visited.contains(mostProbable.n) { continue }
+        
+        visited.insert(mostProbable.n)
 
-        visited.insert(best.i)
+        for node in neighbors[mostProbable.n] {
+            if visited.contains(node.0) { continue }
 
-        for (node, double) in neighbors[best.i] {
-            if visited.contains(node) { continue }
-
-            heap.push(Node(i: node, probability: double * best.probability))
+            let newProbability = mostProbable.probability * node.1
+            heap.push(Node(n: node.0, probability: newProbability))
         }
     }
 

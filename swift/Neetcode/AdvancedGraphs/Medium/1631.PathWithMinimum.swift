@@ -13,36 +13,34 @@ struct Cell: Comparable {
     }
 }
 
-// Time: O(m * n), Space: O(m * n)
+// Time: O(m * n * log(m * n)), Space: O(m * n)
 func minimumEffortPath(_ heights: [[Int]]) -> Int {
     let rows = heights.count, cols = heights[0].count
     let directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-    var heap = Heap<Cell>(.minHeap, [Cell(i: 0, j: 0, effort: 0)])
     var visited = Set<String>()
-    
+    var heap = Heap<Cell>(.minHeap)
+    heap.push(Cell(i: 0, j: 0, effort: 0))
+    var result = 0
+
     while !heap.isEmpty {
-        let cell = heap.pop()!
-        let key = "\(cell.i),\(cell.j)"
+        let leastEffort = heap.pop()!
+        result = max(result, leastEffort.effort)
+        visited.insert("\(leastEffort.i),\(leastEffort.j)")
 
-        if visited.contains(key) { continue }
-        visited.insert(key)
-
-        if cell.i == rows - 1, cell.j == cols - 1 { return cell.effort }
+        if leastEffort.i == rows - 1, leastEffort.j == cols - 1 { return result }
 
         for (di, dj) in directions {
-            let r = cell.i + di, c = cell.j + dj
-            let key = "\(r),\(c)"
-
+            let r = leastEffort.i + di, c = leastEffort.j + dj
+            
             if r < 0 || r >= rows || c < 0 || c >= cols { continue }
-            if visited.contains(key) { continue }
+            if visited.contains("\(r),\(c)") { continue }
 
-            let nextEffort = abs(heights[cell.i][cell.j] - heights[r][c])
-            let largestEffort = max(cell.effort, nextEffort)
-            heap.push(Cell(i: r, j: c, effort: largestEffort))
+            let effort = abs(heights[leastEffort.i][leastEffort.j] - heights[r][c])
+            heap.push(Cell(i: r, j: c, effort: effort))
         }
     }
 
-    return 0
+    return result
 }
 
 print(minimumEffortPath([[1,2,2],[3,8,2],[5,3,5]]))

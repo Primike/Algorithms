@@ -5,13 +5,13 @@
 // return the cheapest price from src to dst with at most k stops. 
 // If there is no such route, return -1.
 
-struct City: Comparable {
-    let city: Int
-    var cost: Int
-    var stops: Int
+struct Stop: Comparable {
+    let n: Int
+    let price: Int
+    let stops: Int
 
-    static func < (_ l: City, _ r: City) -> Bool {
-        return l.cost < r.cost
+    static func < (_ l: Stop, _ r: Stop) -> Bool {
+        return l.price < r.price
     }
 }
 
@@ -22,19 +22,19 @@ func findCheapestPrice(_ n: Int, _ flights: [[Int]], _ src: Int, _ dst: Int, _ k
         paths[flight[0]].append((flight[1], flight[2]))
     }
 
-    var heap = Heap<City>(.minHeap, [City(city: src, cost: 0, stops: 0)])
+    var heap = Heap<Stop>(.minHeap, [Stop(n: src, price: 0, stops: 0)])
     var visited = [Int: Int]()
 
     while !heap.isEmpty {
         let cheapest = heap.pop()!
 
-        if let stops = visited[cheapest.city], stops <= cheapest.stops { continue }
-        if cheapest.city == dst, cheapest.stops - 1 <= k { return cheapest.cost }
+        if let stops = visited[cheapest.n], stops <= cheapest.stops { continue }
+        if cheapest.n == dst, cheapest.stops - 1 <= k { return cheapest.price }
 
-        visited[cheapest.city] = cheapest.stops
+        visited[cheapest.n] = cheapest.stops
 
-        for (node, cost) in paths[cheapest.city] {
-            heap.push(City(city: node, cost: cheapest.cost + cost, stops: cheapest.stops + 1))
+        for stop in paths[cheapest.n] {
+            heap.push(Stop(n: stop.0, price: cheapest.price + stop.1, stops: cheapest.stops + 1))
         }
     }
 
