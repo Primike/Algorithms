@@ -25,7 +25,7 @@ func cloneGraph(_ node: Node?) -> Node? {
     return dfs(node)
 }
 
-func cloneGraph(_ node: Node?) -> Node? {
+func cloneGraph2(_ node: Node?) -> Node? {
     guard let node = node else { return nil }
 
     var dict = [node: Node(node.val)]
@@ -48,4 +48,43 @@ func cloneGraph(_ node: Node?) -> Node? {
     }
 
     return dict[node]
+}
+
+func cloneGraph3(_ node: Node?) -> Node? {
+    var nodeToCopy = [Node: Node]()
+
+    func createCopies(_ node: Node?) {
+        guard let node = node else { return }
+        if nodeToCopy.keys.contains(node) { return }
+
+        nodeToCopy[node] = Node(node.val)
+
+        for n in node.neighbors {
+            createCopies(n)
+        }
+    }
+
+    var visited = Set<Int>()
+
+    func connectCopies(_ node: Node?) {
+        guard let node = node else { return }
+        guard let copy = nodeToCopy[node] else { return }
+
+        visited.insert(node.val)
+
+        for n in node.neighbors {
+            guard let neighbor = n else { continue }
+            guard let neighborCopy = nodeToCopy[neighbor] else { continue }
+
+            copy.neighbors.append(neighborCopy)
+
+            if visited.contains(neighbor.val) { continue }
+            connectCopies(neighbor)
+        }
+    }
+
+    createCopies(node)
+    connectCopies(node)
+
+    return nodeToCopy[node ?? Node(-1)]
 }

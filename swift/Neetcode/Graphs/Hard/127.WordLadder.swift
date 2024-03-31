@@ -9,10 +9,9 @@
 
 // Use hashmap better
 func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> Int {
-    var wordList = Set(wordList.map { Array($0) })
-    let beginWord = Array(beginWord), endWord = Array(endWord)
     if !wordList.contains(endWord) { return 0 }
     
+    var wordList = Set(wordList)
     wordList.remove(beginWord)
     var queue = [beginWord]
     var result = 1
@@ -20,20 +19,19 @@ func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) 
     while !queue.isEmpty {
         for _ in 0..<queue.count {
             let first = queue.removeFirst()
-            
+
             for word in wordList {
-                var count = 0
+                var different = 0
 
-                for i in 0..<word.count {
-                    if first[i] != word[i] { count += 1 }
-                    if count >= 2 { break }
+                for (i, j) in zip(first, word) {
+                    if i != j { different += 1 }
                 }
 
-                if count <= 1 {
-                    if word == endWord { return result + 1}
-                    queue.append(word)
-                    wordList.remove(word)
-                }
+                if different > 1 { continue }
+                if word == endWord { return result + 1 }
+                
+                wordList.remove(word)
+                queue.append(word)
             }
         }
 

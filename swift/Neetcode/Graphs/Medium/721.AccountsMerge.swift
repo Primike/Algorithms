@@ -3,6 +3,7 @@
 // are emails in sorted order. 
 // The accounts themselves can be returned in any order.
 
+// Also dfs
 func accountsMerge(_ accounts: [[String]]) -> [[String]] {
     var root = Array(0..<accounts.count)
     var rank = Array(repeating: 1, count: accounts.count)

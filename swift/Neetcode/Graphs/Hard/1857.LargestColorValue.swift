@@ -1,6 +1,7 @@
 // Return the largest color value of any valid path in the given graph, 
 // or -1 if the graph contains a cycle.
 
+// Kahns Algorithm
 func largestPathValue(_ colors: String, _ edges: [[Int]]) -> Int {
     let colors = Array(colors)
     var degrees = Array(repeating: 0, count: colors.count)

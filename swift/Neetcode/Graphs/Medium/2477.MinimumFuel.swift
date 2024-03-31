@@ -9,24 +9,22 @@ func minimumFuelCost(_ roads: [[Int]], _ seats: Int) -> Int {
         neighbors[road[1]].append(road[0])
     }
 
-    var result = 0
-
-    func dfs(_ n: Int, _ parent: Int) -> Int {            
-        var passengers = 1
+    func dfs(_ n: Int, _ parent: Int) -> (Int, Int) {
+        var totalPeople = 0
+        var totalFuel = 0
 
         for node in neighbors[n] {
             if parent == node { continue }
 
-            let people = dfs(node, n)
-            result += (people + seats - 1) / seats
-            passengers += people
+            let (people, fuel) = dfs(node, n)
+            totalFuel += fuel + ((people + seats - 1) / seats)
+            totalPeople += people
         }
 
-        return passengers
+        return(totalPeople + 1, totalFuel)
     }
 
-    dfs(0, -1)
-    return result
+    return dfs(0, -1).1
 }
 
 print(minimumFuelCost([[0,1],[0,2],[0,3]], 5))

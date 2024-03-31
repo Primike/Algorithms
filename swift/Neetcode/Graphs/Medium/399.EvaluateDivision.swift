@@ -6,38 +6,45 @@
 // represents the jth query where you must find the answer for Cj / Dj = ?.
 // Return the answers to all queries. If a single answer cannot be determined, return -1.0.
 
-// Uses stoichiometry
 func calcEquation(_ equations: [[String]], _ values: [Double], _ queries: [[String]]) -> [Double] {
-    var dict = [String: [(String, Double)]]()
+    var neighbors = [String: [(String, Double)]]()
 
-    for (index, equation) in equations.enumerated() {
-        let a = equation[0], b = equation[1]
-        dict[a, default: []].append((b, values[index]))
-        dict[b, default: []].append((a, 1 / values[index]))
+    for (equation, value) in zip(equations, values) {
+        neighbors[equation[0], default: []].append((equation[1], value))
+        neighbors[equation[1], default: []].append((equation[0], 1.0 / value))
     }
-    
-    func bfs(_ numerator: String, _ denominator: String) -> Double {
-        if dict[numerator] == nil || dict[denominator] == nil { return -1 }
 
-        var queue = [(numerator, 1.0)]
-        var visited = Set([numerator])
+    func bfs(_ letter: String, _ target: String) -> Double {
+        if target == letter { return 1 }
+
+        var queue = [(letter, 1.0)]
+        var visited = Set([letter])
 
         while !queue.isEmpty {
-            let (node, current) = queue.removeFirst()
-            if node == denominator { return current }
+            for _ in 0..<queue.count {
+                let (first, value) = queue.removeFirst()
 
-            for (n, weight) in dict[node, default: []] {
-                if visited.contains(n) { continue }
+                for (alpha, multiplier) in neighbors[first, default: []] {
+                    if visited.contains(alpha) { continue }
+                    if alpha == target { return value * multiplier }
 
-                queue.append((n, current * weight))
-                visited.insert(n)
+                    visited.insert(alpha)
+                    queue.append((alpha, value * multiplier))
+                }
             }
         }
-        
+
         return -1
     }
 
-    return queries.map { bfs($0[0], $0[1]) }
+    var result = Array(repeating: -1.0, count: queries.count)
+
+    for (i, query) in queries.enumerated() {
+        if neighbors[query[0]] == nil || neighbors[query[1]] == nil { continue }
+        result[i] = bfs(query[0], query[1])
+    }
+
+    return result
 }
 
 print(calcEquation([
