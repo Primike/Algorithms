@@ -2,28 +2,30 @@
 // such that the product of their lengths is maximized. 
 // The two subsequences are disjoint if they do not both pick a character at the same index.
 
+// Time: O(3^n), Space: O(n)
 func maxProduct(_ s: String) -> Int {
     let s = Array(s)
-    var result = 0
+    var result = 1
 
-    func backtrack(_ i: Int, _ subseq1: [Character], _ subseq2: [Character]) {
-        if i == s.count {
-            if subseq1 == Array(subseq1.reversed()), subseq2 == Array(subseq2.reversed()) {
-                result = max(result, subseq1.count * subseq2.count)
-            }
-            
+    func getProduct(_ a: [Character], _ b: [Character]) -> Int {
+        if a != Array(a.reversed()) || b != Array(b.reversed()) { return 0 }
+        return a.count * b.count
+    }
+
+    func backtrack(_ i: Int, _ a: [Character], _ b: [Character]) {            
+        if i == s.count { 
+            result = max(result, getProduct(a, b))
             return
         }
 
-        backtrack(i + 1, subseq1 + [s[i]], subseq2)
-        backtrack(i + 1, subseq1, subseq2 + [s[i]])
-        backtrack(i + 1, subseq1, subseq2)
+        backtrack(i + 1, a + [s[i]], b)
+        backtrack(i + 1, a, b + [s[i]])
+        backtrack(i + 1, a, b)
     }
 
     backtrack(0, [], [])
     return result
 }
-
 
 print(maxProduct("leetcodecom"))
 print(maxProduct("bb"))

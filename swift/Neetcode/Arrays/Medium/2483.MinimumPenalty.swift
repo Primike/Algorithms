@@ -3,30 +3,23 @@
 // Return the earliest hour at which the shop must be closed 
 // to incur a minimum penalty.
 
+// Time: O(n), Space: O(1)
 func bestClosingTime(_ customers: String) -> Int {
     let customers = Array(customers)
-    var count = 0
-
-    for i in stride(from: customers.count - 1, to: -1, by: -1) {
-        if customers[i] == "Y" { count += 1 }
-    }
-
-    var current = count
-    var minimum = Int.max
-    var result = 0
+    var minPenalty = 0, result = 0
+    var penalty = 0
 
     for (i, hour) in customers.enumerated() {
-        if current < minimum { 
-            minimum = current 
-            result = i
+        penalty += hour == "Y" ? -1 : 1
+
+        if penalty < minPenalty {
+            minPenalty = penalty
+            result = i + 1
         }
+    }
 
-        if hour == "Y" { current -= 1 }
-        if hour == "N" { current += 1 }
-    } 
-
-    return current < minimum ? customers.count : result
-}   
+    return result
+}
 
 print(bestClosingTime("YYNY"))
 print(bestClosingTime("NNNNN"))

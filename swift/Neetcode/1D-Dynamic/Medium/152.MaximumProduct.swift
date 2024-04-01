@@ -1,6 +1,12 @@
 // Given an integer array nums, find a subarray
 // that has the largest product, and return the product.
 
+// For both at every number streak will continue or end
+// currentMax: continuation, use left negative, start new
+// [...] + [n], -[...] + [-n], [N]
+// currentMin: continuation, use left negative, start new
+// [...] + [-n], -[...] + [-n], [-N]
+
 // Time: O(n), Space: O(1)
 func maxProduct(_ nums: [Int]) -> Int {
     var result = nums[0]

@@ -2,6 +2,7 @@
 // and return its index. If the array contains multiple peaks, 
 // return the index to any of the peaks.
 
+// Time: O(logn), Space: O(1)
 func findPeakElement(_ nums: [Int]) -> Int {
     var left = 0, right = nums.count - 1
 

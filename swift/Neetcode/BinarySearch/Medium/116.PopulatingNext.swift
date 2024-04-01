@@ -22,7 +22,7 @@ func connect(_ root: Node?) -> Node? {
     return root
 }
 
-func connect(_ root: Node?) -> Node? {
+func connect2(_ root: Node?) -> Node? {
     guard let root = root else { return root }
 
     root.right?.next = root.next?.left
@@ -30,6 +30,26 @@ func connect(_ root: Node?) -> Node? {
 
     connect(root.left)
     connect(root.right)
+
+    return root
+}
+
+func connect3(_ root: Node?) -> Node? {
+    guard let root = root else { return nil }
+
+    var queue = [root]
+
+    while !queue.isEmpty {
+        let count = queue.count
+
+        for i in 0..<count {
+            let first = queue.removeFirst()
+
+            if i < count - 1 { first.next = queue[0] }
+            if let left = first.left { queue.append(left) }
+            if let right = first.right { queue.append(right) }
+        }
+    }
 
     return root
 }

@@ -22,30 +22,36 @@ func maxScore(_ nums: [Int]) -> Int {
         }
     }
 
-    var memo = [Set<Int>: Int]()
+    var memo = [String: Int]()
 
-    func dp(_ operation: Int, _ visited: Set<Int>) -> Int {
-        if visited.count == nums.count { return 0 }
-        if let value = memo[visited] { return value }
+    func dp(_ operation: Int, _ current: [Character]) -> Int {
+        if let value = memo[String(current)] { return value }
+        if current.allSatisfy { $0 == "1" } { return 0 }
 
-        var result = 1
-
+        var result = 0
+        
         for i in 0..<nums.count {
-            for j in (i + 1)..<nums.count {
-                if visited.contains(i) || visited.contains(j) { continue }
+            if current[i] == "1" { continue }
 
-                var newSet = Set(visited + [i, j])
+            var newBitmask = current
+            newBitmask[i] = "1"
+
+            for j in (i + 1)..<nums.count {
+                if current[j] == "1" { continue }
+
+                newBitmask[j] = "1"
                 let take = operation * gcd["\(nums[i]),\(nums[j])", default: 1]
-                let recursion = dp(operation + 1, newSet)
-                result = max(result, take + recursion)
+                result = max(result, dp(operation + 1, newBitmask) + take)
+                newBitmask[j] = "0"
             }
         }
 
-        memo[visited] = result
+        memo[String(current)] = result
         return result
     }
 
-    return dp(1, [])
+    let bitmask: [Character] = Array(repeating: "0", count: nums.count)
+    return dp(1, bitmask)
 }
 
 print(maxScore([1,2]))

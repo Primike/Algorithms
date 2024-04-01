@@ -4,25 +4,29 @@
 // Return an integer array pairs of length n where pairs[i] is the number 
 // of potions that will form a successful pair with the ith spell.
 
+// Time: O(n * logn), Space: O(1)
 func successfulPairs(_ spells: [Int], _ potions: [Int], _ success: Int) -> [Int] {
-    let potions = potions.sorted(), count = potions.count
+    let potions = potions.sorted()
     var result = [Int]()
 
     for spell in spells {
-        var left = 0, right = count - 1
+        var left = 0, right = potions.count - 1
 
         while left < right {
             let mid = (right + left) / 2
 
-            if spell * potions[mid] < success {
-                left = mid + 1
-            } else {
+            if potions[mid] * spell >= success {
                 right = mid
+            } else {
+                left = mid + 1
             }
         }
 
-        if left < count, spell * potions[left] < success { left += 1 }
-        result.append(count - left)
+        if potions[left] * spell < success {
+            result.append(0)
+        } else {
+            result.append(potions.count - left)
+        }
     }
 
     return result

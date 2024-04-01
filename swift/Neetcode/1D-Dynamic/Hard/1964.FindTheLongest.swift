@@ -1,36 +1,35 @@
 // Return an array ans of length n, where ans[i] is the length of the 
 // longest obstacle course for index i as described above.
-
 // BS Finds position were current is greater than last element in a subsequence
 // it will overwrite a larger value and use the smaller as the new last 
 
 // Time: O(n * logn), Space: O(n)
 func longestObstacleCourseAtEachPosition(_ obstacles: [Int]) -> [Int] {
-    var tab = [Int](repeating: 1, count: obstacles.count)
-    var last = [Int]()
+    var tab = Array(repeating: 0, count: obstacles.count)
+    var lis = [Int]()
 
-    for (i, height) in obstacles.enumerated() {
-        var low = 0, high = last.count
+    for (i, obstacle) in obstacles.enumerated() {
+        var left = 0, right = lis.count
 
-        while low < high {
-            let mid = low + (high - low) / 2
+        while left < right {
+            let mid = (right + left) / 2
 
-            if last[mid] <= height {
-                low = mid + 1
+            if lis[mid] > obstacle {
+                right = mid
             } else {
-                high = mid
+                left = mid + 1
             }
         }
 
-        if low == last.count {
-            last.append(height)
+        if left == lis.count {
+            lis.append(obstacle)
         } else {
-            last[low] = height
+            lis[left] = obstacle
         }
-        
-        tab[i] = low + 1
+
+        tab[i] = left + 1
     }
-    
+
     return tab
 }
 

@@ -1,6 +1,7 @@
 // Return the minimum maximum difference among all p pairs. 
 // We define the maximum of an empty set to be zero.
 
+// Time: O(n * logn), Space: O(n * logn)
 func minimizeMax(_ nums: [Int], _ p: Int) -> Int {
     if p == 0 { return 0 }
     

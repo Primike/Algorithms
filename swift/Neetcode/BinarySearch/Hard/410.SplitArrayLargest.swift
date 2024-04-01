@@ -1,40 +1,32 @@
 // Given an integer array nums and an integer k, split nums into k 
 // non-empty subarrays such that the largest sum of any subarray is minimized.
 
+// Time: O(n * logn), Space: O(1)
 func splitArray(_ nums: [Int], _ k: Int) -> Int {
     var left = nums.max() ?? 0, right = nums.reduce(0, +)
-    var result = right
 
-    while left <= right {
+    while left < right {
         let mid = (right + left) / 2
-        var currentCount = 0
-        var subarrays = 0
+        var current = 0
+        var count = 1
 
         for number in nums {
-            if number > mid {
-                subarrays = k + 1 
-                break
+            if current + number > mid {
+                count += 1
+                current = 0
             }
-
-            if currentCount + number > mid {
-                subarrays += 1
-                currentCount = number
-            } else {
-                currentCount += number
-            }
+            
+            current += number
         }
-
-        if currentCount > 0 { subarrays += 1 }
-
-        if subarrays <= k {
-            result = mid
-            right = mid - 1
+        
+        if count <= k {
+            right = mid
         } else {
             left = mid + 1
         }
     }
 
-    return result
+    return left
 }
 
 print(splitArray([7,2,5,10,8], 2))

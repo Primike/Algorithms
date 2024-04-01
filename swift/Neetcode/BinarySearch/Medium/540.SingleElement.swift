@@ -2,6 +2,7 @@
 // appears exactly twice, except for one element which appears exactly once.
 // Return the single element that appears only once.
 
+// Time: O(n), Space: O(1)
 func singleNonDuplicate(_ nums: [Int]) -> Int {
     var left = 0, right = nums.count - 1
 

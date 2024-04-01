@@ -4,7 +4,6 @@
 // Return the maximum k you can choose such that p is still a 
 // subsequence of s after the removals.
 
-// right + 1 b/c they want k not index
 func maximumRemovals(_ s: String, _ p: String, _ removable: [Int]) -> Int {
     var s = Array(s), p = Array(p)
 

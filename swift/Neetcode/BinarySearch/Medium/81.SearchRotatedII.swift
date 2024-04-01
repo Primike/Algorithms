@@ -4,29 +4,29 @@
 func search(_ nums: [Int], _ target: Int) -> Bool {
     var left = 0, right = nums.count - 1
 
-    while left <= right {
+    while left < right {
         let mid = (right + left) / 2
 
-        if nums[mid] == target {
-            return true
-        } else if nums[mid] > nums[left] {
+        if nums[mid] == target { return true }
+        
+        if nums[mid] > nums[left] {
             if target >= nums[left], target < nums[mid] {
-                right = mid - 1
+                right = mid
             } else {
                 left = mid + 1
             }
         } else if nums[mid] < nums[left] {
-            if target <= nums[right], target > nums[mid] {
+            if target > nums[mid], target <= nums[right] {
                 left = mid + 1
             } else {
-                right = mid - 1
+                right = mid
             }
         } else {
             left += 1
         }
     }
 
-    return false
+    return nums[left] == target
 }
 
 print(search([2,5,6,0,0,1,2], 0))
