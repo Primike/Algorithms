@@ -10,7 +10,8 @@ Arrays:
         palindromes use asscci and post/prefix hashes
     ]
 
-    Easy: Designs
+    Easy: Designs, 205?
+    Hard: 2306
     Tricks: m179, m838, m2002, m280, m304, m665, m2483
 
 
@@ -50,7 +51,8 @@ Stack:
         Monotomic increasing/decreasing stack,
     ]
 
-    Tricks: m456
+    Hard: 84?
+    Tricks: m456, h895
 
 
 
@@ -68,7 +70,8 @@ Binary Search ?:
     ]
 
     Medium: 540?, 2616?, 33?, 81?, 1898?
-    Tricks: m162, m116, m1268
+    Hard: 4!
+    Tricks: m162, m116, m1268, h410
 
 
 
@@ -84,6 +87,7 @@ LinkedList:
     ]
 
     Medium: 138?, 622?, 146?
+    Hard: 460!
     Tricks: e160, m287, m86
 
 
@@ -104,7 +108,8 @@ Trees:
     ]
 
     Medium: 450?, 427?, 106?, 96?, 95, 894?, 337?
-    Tricks: m1443, m652, m662, m173
+    Hard: 297
+    Tricks: m1443, m652, m662, m173, h124
 
 
 
@@ -118,6 +123,7 @@ Heap:
     ]
     
     Medium: 2542?, 1405
+    Hard: 1675?
     Tricks: m621, m1882, m1094
 
 
@@ -159,14 +165,17 @@ Graphs:
     ]
 
     Medium: 1958?, 1129?, 785?
+    Hard: 1857
     Tricks: m207, m323, m721, m1020, m399
 
 
 
 Advanced Graphs:
-    Prims/Kruskals: Minimum Spanning Tree vertices connected with least weight
+    Prims/Kruskals: Minimum Spanning Tree vertices connected with least weight,
+    Hierholzers
 
-    Medium: 1584, 787
+    Medium: 1584?, 787
+    Hard: 332?, 269?, 2421!, 1579?
 
 
 
@@ -184,7 +193,8 @@ Advanced Graphs:
     ]
 
     Medium: 152?, 740?, 673?, 1035?, 837
-    Tricks: m91, m300, m416, m983, m343, m2140
+    Hard: 691?, 1406, 1964?, 1359
+    Tricks: m91, m300, m416, m983, m343, m2140, h472, h1799
 
 
 
@@ -212,6 +222,7 @@ Greedy:
     ]
 
     Medium: 918?, 45?, 1871!, 134?, 2439?, 763?
+    Hard: 135
     Study: 678, 1029
 
 
