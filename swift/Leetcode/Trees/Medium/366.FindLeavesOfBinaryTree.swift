@@ -4,36 +4,27 @@
 // Remove all the leaf nodes.
 // Repeat until the tree is empty.
 
-// Time: O(n), Space: O(n)
+// Time: O(n), Space: O(h)
 func findLeaves(_ root: TreeNode?) -> [[Int]] {
-    guard let root = root else { return [] }
+    var levels = [Int: [Int]]()
 
-    var leafs = [Int: [Int]]()
+    func dfs(_ root: TreeNode?) -> Int {
+        guard let root = root else { return 0 }
 
-    func dfs(_ root: TreeNode) -> Int {
-        var height = 0
+        let left = dfs(root.left), right = dfs(root.right)
+        let deepest = max(left, right)
 
-        if let left = root.left {
-            let depth = dfs(left)
-            leafs[depth, default: []].append(left.val)
-            height = max(depth, height)
-        }
-
-        if let right = root.right {
-            let depth = dfs(right)
-            leafs[depth, default: []].append(right.val)
-            height = max(depth, height)
-        }
-
-        return height + 1
+        levels[deepest, default: []].append(root.val)
+        return deepest + 1
     }
 
-    let depth = dfs(root)
-    leafs[depth, default: []].append(root.val)
+    dfs(root)
+    let smallest = levels.keys.min() ?? 0
+    let largest = levels.keys.max() ?? 0
     var result = [[Int]]()
 
-    for i in 1...(leafs.keys.max() ?? 1) {
-        result.append(leafs[i, default: []])
+    for i in smallest...largest {
+        result.append(levels[i, default: []])
     }
 
     return result

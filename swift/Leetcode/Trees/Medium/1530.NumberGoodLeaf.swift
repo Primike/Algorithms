@@ -3,6 +3,7 @@
 // if the length of the shortest path between them is less than or equal to distance.
 // Return the number of good leaf node pairs in the tree.
 
+// Time: O(n^2), Space: O(n)
 func countPairs(_ root: TreeNode?, _ distance: Int) -> Int {
     var result = 0
     

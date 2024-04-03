@@ -5,29 +5,24 @@
 
 // Time: O(n), Space: O(n)
 func pseudoPalindromicPaths (_ root: TreeNode?) -> Int {
-    var result = 0
-
-    func checkPalindrome(_  dict: [Int: Int]) {
-        var count = 0
-
-        for (key, value) in dict {
-            if value % 2 != 0 { count += 1 }
-        }
-
-        result += count > 1 ? 0 : 1
+    func checkPalindrome(_ path: [Int: Int]) -> Bool {
+        return path.values.filter { $0 % 2 != 0 }.count <= 1
     }
 
-    func dfs(_ root: TreeNode?, _ dict: [Int: Int]) -> TreeNode? {
-        guard let root = root else { return nil }
+    var result = 0
 
-        var dict = dict
-        dict[root.val, default: 0] += 1
+    func dfs(_ root: TreeNode?, _ current: [Int: Int]) {
+        guard let root = root else { return }
 
-        let left = dfs(root.left, dict), right = dfs(root.right, dict)
+        var current = current
+        current[root.val, default: 0] += 1
 
-        if left == nil, right == nil { checkPalindrome(dict) }
+        dfs(root.left, current)
+        dfs(root.right, current)
 
-        return root
+        if root.left == nil, root.right == nil { 
+            result += checkPalindrome(current) ? 1 : 0
+        }
     }
 
     dfs(root, [:])

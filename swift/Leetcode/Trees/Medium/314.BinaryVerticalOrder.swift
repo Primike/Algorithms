@@ -3,29 +3,29 @@
 // If two nodes are in the same row and column, 
 // the order should be from left to right.
 
+// Time: O(n), Space: O(n)
 func verticalOrder(_ root: TreeNode?) -> [[Int]] {
-    var columns = [Int: [(Int, Int)]]()
+    guard let root = root else { return [] }
 
-    func dfs(_ node: TreeNode?, _ i: Int, _ j: Int) {
-        guard let node = node else { return }
+    var xToNodes = [Int: [Int]]()
+    var queue = [(root, 0)]
 
-        columns[j, default: []].append((i, node.val))
-
-        dfs(node.left, i + 1, j - 1)
-        dfs(node.right, i + 1, j + 1)
+    while !queue.isEmpty {
+        for _ in 0..<queue.count {
+            let (node, x) = queue.removeFirst()
+            xToNodes[x, default: []].append(node.val)
+            
+            if let left = node.left { queue.append((left, x - 1)) }
+            if let right = node.right { queue.append((right, x + 1)) }
+        }
     }
 
-    dfs(root, 0, 0)
-
-    var left = columns.keys.min() ?? 0
-    var right = columns.keys.max() ?? 0
+    let minimum = xToNodes.keys.min() ?? 0
+    let maximum = xToNodes.keys.max() ?? 0
     var result = [[Int]]()
 
-    for j in left...right {
-        if let nodes = columns[j] {
-            let sorted = nodes.sorted { $0.0 < $1.0 }
-            result.append(sorted.map { $0.1 })
-        }
+    for i in minimum...maximum {
+        result.append(xToNodes[i, default: []])
     }
 
     return result

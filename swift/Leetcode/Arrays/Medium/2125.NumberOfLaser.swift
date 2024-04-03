@@ -5,25 +5,11 @@
 
 // Time: O(n * m), Space: O(n)
 func numberOfBeams(_ bank: [String]) -> Int {
-    var lasers = [Int]()
+    let lasers = bank.map { Array($0).filter { $0 == "1"}.count }.filter { $0 != 0 }
+    var result = 0
 
-    for row in bank {
-        var count = 0
-
-        for number in row {
-            if number == "1" { count += 1 }
-        }
-
-        lasers.append(count)
-    }
-
-    var result = 0, last = lasers[0]
-
-    for i in 1..<lasers.count {
-        if lasers[i] == 0 { continue }
-
-        result += lasers[i] * last
-        last = lasers[i]
+    for i in 1..<max(1, lasers.count) {
+        result += lasers[i - 1] * lasers[i]
     }
 
     return result

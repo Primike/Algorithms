@@ -13,6 +13,39 @@ func treeDiameter(_ edges: [[Int]]) -> Int {
         neighbors[edge[1]].append(edge[0])
     }
 
+    var result = 0
+
+    func dfs(_ n: Int, _ parent: Int) -> Int {
+        var longest = 0, secondLongest = 0
+
+        for node in neighbors[n] {
+            if node == parent { continue }
+            let pathLength = dfs(node, n)
+            
+            if pathLength > longest {
+                secondLongest = longest
+                longest = pathLength
+            } else if pathLength > secondLongest {
+                secondLongest = pathLength
+            }
+        }
+
+        result = max(result, longest + secondLongest)
+        return longest + 1
+    }
+
+    dfs(0, -1)
+    return result
+}
+
+func treeDiameter2(_ edges: [[Int]]) -> Int {
+    var neighbors = Array(repeating: [Int](), count: edges.count + 1)
+
+    for edge in edges {
+        neighbors[edge[0]].append(edge[1])
+        neighbors[edge[1]].append(edge[0])
+    }
+
     var lastNode = 0
 
     func bfs(_ n: Int) -> Int {

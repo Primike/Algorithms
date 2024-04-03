@@ -4,32 +4,33 @@
 // It is guaranteed that the given array represents a valid 
 // connected binary tree.
 
+// Time: O(n), Space: O(n)
 func pathSum(_ nums: [Int]) -> Int {
-    var values = [Int: Int]()
+    let nums = nums.map { String($0).compactMap { Int(String($0)) } }
+    var nodes = [[Int]: Int]()
+
+    for node in nums {
+        nodes[[node[0], node[1]]] = node[2]
+    }
+
+    var visited = Set<[Int]>()
     var result = 0
 
-    func dfs(_ node: Int, _ current: Int = 0) {
-        guard let value = values[node] else { return }
+    func dfs(_ key: [Int], _ total: Int) -> Bool {
+        guard let value = nodes[key] else { return false }
 
-        let depth = node / 10, position = node % 10
-        let left = (depth + 1) * 10 + 2 * position - 1
-        let right = left + 1
+        if visited.contains(key) { return true }
+        visited.insert(key)
 
-        if values[left] == nil, values[right] == nil {
-            result += current + value
-        } else {
-            dfs(left, current + value)
-            dfs(right, current + value)
-        }
+        let left = dfs([key[0] + 1, 2 * key[1] - 1], total + value)
+        let right = dfs([key[0] + 1, 2 * key[1]], total + value)
+
+        if !left, !right { result += total + value }
+
+        return true
     }
 
-    for number in nums {
-        let node = number / 10
-        let value = number % 10
-        values[node] = value
-    }
-
-    dfs(nums[0] / 10)
+    dfs([1, 1], 0)
     return result
 }
 

@@ -5,7 +5,6 @@
 // Time: O(4^4), Space: O(4)
 func nextClosestTime(_ time: String) -> String {
     func formatToMinutes(_ time: [Character]) -> Int {
-        print(time)
         let hours = String(time[0...1])
         let minutes = String(time[2...])
 
