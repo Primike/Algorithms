@@ -5,22 +5,43 @@
 
 // Time: O(n * k), Space: O(n)
 func maxSumAfterPartitioning(_ arr: [Int], _ k: Int) -> Int {
-    var tab = Array(repeating: 0, count: arr.count)
+    var tab = Array(repeating: 0, count: arr.count + 1)
 
-    for i in 0..<tab.count {
-        var maximum = Int.min
+    for i in 1...arr.count {
+        var largest = 0
 
-        for j in 1...k {
-            if i - j + 1 >= 0 {
-                maximum = max(maximum, arr[i - j + 1])
-                tab[i] = max(tab[i], (i >= j ? tab[i - j] : 0) + maximum * j)
-            }
+        for j in 1...min(k, i) {
+            largest = max(largest, arr[i - j])
+            tab[i] = max(tab[i], tab[i - j] + largest * j)
         }
     }
 
-    return tab[tab.count - 1]
+    return tab[arr.count]
 }
 
 print(maxSumAfterPartitioning([1,15,7,9,2,5,10], 3))
 print(maxSumAfterPartitioning([1,4,1,5,7,3,6,1,9,9,3], 4))
 print(maxSumAfterPartitioning([1], 1))
+
+
+func maxSumAfterPartitioning2(_ arr: [Int], _ k: Int) -> Int {
+    var memo = [Int: Int]()
+
+    func dp(_ index: Int) -> Int {
+        if index == arr.count { return 0 }
+        if let value = memo[index] { return value }
+
+        var result = 0
+        var largest = 0
+
+        for i in index..<min(arr.count, index + k) {
+            largest = max(largest, arr[i])
+            result = max(result, dp(i + 1) + largest * (i - index + 1))
+        }
+
+        memo[index] = result
+        return result
+    }
+
+    return dp(0)
+}

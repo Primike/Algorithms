@@ -6,6 +6,41 @@
 
 // Time: O(n), Space: O(n)
 func numWays(_ n: Int, _ k: Int) -> Int {
+    if n == 1 { return k }
+    if n == 2 { return k * k }
+
+    var one = k, two = k * k
+
+    for i in 2..<n {
+        let next = (k - 1) * (one + two)
+        one = two 
+        two = next
+    }
+
+    return two
+}
+
+print(numWays(3, 2))
+print(numWays(1, 1))
+print(numWays(7, 2))
+
+
+func numWays2(_ n: Int, _ k: Int) -> Int {
+    if n == 1 { return k }
+    if n == 2 { return k * k }
+
+    var tab = Array(repeating: 0, count: n)
+    tab[0] = k
+    tab[1] = k * k
+
+    for i in 2..<tab.count {
+        tab[i] = (k - 1) * (tab[i - 1] + tab[i - 2])
+    }
+
+    return tab[n - 1]
+}
+
+func numWays3(_ n: Int, _ k: Int) -> Int {
     var memo = [Int: Int]()
 
     func dp(_ n: Int) -> Int {
@@ -21,7 +56,3 @@ func numWays(_ n: Int, _ k: Int) -> Int {
 
     return dp(n)
 }
-
-print(numWays(3, 2))
-print(numWays(1, 1))
-print(numWays(7, 2))

@@ -9,9 +9,9 @@
 func largestDivisibleSubset(_ nums: [Int]) -> [Int] {
     let nums = nums.sorted()
     var tab = Array(repeating: [Int](), count: nums.count)
-
+    
     for i in 0..<nums.count {
-        for j in 0...i {
+        for j in 0..<i {
             if nums[i] % nums[j] == 0 {
                 if tab[i].count < tab[j].count { tab[i] = tab[j] }
             }
@@ -20,13 +20,7 @@ func largestDivisibleSubset(_ nums: [Int]) -> [Int] {
         tab[i].append(nums[i])
     }
 
-    var result = [Int]()
-
-    for i in 0..<tab.count {
-        if tab[i].count > result.count { result = tab[i] }
-    }
-
-    return result
+    return tab.max { $0.count < $1.count } ?? []
 }
 
 print(largestDivisibleSubset([1,2,3]))
