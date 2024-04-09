@@ -8,23 +8,19 @@
 
 // Time: O(n^2), Space: O(n^2)
 func minFallingPathSum(_ matrix: [[Int]]) -> Int {
-    let n = matrix.count
-    var tab = Array(repeating: Array(repeating: Int.max, count: n), count: n)
-    
-    for i in 0..<tab.count {
-        for j in 0..<tab.count {
-            if i > 0 {
-                tab[i][j] = min(tab[i][j], tab[i - 1][j])
-                if j > 0 { tab[i][j] = min(tab[i][j], tab[i - 1][j - 1]) }
-                if j < n - 1 { tab[i][j] = min(tab[i][j], tab[i - 1][j + 1]) }
-            }
+    var tab = matrix
 
-            if tab[i][j] == .max { tab[i][j] = 0 }
+    for i in 1..<tab.count {
+        for j in 0..<tab[0].count {
+            tab[i][j] = tab[i - 1][j]
+            if j > 0 { tab[i][j] = min(tab[i][j], tab[i - 1][j - 1]) }
+            if j < tab[0].count - 1 { tab[i][j] = min(tab[i][j], tab[i - 1][j + 1]) }
+            
             tab[i][j] += matrix[i][j]
         }
     }
-    
-    return tab[n - 1].min() ?? 0
+
+    return tab[tab.count - 1].min() ?? 0
 }
 
 print(minFallingPathSum([[2,1,3],[6,5,4],[7,8,9]]))

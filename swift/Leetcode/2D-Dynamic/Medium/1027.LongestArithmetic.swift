@@ -1,6 +1,7 @@
 // Given an array nums of integers, return the length of the 
 // longest arithmetic subsequence in nums.
 
+// Time: O(n^2), Space: O(n^2)
 func longestArithSeqLength(_ nums: [Int]) -> Int {
     var dp = Array(repeating: [Int: Int](), count: nums.count)
     var result = 0

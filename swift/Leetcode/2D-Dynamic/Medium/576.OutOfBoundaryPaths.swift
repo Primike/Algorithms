@@ -6,6 +6,7 @@
 // return the number of paths to move the ball out of the grid boundary. 
 // Since the answer can be very large, return it modulo 109 + 7.
 
+// Time: O(n * m * maxMove), Space: O(n * m * maxMove)
 func findPaths(_ m: Int, _ n: Int, _ maxMove: Int, _ startRow: Int, _ startColumn: Int) -> Int {
     let mod = 1_000_000_007
     var memo = [String: Int]()

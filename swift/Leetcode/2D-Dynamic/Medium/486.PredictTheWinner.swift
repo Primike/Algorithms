@@ -2,6 +2,7 @@
 // then player 1 is still the winner, and you should also return true. 
 // You may assume that both players are playing optimally.
 
+// Time: O(n^2), Space: O(n^2)
 func predictTheWinner(_ nums: [Int]) -> Bool {
     var memo = [String: Int]()
 
