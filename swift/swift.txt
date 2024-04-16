@@ -137,8 +137,10 @@ Math:
         n = count, k = pair size
 
     (numerator + denominator - 1) / denominator - round up
-
+ 
     i % j = i for j > i
+
+    Gauss: n * (n + 1) / 2
 
 
 

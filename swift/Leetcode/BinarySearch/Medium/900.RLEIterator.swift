@@ -1,45 +1,38 @@
 class RLEIterator {
 
-    private var digitCount: [Int]
-    private var digits: [Int]
+    private var numbers: [(Int, Int)]
     private var exhaust: Int
-    private var i: Int
+    private var left: Int
 
     init(_ encoding: [Int]) {
-        self.digitCount = []
-        self.digits = []
-        self.exhaust = 0
-        self.i = 0
-
-        var sum = 0
+        self.numbers = []
+        var total = 0
 
         for i in stride(from: 0, to: encoding.count - 1, by: 2) {
             if encoding[i] == 0 { continue }
-            
-            sum += encoding[i]
-            digitCount.append(sum)
-            digits.append(encoding[i + 1])
+            numbers.append((total + encoding[i], encoding[i + 1]))
+            total += encoding[i]
         }
+
+        self.exhaust = 0
+        self.left = 0
     }
     
     func next(_ n: Int) -> Int {
         exhaust += n
+        var right = numbers.count - 1
 
-        var right = digitCount.count - 1
+        while left < right {
+            let mid = (right + left) / 2
 
-        while i <= right {
-            let mid = (right + i) / 2
-
-            if digitCount[mid] < exhaust {
-                i = mid + 1
-            } else if mid == 0 || digitCount[mid - 1] < exhaust {
-                i = mid 
-                return digits[i]
+            if numbers[mid].0 < exhaust {
+                left = mid + 1 
             } else {
-                right = mid - 1
+                right = mid
             }
         }
 
-        return -1
+        if numbers[left].0 < exhaust { return -1 }
+        return numbers[left].1
     }
 }

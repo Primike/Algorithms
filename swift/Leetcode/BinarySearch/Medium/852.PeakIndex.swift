@@ -6,13 +6,13 @@
 func peakIndexInMountainArray(_ arr: [Int]) -> Int {
     var left = 0, right = arr.count - 1
 
-    while left <= right {
-        let mid = (left + right) / 2
+    while left < right {
+        let mid = (right + left) / 2
 
-        if arr[mid] > arr[mid + 1] {
-            right = mid - 1
-        } else {
+        if arr[mid] < arr[mid + 1] {
             left = mid + 1
+        } else {
+            right = mid
         }
     }
 
