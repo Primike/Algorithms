@@ -10,27 +10,31 @@ func canBeValid(_ s: String, _ locked: String) -> Bool {
     if s.count % 2 != 0 { return false }
 
     let s = Array(s), locked = Array(locked)
-    
-    func validate(_ s: [Character], _ locked: [Character], _ bracket: Character) -> Bool {
-        var count = 0, unlocked = 0
+    var count = 0
 
-        for i in 0..<s.count {
-            if locked[i] == "1" {
-                count += (s[i] == bracket ? 1 : -1)
-            } else {
-                unlocked += 1
-            }
-
-            if unlocked + count < 0 { return false }
+    for i in 0..<s.count {
+        if locked[i] == "0" || s[i] == "(" {
+            count += 1
+        } else {
+            count -= 1
         }
 
-        return count <= unlocked
+        if count < 0 { return false }
     }
-    
-    let left = validate(s, locked, "(")
-    let right = validate(Array(s.reversed()), Array(locked.reversed()), ")")
 
-    return left && right
+    count = 0 
+    
+    for i in stride(from: s.count - 1, to: -1, by: -1) {
+        if locked[i] == "0" || s[i] == ")" {
+            count += 1
+        } else {
+            count -= 1
+        }
+
+        if count < 0 { return false }
+    }
+
+    return true
 }
 
 print(canBeValid("))()))", "010100"))
