@@ -1,17 +1,23 @@
 1D-DP:
-    Medium: 276, 1043!
-    Hard: 140?, 1235, 1425?, 2355, 975
+    Medium: 1043?
+    Hard: 140?, 975, 1235, 1425?, 2355
+    Tricks: m276
 
 
 2D-DP:
-    Medium: 486?, 1027!
-    Hard: 403, 446
+    Medium: 486?
+    Hard: 403, 446, 1289
+    Tricks: m1155, m1027
+
+
+Advanced Graphs:
+    Tricks: m2812
 
 
 Array:
-    Medium: 418!, 1583
+    Medium: 2863?
     Hard: 2781, 315
-    Tricks: e232, m1041
+    Tricks: e232, m2971
 
 
 Backtracking:
@@ -20,17 +26,19 @@ Backtracking:
 
 
 Binary Search:
-    Medium: 852?, 362?
+    Medium: 362?, 852?
 
 
 Graph:
-    Medium: 2115?, 2812!!, 1136?
-    Tricks: m1319, h2709, m1101
+    Medium: 365?, 310!
+    Hard: 834
+    Tricks: h2709
 
 
 Greedy: 
-    Medium: 2870, 2116!
+    Medium: 948?, 2116?
     Hard: 871?, 1326
+    Tricks: m2870, m2745
 
 
 Heap: 
@@ -38,8 +46,6 @@ Heap:
 
 
 Intervals:
-    Medium: 452?
-
 
 
 LinkedList:
@@ -49,36 +55,60 @@ LinkedList:
 Math: 
     Medium: 856?, 939
     Hard: 2366?
+    Tricks: m1041
 
 
 Matrix:
-    Medium: 54?, 48?
+    Medium: 54?, 1727?
+
+
+Monotomic Stack:
+    Medium: 907?, 503, 316?, 962
 
 
 Prefix:
-    Medium: 930?
     Hard: 1074
 
 
+Simulation: 
+    Easy: 1700
+    Medium: 1583, 950
+
+
 Sliding Window: 
-    Hard: 632, 2009!
+    Medium: 713?
+    Hard: 632, 2009!, 2444
     Tricks: m1297, h922
 
 
 Stack: 
-    Medium: 907
     Hard: 224!, 85?
 
 
+String:
+    Medium: 418!!
+
+
+Topological Sort:
+
+
 Trees:
-    Medium: 666?, 314?, 333?, 1530!
+    Easy: 404?
+    Medium: 666?, 1530?, 2641?, 623?, 988?
     Hard: 987, 2458!
-    Tricks: 1245
+    Tricks: m655, m1245, m2385
 
 
 Two Pointers:
-    Medium: 31
+    Medium: 1574
+    Tricks: m31
+
+
+UnionFind:
+    Tricks: m1101, m1319
 
 
 2811
 Deque
+
+DAG 2^n * n

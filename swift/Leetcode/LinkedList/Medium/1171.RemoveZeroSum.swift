@@ -6,29 +6,29 @@
 // Time: O(n), Space: O(n)
 func removeZeroSumSublists(_ head: ListNode?) -> ListNode? {
     let newHead = ListNode(0, head)
-    var prefixSum = [0: newHead]
-    var head = head
-    var currentSum = 0
+    var prefixSums = [0: newHead]
+    var current = head
+    var sum = 0
 
-    while let current = head {
-        currentSum += current.val
+    while let node = current {
+        sum += node.val
 
-        if let previous = prefixSum[currentSum] {
-            var toDelete = previous.next
-            var key = currentSum
+        if let previous = prefixSums[sum] {
+            var deleted = previous.next
+            var key = sum
 
-            while let deleted = toDelete, deleted !== current {
-                key += deleted.val
-                prefixSum[key] = nil
-                toDelete = deleted.next
+            while let prefixNode = deleted, prefixNode !== current {
+                key += prefixNode.val
+                prefixSums[key] = nil
+                deleted = prefixNode.next
             }
 
-            previous.next = current.next
+            previous.next = node.next
         } else {
-            prefixSum[currentSum] = current
+            prefixSums[sum] = node
         }
 
-        head = current.next
+        current = node.next
     }
 
     return newHead.next
