@@ -1,5 +1,5 @@
 class TrieNode {
-    var children: [Character: TrieNode] = [:]
+    var children = [Character: TrieNode]()
     var isEndOfWord = false
 }
 
@@ -37,10 +37,10 @@ class Trie {
         return current.isEndOfWord
     }
     
-    func startsWith(_ prefix: String) -> Bool {
+    func startsWith(_ string: String) -> Bool {
         var current = head
 
-        for letter in prefix {
+        for letter in string {
             guard let node = current.children[letter] else { return false }
             current = node
         }
