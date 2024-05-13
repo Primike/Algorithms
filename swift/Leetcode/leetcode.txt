@@ -42,14 +42,15 @@ Greedy:
 
 
 Heap: 
-    Hard: 407
+    Medium: 786
+    Hard: 407, 857
 
 
 Intervals:
 
 
 LinkedList:
-    Medium: 1171?
+    Medium: 1171?, 2487?, 2816?
 
 
 Math: 
