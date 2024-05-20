@@ -95,7 +95,7 @@ Topological Sort:
 
 Trees:
     Easy: 404?
-    Medium: 666?, 1530?, 2641?, 623?, 988?
+    Medium: 666?, 1530?, 2641?, 623?, 979, 988?
     Hard: 987, 2458!
     Tricks: m655, m1245, m2385
 
