@@ -1,6 +1,7 @@
 Arrays:
     Easy: [
         Moores voting algorithm,
+        Accumulate paris by adding previous as encounter new
     ]
 
     Medium: [
@@ -10,9 +11,10 @@ Arrays:
         palindromes use asscci and post/prefix hashes
     ]
 
-    Easy: Designs, 205?
-    Hard: 2306
-    Tricks: m179, m838, m2002, m280, m304, m665, m2483
+    Easy: Designs, 205?, 1758?
+    Medium: 799?, 1291?
+    Hard: 1074?, 2306?
+    Tricks: e1913, m179, m304, m665, m838, m2870, m2971
 
 
 
@@ -24,7 +26,8 @@ Two Pointers:
         for n-matrix rotations use reversing or reflection/transpose,
     ]
 
-    Tricks: m80, m1498, m189
+    Medium: 1498
+    Tricks: e844
 
 
 
@@ -32,7 +35,7 @@ Sliding Window:
     Medium: [
         Sometimes not necessary to decrease window,
         double the input and search window,
-        search inner/outer window
+        search inner/outer window,
     ]
 
     Hard: [
@@ -40,7 +43,8 @@ Sliding Window:
         double ended queue
     ]
 
-    Tricks: m1888
+    Hard: 2009!
+    Tricks: m713, m1888
 
 
 
@@ -51,8 +55,9 @@ Stack:
         Monotomic increasing/decreasing stack,
     ]
 
+    Medium: 907?
     Hard: 84?
-    Tricks: m456, h895
+    Tricks: e232, m456, h895
 
 
 
@@ -86,7 +91,7 @@ LinkedList:
         try separating 1 loop into 2
     ]
 
-    Medium: 138?, 622?, 146?
+    Medium: 138?, 622?, 146?, 2487?
     Hard: 460!
     Tricks: e160, m287, m86
 
@@ -107,7 +112,7 @@ Trees:
         Run both flipped and unflipped,
     ]
 
-    Medium: 450?, 427?, 106?, 96?, 95, 894?, 337?
+    Medium: 450?, 427?, 106?, 96?, 95, 894?, 337?, 979, 988?, 1361?
     Hard: 297
     Tricks: m1443, m652, m662, m173, h124
 
@@ -123,7 +128,7 @@ Heap:
     ]
     
     Medium: 2542?, 1405
-    Hard: 1675?
+    Hard: 857, 1425?, 1675?
     Tricks: m621, m1882, m1094
 
 
@@ -138,6 +143,8 @@ BackTracking:
         during sort/build-array try minimize recursive calls,
     ]
 
+    Medium: 2597
+    Hard: 140?
     Tricks: m46, m131, m698
 
 
@@ -164,7 +171,7 @@ Graphs:
         Khans algorithm
     ]
 
-    Medium: 1958?, 1129?, 785?
+    Medium: 310!, 1958?, 1129?, 785?
     Hard: 1857
     Tricks: m207, m323, m721, m1020, m399
 
@@ -176,6 +183,7 @@ Advanced Graphs:
 
     Medium: 1584?, 787
     Hard: 332?, 269?, 2421!, 1579?
+    Tricks: m2812, h2709
 
 
 
@@ -209,7 +217,9 @@ Advanced Graphs:
     ]
 
     Medium: 1049?, 221?, 1140?, 926?
+    Hard: 446, 629, 1289
     Study: 309, 494, 97, 877, 474, 1911, 72
+    Tricks: m1155
 
 
 
@@ -221,7 +231,7 @@ Greedy:
         use negatives for sorting tuples
     ]
 
-    Medium: 918?, 45?, 1871!, 134?, 2439?, 763?
+    Medium: 918?, 45?, 1871!, 134?, 2439?, 763?, 950
     Hard: 135
     Study: 678, 1029
 
