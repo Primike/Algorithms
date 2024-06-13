@@ -43,7 +43,7 @@ Sliding Window:
         double ended queue
     ]
 
-    Hard: 2009!
+    Hard: 2009?
     Tricks: m713, m1888
 
 
@@ -51,13 +51,12 @@ Sliding Window:
 Stack:
     Medium: [
         Iterate through backwards and forwards with checks,
-        stack with tuples,
-        Monotomic increasing/decreasing stack,
+        Monotomic does not calculate for current
     ]
 
-    Medium: 907?
+    Medium: 456?, 907?
     Hard: 84?
-    Tricks: e232, m456, h895
+    Tricks: e232, h895
 
 
 

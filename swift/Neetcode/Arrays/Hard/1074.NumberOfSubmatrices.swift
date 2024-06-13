@@ -17,17 +17,17 @@ func numSubmatrixSumTarget(_ matrix: [[Int]], _ target: Int) -> Int {
 
     var result = 0
 
-    for left in 0..<cols {
-        for right in left..<cols {
+    for i in 0..<cols {
+        for j in i..<cols {
             var prefixCol = [0: 1]
-            var current = 0
+            var sum = 0
 
             for r in 0..<rows {
-                current += prefixRows[r][right] 
-                current -= left > 0 ? prefixRows[r][left - 1] : 0
+                sum += prefixRows[r][j] 
+                if i > 0 { sum -= prefixRows[r][i - 1] }
 
-                if let sum = prefixCol[current - target] { result += sum }
-                prefixCol[current, default: 0] += 1
+                if let matrices = prefixCol[sum - target] { result += matrices }
+                prefixCol[sum, default: 0] += 1
             }
         }
     }
