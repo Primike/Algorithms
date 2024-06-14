@@ -3,23 +3,20 @@
 
 // Time: O(n), Space: O(n)
 func largestRectangleArea(_ heights: [Int]) -> Int {
-    var stack = [(Int, Int)]()
+    var heights = heights + [0]
+    var monotomic = [(Int, Int)]()
     var result = 0
 
     for (i, height) in heights.enumerated() {
         var index = i
 
-        while let last = stack.last, last.1 > height {
-            stack.removeLast()
+        while let last = monotomic.last, last.1 > height {
+            monotomic.removeLast()
             result = max(result, last.1 * (i - last.0))
             index = last.0
         }
 
-        stack.append((index, height))
-    }
-
-    for (i, height) in stack {
-        result = max(result, height * (heights.count - i))
+        monotomic.append((index, height))
     }
 
     return result

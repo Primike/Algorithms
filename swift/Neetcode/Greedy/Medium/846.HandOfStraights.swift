@@ -10,15 +10,13 @@ func isNStraightHand(_ hand: [Int], _ groupSize: Int) -> Bool {
     if hand.count % groupSize != 0 { return false }
 
     var dict = hand.reduce(into: [:]) { $0[$1, default: 0] += 1 }
-    let partitions = hand.count / groupSize
 
-    for i in 0..<partitions {
+    for i in 0..<(hand.count / groupSize) {
         var smallest = dict.keys.min() ?? 0
 
         for j in smallest..<(smallest + groupSize) {
             if !dict.keys.contains(j) { return false }
-
-            dict[j, default: 0] -= 1
+            dict[j, default: 1] -= 1
 
             if dict[j, default: 0] == 0 { dict[j] = nil }
         }

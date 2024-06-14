@@ -73,7 +73,7 @@ Binary Search ?:
         careful with returning index vs first-k
     ]
 
-    Medium: 540?, 2616?, 33?, 81?, 1898?
+    Medium: 2616?, 33?, 81?, 1898?
     Hard: 4!
     Tricks: m162, m116, m1268, h410
 
