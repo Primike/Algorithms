@@ -60,7 +60,7 @@ Stack:
 
 
 
-Binary Search ?:
+Binary Search:
     Easy: [
         Search for the largest not the smallest value,
         good for guessing numbers,
@@ -68,14 +68,13 @@ Binary Search ?:
 
     Medium: [
         Use when answer has a numeric upper bound,
-        if searching i < i + 1 use left < right,
-        split rotated array in sections,
-        careful with returning index vs first-k
+        if searching i < i + 1 use left < right b/c left != right,
+        find pivot index,
     ]
 
-    Medium: 2616?, 33?, 81?, 1898?
+    Medium: 81?
     Hard: 4!
-    Tricks: m162, m116, m1268, h410
+    Tricks: m116, m1268, m2616
 
 
 
@@ -90,9 +89,9 @@ LinkedList:
         try separating 1 loop into 2
     ]
 
-    Medium: 138?, 622?, 146?, 2487?
+    Medium: 138?, 146?
     Hard: 460!
-    Tricks: e160, m287, m86
+    Tricks: e160, m287
 
 
 
@@ -111,9 +110,9 @@ Trees:
         Run both flipped and unflipped,
     ]
 
-    Medium: 450?, 427?, 106?, 96?, 95, 894?, 337?, 979, 988?, 1361?
-    Hard: 297
-    Tricks: m1443, m652, m662, m173, h124
+    Medium: 106?, 96, 95, 450?, 337?, 894?, 979, 988?, 1361?
+    Hard: 297?
+    Tricks: m173, m662
 
 
 
@@ -126,9 +125,9 @@ Heap:
         Use 2 heaps,
     ]
     
-    Medium: 2542?, 1405
-    Hard: 857, 1425?, 1675?
-    Tricks: m621, m1882, m1094
+    Medium: 1405?
+    Hard: 857, 1425, 1675
+    Tricks: m1094
 
 
 
