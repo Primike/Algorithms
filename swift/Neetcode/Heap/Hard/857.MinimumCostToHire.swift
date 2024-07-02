@@ -9,8 +9,6 @@
 
 func mincostToHireWorkers(_ quality: [Int], _ wage: [Int], _ k: Int) -> Double {
     var ratio = [(Double, Double)]()
-    var result = Double.infinity
-    var currentQuality = 0.0
 
     for i in 0..<quality.count {
         ratio.append((Double(wage[i]) / Double(quality[i]), Double(quality[i])))
@@ -18,13 +16,15 @@ func mincostToHireWorkers(_ quality: [Int], _ wage: [Int], _ k: Int) -> Double {
     
     ratio.sort { $0.0 < $1.0 }
     var heap = Heap<Double>(.maxHeap)
-    
+    var result = Double.infinity
+    var current = 0.0
+
     for i in 0..<quality.count {
         heap.push(ratio[i].1)
-        currentQuality += ratio[i].1
+        current += ratio[i].1
         
-        if heap.count > k { currentQuality -= heap.pop() ?? 0 } 
-        if heap.count == k { result = min(result, currentQuality * ratio[i].0) }
+        if heap.count > k { current -= heap.pop() ?? 0 } 
+        if heap.count == k { result = min(result, current * ratio[i].0) }
     }
     
     return result

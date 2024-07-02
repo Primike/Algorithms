@@ -12,27 +12,27 @@ struct Server: Comparable {
 
 // Time: O(m * n * logn), Space: O(n + m)
 func assignTasks(_ servers: [Int], _ tasks: [Int]) -> [Int] {
-    var availableServers = Heap<Server>(.minHeap)
+    var freeServers = Heap<Server>(.minHeap)
     var usedServers = Heap<Server>(.minHeap)
 
     for (i, weight) in servers.enumerated() {
-        availableServers.push(Server(i: i, weight: weight))
+        freeServers.push(Server(i: i, weight: weight))
     }
 
     var result = [Int]()
     var time = 0, index = 0
 
     while index < tasks.count {
-        if availableServers.isEmpty { time = usedServers.peek()!.time }
+        if freeServers.isEmpty { time = usedServers.peek()!.time }
 
         while var first = usedServers.peek(), first.time <= time {
             usedServers.pop()
             first.isUsed = false
-            availableServers.push(first)
+            freeServers.push(first)
         }
 
-        while index < tasks.count, time >= index, !availableServers.isEmpty {
-            var server = availableServers.pop()!
+        while index < tasks.count, time >= index, freeServers.isEmpty {
+            var server = freeServers.pop()!
             server.time = time + tasks[index]
             server.isUsed = true
             usedServers.push(server)

@@ -7,25 +7,28 @@
 // Time: O(n), Space: O(h)
 func minTime(_ n: Int, _ edges: [[Int]], _ hasApple: [Bool]) -> Int {
     var neighbors = Array(repeating: [Int](), count: n)
-    
+
     for edge in edges {
         neighbors[edge[0]].append(edge[1])
         neighbors[edge[1]].append(edge[0])
     }
 
-    func dfs(_ i: Int, _ parent: Int) -> Int {
-        var time = 0
-        
-        for node in neighbors[i] {
+    var result = 0
+    
+    func dfs(_ n: Int, _ parent: Int) -> Bool {
+        var count = 0
+
+        for node in neighbors[n] {
             if node == parent { continue }
-            time += dfs(node, i)
+            if dfs(node, n) { count += 1 }
         }
 
-        if i != 0, (hasApple[i] || time > 0) { time += 2 }
-        return time
+        result += count * 2
+        return count >= 1 || hasApple[n]
     }
 
-    return dfs(0, -1)
+    dfs(0, -1)
+    return result
 }
 
 print(minTime(7,

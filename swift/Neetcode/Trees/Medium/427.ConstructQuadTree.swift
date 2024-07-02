@@ -5,31 +5,26 @@
 // Time: O(n^2), Space: O(logn)
 func construct(_ grid: [[Int]]) -> Node? {
     if grid.isEmpty { return nil }
+    if grid.count == 1 { return Node(grid[0][0] == 1, true) }
 
-    func build(_ grid: [[Int]]) -> Node {
-        if grid.count == 1 { return Node(grid[0][0] == 1, true) }
+    let half = grid.count / 2
+    let topLeft = construct(Array(grid[0..<half].map { Array($0[0..<half]) }))!
+    let topRight = construct(Array(grid[0..<half].map { Array($0[half...]) }))!
+    let bottomLeft = construct(Array(grid[half...].map { Array($0[0..<half]) }))!
+    let bottomRight = construct(Array(grid[half...].map { Array($0[half...]) }))!
 
-        let half = grid.count / 2
-        let topLeft = build(Array(grid[0..<half].map { Array($0[0..<half]) }))
-        let topRight = build(Array(grid[0..<half].map { Array($0[half...]) }))
-        let bottomLeft = build(Array(grid[half...].map { Array($0[0..<half]) }))
-        let bottomRight = build(Array(grid[half...].map { Array($0[half...]) }))
+    if topLeft.isLeaf, topRight.isLeaf, bottomLeft.isLeaf, bottomRight.isLeaf,
+        topLeft.val == topRight.val, topLeft.val == bottomLeft.val, topLeft.val == bottomRight.val {
+        return Node(topRight.val, true)
+    } 
 
-        if topLeft.isLeaf, topRight.isLeaf, bottomLeft.isLeaf, bottomRight.isLeaf,
-            topLeft.val == topRight.val, topLeft.val == bottomLeft.val, topLeft.val == bottomRight.val {
-            return Node(topRight.val, true)
-        } 
+    let node = Node(true, false)
+    node.topLeft = topLeft
+    node.topRight = topRight
+    node.bottomLeft = bottomLeft
+    node.bottomRight = bottomRight
 
-        let node = Node(true, false)
-        node.topLeft = topLeft
-        node.topRight = topRight
-        node.bottomLeft = bottomLeft
-        node.bottomRight = bottomRight
-
-        return node
-    }
-
-    return build(grid)
+    return node
 }
 
 print(construct([[0,1],[1,0]]))

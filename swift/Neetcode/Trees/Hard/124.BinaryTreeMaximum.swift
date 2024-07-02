@@ -1,5 +1,6 @@
 // Given the root of a binary tree, return the maximum path sum of any non-empty path.
 
+// Time: O(n), Space: O(h)
 func maxPathSum(_ root: TreeNode?) -> Int {
     guard let root = root else { return 0 }
 

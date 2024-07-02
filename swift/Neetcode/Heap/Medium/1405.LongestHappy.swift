@@ -3,7 +3,7 @@
 // If there is no such string, return the empty string "".
 
 struct Letter: Comparable {
-    let letter: Character
+    let letter: String
     var count: Int
 
     static func <(_ l: Letter, _ r: Letter) -> Bool {
@@ -11,36 +11,35 @@ struct Letter: Comparable {
     }
 }
 
-// Time: O(n), Space: O(n)
+// Time: O(a + b + c), Space: O(3)
 func longestDiverseString(_ a: Int, _ b: Int, _ c: Int) -> String {
     var heap = Heap<Letter>(.maxHeap)
+    
     if a != 0 { heap.push(Letter(letter: "a", count: a)) }
     if b != 0 { heap.push(Letter(letter: "b", count: b)) }
     if c != 0 { heap.push(Letter(letter: "c", count: c)) }
 
-    var result = [Character]()
+    var result = ""
 
-    while !heap.isEmpty {
-        let length = result.count
-        var first = heap.pop()!
-
-        if length > 1, result.last! == first.letter, result[length - 2] == first.letter {
-            if heap.isEmpty { return String(result) }
+    while var largest = heap.pop() {
+        if let last = result.last, String(last) == largest.letter {
+            if heap.isEmpty { return result }
 
             var second = heap.pop()!
-            result.append(second.letter)
+            result += second.letter
             second.count -= 1
 
             if second.count > 0 { heap.push(second) }
-            heap.push(first)
+            heap.push(largest)
         } else {
-            result.append(first.letter)
-            first.count -= 1
-            if first.count > 0 { heap.push(first) }
+            let count = largest.count == 1 ? 1 : 2
+            result += String(repeating: largest.letter, count: count)
+            largest.count -= count
+            if largest.count > 0 { heap.push(largest) }
         }
     }
 
-    return String(result)
+    return result
 }
 
 print(longestDiverseString(1, 1, 7))

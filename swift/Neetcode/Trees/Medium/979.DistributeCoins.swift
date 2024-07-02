@@ -7,6 +7,7 @@
 // Return the minimum number of moves required 
 // to make every node have exactly one coin.
 
+// Time: O(n), Space: O(h)
 func distributeCoins(_ root: TreeNode?) -> Int {
     var result = 0
 

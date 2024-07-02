@@ -28,3 +28,30 @@ func constrainedSubsetSum(_ nums: [Int], _ k: Int) -> Int {
 print(constrainedSubsetSum([10,2,-10,5,20], 2))
 print(constrainedSubsetSum([-1,-2,-3], 1))
 print(constrainedSubsetSum([10,-2,-10,-5,20], 2))
+
+
+struct Element: Comparable {
+    let i: Int
+    let value: Int
+
+    static func < (_ l: Element, _ r: Element) -> Bool {
+        return l.value < r.value
+    }
+}
+
+func constrainedSubsetSum2(_ nums: [Int], _ k: Int) -> Int {
+    var heap = Heap<Element>(.maxHeap, [Element(i: 0, value: nums[0])])
+    var result = nums[0]
+
+    for i in 1..<nums.count {
+        while let index = heap.peek()?.i, i - index > k {
+            heap.pop()
+        }
+
+        let current = max(0, heap.peek()?.value ?? 0) + nums[i]
+        result = max(result, current)
+        heap.push(Element(i: i, value: current))
+    }
+
+    return result
+}
