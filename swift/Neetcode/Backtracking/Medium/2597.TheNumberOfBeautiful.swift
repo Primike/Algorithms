@@ -2,6 +2,7 @@
 // two integers with an absolute difference equal to k.
 // Return the number of non-empty beautiful subsets of the array nums.
 
+// Time: O(2^n), Space: O(n)
 func beautifulSubsets(_ nums: [Int], _ k: Int) -> Int {
     let nums = nums.sorted()
     var dict = [Int: Int]()

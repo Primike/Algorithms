@@ -1,6 +1,7 @@
 // Given an array nums of distinct integers, return all the possible 
 // permutations. You can return the answer in any order.
 
+// Time: O(n * n!), Space: O(n)
 func permute(_ nums: [Int]) -> [[Int]] {
     var nums = nums
     var result = [[Int]]()

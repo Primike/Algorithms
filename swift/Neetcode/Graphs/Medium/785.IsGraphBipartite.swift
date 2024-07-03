@@ -4,10 +4,10 @@
 
 // Time: O(n + e), Space: O(n)
 func isBipartite(_ graph: [[Int]]) -> Bool {
-    var colors = Array(repeating: "X", count: graph.count)
+    var colors = Array(repeating: "_", count: graph.count)
 
     func dfs(_ n: Int, _ color: String) -> Bool {
-        if colors[n] != "X" { return colors[n] == color }
+        if colors[n] != "_" { return colors[n] == color }
         
         colors[n] = color
                     
@@ -19,7 +19,7 @@ func isBipartite(_ graph: [[Int]]) -> Bool {
     }
     
     for i in 0..<graph.count {
-        if colors[i] == "X", !dfs(i, "B") { return false }
+        if colors[i] == "_", !dfs(i, "B") { return false }
     }
     
     return true

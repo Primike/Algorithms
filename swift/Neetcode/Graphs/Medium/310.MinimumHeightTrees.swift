@@ -7,6 +7,7 @@
 // are called minimum height trees (MHTs).
 // Return a list of all MHTs' root labels. You can return the answer in any order.
 
+// Time: O(n), Space: O(n)
 func findMinHeightTrees(_ n: Int, _ edges: [[Int]]) -> [Int] {
     if n == 1 { return [0] }
 
@@ -23,23 +24,20 @@ func findMinHeightTrees(_ n: Int, _ edges: [[Int]]) -> [Int] {
         if neighbors[i].count == 1 { result.append(i) }
     }
 
-    var remaining = n
+    var nodesToVisit = n
 
-    while remaining > 2 {
-        let leafCount = result.count
-        remaining -= leafCount
+    while nodesToVisit > 2 {
+        nodesToVisit -= result.count
 
-        var newLeaves = [Int]()
+        for i in 0..<result.count {
+            let currentLeaf = result.removeFirst()
 
-        for leaf in result {
-            if let neighbor = neighbors[leaf].first {
-                neighbors[neighbor].remove(leaf)
+            if let nextLeaf = neighbors[currentLeaf].first {
+                neighbors[nextLeaf].remove(currentLeaf)
 
-                if neighbors[neighbor].count == 1 { newLeaves.append(neighbor) }
+                if neighbors[nextLeaf].count == 1 { result.append(nextLeaf) }
             }
         }
-
-        result = newLeaves
     }
 
     return result

@@ -2,8 +2,10 @@
 // in s to construct a sentence where each word is a valid dictionary word. 
 // Return all such possible sentences in any order.
 
+// Time: O(n * 2^n), Space: O(n * 2^n)
 func wordBreak(_ s: String, _ wordDict: [String]) -> [String] {
-    let s = Array(s), wordDict = Set(wordDict)
+    let s = Array(s).map { String($0) }
+    let wordDict = Set(wordDict)
     let alphaSet = Set(wordDict.joined())
 
     for letter in s {
@@ -17,15 +19,14 @@ func wordBreak(_ s: String, _ wordDict: [String]) -> [String] {
         if let value = memo[index] { return value }
 
         var result = [String]()
+        var word = ""
 
-        for i in (index + 1)...s.count {
-            let word = String(s[index..<i])
+        for i in index..<s.count {
+            word += s[i]
             
             if !wordDict.contains(word) { continue }
 
-            let sentences = dp(i)
-
-            for sentence in sentences {
+            for sentence in dp(i + 1) {
                 result.append(sentence.isEmpty ? word : word + " " + sentence)
             }
         }

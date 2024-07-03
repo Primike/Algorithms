@@ -8,21 +8,21 @@ func accountsMerge(_ accounts: [[String]]) -> [[String]] {
     var root = Array(0..<accounts.count)
     var rank = Array(repeating: 1, count: accounts.count)
 
-    func getRoot(_ n: Int) -> Int {
-        var n = root[n]
+    func getRoot(_ node: Int) -> Int {
+        var node = root[node]
 
-        while n != root[n] {
-            root[n] = root[root[n]]
-            n = root[n]
+        while node != root[node] {
+            root[node] = root[root[node]]
+            node = root[node]
         }
 
-        return n
+        return node
     }
 
-    func mergeRoots(_ n1: Int, _ n2: Int) -> Bool {
+    func mergeRoots(_ n1: Int, _ n2: Int) {
         let p1 = getRoot(n1), p2 = getRoot(n2)
 
-        if p1 == p2 { return false }
+        if p1 == p2 { return }
 
         if rank[p1] >= rank[p2] { 
             root[p2] = p1
@@ -31,35 +31,27 @@ func accountsMerge(_ accounts: [[String]]) -> [[String]] {
             root[p1] = p2
             rank[p2] += rank[p1]
         }
-
-        return true
     }
 
-    var emailToAccount = [String: Int]()
+    var emailToAccountId = [String: Int]()
 
     for (i, account) in accounts.enumerated() {
         for email in account[1...] {
-            if let index = emailToAccount[email] {
-                mergeRoots(i, index)
+            if let j = emailToAccountId[email] {
+                mergeRoots(i, j)
             } else {
-                emailToAccount[email] = i
+                emailToAccountId[email] = i
             }
         }
     }
 
-    var emailGroup = [Int: [String]]()
+    var accountIdEmails = [Int: [String]]()
     
-    for (email, i) in emailToAccount {
-        emailGroup[getRoot(i), default: []].append(email)
+    for (email, id) in emailToAccountId {
+        accountIdEmails[getRoot(id), default: []].append(email)
     }
 
-    var result = [[String]]()
-
-    for (i, emails) in emailGroup {
-        result.append([accounts[i][0]] + emails.sorted())
-    }
-
-    return result
+    return accountIdEmails.map { (key, emails) in [accounts[key][0]] + emails.sorted() }
 }
 
 print(accountsMerge([
@@ -73,3 +65,44 @@ print(accountsMerge([
     ["Ethan","Ethan5@m.co","Ethan4@m.co","Ethan0@m.co"],
     ["Hanzo","Hanzo3@m.co","Hanzo1@m.co","Hanzo0@m.co"],
     ["Fern","Fern5@m.co","Fern1@m.co","Fern0@m.co"]]))
+
+
+func accountsMerge2(_ accountList: [[String]]) -> [[String]] {
+    var neighbors = [String: [String]]()
+    
+    for account in accountList {
+        for j in 2..<account.count {
+            neighbors[account[1], default: []].append(account[j])
+            neighbors[account[j], default: []].append(account[1])
+        }
+    }
+
+    var visited = Set<String>()
+
+    func dfs(_ mergedAccount: inout [String], _ node: String) {
+        if visited.contains(node) { return }
+
+        visited.insert(node)
+        mergedAccount.append(node)
+                    
+        for next in neighbors[node, default: []] {
+            dfs(&mergedAccount, next)
+        }
+    }
+
+    var result = [[String]]()
+
+    for account in accountList {
+        if visited.contains(account[1]) { continue }
+
+        let name = account[0]
+        let root = account[1]
+        var mergedAccount = [name]   
+
+        dfs(&mergedAccount, root)
+        mergedAccount[1...].sort()
+        result.append(mergedAccount)
+    }
+    
+    return result
+}
