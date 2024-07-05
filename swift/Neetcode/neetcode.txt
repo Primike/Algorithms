@@ -139,11 +139,11 @@ BackTracking:
         sort array to avoid duplicates and skip if previous ==,
         DP may not be possible even for same inputs if parents differ,
         during sort/build-array try minimize recursive calls,
+        copying array takes n time,
     ]
 
-    Medium: 2597
+    Medium: 698?, 2597?
     Hard: 140?
-    Tricks: m46, m131, m698
 
 
 
@@ -169,9 +169,9 @@ Graphs:
         Khans algorithm
     ]
 
-    Medium: 310!, 1958?, 1129?, 785?
-    Hard: 1857
-    Tricks: m207, m323, m721, m1020, m399
+    Medium: 207?, 310?, 1129?, 785?
+    Hard: 1857?
+    Tricks: m323, m721, m1020, m399
 
 
 
@@ -198,9 +198,9 @@ Advanced Graphs:
         Euclidian Algorithm
     ]
 
-    Medium: 152?, 740?, 673?, 1035?, 837
+    Medium: 152?, 673?, 837?
     Hard: 691?, 1406, 1964?, 1359
-    Tricks: m91, m300, m416, m983, m343, m2140, h472, h1799
+    Tricks: m91, m300, m416, m740, m983, m343, m2140, h472, h1799
 
 
 

@@ -4,6 +4,7 @@
 // You should preserve the original relative order of the nodes 
 // in each of the two partitions.
 
+// Time: O(n), Space: O(1)
 func partition(_ head: ListNode?, _ x: Int) -> ListNode? {
     var leftList = ListNode(), rightList = ListNode()
     var left = leftList, right = rightList
