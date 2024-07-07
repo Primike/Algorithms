@@ -1,84 +1,83 @@
 1D-DP:
     Medium: 1043?
-    Hard: 140?, 975, 1235, 1425?, 2355
+    Hard: 975, 1235, 2355
     Tricks: m276
 
 
 2D-DP:
     Medium: 486?
-    Hard: 403, 446, 1289
-    Tricks: m1155, m1027
+    Hard: 403, 552
+    Tricks: m1027
 
 
 Advanced Graphs:
-    Tricks: m2812
+
 
 
 Array:
     Medium: 2863?
     Hard: 2781, 315
-    Tricks: e232, m2971
 
 
 Backtracking:
-    Hard: 1088!, 465
+    Medium: 291?
+    Hard: 301?, 1088!, 465
     Tricks: h679
 
 
 Binary Search:
-    Medium: 362?, 852?
+    Medium: 362?, 852?, 1482?, 1552?
 
 
 Graph:
-    Medium: 365?, 310!
+    Medium: 365?, 2061 2285
     Hard: 834
-    Tricks: h2709
 
 
 Greedy: 
-    Medium: 948?, 2116?
-    Hard: 871?, 1326
-    Tricks: m2870, m2745
+    Medium: 2116?, 1564, 1580
+    Hard: 330!, 871?, 1326
+    Tricks: m2745
 
 
 Heap: 
-    Medium: 786
-    Hard: 407, 857
+    Medium: 786, 1438
+    Hard: 407, 1354?
 
 
 Intervals:
 
 
 LinkedList:
-    Medium: 1171?, 2487?, 2816?
+    Medium: 1171?, 2058?, 2816?
 
 
 Math: 
+    Easy: 2582?
     Medium: 856?, 939
     Hard: 2366?
-    Tricks: m1041
+    Tricks: e1518
 
 
 Matrix:
-    Medium: 54?, 1727?
+    Medium: 1727?
 
 
 Monotomic Stack:
-    Medium: 907?, 503, 316?, 962
+    Medium: 503, 316?, 962
 
 
 Prefix:
+    Medium: 974, 1248?
     Hard: 1074
 
 
 Simulation: 
-    Easy: 1700
-    Medium: 1583, 950
+    Medium: 1583
 
 
-Sliding Window: 
-    Medium: 713?
-    Hard: 632, 2009!, 2444
+Sliding Window:
+    Hard: 632, 2444
     Tricks: m1297, h922
 
 
@@ -95,7 +94,7 @@ Topological Sort:
 
 Trees:
     Easy: 404?
-    Medium: 666?, 1530?, 2641?, 623?, 979, 988?
+    Medium: 666?, 1530?, 2641?, 623?, 776
     Hard: 987, 2458!
     Tricks: m655, m1245, m2385
 
