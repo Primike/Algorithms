@@ -1,7 +1,48 @@
 // Given an array of strings words (without duplicates), 
 // return all the concatenated words in the given list of words.
 
+// Time: O(n * m^2), Space: O(n + m)
 func findAllConcatenatedWordsInADict(_ words: [String]) -> [String] {
+    let trie = Trie()
+    
+    for word in words {
+        trie.insert(word)
+    }
+    
+    var result = [String]()
+    var memo = [String: Bool]()
+    
+    func dp(_ word: String) -> Bool {
+        if let value = memo[word] { return value }
+        
+        let wordArray = Array(word)
+        
+        for i in 1..<word.count {
+            let left = String(wordArray[0..<i])
+            let right = String(wordArray[i..<word.count])
+            
+            if trie.search(left), (trie.search(right) || dp(right)) {
+                memo[word] = true
+                return true
+            }
+        }
+        
+        memo[word] = false
+        return false
+    }
+    
+    for word in words {
+        if dp(word) { result.append(word) }
+    }
+    
+    return result
+}
+
+print(findAllConcatenatedWordsInADict(["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]))
+print(findAllConcatenatedWordsInADict(["cat","dog","catdog"]))
+
+
+func findAllConcatenatedWordsInADict2(_ words: [String]) -> [String] {
     var wordSet = Set(words)
     var result = [String]()
 
@@ -28,11 +69,7 @@ func findAllConcatenatedWordsInADict(_ words: [String]) -> [String] {
     return result
 }
 
-print(findAllConcatenatedWordsInADict(["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]))
-print(findAllConcatenatedWordsInADict(["cat","dog","catdog"]))
-
-
-func findAllConcatenatedWordsInADict2(_ words: [String]) -> [String] {
+func findAllConcatenatedWordsInADict3(_ words: [String]) -> [String] {
     let wordSet = Set(words)
     var memo = [String: Bool]()
 

@@ -50,6 +50,45 @@ func canPartition3(_ nums: [Int]) -> Bool {
     if nums.reduce(0, +) % 2 != 0 { return false }
 
     let target = nums.reduce(0, +) / 2
+    var tab = Array(repeating: false, count: target + 1)
+    tab[0] = true
+
+    for i in 0..<nums.count {
+        var nextRow = Array(repeating: false, count: target + 1)
+        let number = nums[i]
+
+        for j in 0...target {
+            nextRow[j] = tab[j] || (j >= number && tab[j - number])
+        }
+
+        tab = nextRow
+    }
+
+    return tab[target]
+}
+
+func canPartition4(_ nums: [Int]) -> Bool {
+    if nums.reduce(0, +) % 2 != 0 { return false }
+
+    let target = nums.reduce(0, +) / 2
+    var tab = Array(repeating: Array(repeating: false, count: target + 1), count: nums.count + 1)
+    tab[0][0] = true
+
+    for i in 1...nums.count {
+        let number = nums[i - 1]
+
+        for j in 0...target {
+            tab[i][j] = tab[i - 1][j] || (j >= number && tab[i - 1][j - number])
+        }
+    }
+
+    return tab[nums.count][target]
+}
+
+func canPartition5(_ nums: [Int]) -> Bool {
+    if nums.reduce(0, +) % 2 != 0 { return false }
+
+    let target = nums.reduce(0, +) / 2
     var memo = [String: Bool]()
 
     func dp(_ i: Int, _ target: Int) -> Bool {

@@ -4,9 +4,11 @@
 func mostPoints(_ questions: [[Int]]) -> Int {
     var tab = Array(repeating: 0, count: questions.count + 1)
 
-    for i in stride(from: tab.count - 2, through: 0, by: -1) {
-        let nextIndex = min(i + questions[i][1] + 1, tab.count - 1)
-        tab[i] = max(questions[i][0] + tab[nextIndex], tab[i + 1])
+    for i in (0..<questions.count).reversed() {
+        let skip = tab[i + 1]
+        let take = questions[i][0] + tab[min(i + questions[i][1] + 1, tab.count - 1)]
+
+        tab[i] = max(skip, take)
     }
 
     return tab[0]

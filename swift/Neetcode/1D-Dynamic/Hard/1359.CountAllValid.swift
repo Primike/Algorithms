@@ -5,6 +5,26 @@
 
 func countOrders(_ n: Int) -> Int {
     let mod = 1_000_000_007
+    var tab = Array(repeating: Array(repeating: 0, count: n + 1), count: n + 1)
+    tab[0][0] = 1
+
+    for i in 0...n {
+        for j in 0...n {
+            if i > 0 { tab[i][j] = (i * tab[i - 1][j]) % mod }
+            if j > i { tab[i][j] += ((j - i) * tab[i][j - 1]) % mod }
+        }
+    }
+
+    return tab[n][n] % mod
+}
+
+print(countOrders(1))
+print(countOrders(2))
+print(countOrders(3))
+
+
+func countOrders2(_ n: Int) -> Int {
+    let mod = 1_000_000_007
     var memo = [String: Int]()
 
     func dp(_ n: Int, _ m: Int) -> Int {
@@ -23,7 +43,3 @@ func countOrders(_ n: Int) -> Int {
 
     return dp(n, n)
 }
-
-print(countOrders(1))
-print(countOrders(2))
-print(countOrders(3))

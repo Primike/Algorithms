@@ -14,10 +14,10 @@ func longestObstacleCourseAtEachPosition(_ obstacles: [Int]) -> [Int] {
         while left < right {
             let mid = (right + left) / 2
 
-            if lis[mid] > obstacle {
-                right = mid
-            } else {
+            if obstacle >= lis[mid] {
                 left = mid + 1
+            } else {
+                right = mid
             }
         }
 

@@ -32,6 +32,30 @@ func mincostTickets2(_ days: [Int], _ costs: [Int]) -> Int {
     var tab = Array(repeating: Int.max, count: days.count + 1)
     tab[0] = 0
 
+    for i in 1...days.count {
+        tab[i] = tab[i - 1] + costs[0]
+        var j = i - 1
+
+        while j >= 0, days[i - 1] < days[j] + 7 {
+            j -= 1
+        }
+
+        tab[i] = min(tab[i], tab[j + 1] + costs[1])
+
+        while j >= 0, days[i - 1] < days[j] + 30 {
+            j -= 1
+        }
+        
+        tab[i] = min(tab[i], tab[j + 1] + costs[2])
+    }
+
+    return tab[days.count]
+}
+
+func mincostTickets3(_ days: [Int], _ costs: [Int]) -> Int {
+    var tab = Array(repeating: Int.max, count: days.count + 1)
+    tab[0] = 0
+
     for index in 0..<days.count {
         var i = index, j = index, k = index
 
@@ -55,30 +79,29 @@ func mincostTickets2(_ days: [Int], _ costs: [Int]) -> Int {
     return tab[tab.count - 1]
 }
 
-func mincostTickets3(_ days: [Int], _ costs: [Int]) -> Int {
+func mincostTickets4(_ days: [Int], _ costs: [Int]) -> Int {
     var memo = [Int: Int]()
 
-    func dp(_ index: Int) -> Int {
-        if index >= days.count { return 0 }
-        if let value = memo[index] { return value }
+    func dp(_ i: Int) -> Int {
+        if i >= days.count { return 0 }
+        if let value = memo[i] { return value }
 
-        var result = Int.max
-        var i = index, j = index, k = index
+        var result = dp(i + 1) + costs[0]
+        var j = i
 
-        while i < days.count, days[index] + 1 > days[i] {
-            i += 1
-        }
-
-        while j < days.count, days[index] + 7 > days[j] {
+        while j < days.count, days[i] + 7 > days[j] {
             j += 1
         }
-        
-        while k < days.count, days[index] + 30 > days[k] {
-            k += 1
+
+        result = min(result, dp(j) + costs[1])
+
+        while j < days.count, days[i] + 30 > days[j] {
+            j += 1
         }
 
-        result = min(dp(i) + costs[0], dp(j) + costs[1], dp(k) + costs[2])
-        memo[index] = result
+        result = min(result, dp(j) + costs[2])
+        
+        memo[i] = result
         return result
     }
 

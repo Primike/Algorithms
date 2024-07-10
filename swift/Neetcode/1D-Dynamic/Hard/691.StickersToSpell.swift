@@ -8,10 +8,10 @@
 // If the task is impossible, return -1.
 
 func minStickers(_ stickers: [String], _ target: String) -> Int {
-    var current = Array(repeating: 0, count: 26)
+    var word = Array(repeating: 0, count: 26)
 
     for letter in target {
-        current[Int(letter.asciiValue!) - 97] += 1
+        word[Int(letter.asciiValue!) - 97] += 1
     }
 
     var words = [[Character: Int]]()
@@ -20,7 +20,7 @@ func minStickers(_ stickers: [String], _ target: String) -> Int {
         var dict = [Character: Int]()
 
         for letter in sticker {
-            if current[Int(letter.asciiValue!) - 97] == 0 { continue }
+            if word[Int(letter.asciiValue!) - 97] == 0 { continue }
             dict[letter, default: 0] += 1
         }
 
@@ -29,35 +29,35 @@ func minStickers(_ stickers: [String], _ target: String) -> Int {
 
     var memo = [[Int]: Int]()
 
-    func dp(_ current: [Int]) -> Int {
-        if current.allSatisfy { $0 == 0 } { return 0 }
-        if let value = memo[current] { return value }
+    func dp(_ word: [Int]) -> Int {
+        if word.allSatisfy { $0 == 0 } { return 0 }
+        if let value = memo[word] { return value }
 
         var result = Int.max
 
-        for word in words {
-            var array = current, count = 0
+        for sticker in words {
+            var array = word
+            var modifiedWord = false
 
-            for (letter, value) in word {
+            for (letter, value) in sticker {
                 let i = Int(letter.asciiValue!) - 97
+                if array[i] <= 0 { continue }
 
-                if array[i] > 0 { 
-                    array[i] = max(0, array[i] - value)
-                    count += 1 
-                }
+                array[i] = max(0, array[i] - value)
+                modifiedWord = true
             }
 
-            if count > 0 { 
-                let recursion = dp(array)
-                if recursion != -1 { result = min(result, recursion + 1) }
+            if modifiedWord { 
+                let subproblem = dp(array)
+                if subproblem != -1 { result = min(result, subproblem + 1) }
             }
         }
 
-        memo[current] = result == .max ? -1 : result
-        return memo[current, default: -1]
+        memo[word] = result == .max ? -1 : result
+        return memo[word, default: -1]
     }
 
-    return dp(current)
+    return dp(word)
 }
 
 print(minStickers(["with","example","science"], "thehat"))

@@ -9,19 +9,21 @@
 
 // Time: O(n), Space: O(1)
 func maxProduct(_ nums: [Int]) -> Int {
+    let nums = nums.map { Double($0) }
     var result = nums[0]
-    var currentMin = 1, currentMax = 1
+    var currentMin = 1.0, currentMax = 1.0
 
-    for number in nums {
-        let temp = currentMax * number
+    for n in nums {
+        let currentLargestSubarray = max(n, n * currentMax, n * currentMin)
+        let currentSmallestSubarray = min(n, n * currentMax, n * currentMin)
 
-        currentMax = max(number * currentMax, number * currentMin, number)
-        currentMin = min(temp, number * currentMin, number)
+        currentMax = currentLargestSubarray
+        currentMin = currentSmallestSubarray
 
         result = max(result, currentMax)
     }
-    
-    return result
+
+    return Int(result)
 }
 
 print(maxProduct([2,3,-2,4]))

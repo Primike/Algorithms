@@ -23,12 +23,11 @@ print(new21Game(6, 1, 10))
 print(new21Game(21, 17, 10))
 
 // TLE
-func new21Game(_ n: Int, _ k: Int, _ maxPts: Int) -> Double {
+func new21Game2(_ n: Int, _ k: Int, _ maxPts: Int) -> Double {
     var memo = [Int: Double]()
 
     func dp(_ points: Int) -> Double {
-        if points > n { return 0.0 }
-        if points >= k { return 1.0 }
+        if points >= k { return points <= n ? 1.0 : 0.0 }
         if let value = memo[points] { return value }
 
         var result = 0.0

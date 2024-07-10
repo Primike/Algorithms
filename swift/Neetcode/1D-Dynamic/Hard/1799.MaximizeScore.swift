@@ -8,50 +8,55 @@
 
 // Time: O(n^2 * log(n + m) + 2^n * n^2), Space: O(n^2 + 2^n * n^2)
 func maxScore(_ nums: [Int]) -> Int {
-    var gcd = [String: Int]()
-
-    func getGCD(_ i: Int, _ j: Int) -> Int {
-        if j == 0 { return i }
-
-        return getGCD(j, i % j)
+    func getGCD(_ a: Int, _ b: Int) -> Int {
+        var a = a, b = b
+        
+        while b != 0 {
+            let remainder = a % b
+            a = b
+            b = remainder
+        }
+        
+        return a
     }
+
+    var gcd = [[Int]: Int]()
 
     for i in 0..<nums.count {
         for j in (i + 1)..<nums.count {
-            gcd["\(nums[i]),\(nums[j])"] = getGCD(nums[i], nums[j])
+            gcd[[i, j]] = getGCD(nums[i], nums[j])
         }
     }
 
-    var memo = [String: Int]()
+    var memo = [[Int]: Int]()
 
-    func dp(_ operation: Int, _ current: [Character]) -> Int {
-        if let value = memo[String(current)] { return value }
-        if current.allSatisfy { $0 == "1" } { return 0 }
+    func dp(_ bitmask: [Int], _ n: Int) -> Int {
+        if bitmask.allSatisfy({ $0 == 1 }) { return 0 }
+        if let value = memo[bitmask] { return value }
 
         var result = 0
-        
-        for i in 0..<nums.count {
-            if current[i] == "1" { continue }
+        var bitmask = bitmask
 
-            var newBitmask = current
-            newBitmask[i] = "1"
+        for i in 0..<nums.count {
+            if bitmask[i] == 1 { continue }
+            bitmask[i] = 1
 
             for j in (i + 1)..<nums.count {
-                if current[j] == "1" { continue }
+                if bitmask[j] == 1 { continue }
 
-                newBitmask[j] = "1"
-                let take = operation * gcd["\(nums[i]),\(nums[j])", default: 1]
-                result = max(result, dp(operation + 1, newBitmask) + take)
-                newBitmask[j] = "0"
+                bitmask[j] = 1
+                result = max(result, gcd[[i, j], default: 1] * n + dp(bitmask, n + 1))
+                bitmask[j] = 0
             }
+
+            bitmask[i] = 0
         }
 
-        memo[String(current)] = result
+        memo[bitmask] = result
         return result
     }
 
-    let bitmask: [Character] = Array(repeating: "0", count: nums.count)
-    return dp(1, bitmask)
+    return dp(Array(repeating: 0, count: nums.count), 1)
 }
 
 print(maxScore([1,2]))

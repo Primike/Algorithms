@@ -26,6 +26,24 @@ print(numDecodings("226"))
 print(numDecodings("06"))
 
 func numDecodings2(_ s: String) -> Int {
+    let s = Array(s).map { String($0) }
+    var tab = Array(repeating: 0, count: s.count + 1)
+    tab[tab.count - 1] = 1
+
+    for i in (0..<s.count).reversed() {
+        if s[i] == "0" { continue }
+
+        tab[i] += tab[i + 1] 
+
+        if i < s.count - 1, let n = Int(s[i] + s[i + 1]), n <= 26 {
+            tab[i] += tab[i + 2]
+        }
+    }
+
+    return tab[0]
+}
+
+func numDecodings3(_ s: String) -> Int {
     let s = Array(s)
     var memo = [Int: Int]()
 

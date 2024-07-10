@@ -1,23 +1,28 @@
 // Return the maximum number of connecting lines we can draw.
 
-// Time: O(m * n), Space: O(m * n)
+// Needleman-Wunsch Algorithm 
+// Time: O(m * n), Space: O(m)
 func maxUncrossedLines(_ nums1: [Int], _ nums2: [Int]) -> Int {
-    let n1 = nums1.count, n2 = nums2.count
-    var dp = Array(repeating: Array(repeating: 0, count: n2 + 1), count: n1 + 1)
+    var tab = Array(repeating: 0, count: nums2.count)
 
-    for i in 1..<dp.count {
-        for j in 1..<dp[0].count {
-            if nums1[i - 1] == nums2[j - 1] {
-                dp[i][j] = dp[i - 1][j - 1] + 1
+    for i in 0..<nums1.count {
+        var nextRow = Array(repeating: 0, count: nums2.count)
+
+        for j in 0..<nums2.count {
+            if nums1[i] == nums2[j] {
+                nextRow[j] = 1
+                if j > 0 { nextRow[j] += tab[j - 1] }
             } else {
-                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+                nextRow[j] = tab[j]
+                if j > 0 { nextRow[j] = max(nextRow[j], nextRow[j - 1]) }
             }
         }
+
+        tab = nextRow
     }
 
-    return dp[n1][n2]
+    return tab[tab.count - 1]
 }
-
 
 print(maxUncrossedLines([1,4,2], [1,2,4]))
 print(maxUncrossedLines([2,5,1,2,5], [10,5,2,1,5,2]))
@@ -25,6 +30,24 @@ print(maxUncrossedLines([1,3,7,1,7,5], [1,9,2,5,1]))
 
 
 func maxUncrossedLines2(_ nums1: [Int], _ nums2: [Int]) -> Int {
+    var tab = Array(repeating: Array(repeating: 0, count: nums2.count), count: nums1.count)
+
+    for i in 0..<nums1.count {
+        for j in 0..<nums2.count {
+            if nums1[i] == nums2[j] { 
+                tab[i][j] += 1
+                if i > 0, j > 0 { tab[i][j] += tab[i - 1][j - 1] }
+            } else {
+                if i > 0 { tab[i][j] = max(tab[i][j], tab[i - 1][j]) }
+                if j > 0 { tab[i][j] = max(tab[i][j], tab[i][j - 1]) }
+            }
+        }
+    }
+
+    return tab[nums1.count - 1][nums2.count - 1]
+}
+
+func maxUncrossedLines3(_ nums1: [Int], _ nums2: [Int]) -> Int {
     var memo = [String: Int]()
 
     func dp(_ i: Int, _ j: Int) -> Int {
