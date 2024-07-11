@@ -192,21 +192,19 @@ Advanced Graphs:
         center expansion / back-forth,
         for subsequence use loop up to current i,
         iterate backwards to avoid multiple stacking changes,
-        create sequential tab regardless if some are not in nums,
         for loop faster than skip/take with static i,
-        remember LIS,
-        Euclidian Algorithm
+        Euclidian Algorithm,
+        Bs: .count/-1 -> </<=
     ]
 
-    Medium: 152?, 673?, 837?
-    Hard: 691?, 1406, 1964?, 1359
-    Tricks: m91, m300, m416, m740, m983, m343, m2140, h472, h1799
+    Medium: 152?, 673?, 837!, 1043?
+    Hard: 691?, 1964?, 1359?, 2147?
+    Tricks: m300, m343, m416, m740, m935, m1048, h472, h1406, h1799
 
 
 
 2D: 
     [
-        Time depends on params b/c memo only visit each combo once
         Bounded Knapsack,
         for combinations tab loop goes inside, memo -> index..<n
         for premutations tab first duplicates rearranged,
@@ -214,10 +212,10 @@ Advanced Graphs:
         if current doesnt need mod just return next recursion,
     ]
 
-    Medium: 1049?, 221?, 1140?, 926?
+    Medium: 1049?, 1140?
     Hard: 446, 629, 1289
     Study: 309, 494, 97, 877, 474, 1911, 72
-    Tricks: m1155
+    Tricks: m221, m926, m1155
 
 
 
