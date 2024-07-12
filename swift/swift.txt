@@ -17,7 +17,7 @@ Strings:
 
 Character:
 
-    let alpha = Character(UnicodeScalar(UInt8(96 + i)))
+    let alpha = Character(UnicodeScalar(96 + i))
 
     let arrayIndex = Int(letter.asciiValue!) - 97 /ascii of A
 
