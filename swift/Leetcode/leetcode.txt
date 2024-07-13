@@ -1,12 +1,12 @@
 1D-DP:
     Medium: 1043?
-    Hard: 975, 1235, 2355
+    Hard: 975, 2355
     Tricks: m276
 
 
 2D-DP:
     Medium: 486?
-    Hard: 403, 552
+    Hard: 403
     Tricks: m1027
 
 
@@ -35,7 +35,7 @@ Graph:
 
 
 Greedy: 
-    Medium: 2116?, 1564, 1580
+    Medium: 2116?, 1564, 1580, 1717
     Hard: 330!, 871?, 1326
     Tricks: m2745
 
