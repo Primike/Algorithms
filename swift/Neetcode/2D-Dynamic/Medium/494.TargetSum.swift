@@ -1,5 +1,8 @@
+// You want to build an expression out of nums by adding one of the symbols 
+// '+' and '-' before each integer in nums and then concatenate all the integers.
 // Return the number of different expressions that you can build, which evaluates to target.
 
+// Time: O(n * t), Space: O(n * t)
 func findTargetSumWays(_ nums: [Int], _ target: Int) -> Int {
     let sum = nums.reduce(0, +)
     if abs(target) > sum { return 0 } 

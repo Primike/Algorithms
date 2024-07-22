@@ -37,32 +37,28 @@ func minFlipsMonoIncr2(_ s: String) -> Int {
     return result
 }
 
-
 func minFlipsMonoIncr3(_ s: String) -> Int {
     let s = Array(s)
     var memo = [String: Int]()
 
-    func dp(_ i: Int, _ sawOne: Bool) -> Int {
-        let key = "\(i),\(sawOne)"
+    func dp(_ i: Int, _ zeros: Bool) -> Int {
+        let key = "\(i),\(zeros)"
 
+        if i == s.count { return 0 }
         if let value = memo[key] { return value }
-        if i >= s.count { return 0 }
 
-        var result = 0
+        var result = Int.max
 
-        if sawOne {
-            result = dp(i + 1, sawOne) + (s[i] == "1" ? 0 : 1)
+        if zeros {
+            result = min(result, dp(i + 1, true) + (s[i] == "0" ? 0 : 1))
+            result = min(result, dp(i + 1, false) + (s[i] == "1" ? 0 : 1))
         } else {
-            if s[i] == "0" {
-                result = min(dp(i + 1, false), dp(i + 1, true))
-            } else {
-                result = min(dp(i + 1, true), dp(i + 1, false) + 1)
-            }
+            result = min(result, dp(i + 1, false) + (s[i] == "1" ? 0 : 1))
         }
 
         memo[key] = result
         return result
     }
 
-    return dp(0, false)
+    return dp(0, true)
 }

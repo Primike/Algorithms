@@ -25,30 +25,31 @@ print(findMaxForm(["10","0","1"], 1, 1))
 
 
 func findMaxForm2(_ strs: [String], _ m: Int, _ n: Int) -> Int {
-    var binary = [(Int, Int)]()
+    var strings = [(Int, Int)]()
 
     for string in strs {
         let zeros = string.filter { $0 == "0" }, ones = string.filter { $0 == "1" }
-        binary.append((zeros.count, ones.count))
+        strings.append((zeros.count, ones.count))
     }
 
-    var memo = [String: Int]()
+    var memo = [[Int]: Int]()
 
-    func dp(_ i: Int, _ m: Int, _ n: Int) -> Int {
-        let key = "\(i),\(m),\(n)"
+    func dp(_ i: Int, _ zeros: Int, _ ones: Int) -> Int {
+        let key = [i, zeros, ones]
 
-        if m < 0 || n < 0 || i >= binary.count { return 0 }
+        if i == strings.count { return 0 }
         if let value = memo[key] { return value }
 
-        let skip = dp(i + 1, m, n)
-        var take = dp(i + 1, m - binary[i].0, n - binary[i].1)
+        var result = dp(i + 1, zeros, ones)
+        let (z, o) = strings[i]
 
-        if m - binary[i].0 >= 0, n - binary[i].1 >= 0 { take += 1 }
-        let result = max(take, skip)
+        if zeros + z <= m, ones + o <= n { 
+            result = max(result, dp(i + 1, zeros + z, ones + o) + 1)
+        }
 
         memo[key] = result
         return result
     }
 
-    return dp(0, m, n)
+    return dp(0, 0, 0)
 }

@@ -42,5 +42,5 @@ func isInterleave2(_ s1: String, _ s2: String, _ s3: String) -> Bool {
         return false
     }
 
-    return dp(0,0)
+    return dp(0, 0)
 }
