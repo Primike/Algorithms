@@ -5,6 +5,7 @@
 // Return a string representing the maximum odd binary number 
 // that can be created from the given combination.
 
+// Time: O(n), Space: O(1)
 func maximumOddBinaryNumber(_ s: String) -> String {
     let ones = s.filter { $0 == "1" }.count - 1 
     let zeros = s.filter { $0 == "0" }.count   

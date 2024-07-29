@@ -7,10 +7,8 @@ func maxSubArray(_ nums: [Int]) -> Int {
     var current = 0
 
     for number in nums {
-        current += number
+        current = max(current + number, number)
         result = max(result, current)
-
-        if current < 0 { current = 0 }
     }
 
     return result

@@ -3,7 +3,7 @@
 // Given a string s, return the minimum number of characters you need 
 // to delete to make s good.
 
-// Time: O(n * logn), Space: O(n)
+// Time: O(n * logn), Space: O(26)
 func minDeletions(_ s: String) -> Int {
     let dict = Array(s).reduce(into: [:]) { $0[$1, default: 0] += 1 }
     var sorted = Array(dict.map { $0.value }).sorted(by: >)

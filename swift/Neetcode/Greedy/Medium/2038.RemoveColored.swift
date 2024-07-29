@@ -1,3 +1,11 @@
+// Alice is only allowed to remove a piece colored 'A' 
+// if both its neighbors are also colored 'A'. 
+// She is not allowed to remove pieces that are colored 'B'.
+// Bob is only allowed to remove a piece colored 'B' 
+// if both its neighbors are also colored 'B'. 
+// He is not allowed to remove pieces that are colored 'A'.
+// If a player cannot make a move on their turn, 
+// that player loses and the other player wins.
 // Assuming Alice and Bob play optimally, return true if Alice wins, 
 // or return false if Bob wins.
 

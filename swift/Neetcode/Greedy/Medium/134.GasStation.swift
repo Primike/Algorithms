@@ -22,3 +22,26 @@ func canCompleteCircuit(_ gas: [Int], _ cost: [Int]) -> Int {
 
 print(canCompleteCircuit([1,2,3,4,5], [3,4,5,1,2]))
 print(canCompleteCircuit([2,3,4], [3,4,3]))
+
+
+func canCompleteCircuit2(_ gas: [Int], _ cost: [Int]) -> Int {
+    var route = zip(gas, cost).map { ($0.0, $0.1) } + zip(gas, cost).map { ($0.0, $0.1) }
+    var currentGas = 0
+    var left = 0
+
+    for i in 0..<route.count {   
+        currentGas += route[i].0 - route[i].1
+                        
+        if i - left + 1 == gas.count {
+            if currentGas >= 0 { return left % gas.count }
+
+            currentGas -= route[left].0 - route[left].1
+            left += 1
+        } else if currentGas < 0 {
+            left = i + 1
+            currentGas = 0
+        }
+    }
+
+    return -1
+}

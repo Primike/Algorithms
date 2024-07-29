@@ -7,9 +7,9 @@
 
 // Time: O(n), Space: O(1)
 func minimizeArrayValue(_ nums: [Int]) -> Int {
-    var result = nums[0], current = nums[0]
+    var result = 0, current = 0
 
-    for i in 1..<nums.count {
+    for i in 0..<nums.count {
         current += nums[i]
         result = max(result, (current + i) / (i + 1))
     }

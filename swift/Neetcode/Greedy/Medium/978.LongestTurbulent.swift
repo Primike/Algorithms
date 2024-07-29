@@ -2,19 +2,22 @@
 
 // Time: O(n), Space: O(1)
 func maxTurbulenceSize(_ arr: [Int]) -> Int {
+    if arr.count == 1 { return 1 }
+    
     var result = 1
+    var isLarger = !(arr[1] > arr[0])
     var count = 1
-    var smaller = true
 
     for i in 1..<arr.count {
-        if arr[i] == arr[i - 1] {
-            count = 1
-        } else if (smaller && arr[i] < arr[i - 1]) || (!smaller && arr[i] > arr[i - 1]) {
+        if isLarger, arr[i] < arr[i - 1] {
             count += 1
-            smaller = !smaller
+            isLarger = false
+        } else if !isLarger, arr[i] > arr[i - 1] {
+            count += 1
+            isLarger = true
         } else {
-            count = 2
-            smaller = arr[i] > arr[i - 1]
+            count = arr[i] == arr[i - 1] ? 1 : 2
+            isLarger = arr[i] > arr[i - 1]
         }
 
         result = max(result, count)
