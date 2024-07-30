@@ -226,14 +226,15 @@ Greedy:
         use negatives for sorting tuples
     ]
 
-    Medium: 918, 1871!, 950
-    Hard: 135
-    Study: m134, m678, m763, 1029, m2439
+    Medium: 649?, 918, 1871!, 950
+    Hard: 135?, 1793?
+    Tricks: m134, m678, m763, m1029, m1846, m2439
+    Bit: m861, h3068
 
 
 
 Intervals:
-    Medium: 57?, 435
+    Medium: 57?, 253?, 435?
 
 
 
