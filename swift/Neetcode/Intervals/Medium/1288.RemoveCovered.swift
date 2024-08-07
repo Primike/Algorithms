@@ -2,7 +2,7 @@
 // represent the interval [li, ri), remove all intervals that 
 // are covered by another interval in the list.
 
-// Time: O(n * logn), Space: O(1)
+// Time: O(n * log(n)), Space: O(1)
 func removeCoveredIntervals(_ intervals: [[Int]]) -> Int {
     let intervals = intervals.sorted { ($0[0], -$0[1]) < ($1[0], -$1[1]) }
     var result = 0

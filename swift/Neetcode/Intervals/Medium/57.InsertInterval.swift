@@ -5,21 +5,21 @@
 // Time: O(n), Space: O(n)
 func insert(_ intervals: [[Int]], _ newInterval: [Int]) -> [[Int]] {
     var result = [[Int]]()
-    var newInterval = newInterval
+    var current = newInterval
 
-    for i in 0..<intervals.count {
-        if newInterval[1] < intervals[i][0] {
-            result.append(newInterval)
+    for (i, interval) in intervals.enumerated() {
+        if current[1] < interval[0] {
+            result.append(current)
             return result + intervals[i...]
-        } else if newInterval[0] > intervals[i][1] {
-            result.append(intervals[i])
+        } else if current[0] > interval[1] {
+            result.append(interval)
         } else {
-            newInterval[0] = min(newInterval[0], intervals[i][0])
-            newInterval[1] = max(newInterval[1], intervals[i][1])
+            current[0] = min(current[0], interval[0])
+            current[1] = max(current[1], interval[1])
         }
     }
     
-    result.append(newInterval)
+    result.append(current)
     return result
 }
 

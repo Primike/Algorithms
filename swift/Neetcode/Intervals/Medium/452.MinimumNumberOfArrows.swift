@@ -6,7 +6,7 @@
 // Given the array points, return the minimum number of arrows 
 // that must be shot to burst all balloons.
 
-// Time: O(n * logn), Space: O(1)
+// Time: O(n * log(n)), Space: O(1)
 func findMinArrowShots(_ points: [[Int]]) -> Int {
     var sortedBalloons = points.sorted { ($0[0], $0[1]) < ($1[0], $1[1]) }
     var result = 0

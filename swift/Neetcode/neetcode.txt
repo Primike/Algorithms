@@ -193,7 +193,7 @@ Advanced Graphs:
         for subsequence use loop up to current i,
         iterate backwards to avoid multiple stacking changes,
         for loop faster than skip/take with static i,
-        Euclidian Algorithm,
+        Euclidean Algorithm,
         Bs: .count/-1 -> </<=
     ]
 
@@ -234,9 +234,23 @@ Greedy:
 
 
 Intervals:
-    Medium: 57?, 253?, 435?
+    Medium: 57?, 253?, 435?, 452?
+    Hard: 352?, 1851?
 
 
 
+Math: 
+    Easy [
+        Euclidean Algorithm,
+        Prime factorization,
+        Binary exponentiation
+    ]
+
+    Easy: 9, 263?, 1071?, 1716?
+    Medium: 50!, 54?
+    Tricks: m73
+
+
+    
 Other: 
-    Prefix Sum, Monotomic Stack, Tries, 2D Tabulation
+    Prefix Sum, Monotomic Stack, Tries, Intervals

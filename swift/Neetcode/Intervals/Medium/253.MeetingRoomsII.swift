@@ -11,7 +11,7 @@ struct Room: Comparable {
     }
 }
 
-// Time: O(n * logn), Space: O(n)
+// Time: O(n * log(n)), Space: O(n)
 func minMeetingRooms(_ intervals: [[Int]]) -> Int {
     var intervals = intervals.sorted { ($0[0], $0[1]) < ($1[0], $1[1]) }
     var heap = Heap<Room>(.minHeap)

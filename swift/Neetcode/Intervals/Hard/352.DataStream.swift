@@ -1,46 +1,40 @@
+// Given a data stream input of non-negative integers a1, a2, ..., an,
+// summarize the numbers seen so far as a list of disjoint intervals.
+// Implement the SummaryRanges class:
+// SummaryRanges() Initializes the object with an empty stream.
+// void addNum(int value) Adds the integer value to the stream.
+// int[][] getIntervals() Returns a summary of the integers 
+// in the stream currently as a list of disjoint intervals [starti, endi]. 
+// The answer should be sorted by starti.
+
 class SummaryRanges {
 
-    var ranges: [[Int]]
+    private var intervals: [[Int]]
 
     init() {
-        self.ranges = []
+        self.intervals = []
     }
 
     func addNum(_ value: Int) {
-        if ranges.isEmpty {
-            ranges.append([value, value])
-            return
-        }
+        var newInterval = [value, value]
+        var i = 0
 
-        var left = 0, right = ranges.count - 1
-
-        while left <= right {
-            let mid = left + (right - left) / 2
-
-            if ranges[mid][0] <= value, ranges[mid][1] >= value { 
-                return 
-            } else if ranges[mid][1] < value {
-                left = mid + 1
+        while i < intervals.count {
+            if intervals[i][1] + 1 < value {
+                i += 1
+            } else if intervals[i][0] - 1 > value {
+                break
             } else {
-                right = mid - 1
+                newInterval[0] = min(newInterval[0], intervals[i][0])
+                newInterval[1] = max(newInterval[1], intervals[i][1])
+                intervals.remove(at: i)
             }
         }
-
-        if left > 0, ranges[left - 1][1] + 1 >= value {
-            ranges[left - 1][1] = max(ranges[left - 1][1], value)
-
-            if left < ranges.count, ranges[left][0] - 1 <= value {
-                ranges[left - 1][1] = max(ranges[left - 1][1], ranges[left][1])
-                ranges.remove(at: left)
-            }
-        } else if left < ranges.count, ranges[left][0] - 1 <= value {
-            ranges[left][0] = min(ranges[left][0], value)
-        } else {
-            ranges.insert([value, value], at: left)
-        }
+        
+        intervals.insert(newInterval, at: i)
     }
 
     func getIntervals() -> [[Int]] {
-        return ranges
+        return intervals
     }
 }

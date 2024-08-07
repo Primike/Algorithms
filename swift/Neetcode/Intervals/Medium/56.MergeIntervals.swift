@@ -5,11 +5,11 @@
 // Time: O(n * logn), Space: O(n)
 func merge(_ intervals: [[Int]]) -> [[Int]] {
     let intervals = intervals.sorted { $0[0] < $1[0] }
-    var result = [intervals[0]]
+    var result = [[Int]]()
 
     for interval in intervals {
-        if result[result.count - 1][1] >= interval[0] {
-            result[result.count - 1][1] = max(result[result.count - 1][1], interval[1])
+        if let last = result.last, last[1] >= interval[0] {
+            result[result.count - 1][1] = max(last[1], interval[1])
         } else {
             result.append(interval)
         }
