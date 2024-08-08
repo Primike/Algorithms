@@ -1,21 +1,25 @@
-// Increment the large integer by one and return the resulting array of digits.
+// Increment the large integer by one and 
+// return the resulting array of digits.
 
+// Time: O(n), Space: O(1)
 func plusOne(_ digits: [Int]) -> [Int] {
     var digits = digits
-    digits[digits.count - 1] += 1
+    var carry = true
 
-    for i in stride(from: digits.count - 1, to: -1, by: -1) {
-        if digits[i] == 10, i > 0 {
-            digits[i - 1] += 1
+    for i in (0..<digits.count).reversed() {
+        if !carry { return digits }
+
+        digits[i] += 1
+
+        if digits[i] == 10 { 
+            carry = true 
             digits[i] = 0
+        } else {
+            carry = false
         }
     }
 
-    if digits[0] == 10 {
-        digits[0] = 0
-        digits = [1] + digits
-    }
-
+    if carry { return [1] + digits }
     return digits
 }
 

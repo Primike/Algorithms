@@ -248,7 +248,7 @@ Math:
 
     Easy: 9, 263?, 1071?, 1716?
     Medium: 50!, 54?
-    Tricks: m73
+    Tricks: m73, m1041, m1727
 
 
     

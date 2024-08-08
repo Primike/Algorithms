@@ -1,6 +1,7 @@
 // You are given an n x n 2D matrix representing an image, 
 // rotate the image by 90 degrees (clockwise).
 
+// Time: O(n^2), Space: O(n^2)
 func rotate(_ matrix: inout [[Int]]) {
     for i in 0..<matrix.count {
         for j in i..<matrix.count {

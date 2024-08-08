@@ -1,14 +1,25 @@
 // Given two strings str1 and str2, return the largest string x 
 // such that x divides both str1 and str2.
 
+// All possible divisors of 2 numbers divide the gcd
+
+// Time: O(n + m), Space: O(gcd)
 func gcdOfStrings(_ str1: String, _ str2: String) -> String {
     if str1 + str2 != str2 + str1 { return "" }
 
-    func gcd(_ a: Int, _ b: Int) -> Int {
-        return b == 0 ? a : gcd(b, a % b)
+    func euclideanAlgorithm(_ x: Int, _ y: Int) -> Int {
+        var largest = max(x, y), smallest = min(x, y)
+
+        while largest % smallest != 0 { 
+            let remainder = largest % smallest
+            largest = smallest
+            smallest = remainder
+        }
+
+        return smallest
     }
 
-    return String(str1.prefix(gcd(str1.count, str2.count)))
+    return String(str1.prefix(euclideanAlgorithm(str1.count, str2.count)))
 }
 
 print(gcdOfStrings("ABCABC", "ABC"))

@@ -1,5 +1,37 @@
 // Given an m x n matrix, return all elements of the matrix in spiral order.
 
+// Time: O(m * n), Space: O(m * n)
+func spiralOrder(_ matrix: [[Int]]) -> [Int] {
+    let rows = matrix.count
+    let cols = matrix[0].count
+    let directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    var result = [Int]()
+    var visited = Set<[Int]>()
+    var i = 0, j = 0
+    var dr = 0
+    
+    while result.count < rows * cols {
+        result.append(matrix[i][j])
+        visited.insert([i, j])
+        
+        let r = i + directions[dr].0
+        let c = j + directions[dr].1
+        
+        if visited.contains([r, c]) || r < 0 || r >= rows || c < 0 || c >= cols {
+            dr = (dr + 1) % 4
+        }
+        
+        i += directions[dr].0
+        j += directions[dr].1
+    }
+    
+    return result
+}
+
+print(spiralOrder([[1,2,3],[4,5,6],[7,8,9]]))
+print(spiralOrder([[1,2,3,4],[5,6,7,8],[9,10,11,12]]))
+
+
 func spiralOrder(_ matrix: [[Int]]) -> [Int] {
     let rows = matrix.count, cols = matrix[0].count
     var visited = Set<[Int]>()
@@ -27,6 +59,3 @@ func spiralOrder(_ matrix: [[Int]]) -> [Int] {
     dfs(0, 0, 0)
     return result
 }
-
-print(spiralOrder([[1,2,3],[4,5,6],[7,8,9]]))
-print(spiralOrder([[1,2,3,4],[5,6,7,8],[9,10,11,12]]))

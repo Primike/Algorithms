@@ -2,7 +2,7 @@
 // Return the widest vertical area between two points such that 
 // no points are inside the area.
 
-// Time: O(n * logn), Space: O(n)
+// Time: O(n * log(n)), Space: O(n)
 func maxWidthOfVerticalArea(_ points: [[Int]]) -> Int {
     let points = points.sorted { $0[0] < $1[0] }
     var result = 0
