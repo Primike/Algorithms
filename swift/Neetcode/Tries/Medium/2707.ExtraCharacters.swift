@@ -6,25 +6,25 @@
 
 // Use trie
 func minExtraChar(_ s: String, _ dictionary: [String]) -> Int {
-    let s = Array(s) 
-    let words = Set(dictionary) 
+    let s = Array(s).map { String($0) }
+    let dictionary = Set(dictionary)
     var memo = [Int: Int]()
 
     func dp(_ index: Int) -> Int {
         if index == s.count { return 0 }
         if let value = memo[index] { return value }
 
-        var result = 1 + dp(index + 1)
+        var result = dp(index + 1) + 1
+        var word = ""
 
         for i in index..<s.count {
-            if words.contains(String(s[index...i])) {
-                result = min(result, dp(i + 1))
-            }
+            word += s[i]
+            if dictionary.contains(word) { result = min(result, dp(i + 1)) }
         }
 
         memo[index] = result
         return result
-    }
+    } 
 
     return dp(0)
 }
