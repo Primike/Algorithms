@@ -33,7 +33,7 @@ print(minHeightShelves([[1,1],[2,3],[2,3],[1,1],[1,1],[1,1],[1,2]], 4))
 print(minHeightShelves([[1,3],[2,4],[3,2]], 6))
 
 
-func minHeightShelves(_ books: [[Int]], _ shelfWidth: Int) -> Int {
+func minHeightShelves2(_ books: [[Int]], _ shelfWidth: Int) -> Int {
     var memo = [Int: Int]()
 
     func dp(_ index: Int) -> Int {

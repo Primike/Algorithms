@@ -10,30 +10,75 @@
 // If there are multiple such indices j, you can only jump to the smallest such index j.
 // Return the number of good starting indices.
 
+// Time: O(n * log(n) + n), Space: O(n)
 func oddEvenJumps(_ arr: [Int]) -> Int {
-    var nextOdd = [Int](repeating: -1, count: arr.count)
-    var nextEven = [Int](repeating: -1, count: arr.count)
-    var sortedIndices = arr.enumerated().map { $0.offset }
-    sortedIndices.sort { arr[$0] == arr[$1] ? $0 < $1 : arr[$0] < arr[$1] }
+    var nextOdd = Array(repeating: -1, count: arr.count)
+    var nextEven = Array(repeating: -1, count: arr.count)
+    var indicies = arr.enumerated().map { $0.offset }
     var stack = [Int]()
 
-    for index in sortedIndices {
-        while let last = stack.last, last < index {
-            nextOdd[stack.removeLast()] = index
+    for i in indicies.sorted { (arr[$0], $0) < (arr[$1], $1) } {
+        while let last = stack.last, last < i {
+            stack.removeLast()
+            nextOdd[last] = i
         }
 
-        stack.append(index)
+        stack.append(i)
     }
 
-    sortedIndices.sort { arr[$0] == arr[$1] ? $0 < $1 : arr[$0] > arr[$1] }
     stack = []
 
-    for index in sortedIndices {
-        while let last = stack.last, last < index {
-            nextEven[stack.removeLast()] = index
+    for i in indicies.sorted { (-arr[$0], $0) < (-arr[$1], $1) }  {
+        while let last = stack.last, last < i {
+            stack.removeLast()
+            nextEven[last] = i
         }
 
-        stack.append(index)
+        stack.append(i)
+    }
+
+    var tabOdd = Array(repeating: false, count: arr.count)
+    var tabEven = Array(repeating: false, count: arr.count)
+    tabOdd[arr.count - 1] = true
+    tabEven[arr.count - 1] = true
+
+    for i in (0..<(arr.count - 1)).reversed() {
+        if nextOdd[i] != -1 { tabOdd[i] = tabEven[nextOdd[i]] }
+        if nextEven[i] != -1 { tabEven[i] = tabOdd[nextEven[i]] }
+    }
+
+    return tabOdd.filter { $0 }.count
+}
+
+print(oddEvenJumps([10,13,12,14,15]))
+print(oddEvenJumps([2,3,1,1,4]))
+print(oddEvenJumps([5,1,3,4,2]))
+
+
+func oddEvenJumps2(_ arr: [Int]) -> Int {
+    var nextOdd = Array(repeating: -1, count: arr.count)
+    var nextEven = Array(repeating: -1, count: arr.count)
+    var indicies = arr.enumerated().map { $0.offset }
+    var stack = [Int]()
+
+    for i in indicies.sorted { (arr[$0], $0) < (arr[$1], $1) } {
+        while let last = stack.last, last < i {
+            stack.removeLast()
+            nextOdd[last] = i
+        }
+
+        stack.append(i)
+    }
+
+    stack = []
+
+    for i in indicies.sorted { (-arr[$0], $0) < (-arr[$1], $1) }  {
+        while let last = stack.last, last < i {
+            stack.removeLast()
+            nextEven[last] = i
+        }
+
+        stack.append(i)
     }
 
     var memo = [String: Bool]()
@@ -42,10 +87,10 @@ func oddEvenJumps(_ arr: [Int]) -> Int {
         let key = "\(i),\(isOdd)"
 
         if i == arr.count - 1 { return true }
-        if let cached = memo[key] { return cached }
+        if let value = memo[key] { return value }
 
-        let index = isOdd ? nextOdd[i] : nextEven[i]
-        let result = index != -1 ? dp(index, !isOdd) : false
+        let nextJump = isOdd ? nextOdd[i] : nextEven[i]
+        let result = nextJump == -1 ? false : dp(nextJump, !isOdd)
 
         memo[key] = result
         return result
@@ -59,7 +104,3 @@ func oddEvenJumps(_ arr: [Int]) -> Int {
 
     return result
 }
-
-print(oddEvenJumps([10,13,12,14,15]))
-print(oddEvenJumps([2,3,1,1,4]))
-print(oddEvenJumps([5,1,3,4,2]))

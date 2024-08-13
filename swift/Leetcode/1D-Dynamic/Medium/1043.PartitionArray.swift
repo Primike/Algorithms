@@ -7,16 +7,16 @@
 func maxSumAfterPartitioning(_ arr: [Int], _ k: Int) -> Int {
     var tab = Array(repeating: 0, count: arr.count + 1)
 
-    for i in 1...arr.count {
+    for i in (0..<arr.count).reversed() {
         var largest = 0
 
-        for j in 1...min(k, i) {
-            largest = max(largest, arr[i - j])
-            tab[i] = max(tab[i], tab[i - j] + largest * j)
+        for j in i..<min(i + k, arr.count) {
+            largest = max(largest, arr[j])
+            tab[i] = max(tab[i], tab[j + 1] + (j - i + 1) * largest)
         }
     }
 
-    return tab[arr.count]
+    return tab[0]
 }
 
 print(maxSumAfterPartitioning([1,15,7,9,2,5,10], 3))
