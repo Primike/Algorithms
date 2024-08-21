@@ -3,6 +3,7 @@
 // Return the probability that the number of coins 
 // facing heads equals target if you toss every coin exactly once.
 
+// Time: O(n * t), Space: O(n * t)
 func probabilityOfHeads(_ prob: [Double], _ target: Int) -> Double {
     var memo = [String: Double]()
     

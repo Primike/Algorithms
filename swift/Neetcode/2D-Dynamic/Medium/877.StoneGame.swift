@@ -31,6 +31,26 @@ print(stoneGame([3,7,2,3]))
 
 
 func stoneGame2(_ piles: [Int]) -> Bool {
+    var memo = [String: Int]()
+
+    func dp(_ i: Int, _ j: Int) -> Int {
+        let key = "\(i),\(j)"
+
+        if i == j { return piles[i] }
+        if let value = memo[key] { return value }
+
+        let first = piles[i] - dp(i + 1, j)
+        let last = piles[j] - dp(i, j - 1)
+        let result = max(first, last)
+
+        memo[key] = result
+        return result
+    }
+
+    return dp(0, piles.count - 1) >= 0
+}
+
+func stoneGame3(_ piles: [Int]) -> Bool {
     var memo = [[Int]: Int]()
 
     func dp(_ i: Int, _ j: Int) -> Int {

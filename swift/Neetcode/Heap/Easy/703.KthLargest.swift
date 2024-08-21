@@ -5,8 +5,8 @@
 //Time: O(nlogk), Space: O(k)
 class KthLargest {
 
-    var heap: Heap<Int>
-    let k: Int
+    private var heap: Heap<Int>
+    private let k: Int
 
     init(_ k: Int, _ nums: [Int]) {
         self.heap = Heap(.minHeap)

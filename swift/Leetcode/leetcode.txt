@@ -1,12 +1,12 @@
 1D-DP:
-    Medium: 276
+    Medium: 276, 1937
     Hard: 123?, 975?, 2355?
     Tricks: m1218, m1653
 
 
 
 2D-DP:
-    Medium: 486?, 1027?, 1230, 1395
+    Medium: 486?, 1027?, 1230, 1395, 1937
     Hard: 403
 
 
@@ -18,13 +18,13 @@ Advanced Graphs:
 
 
 Array:
-    Medium: 2863?
+    Medium: 264, 2863?
     Hard: 2781, 315
 
 
 
 Backtracking:
-    Medium: 291?
+    Medium: 291?, 351
     Hard: 301?, 1088!, 465
     Tricks: h679
 
@@ -32,6 +32,7 @@ Backtracking:
 
 Binary Search:
     Medium: 362?, 852?, 1482?, 1552?
+    Hard: 719?
 
 
 
@@ -43,7 +44,7 @@ Graph:
 
 Greedy: 
     Medium: 959, 2116?, 1564, 1580, 1717
-    Hard: 330!, 871?, 1326
+    Hard: 330!, 624, 871?, 1326
     Tricks: m2745
 
 
