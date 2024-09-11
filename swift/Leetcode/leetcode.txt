@@ -13,7 +13,7 @@
 
 Advanced Graphs:
     Medium: 1334?, 2093?, 2976
-    Hard: 2045?
+    Hard: 2045?, 2699!
 
 
 
@@ -24,7 +24,7 @@ Array:
 
 
 Backtracking:
-    Medium: 291?, 351
+    Medium: 291?, 320, 351
     Hard: 301?, 1088!, 465
     Tricks: h679
 
@@ -37,7 +37,7 @@ Binary Search:
 
 
 Graph:
-    Medium: 365?, 2061 2285
+    Medium: 365?, 947, 2061 2285
     Hard: 834
 
 
@@ -60,7 +60,7 @@ Intervals:
 
 
 LinkedList:
-    Medium: 1171?, 2058?, 2816?
+    Medium: 1171?, 1367, 2058?, 2816?, 3217
 
 
 
@@ -73,7 +73,7 @@ Math:
 
 
 Matrix:
-    Medium: 1727?
+    Medium: 1727?, 2326
 
 
 
@@ -89,7 +89,8 @@ Prefix:
 
 
 Simulation: 
-    Medium: 1583
+    Easy: 1945
+    Medium: 592, 874, 1583, 1894, 2028
 
 
 
@@ -107,7 +108,7 @@ Stack:
 
 String:
     Medium: 418!!
-    Hard: 273!
+    Hard: 273!, 564
     Tricks: m1062
 
 
@@ -118,7 +119,7 @@ Topological Sort:
 
 
 Trees:
-    Easy: 404?
+    Easy: 404?, 590
     Medium: 666?, 1530?, 2641?, 623?, 776
     Hard: 987, 2458!
     Tricks: m655, m1245, m2385
@@ -137,3 +138,5 @@ UnionFind:
 Deque
 
 DAG 2^n * n
+
+Python: 1634
