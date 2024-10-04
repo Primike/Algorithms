@@ -6,7 +6,7 @@
 
 
 2D-DP:
-    Medium: 486?, 650?, 1027?, 1230, 1395
+    Medium: 241, 486?, 650?, 1027?, 1230, 1395
     Hard: 403
 
 
@@ -18,8 +18,9 @@ Advanced Graphs:
 
 
 Array:
-    Medium: 264, 2863?
+    Medium: 264, 2863?, 3043
     Hard: 2781, 315
+    Tricks: 729
 
 
 
@@ -37,7 +38,7 @@ Binary Search:
 
 
 Graph:
-    Medium: 365?, 947, 2061 2285
+    Medium: 365?, 386, 947, 1257, 2061 2285
     Hard: 834
 
 
@@ -56,6 +57,7 @@ Heap:
 
 
 Intervals:
+    Medium: 1229
 
 
 
@@ -108,7 +110,7 @@ Stack:
 
 String:
     Medium: 418!!
-    Hard: 273!, 564
+    Hard: 214!, 273!, 564
     Tricks: m1062
 
 
@@ -125,9 +127,16 @@ Trees:
     Tricks: m655, m1245, m2385
 
 
+
+Tries:
+    Hard: 440, 2416
+
+
+    
 Two Pointers:
     Medium: 1574
     Tricks: m31
+
 
 
 UnionFind:
