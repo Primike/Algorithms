@@ -18,7 +18,7 @@ Advanced Graphs:
 
 
 Array:
-    Medium: 264, 2863?, 3043
+    Medium: 264, 731, 1497, 1590, 1858, 2863?, 3043
     Hard: 2781, 315
     Tricks: 729
 
@@ -44,14 +44,14 @@ Graph:
 
 
 Greedy: 
-    Medium: 959, 2116?, 1564, 1580, 1717
+    Medium: 670, 959, 2116?, 1564, 1580, 1717, 2406, 2938
     Hard: 330!, 624, 871?, 1326
     Tricks: m2745
 
 
 
 Heap: 
-    Medium: 786, 1438
+    Medium: 786, 1438, 1942
     Hard: 407, 1354?
 
 
@@ -62,7 +62,8 @@ Intervals:
 
 
 LinkedList:
-    Medium: 1171?, 1367, 2058?, 2816?, 3217
+    Medium: 641, 1171?, 1367, 2058?, 2816?, 3217
+    Hard: 432
 
 
 
@@ -104,6 +105,7 @@ Sliding Window:
 
 
 Stack: 
+    Medium: 1381
     Hard: 224!, 85?
 
 
@@ -129,12 +131,13 @@ Trees:
 
 
 Tries:
+    Medium: 1804
     Hard: 440, 2416
 
 
     
 Two Pointers:
-    Medium: 1574
+    Medium: 1574, 1813, 2491
     Tricks: m31
 
 
