@@ -40,6 +40,11 @@ func numWays2(_ n: Int, _ k: Int) -> Int {
     return tab[n - 1]
 }
 
+// Current state f(i) is the sum:
+// Paint_Different_Than_Last = (k - 1) * f(i - 1)
+// Paint_Same_As_Last = (k - 1) * f(i - 2).
+// To paint f(i) the same color as f(i - 1) f(i - 2) must be different color
+
 func numWays3(_ n: Int, _ k: Int) -> Int {
     var memo = [Int: Int]()
 

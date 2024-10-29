@@ -5,6 +5,75 @@
 
 // Time: O(n^2), Space: O(n^2)
 func largestIsland(_ grid: [[Int]]) -> Int {
+    var grid = grid
+    let rows = grid.count, cols = grid[0].count
+    let directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    var visited = Set<String>()
+    var colorToSize = [Int: Int]()
+    var size = 0
+    var color = 1
+
+    func dfs(_ i: Int, _ j: Int) {  
+        let key = "\(i),\(j)"
+
+        if i < 0 || i >= rows || j < 0 || j >= cols { return }
+        if grid[i][j] == 0 || visited.contains(key) { return }
+
+        size += 1
+        grid[i][j] = color
+        visited.insert(key)
+
+        for (di, dj) in directions {
+            dfs(i + di, j + dj)
+        }
+    }
+
+    for i in 0..<rows {
+        for j in 0..<cols {
+            if visited.contains("\(i),\(j)") || grid[i][j] == 0 { continue }
+
+            dfs(i, j)
+            colorToSize[color] = size
+            size = 0
+            color += 1
+        }
+    }
+
+    var result = 0
+    
+    for i in 0..<rows {
+        for j in 0..<cols {
+            if grid[i][j] != 0 { continue }
+
+            var colors = Set<Int>()
+
+            for (di, dj) in directions {
+                let r = i + di, c = j + dj
+
+                if r < 0 || r >= rows || c < 0 || c >= cols { continue }
+                if grid[r][c] == 0 || colors.contains(grid[r][c]) { continue }
+                colors.insert(grid[r][c])
+            }
+
+            var total = 1
+
+            for color in colors {
+                total += colorToSize[color, default: 0]
+            }
+
+            result = max(result, total)
+        }
+    }
+
+    return max(result, colorToSize.values.max() ?? 0)
+}
+
+print(largestIsland([[1,0],[0,1]]))
+print(largestIsland([[1,1],[1,0]]))
+print(largestIsland([[1,1],[1,1]]))
+
+
+func largestIsland2(_ grid: [[Int]]) -> Int {
     var grid = grid.map { $0.map { ($0, 0) } }
     var rows = grid.count, cols = grid[0].count
     var visited = Set<String>()
@@ -81,7 +150,3 @@ func largestIsland(_ grid: [[Int]]) -> Int {
 
     return result
 }
-
-print(largestIsland([[1,0],[0,1]]))
-print(largestIsland([[1,1],[1,0]]))
-print(largestIsland([[1,1],[1,1]]))
