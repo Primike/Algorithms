@@ -10,33 +10,29 @@
 // Time: O(m * n), Space: O(n)
 func maxPoints(_ points: [[Int]]) -> Int {
     let rows = points.count, cols = points[0].count
-    var previousRow = points[0]
-
-    for i in 1..<rows {
-        var leftMax = Array(repeating: 0, count: cols)
-        var rightMax = Array(repeating: 0, count: cols)
-        leftMax[0] = previousRow[0]
+    var tab = Array(repeating: 0, count: cols)
+    
+    for i in 0..<rows {
+        var leftScan = Array(repeating: 0, count: cols)
+        leftScan[0] = tab[0]
 
         for j in 1..<cols {
-            leftMax[j] = max(leftMax[j - 1] - 1, previousRow[j])
+            leftScan[j] = max(tab[j], leftScan[j - 1] - 1)
         }
+        
+        var rightScan = Array(repeating: 0, count: cols)
+        rightScan[cols - 1] = tab[cols - 1]
 
-        rightMax[cols - 1] = previousRow[cols - 1]
-
-        for j in (0..<cols - 1).reversed()  {
-            rightMax[j] = max(rightMax[j + 1] - 1, previousRow[j])
+        for j in (0..<(cols - 1)).reversed() {
+            rightScan[j] = max(rightScan[j + 1] - 1, tab[j])
         }
-
-        var currentRow = Array(repeating: 0, count: cols)
-
+        
         for j in 0..<cols {
-            currentRow[j] = points[i][j] + max(leftMax[j], rightMax[j])
+            tab[j] = points[i][j] + max(leftScan[j], rightScan[j])
         }
-
-        previousRow = currentRow
     }
-
-    return previousRow.max() ?? 0
+    
+    return tab.max() ?? 0
 }
 
 print(maxPoints([[1,2,3],[1,5,1],[3,1,1]]))
