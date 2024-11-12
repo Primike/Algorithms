@@ -3,65 +3,59 @@
 // different possible ways to group numbers and operators. 
 // You may return the answer in any order.
 
+// Time: O(n * 2^n), Space: O(n^2 * 2^n)
 func diffWaysToCompute(_ expression: String) -> [Int] {
-    func tokenize(_ expression: String) -> [String] {
-        var tokens = [String]()
+    func createExpression(_ expression: String) -> [String] {
+        var array = [String]()
         var number = ""
 
         for char in expression {
             if char.isNumber {
                 number.append(char)
             } else {
-                if !number.isEmpty {
-                    tokens.append(number)
-                    number = ""
-                }
-                tokens.append(String(char))
+                array.append(number)
+                number = ""
+                array.append(String(char))
             }
         }
-        if !number.isEmpty { tokens.append(number) }
-        return tokens
+
+        array.append(number)
+        return array
     }
 
-    let tokens = tokenize(expression)
+    let expression = createExpression(expression)
     var memo = [String: [Int]]()
 
-    func compute(_ tokens: [String], _ start: Int, _ end: Int) -> [Int] {
-        let key = "\(start)-\(end)"
+    func dp(_ start: Int, _ end: Int) -> [Int] {
+        let key = "\(start),\(end)"
 
+        if start == end { return [Int(expression[start]) ?? 0] }
         if let value = memo[key] { return value }
 
-        var results = [Int]()
-
-        if start == end {
-            if let number = Int(tokens[start]) { results.append(number) }
-            memo[key] = results
-            return results
-        }
+        var result = [Int]()
 
         for i in stride(from: start + 1, to: end, by: 2) {
-            let op = tokens[i]
-            let leftResults = compute(tokens, start, i - 1)
-            let rightResults = compute(tokens, i + 1, end)
+            let leftResults = dp(start, i - 1)
+            let rightResults = dp(i + 1, end)
 
-            for left in leftResults {
-                for right in rightResults {
-                    if op == "+" {
-                        results.append(left + right)
-                    } else if op == "-" {
-                        results.append(left - right)
-                    } else if op == "*" {
-                        results.append(left * right)
+            for num1 in leftResults {
+                for num2 in rightResults {
+                    if expression[i] == "+" {
+                        result.append(num1 + num2)
+                    } else if expression[i] == "-" {
+                        result.append(num1 - num2)
+                    } else if expression[i] == "*" {
+                        result.append(num1 * num2)
                     }
                 }
             }
         }
 
-        memo[key] = results
-        return results
+        memo[key] = result
+        return result
     }
 
-    return compute(tokens, 0, tokens.count - 1)
+    return dp(0, expression.count - 1)
 }
 
 print(diffWaysToCompute("2-1-1"))
