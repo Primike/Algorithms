@@ -9,17 +9,19 @@
 // Time: O(n^2), Space: O(n^2)
 func minSteps(_ n: Int) -> Int {
     if n == 1 { return 0 }
-    
+
     var memo = [String: Int]()
 
-    func dp(_ x: Int, _ ctrl: Int) -> Int {
-        let key = "\(x),\(ctrl)"
+    func dp(_ count: Int, _ copied: Int) -> Int {
+        let key = "\(count),\(copied)"
 
+        if count == n { return 0 }
+        if count > n { return n }
         if let value = memo[key] { return value }
-        if x > n { return n + 1 }
-        if x == n { return 0 }
 
-        let result = min(dp(x + ctrl, ctrl) + 1, dp(x + x, x) + 2)
+        let paste = dp(count + copied, copied) + 1
+        let copy = dp(count * 2, count) + 2
+        let result = min(paste, copy)
 
         memo[key] = result
         return result
