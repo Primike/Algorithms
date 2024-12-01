@@ -7,6 +7,30 @@
 // If the frog's last jump was k units, its next jump must be either k - 1, 
 // k, or k + 1 units. The frog can only jump in the forward direction.
 
+// Time: O(n^2), Space: O(n^2)
+func canCross(_ stones: [Int]) -> Bool {
+    let n = stones.count
+    var dp = Array(repeating: Array(repeating: false, count: n), count: n)
+    dp[0][0] = true
+
+    for i in 1..<n {
+        for j in 0..<i {
+            let jump = stones[i] - stones[j]
+            if jump > n - 1 || jump < 0 { continue }
+
+            if dp[j][jump] { dp[i][jump] = true }
+            if jump > 0, dp[j][jump - 1] { dp[i][jump] = true }
+            if jump + 1 < n, dp[j][jump + 1] { dp[i][jump] = true }
+        }
+    }
+
+    return dp[n - 1].contains(true)
+}
+
+print(canCross([0,1,3,5,6,8,12,17]))
+print(canCross([0,1,2,3,4,8,9,11]))
+
+
 func canCross(_ stones: [Int]) -> Bool {
     var stonesSet = Set(stones)
     var memo = [String: Bool]()
@@ -31,6 +55,3 @@ func canCross(_ stones: [Int]) -> Bool {
 
     return dp(1, 1)
 }
-
-print(canCross([0,1,3,5,6,8,12,17]))
-print(canCross([0,1,2,3,4,8,9,11]))
