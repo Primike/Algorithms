@@ -1,6 +1,6 @@
 struct Alpha: Comparable {
     let cost: Int
-    let index: Int
+    let ascii: Int
 
     static func < (_ l: Alpha, _ r: Alpha) -> Bool {
         return l.cost < r.cost
@@ -11,49 +11,50 @@ func minimumCost(_ source: String, _ target: String, _ original: [Character], _ 
     var paths = Array(repeating: [(Int, Int)](), count: 26)
 
     for i in 0..<original.count {
-        let start = Int(original[i].asciiValue!) - 97
-        let end = Int(changed[i].asciiValue!) - 97
-        paths[start].append((end, cost[i]))
+        let startAscii = Int(original[i].asciiValue!) - 97
+        let endAscii = Int(changed[i].asciiValue!) - 97
+        paths[startAscii].append((endAscii, cost[i]))
     }
 
-    func dijkstra(_ start: Int) -> [Int] {
-        var heap = Heap<Alpha>(.minHeap, [(Alpha(cost: 0, index: start))])
-        var minCosts = Array(repeating: Int.max, count: 26)
-        minCosts[start] = 0
+    func dijkstra(_ letter: Int) -> [Int] {
+        var heap = Heap<Alpha>(.minHeap, [(Alpha(cost: 0, ascii: letter))])
+        var minCostsForLetter = Array(repeating: Int.max, count: 26)
+        minCostsForLetter[letter] = 0
 
         while !heap.isEmpty {
             let closest = heap.pop()!
 
-            if closest.cost > minCosts[closest.index] { continue }
+            if closest.cost > minCostsForLetter[closest.ascii] { continue }
 
-            for (next, weight) in paths[closest.index] {
-                if closest.cost + weight >= minCosts[next] { continue }
+            for (next, weight) in paths[closest.ascii] {
+
+                if closest.cost + weight >= minCostsForLetter[next] { continue }
                 
-                minCosts[next] = closest.cost + weight
-                heap.push(Alpha(cost: closest.cost + weight, index: next))
+                minCostsForLetter[next] = closest.cost + weight
+                heap.push(Alpha(cost: closest.cost + weight, ascii: next))
             }
         }
 
-        return minCosts
+        return minCostsForLetter
     }
 
-    var pathCosts = Array(repeating: Array(repeating: Int.max, count: 26), count: 26)
+    var shortestPath = Array(repeating: Array(repeating: Int.max, count: 26), count: 26)
 
     for i in 0..<26 {
-        pathCosts[i] = dijkstra(i)
+        shortestPath[i] = dijkstra(i)
     }
 
     let source = Array(source), target = Array(target)
     var result = 0
 
     for i in 0..<source.count {
-        let sIndex = Int(source[i].asciiValue!) - 97
-        let tIndex = Int(target[i].asciiValue!) - 97
+        let sAscii = Int(source[i].asciiValue!) - 97
+        let tAscii = Int(target[i].asciiValue!) - 97
 
-        if sIndex == tIndex { continue }
-        if pathCosts[sIndex][tIndex] == Int.max { return -1 }
+        if sAscii == tAscii { continue }
+        if shortestPath[sAscii][tAscii] == Int.max { return -1 }
 
-        result += pathCosts[sIndex][tIndex]
+        result += shortestPath[sAscii][tAscii]
     }
 
     return result

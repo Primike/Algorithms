@@ -6,7 +6,7 @@
 
 struct City: Comparable {
     let city: Int
-    var distance: Int
+    let distance: Int
 
     static func < (_ l: City, _ r: City) -> Bool {
         return l.distance < r.distance
@@ -16,7 +16,7 @@ struct City: Comparable {
 // Time: O(n^3 * log(n)), Space: O(n^2)
 func findTheCity(_ n: Int, _ edges: [[Int]], _ distanceThreshold: Int) -> Int {
     var neighbors = Array(repeating: [(Int, Int)](), count: n)
-    var reachable = Array(0..<n)
+    var reachableCities = Array(repeating: 0, count: n)
 
     for edge in edges {
         neighbors[edge[0]].append((edge[1], edge[2]))
@@ -25,31 +25,33 @@ func findTheCity(_ n: Int, _ edges: [[Int]], _ distanceThreshold: Int) -> Int {
 
     func dijkstra(_ city: Int) {
         var heap = Heap<City>(.minHeap, [City(city: city, distance: 0)])
-        var distances = Array(repeating: Int.max, count: n)
-        distances[city] = 0
+        var distanceToCity = [city: 0]
 
         while !heap.isEmpty {
             let closest = heap.pop()!
 
             for (node, weight) in neighbors[closest.city] {
-                if closest.distance > distanceThreshold { continue }
-                if closest.distance + weight >= distances[node] { continue }
+                let newDistance = closest.distance + weight
 
-                distances[node] = closest.distance + weight
-                heap.push(City(city: node, distance: closest.distance + weight))
+                if newDistance > distanceThreshold { continue }
+                if let value = distanceToCity[node], newDistance >= value { continue }
+
+                heap.push(City(city: node, distance: newDistance))
+                distanceToCity[node] = newDistance
             }
         }
 
-        reachable[city] = distances.filter { $0 <= distanceThreshold }.count - 1
+        reachableCities[city] = distanceToCity.count - 1
     }
 
-    var result = Int.max, cities = Int.max
+    var mostCities = n
+    var result = 0
 
-    for i in (0..<n).reversed() {
+    for i in 0..<n {
         dijkstra(i)
 
-        if reachable[i] < cities {
-            cities = reachable[i]
+        if reachableCities[i] <= mostCities {
+            mostCities = reachableCities[i]
             result = i
         }
     }

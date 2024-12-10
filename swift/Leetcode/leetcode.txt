@@ -17,8 +17,14 @@
 
 
 Advanced Graphs:
-    Medium: 1334?, 2093?, 2976
+    [
+        Used dict instead of set for visited to replace weight,
+        With letters precompute all shortest paths to every other letter
+    ]
+
+    Medium: 2976?
     Hard: 2045?, 2699!!
+    Tricks: h1568
 
 
 

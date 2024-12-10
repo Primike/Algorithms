@@ -24,33 +24,34 @@ func minimumCost(_ n: Int, _ highways: [[Int]], _ discounts: Int) -> Int {
         neighbors[highway[1]].append((highway[0], highway[2]))
     }
 
-    var costForCity = Array(repeating: Array(repeating: Int.max, count: discounts + 1), count: n)
-    costForCity[0][discounts] = 0
     var heap = Heap<City>(.minHeap, [City(city: 0, cost: 0, discounts: discounts)])
+    var visited = [String: Int]()
 
     while !heap.isEmpty {
-        let closest = heap.pop()!
+        let first = heap.pop()!
+        if first.city == n - 1 { return first.cost }
 
-        if closest.cost > costForCity[closest.city][closest.discounts] { continue }
+        for (node, weight) in neighbors[first.city] {
+            let newCost1 = first.cost + weight
+            let key1 = "\(node),\(first.discounts)"
 
-        for (next, toll) in neighbors[closest.city] {
-            let payFull = closest.cost + toll
-            let payDiscount = closest.cost + toll / 2
-
-            if costForCity[next][closest.discounts] > payFull { 
-                heap.push(City(city: next, cost: payFull, discounts: closest.discounts))
-                costForCity[next][closest.discounts] = payFull
+            if visited[key1, default: Int.max] > newCost1 {
+                visited[key1] = newCost1
+                heap.push(City(city: node, cost: newCost1, discounts: first.discounts))
             }
 
-            if closest.discounts > 0, costForCity[next][closest.discounts - 1] > payDiscount {
-                heap.push(City(city: next, cost: payDiscount, discounts: closest.discounts - 1))
-                costForCity[next][closest.discounts - 1] = payDiscount
+            let newDiscounts = first.discounts - 1
+            let newCost2 = first.cost + weight / 2
+            let key2 = "\(node),\(newDiscounts)"
+
+            if newDiscounts >= 0, visited[key2, default: Int.max] > newCost2 {
+                visited[key2] = newCost2
+                heap.push(City(city: node, cost: newCost2, discounts: newDiscounts))
             }
         }
     }
 
-    let result = costForCity[n - 1].min() ?? -1
-    return result == Int.max ? -1 : result
+    return -1
 }
 
 print(minimumCost(5, [[0,1,4],[2,1,3],[1,4,11],[3,2,3],[3,4,2]], 1))
