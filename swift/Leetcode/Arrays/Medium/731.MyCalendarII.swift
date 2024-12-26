@@ -1,35 +1,35 @@
+// The event can be represented as a pair of integers startTime and 
+// endTime that represents a booking on the half-open interval 
+// [startTime, endTime), the range of real numbers x such that startTime <= x < endTime.
+// Implement the MyCalendarTwo class:
+// MyCalendarTwo() Initializes the calendar object.
+// boolean book(int startTime, int endTime) Returns true if
+// the event can be added to the calendar successfully 
+// without causing a triple booking. Otherwise, 
+// return false and do not add the event to the calendar.
+
 class MyCalendarTwo {
 
-    private var bookings: [(Int, Int)]
-    private var overlapBookings: [(Int, Int)]
+    private var singleBookings: [(Int, Int)]
+    private var doubleBookings: [(Int, Int)]
 
     init() {
-        bookings = []
-        overlapBookings = []
+        singleBookings = []
+        doubleBookings = []
     }
 
     func book(_ start: Int, _ end: Int) -> Bool {
-        for booking in overlapBookings {
-            if doesOverlap(booking.0, booking.1, start, end) {
-                return false
+        for (l, r) in doubleBookings {
+            if max(start, l) < min(end, r) { return false }
+        }
+
+        for (l, r) in singleBookings {
+            if max(start, l) < min(end, r) {
+                doubleBookings.append((max(start, l), min(end, r)))
             }
         }
 
-        for booking in bookings {
-            if doesOverlap(booking.0, booking.1, start, end) {
-                overlapBookings.append(getOverlapped(booking.0, booking.1, start, end))
-            }
-        }
-
-        bookings.append((start, end))
+        singleBookings.append((start, end))
         return true
-    }
-
-    private func doesOverlap(_ l1: Int, _ r1: Int, _ l2: Int, _ r2: Int) -> Bool {
-        return max(l1, l2) < min(r1, r2)
-    }
-
-    private func getOverlapped(_ l1: Int, _ r1: Int, _ l2: Int, _ r2: Int) -> (Int, Int) {
-        return (max(l1, l2), min(r1, r2))
     }
 }

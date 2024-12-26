@@ -16,6 +16,10 @@
 
 
 
+Advanced Trees:
+
+
+
 Advanced Graphs:
     [
         Used dict instead of set for visited to replace weight,
@@ -29,9 +33,8 @@ Advanced Graphs:
 
 
 Array:
-    Medium: 264, 277, 731, 1072, 1233, 1429, 1497, 1590, 1858, 2070, 2501?, 2554, 2762, 2779, 2863?, 2955, 2981, 3043
+    Medium: 264?, 277?, 731?, 1072, 1233, 1429, 1497, 1590, 1858, 2070, 2501?, 2554, 2762, 2779, 2863?, 2955, 2981, 3043
     Hard: 2781, 315, 2371
-    Tricks: 729
 
 
 
