@@ -5,6 +5,7 @@
 // Return the maximum number of rows that have all 
 // values equal after some number of flips.
 
+// Time: O(n * m), Space: O(n * m)
 func maxEqualRowsAfterFlips(_ matrix: [[Int]]) -> Int {
     var dict = [String: Int]()
 
