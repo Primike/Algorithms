@@ -6,7 +6,7 @@
 // (indexed from 1), inclusive, in the new array. 
 // Since the answer can be a huge number return it modulo 109 + 7.
 
-// Time: O(n^2 + (2 * n) * log(2 * n)), Space: O(n)
+// Time: O(n^2 + 2 * n * log(n^2)), Space: O(n)
 func rangeSum(_ nums: [Int], _ n: Int, _ left: Int, _ right: Int) -> Int {
     var newArray = [Int]()
 
