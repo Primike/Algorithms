@@ -7,16 +7,17 @@
 // Return the maximum number of integers you can choose 
 // following the mentioned rules.
 
+// Time: O(n), Space: O(n)
 func maxCount(_ banned: [Int], _ n: Int, _ maxSum: Int) -> Int {
     var banned = Set(banned)
     var result = 0
-    var sum = 0
+    var current = 0
 
     for i in 1...n {
         if banned.contains(i) { continue }
-        sum += i
+        if current + i > maxSum { break }
         
-        if sum > maxSum { return result }
+        current += i
         result += 1
     }
 

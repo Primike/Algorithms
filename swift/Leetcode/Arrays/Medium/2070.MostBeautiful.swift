@@ -7,23 +7,21 @@
 // Return an array answer of the same length as queries 
 // where answer[j] is the answer to the jth query.
 
+// Time: O((n * log(n) + q * log(q)), Space: O(n + q)
 func maximumBeauty(_ items: [[Int]], _ queries: [Int]) -> [Int] {
     var result = Array(repeating: 0, count: queries.count)
-    var sortedItems = items.sorted { $0[0] < $1[0] }
-    var queriesWithIndices = queries.enumerated().map { [$0.element, $0.offset] }.sorted { $0[0] < $1[0] }
-    var itemIndex = 0
+    var items = items.sorted { $0[0] < $1[0] }
+    var queries = queries.enumerated().map { [$0.element, $0.offset] }.sorted { $0[0] < $1[0] }
     var maxBeauty = 0
+    var j = 0
 
     for i in 0..<queries.count {
-        let query = queriesWithIndices[i][0]
-        let originalIndex = queriesWithIndices[i][1]
-
-        while itemIndex < sortedItems.count, sortedItems[itemIndex][0] <= query {
-            maxBeauty = max(maxBeauty, sortedItems[itemIndex][1])
-            itemIndex += 1
+        while j < items.count, items[j][0] <= queries[i][0] {
+            maxBeauty = max(maxBeauty, items[j][1])
+            j += 1
         }
 
-        result[originalIndex] = maxBeauty
+        result[queries[i][1]] = maxBeauty
     }
 
     return result
