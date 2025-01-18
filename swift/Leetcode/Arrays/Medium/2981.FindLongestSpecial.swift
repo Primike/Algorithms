@@ -7,32 +7,29 @@
 // A substring is a contiguous non-empty sequence of characters 
 // within a string.
 
+// Time: O(n^2), Space: O(n^2)
 func maximumLength(_ s: String) -> Int {
-    var count: [String: Int] = [:]
-    var countStrings = 0
-    let characters = Array(s)
+    let s = Array(s)
+    var substrings = [String: Int]()
     
-    for start in 0..<characters.count {
-        let character = characters[start]
-        var substringLength = 0
-        
-        for end in start..<characters.count {
-            if character == characters[end] {
-                substringLength += 1
-                let key = "\(character)-\(substringLength)"
-                count[key, default: 0] += 1
-            } else {
-                break
-            }
+    for i in 0..<s.count {
+        let letter = s[i]
+        var j = i
+
+        while j < s.count, s[i] == s[j] {
+            j += 1
+            let key = "\(letter),\(j - i)"
+            substrings[key, default: 0] += 1
         }
     }
     
     var result = 0
 
-    for (key, value) in count {
-        let components = key.split(separator: "-")
+    for (key, value) in substrings {
+        let components = key.split(separator: ",")
         let length = Int(components[1]) ?? 0
-        if value >= 3, length > result { result = length }
+        
+        if value >= 3 { result = max(result, length) }
     }
     
     return result == 0 ? -1 : result
