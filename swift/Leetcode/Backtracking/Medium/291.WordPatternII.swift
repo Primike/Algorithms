@@ -10,32 +10,33 @@ func wordPatternMatch(_ pattern: String, _ s: String) -> Bool {
     var pDict = [Character: String]()
     var sDict = [String: Character]()
 
-    func backtrack(_ i: Int, _ j: Int, _ pDict: inout [Character: String], _ sDict: inout [String: Character]) -> Bool {
-        if i == pattern.count && j == s.count { return true }
+    func backtrack(_ i: Int, _ j: Int) -> Bool {
+        if i == pattern.count, j == s.count { return true }
         if i == pattern.count || j == s.count { return false }
 
-        let char = pattern[i]
-
+        let letter = pattern[i]
+        var string = ""
+        
         for k in j..<s.count {
-            let sPrefix = String(s[j...k])
+            string.append(s[k])
 
-            if let value = pDict[char] {
-                if value == sPrefix, backtrack(i + 1, k + 1, &pDict, &sDict) { return true }
-            } else if sDict[sPrefix] == nil {
-                pDict[char] = sPrefix
-                sDict[sPrefix] = char
+            if let value = pDict[letter] {
+                if value == string, backtrack(i + 1, k + 1) { return true }
+            } else if sDict[string] == nil {
+                pDict[letter] = string
+                sDict[string] = letter
 
-                if backtrack(i + 1, k + 1, &pDict, &sDict) { return true }
+                if backtrack(i + 1, k + 1) { return true }
 
-                pDict[char] = nil
-                sDict[sPrefix] = nil
+                pDict[letter] = nil
+                sDict[string] = nil
             }
         }
 
         return false
     }
 
-    return backtrack(0, 0, &pDict, &sDict)
+    return backtrack(0, 0)
 }
 
 print(wordPatternMatch("abab", "redblueredblue"))

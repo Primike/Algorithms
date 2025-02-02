@@ -7,57 +7,80 @@
 
 // Time: O(n), Space: O(n)
 func timeTaken(_ arrival: [Int], _ state: [Int]) -> [Int] {
-    var zeros = [Int](), ones = [Int]()
-
-    for i in 0..<arrival.count {
-        if state[i] == 0 {
-            zeros.append(i)
-        } else {
-            ones.append(i)
+    var result = Array(repeating: 0, count: arrival.count)
+    var enterQueue = [Int]()
+    var exitQueue = [Int]()
+    var i = 0, j = 0, k = 0
+    var time = arrival[0]
+    var enterLast = false
+    
+    while i < arrival.count || j < enterQueue.count || k < exitQueue.count {
+        if j == enterQueue.count, k == exitQueue.count {
+            if i < arrival.count { time = arrival[i] }
+            enterLast = false
         }
-    }
-
-    var result = Array(repeating: -1, count: arrival.count)
-    var didEnter = false 
-    if !zeros.isEmpty, !ones.isEmpty { didEnter = arrival[ones[0]] > arrival[zeros[0]] }
-    var time = 0
-
-    while !zeros.isEmpty, !ones.isEmpty {
-        let i = zeros[0], j = ones[0]
-
-        if time < arrival[i], time < arrival[j] {
-            time = min(arrival[i], arrival[j])
-            didEnter = false
+        
+        while i < arrival.count, time >= arrival[i] {
+            if state[i] == 0 { enterQueue.append(i) }
+            if state[i] == 1 { exitQueue.append(i) }
+            i += 1
         }
+        
+        if enterLast {
+            while j < enterQueue.count {
+                result[enterQueue[j]] = time
+                time += 1
+                j += 1
 
-        if arrival[i] > time {
-            result[j] = time
-            didEnter = false
-            ones.removeFirst()
-        } else if arrival[j] > time {
-            result[i] = time
-            didEnter = true
-            zeros.removeFirst()
-        } else {
-            if didEnter {
-                result[i] = time
-                zeros.removeFirst()
-            } else {
-                result[j] = time
-                ones.removeFirst()
+                while i < arrival.count, time >= arrival[i] {
+                    if state[i] == 0 { enterQueue.append(i) }
+                    if state[i] == 1 { exitQueue.append(i) }
+                    i += 1
+                }
             }
+
+            while k < exitQueue.count {
+                result[exitQueue[k]] = time
+                time += 1
+                k += 1
+                
+                while i < arrival.count, time >= arrival[i] {
+                    if state[i] == 0 { enterQueue.append(i) }
+                    if state[i] == 1 { exitQueue.append(i) }
+                    i += 1
+                }
+            }
+
+            enterLast = true
+        } else {
+            while k < exitQueue.count {
+                result[exitQueue[k]] = time
+                time += 1
+                k += 1
+
+                while i < arrival.count, time >= arrival[i] {
+                    if state[i] == 0 { enterQueue.append(i) }
+                    if state[i] == 1 { exitQueue.append(i) }
+                    i += 1
+                }
+            }
+
+            while j < enterQueue.count {
+                result[enterQueue[j]] = time
+                time += 1
+                j += 1
+
+                while i < arrival.count, time >= arrival[i] {
+                    if state[i] == 0 { enterQueue.append(i) }
+                    if state[i] == 1 { exitQueue.append(i) }
+                    i += 1
+                }
+            }
+
+            enterLast = false
         }
-
-        time += 1
     }
-
-    var nonEmpty = zeros.isEmpty ? ones : zeros
-
-    for i in nonEmpty {
-        result[i] = max(time, arrival[i])
-        time = max(time, arrival[i]) + 1
-    }
-
+    
     return result
 }
 
