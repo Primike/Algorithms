@@ -40,7 +40,7 @@ Array:
 
 
 Backtracking:
-    Medium: 291?, 320?, 351, 2664?
+    Medium: 291?, 320?, 351?, 681?, 2664?
     Hard: 301?, 1088!, 465
     Tricks: h679
 
