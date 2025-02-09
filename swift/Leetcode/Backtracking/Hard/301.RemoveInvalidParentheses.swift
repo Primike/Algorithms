@@ -3,43 +3,51 @@
 // Return a list of unique strings that are valid with the minimum number of removals. 
 // You may return the answer in any order.
 
+// Time: O(2^n), Space: O(n)
 func removeInvalidParentheses(_ s: String) -> [String] {
     let s = Array(s)
-    var validStrings = Set<String>()
+    var countRight = Array(repeating: 0, count: s.count + 1)
+
+    for i in (0..<s.count).reversed() {
+        countRight[i] = countRight[i + 1] + (s[i] == ")" ? 1 : 0)
+    }
+    
+    var result = Set<String>()
     var current = [Character]()
     var minimum = Int.max
-
-    func backtrack(_ i: Int, _ opened: Int, _ closed: Int, _ removed: Int) {
+    
+    func backtrack(_ i: Int, _ opened: Int, _ removed: Int) {
+        if opened < 0 { return }
+        if removed > minimum { return }
+        if i < s.count, countRight[i] < opened { return }
+        
         if i == s.count {
-            if opened == closed, removed <= minimum {
-                if removed < minimum {
-                    validStrings = []
-                    minimum = removed
-                }
-
-                validStrings.insert(String(current))
+            if opened != 0 { return }
+            if removed < minimum {
+                result = []
+                minimum = removed
             }
-        } else {
-            if s[i] != "(", s[i] != ")" {
-                current.append(s[i])
-                backtrack(i + 1, opened, closed, removed)
-            } else {
-                backtrack(i + 1, opened, closed, removed + 1)
-                current.append(s[i])
-
-                if s[i] == "(" {
-                    backtrack(i + 1, opened + 1, closed, removed)
-                } else if closed < opened {
-                    backtrack(i + 1, opened, closed + 1, removed)
-                }
-            }
-
-            current.removeLast()
+            
+            result.insert(String(current))
+            return
         }
-    }
+        
+        current.append(s[i])
 
-    backtrack(0, 0, 0, 0)
-    return Array(validStrings)
+        if s[i].isLetter {
+            backtrack(i + 1, opened, removed)
+        } else if s[i] == ")" {
+            backtrack(i + 1, opened - 1, removed)
+        } else if s[i] == "(" {
+            backtrack(i + 1, opened + 1, removed)
+        }
+        current.removeLast()
+        
+        backtrack(i + 1, opened, removed + 1)
+    }
+    
+    backtrack(0, 0, 0)
+    return Array(result)
 }
 
 print(removeInvalidParentheses("()())()"))

@@ -7,29 +7,28 @@
 // Time: O(n * 2^n), Space: O(n)
 func maxUniqueSplit(_ s: String) -> Int {
     let s = Array(s)
-    var result = 0
+    var substrings = Set<String>()
+    
+    func backtrack(_ index: Int) -> Int {
+        if index == s.count { return substrings.count }
 
-    func backtrack(_ index: Int, _ count: Int, _ seen: Set<String>) {
-        if index >= s.count { 
-            result = max(result, count)
-            return
-        }
-
-        var seen = seen
-        var current = ""
+        var result = 0
+        var string = ""
 
         for i in index..<s.count {
-            current.append(s[i])
-            if seen.contains(current) { continue }
+            string.append(s[i])
+            
+            if substrings.contains(string) { continue }
 
-            seen.insert(current)
-            backtrack(i + 1, count + 1, seen)
-            seen.remove(current)
+            substrings.insert(string)
+            result = max(result, backtrack(i + 1))
+            substrings.remove(string)
         }
+
+        return result
     }
 
-    backtrack(0, 0, [])
-    return result
+    return backtrack(0)
 }
 
 print(maxUniqueSplit("ababccc"))

@@ -6,44 +6,39 @@
 // Time: O(9!), Space: O(pattern)
 func smallestNumber(_ pattern: String) -> String {
     let pattern = Array(pattern)
-    let numbers: [Character] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    var numSet = Set<Character>()
-    var current = [Character]()
-    var result = "999999999"
+    let numbers = Array("123456789")
+    var result = Array("9999999999")
+    var numberSet = Set<Character>()
 
-    func backtrack(_ index: Int) {
-        if index == pattern.count {
-            if String(current) < result { result = String(current) }
-            return 
+    func backtrack(_ i: Int, _ current: [Character]) {
+        if i == pattern.count { 
+            if String(current) < String(result) { result = current }
+            return
         }
 
-        for n in numbers {
-            if numSet.contains(n) { continue }
-            
-            let last = current.last!
-            numSet.insert(n)
-            current.append(n)
+        for number in numbers {
+            if numberSet.contains(number) { continue }
+            if number > result[i + 1] { continue }
 
-            if pattern[index] == "I", n > last {
-                backtrack(index + 1)
-            } else if pattern[index] == "D", n < last {
-                backtrack(index + 1)
+            numberSet.insert(number)
+
+            if pattern[i] == "I", current.last! < number {
+                backtrack(i + 1, current + [number])
+            } else if pattern[i] == "D", current.last! > number{
+                backtrack(i + 1, current + [number])
             }
-            
-            current.removeLast()
-            numSet.remove(n)
+
+            numberSet.remove(number)
         }
     }
 
-    for n in numbers {
-        numSet.insert(n)
-        current.append(n)
-        backtrack(0)
-        current.removeLast()
-        numSet.remove(n)
+    for number in numbers {
+        numberSet.insert(number)
+        backtrack(0, [number])
+        numberSet.remove(number)
     }
-
-    return result
+    
+    return String(result)
 }
 
 print(smallestNumber("IIIDIDDD"))
