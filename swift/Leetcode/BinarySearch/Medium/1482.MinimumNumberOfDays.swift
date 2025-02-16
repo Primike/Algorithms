@@ -10,34 +10,28 @@
 func minDays(_ bloomDay: [Int], _ m: Int, _ k: Int) -> Int {
     if bloomDay.count < m * k { return -1 }
 
-    func checkIfValid(_ days: Int) -> Bool {
-        var streak = 0
-        var maximum = 0
-        var count = 0
-
-        for i in 0..<bloomDay.count {
-            streak += 1
-            maximum = max(maximum, bloomDay[i])
-
-            if streak == k, maximum <= days { 
-                streak = 0
-                maximum = 0
-                count += 1
-            } else if maximum > days {
-                streak = 0
-                maximum = 0
-            }
-        }
-
-        return count >= m
-    }
-
-    var left = 1, right = bloomDay.max() ?? 1
+    var left = 0, right = bloomDay.max() ?? 0
 
     while left < right {
         let mid = (right + left) / 2
+        var flowers = 0, bouquets = 0
 
-        if checkIfValid(mid) {
+        for day in bloomDay {
+            if bouquets == m { break }
+
+            if day <= mid {
+                flowers += 1
+            } else {
+                flowers = 0
+            }
+
+            if flowers == k {
+                flowers = 0
+                bouquets += 1
+            }
+        }
+
+        if bouquets >= m {
             right = mid
         } else {
             left = mid + 1
@@ -45,8 +39,6 @@ func minDays(_ bloomDay: [Int], _ m: Int, _ k: Int) -> Int {
     }
 
     return left
-
-
 }
 
 print(minDays([1,10,3,10,2], 3, 1))

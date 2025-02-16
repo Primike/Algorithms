@@ -10,35 +10,32 @@
 // Time: O(n * log(n)), Space: O(1)
 func maxDistance(_ position: [Int], _ m: Int) -> Int {
     let position = position.sorted()
-    var left = 1, right = position[position.count - 1] - position[0]
-
-    func canPlaceBalls(_ distance: Int) -> Bool {
-        var count = 1
-        var lastPosition = position[0]
-
-        for i in 1..<position.count {
-            if position[i] - lastPosition >= distance {
-                count += 1
-                lastPosition = position[i]
-            }
-
-            if count >= m { return true }
-        }
-
-        return false
-    }
+    var left = 1, right = position.max() ?? 0
+    var result = 0
 
     while left < right {
-        let mid = (right + left + 1) / 2
+        let mid = (right + left) / 2
+        var balls = 1
+        var last = position[0]
+        
+        for i in 1..<position.count {
+            if balls == m { break }
 
-        if canPlaceBalls(mid) {
-            left = mid
+            if position[i] - last >= mid {
+                balls += 1
+                last = position[i]
+            }
+        }
+
+        if balls >= m {
+            left = mid + 1
+            result = max(result, mid)
         } else {
-            right = mid - 1
+            right = mid
         }
     }
 
-    return left
+    return result
 }
 
 print(maxDistance([1,2,3,4,7], 3))
