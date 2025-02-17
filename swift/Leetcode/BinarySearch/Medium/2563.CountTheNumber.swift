@@ -4,6 +4,7 @@
 // 0 <= i < j < n, and
 // lower <= nums[i] + nums[j] <= upper
 
+// Time: O(n * log(n)), Space: O(1)
 func countFairPairs(_ nums: [Int], _ lower: Int, _ upper: Int) -> Int {
     let nums = nums.sorted()
     var result = 0

@@ -40,13 +40,13 @@ Array:
 
 
 Backtracking:
-    Medium: 291?, 320?, 351?, 681?
+    Medium: 291?, 320?, 351?, 681?, 1718
     Hard: 465?, 679, 1088!
 
 
 
 Binary Search:
-    Medium: 852?, 1574, 1760, 1891, 2064
+    Medium: 852?, 2563?
     Hard: 719?
 
 

@@ -9,27 +9,22 @@
 // You want to minimize your penalty after the operations.
 // Return the minimum possible penalty after performing the operations.
 
+// Time: O(n * log(n)), Space: O(1)
 func minimumSize(_ nums: [Int], _ maxOperations: Int) -> Int {
-    func isPossible(_ maxBallsInBag: Int) -> Bool {
-        var totalOperations = 0
-        for num in nums {
-            totalOperations += (num + maxBallsInBag - 1) / maxBallsInBag - 1
-            if totalOperations > maxOperations {
-                return false
-            }
-        }
-        return true
-    }
-
-    var left = 1
-    var right = nums.max()!
+    var left = 1, right = nums.max() ?? 0
 
     while left < right {
-        let middle = (left + right) / 2
-        if isPossible(middle) {
-            right = middle
+        let mid = (right + left) / 2
+        var operations = 0
+
+        for number in nums {
+            if number > mid { operations += (number - 1) / mid }
+        }
+
+        if operations <= maxOperations {
+            right = mid
         } else {
-            left = middle + 1
+            left = mid + 1
         }
     }
 
