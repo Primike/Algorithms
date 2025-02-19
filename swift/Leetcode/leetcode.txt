@@ -41,19 +41,21 @@ Array:
 
 Backtracking:
     Medium: 291?, 320?, 351?, 681?, 1718
-    Hard: 465?, 679, 1088!
+    Hard: 465?, 679, 1088?
+    Tricks: h301
 
 
 
 Binary Search:
     Medium: 852?, 2563?
-    Hard: 719?
+    Hard: 719
 
 
 
-Graph:
-    Medium: 365?, 386, 947, 1257, 2061 2257, 2285, 3243
+Graphs:
+    Medium: 386, 947, 1257, 2061 2257, 2285, 3243
     Hard: 773, 834, 2127, 2204, 2493!
+    Tricks: m365
 
 
 
