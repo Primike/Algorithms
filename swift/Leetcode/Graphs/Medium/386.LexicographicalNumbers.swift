@@ -3,28 +3,25 @@
 // You must write an algorithm that runs in O(n) time 
 // and uses O(1) extra space. 
 
+// Time: O(n), Space: O(n)
 func lexicalOrder(_ n: Int) -> [Int] {
     var result = [Int]()
 
-    func dfs(_ currentNumber: Int, _ limit: Int) {
-        if currentNumber > limit { return }
+    func dfs(_ current: Int) {
+        if current > n { return }
 
-        result.append(currentNumber)
+        result.append(current)
 
-        for nextDigit in 0...9 {
-            let nextNumber = currentNumber * 10 + nextDigit
-            if nextNumber <= limit {
-                dfs(nextNumber, limit)
-            } else {
-                break 
-            }
+        for i in 0...9 {
+            let number = current * 10 + i
+            dfs(number)
         }
     }
-    
-    for start in 1...9 {
-        dfs(start, n)
+
+    for i in 1...9 {
+        dfs(i)
     }
-    
+
     return result
 }
 
