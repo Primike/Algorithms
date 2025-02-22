@@ -1,11 +1,11 @@
+// You are given two 0-indexed strings str1 and str2.
 // In an operation, you select a set of indices in str1, 
-// and for each index i in the set, increment str1[i] to the 
-// next character cyclically. That is 'a' becomes 'b', 'b' becomes 'c', 
-// and so on, and 'z' becomes 'a'.
-// Return true if it is possible to make str2 a subsequence of str1 
-// by performing the operation at most once, and false otherwise.
+// and for each index i in the set, increment str1[i] 
+// to the next character cyclically. That is 'a' becomes 'b', 
+// 'b' becomes 'c', and so on, and 'z' becomes 'a'.
+// Return true if it is possible to make str2 a subsequence of 
+// str1 by performing the operation at most once, and false otherwise.
 
-// Time: O(n), Space: O(1)
 func canMakeSubsequence(_ str1: String, _ str2: String) -> Bool {
     let str1 = Array(str1), str2 = Array(str2)
     var i = 0

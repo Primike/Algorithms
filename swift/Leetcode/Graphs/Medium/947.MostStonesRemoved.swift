@@ -6,6 +6,7 @@
 // represents the location of the ith stone, 
 // return the largest possible number of stones that can be removed.
 
+// Time: O(n^2), Space: O(n^2)
 func removeStones(_ stones: [[Int]]) -> Int {
     var neighbors = Array(repeating: [Int](), count: stones.count)
     
@@ -18,20 +19,20 @@ func removeStones(_ stones: [[Int]]) -> Int {
         }
     }
     
-    var visited = Array(repeating: false, count: stones.count)
+    var visited = Set<Int>()
     
-    func dfs(_ stone: Int) {
-        visited[stone] = true
+    func dfs(_ node: Int) {
+        visited.insert(node)
 
-        for node in neighbors[stone] {
-            if !visited[node] { dfs(node) }
+        for next in neighbors[node] {
+            if !visited.contains(next) { dfs(next) }
         }
     }
     
     var result = 0
 
     for i in 0..<stones.count {
-        if visited[i] { continue }
+        if visited.contains(i) { continue }
         
         dfs(i)
         result += 1

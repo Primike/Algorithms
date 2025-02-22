@@ -1,22 +1,22 @@
 // Given an integer array arr, partition the array into (contiguous) 
 // subarrays of length at most k. After partitioning, 
 // each subarray has their values changed to become the maximum value of that subarray.
-// Return the largest sum of the given array after partitioning.
+// Return the largest sum of the given array after partitioning. 
 
-// Time: O(n), Space: O(n)
+// Time: O(n * k), Space: O(n)
 func maxSumAfterPartitioning(_ arr: [Int], _ k: Int) -> Int {
     var tab = Array(repeating: 0, count: arr.count + 1)
 
-    for i in 1..<tab.count {
+    for i in (0..<arr.count).reversed() {
         var largest = 0
 
-        for j in 1...min(i, k) {
-            largest = max(largest, arr[i - j])
-            tab[i] = max(tab[i], tab[i - j] + largest * j)
+        for j in i..<min(i + k, arr.count) {
+            largest = max(largest, arr[j])
+            tab[i] = max(tab[i], tab[j + 1] + (j - i + 1) * largest)
         }
     }
 
-    return tab[arr.count]
+    return tab[0]
 }
 
 print(maxSumAfterPartitioning([1,15,7,9,2,5,10], 3))

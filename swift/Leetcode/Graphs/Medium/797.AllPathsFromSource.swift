@@ -4,18 +4,15 @@
 // Time: O(2^n * n), Space: O(n)
 func allPathsSourceTarget(_ graph: [[Int]]) -> [[Int]] {
     var result = [[Int]]()
-    var path = [0]
+    var current = [0]
 
-    func dfs(_ n: Int) {
-        if n == graph.count - 1 {
-            result.append(path) 
-            return 
-        }
+    func dfs(_ node: Int) {
+        if node == graph.count - 1 { result.append(current) }
 
-        for node in graph[n] {
-            path.append(node)
-            dfs(node)
-            path.removeLast()
+        for next in graph[node] {
+            current.append(next)
+            dfs(next)
+            current.removeLast()
         }
     }
 
