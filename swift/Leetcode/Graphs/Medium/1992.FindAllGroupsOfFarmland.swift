@@ -6,43 +6,35 @@
 
 // Time: O(m * n), Space: O(m * n)
 func findFarmland(_ land: [[Int]]) -> [[Int]] {
-    let rows = land.count, cols = land[0].count
-    var visited = Set<String>()
-
-    func bfs(_ i: Int, _ j: Int) -> (Int, Int) {
-        visited.insert("\(i),\(j)")
-        var queue = [(i, j)]
-        var last = (i, j)
-
-        while !queue.isEmpty {
-            for _ in 0..<queue.count {
-                let (r, c) = queue.removeFirst()
-                let directions = [(r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)]
-                last = (r, c)
-
-                for (di, dj) in directions {
-                    let key = "\(di),\(dj)"
-
-                    if di < 0 || di >= rows || dj < 0 || dj >= cols { continue }
-                    if visited.contains(key) || land[di][dj] == 0 { continue }
-
-                    visited.insert(key)
-                    queue.append((di, dj))
-                }
-            }
-        }
-
-        return last
-    }
-
+    var land = land
+    let rows = land.count, cols = land[0].count 
+    let directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
     var result = [[Int]]()
 
     for i in 0..<rows {
         for j in 0..<cols {
-            if visited.contains("\(i),\(j)") { continue }       
             if land[i][j] == 0 { continue }
 
-            let (r, c) = bfs(i, j)
+            land[i][j] = 0
+            var queue = [(i, j)]
+            var r = Int.min, c = Int.min
+
+            while !queue.isEmpty {
+                let first = queue.removeFirst()
+                r = max(r, first.0)
+                c = max(c, first.1)
+
+                for (di, dj) in directions {
+                    let x = first.0 + di, y = first.1 + dj
+
+                    if x < 0 || x >= rows || y < 0 || y >= cols { continue }
+                    if land[x][y] == 0 { continue }
+
+                    queue.append((x, y))
+                    land[x][y] = 0
+                }
+            }
+
             result.append([i, j, r, c])
         }
     }

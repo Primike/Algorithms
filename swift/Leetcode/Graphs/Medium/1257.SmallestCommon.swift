@@ -7,41 +7,37 @@
 // r1 includes r3, it is guaranteed there is no r2 
 // such that r2 includes r3.
 
+// Time: O(m * n), Space: O(m * n)
 func findSmallestRegion(_ regions: [[String]], _ region1: String, _ region2: String) -> String {
-    var childParentMap = [String: String]()
+    var roots = Set(regions.map { $0[0] })
+    var paths = [String: [String]]()
 
-    for regionArray in regions {
-        let parentNode = regionArray[0]
+    for region in regions {
+        var array = [String]()
 
-        for i in 1..<regionArray.count {
-            childParentMap[regionArray[i]] = parentNode
+        for i in 1..<region.count {
+            array.append(region[i])
+            roots.remove(region[i])
+        }   
+
+        paths[region[0], default: []] += array
+    }
+
+    func dfs(_ node: String) -> (String, Bool) {
+        var count = node == region1 || node == region2 ? 1 : 0
+
+        for next in paths[node, default: []] {
+            let (string, bool) = dfs(next)
+
+            if string != "" { return (string, bool) }
+            if bool { count += 1 }
+            if count == 2 { return (node, true) }
         }
+
+        return ("", count > 0)
     }
 
-    func fetchPathForRegion(_ currNode: String, _ childParentMap: [String: String]) -> [String] {
-        var path = [currNode]
-        var currentNode = currNode
-
-        while let parentNode = childParentMap[currentNode] {
-            path.append(parentNode)
-            currentNode = parentNode
-        }
-
-        return path.reversed()
-    }
-
-    let path1 = fetchPathForRegion(region1, childParentMap)
-    let path2 = fetchPathForRegion(region2, childParentMap)
-    var i = 0, j = 0
-    var result = ""
-
-    while i < path1.count, j < path2.count, path1[i] == path2[j] {
-        result = path1[i]
-        i += 1
-        j += 1
-    }
-
-    return result
+    return dfs(Array(roots)[0]).0
 }
 
 print(findSmallestRegion([
