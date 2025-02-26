@@ -6,28 +6,28 @@
 // Return the number of clean spaces in the room 
 // if the robot runs indefinetely.
 
+// Time: O(m * n), Space: O(m * n)
 func numberOfCleanRooms(_ room: [[Int]]) -> Int {
     let rows = room.count, cols = room[0].count
-    let directions = [0, 1, 0, -1, 0]
+    let directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     var visited = Set<String>()
-    var cleaned = Set<String>()
+    var cleaned = Set<[Int]>()
 
-    func dfs(_ i: Int, _ j: Int, _ direction: Int) -> Int {
-        let key = "\(i),\(j),\(direction)"
+    func dfs(_ i: Int, _ j: Int, _ index: Int) -> Int {
+        let key = "\(i),\(j),\(index)" 
 
         if visited.contains(key) { return cleaned.count }
 
+        cleaned.insert([i, j])
         visited.insert(key)
-        cleaned.insert("\(i),\(j)")
-
-        let r = i + directions[direction]
-        let c = j + directions[direction + 1]
-
-        if r >= 0, r < rows, c >= 0, c < cols, room[r][c] == 0 {
-            return dfs(r, c, direction)
+        let r = i + directions[index].0
+        let c = j + directions[index].1 
+        
+        if r < 0 || r >= rows || c < 0 || c >= cols || room[r][c] == 1 {
+            return dfs(i, j, (index + 1) % 4)
+        } else {
+            return dfs(r, c, index)
         }
-
-        return dfs(i, j, (direction + 1) % 4)
     }
 
     return dfs(0, 0, 0)

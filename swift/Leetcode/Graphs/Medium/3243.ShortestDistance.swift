@@ -10,6 +10,7 @@
 // of the shortest path from city 0 to city n - 1 
 // after processing the first i + 1 queries.
 
+// Time: O(q * (n + q)), Space: O(q * n)
 func shortestDistanceAfterQueries(_ n: Int, _ queries: [[Int]]) -> [Int] {
     var paths = Array(repeating: [Int](), count: n)
     

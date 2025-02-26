@@ -3,35 +3,37 @@
 // Return a list answer, where answer[i] is the list of ancestors 
 // of the ith node, sorted in ascending order.
 
-// Time: O(n^2), Space: O(n + m)
+// Time: O(n^2), Space: O(n + e)
 func getAncestors(_ n: Int, _ edges: [[Int]]) -> [[Int]] {
     var paths = Array(repeating: [Int](), count: n)
-
+    
     for edge in edges {
         paths[edge[1]].append(edge[0])
     }
 
-    var result = Array(repeating: Set<Int>(), count: n)
-    var visited = Set<Int>()
+    var memo = [Int: Set<Int>]()
 
     func dfs(_ node: Int) -> Set<Int> {
-        if visited.contains(node) { return result[node] }
+        if let value = memo[node] { return value }
 
-        visited.insert(node)
+        var ancestors = Set<Int>()
 
         for next in paths[node] {
-            result[node].formUnion(dfs(next))
-            result[node].insert(next)
+            ancestors.formUnion(dfs(next))
+            ancestors.insert(next)
         }
 
-        return result[node]
+        memo[node] = ancestors
+        return ancestors
     }
 
-    for i in 0..<n { 
-        dfs(i)
+    var result = [[Int]]()
+
+    for i in 0..<n {
+        result.append(Array(dfs(i)).sorted())
     }
 
-    return result.map { Array($0).sorted() }
+    return result
 }
 
 print(getAncestors(8, [[0,3],[0,4],[1,3],[2,4],[2,7],[3,5],[3,6],[3,7],[4,6]]))

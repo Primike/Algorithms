@@ -8,67 +8,52 @@
 // A cell is guarded if there is at least one guard that can see it.
 // Return the number of unoccupied cells that are not guarded.
 
+// Time: O(m * n), Space: O(m * n)
 func countUnguarded(_ m: Int, _ n: Int, _ guards: [[Int]], _ walls: [[Int]]) -> Int {
-    var matrix = Array(repeating: Array(repeating: "Safe", count: n), count: m)
-
-    for position in guards {
-        matrix[position[0]][position[1]] = "Guard"
-    } 
-
-    for position in walls {
-        matrix[position[0]][position[1]] = "Wall"
-    }
+    let guards = Set(guards)
+    let walls = Set(walls)
+    var rowPrefix = Array(repeating: Array(repeating: true, count: n), count: m)  
+    var colPrefix = Array(repeating: Array(repeating: true, count: n), count: m)  
 
     for i in 0..<m {
-        var guarded = false
-        var visited = [(Int, Int)]()
+        var bool = true
 
         for j in 0..<n {
-            if matrix[i][j] == "Guard" {
-                guarded = true
-
-                while let (x, y) = visited.popLast() {
-                    matrix[x][y] = "Unsafe"
-                }
-            } else if matrix[i][j] == "Wall" {
-                guarded = false
-                visited = []
-            } else {
-                if guarded { 
-                    matrix[i][j] = "Unsafe" 
-                } else {
-                    visited.append((i, j))
-                }
-            }
+            if guards.contains([i, j]) { bool = false } 
+            if walls.contains([i, j]) { bool = true }           
+            rowPrefix[i][j] = bool
         }
-    }
+
+        for j in (0..<n).reversed() {
+            if guards.contains([i, j]) { bool = false } 
+            if walls.contains([i, j]) { bool = true }           
+            rowPrefix[i][j] = rowPrefix[i][j] && bool
+        }
+    } 
+
+    for j in 0..<n {
+        var bool = true
+
+        for i in 0..<m {
+            if guards.contains([i, j]) { bool = false } 
+            if walls.contains([i, j]) { bool = true }           
+            colPrefix[i][j] = bool
+        }
+
+        for i in (0..<m).reversed() {
+            if guards.contains([i, j]) { bool = false } 
+            if walls.contains([i, j]) { bool = true }           
+            colPrefix[i][j] = colPrefix[i][j] && bool
+        }
+    }    
 
     var result = 0
 
-    for j in 0..<n {
-        var guarded = false
-        var visited = [(Int, Int)]()
-
-        for i in 0..<m {
-            if matrix[i][j] == "Guard" {
-                guarded = true
-
-                while let (x, y) = visited.popLast() {
-                    matrix[x][y] = "Unsafe"
-                    result -= 1
-                }
-            } else if matrix[i][j] == "Wall" {
-                guarded = false
-                visited = []
-            } else if matrix[i][j] == "Safe" {
-                if guarded { 
-                    matrix[i][j] = "Unsafe" 
-                } else {
-                    visited.append((i, j))
-                }
-            }
-
-            if matrix[i][j] == "Safe" { result += 1 }
+    for i in 0..<m {
+        for j in 0..<n {
+            if walls.contains([i, j]) { continue }
+            if !rowPrefix[i][j] || !colPrefix[i][j] { continue }
+            result += 1
         }
     }
 
