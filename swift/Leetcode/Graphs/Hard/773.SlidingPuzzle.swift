@@ -6,38 +6,44 @@
 // required so that the state of the board is solved. 
 // If it is impossible for the state of the board to be solved, return -1.
 
+// Time: O(n!), Space: O(n!)
 func slidingPuzzle(_ board: [[Int]]) -> Int {
-    let directions = [
-        [1, 3],
-        [0, 2, 4],
-        [1, 5],
-        [0, 4],
-        [3, 5, 1],
-        [4, 2]
-    ]
-    
-    func swap(_ s: String, _ i: Int, _ j: Int) -> String {
-        var chars = Array(s)
-        chars.swapAt(i, j)
-        return String(chars)
-    }
-    
-    let startState = board.flatMap { $0 }.map(String.init).joined()
-    var visited: [String: Int] = [:]
-    
-    func dfs(_ state: String, _ zeroPos: Int, _ moves: Int) {
-        if let prevMoves = visited[state], prevMoves <= moves { return }
-        
-        visited[state] = moves
+    let rows = board.count, cols = board[0].count
+    var start = (0, 0)
 
-        for nextPos in directions[zeroPos] {
-            let newState = swap(state, zeroPos, nextPos)
-            dfs(newState, nextPos, moves + 1)
+    for i in 0..<rows {
+        for j in 0..<cols {
+            if board[i][j] == 0 { start = (i, j) }
         }
     }
+
+    let directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    let target = [[1, 2, 3], [4, 5, 0]]
+    var board = board
+    var memo = [[[Int]]: Int]()
     
-    dfs(startState, startState.firstIndex(of: "0")!.utf16Offset(in: startState), 0)
-    return visited["123450", default: -1]
+    func dfs(_ i: Int, _ j: Int, _ moves: Int) -> Int {
+        if board == target { return moves }
+        if let value = memo[board], value <= moves { return Int.max }
+
+        memo[board] = moves
+        var result = Int.max
+
+        for (di, dj) in directions {
+            let r = i + di, c = j + dj
+
+            if r < 0 || r >= rows || c < 0 || c >= cols { continue }
+
+            (board[i][j], board[r][c]) = (board[r][c], board[i][j])
+            result = min(result, dfs(r, c, moves + 1))
+            (board[i][j], board[r][c]) = (board[r][c], board[i][j])
+        }
+
+        return result
+    }
+    
+    let result = dfs(start.0, start.1, 0)
+    return result == Int.max ? -1 : result
 }
 
 print(slidingPuzzle([[1,2,3],[4,0,5]]))
