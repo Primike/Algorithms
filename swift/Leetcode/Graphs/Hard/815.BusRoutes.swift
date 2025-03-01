@@ -6,41 +6,45 @@
 // Return the least number of buses you must take to travel from source to target. 
 // Return -1 if it is not possible.
 
+// Time: O(n * s), Space: O(n * s)
 func numBusesToDestination(_ routes: [[Int]], _ source: Int, _ target: Int) -> Int {
     if source == target { return 0 }
 
-    var stopToBuses = [Int: [Int]]()
+    let routes = routes.map { Set($0) }
+    var stopToBuses = [Int: Set<Int>]()
 
     for (i, route) in routes.enumerated() {
         for stop in route {
-            stopToBuses[stop, default: []].append(i)
+            stopToBuses[stop, default: []].insert(i)
         }
     }
 
-    var visitedBuses = Set<Int>()
-    var visitedStops = Set([source])
-    var queue = [source]
-    var result = 0
+    var neighbors = Array(repeating: Set<Int>(), count: routes.count)
+
+    for (i, route) in routes.enumerated() {
+        for stop in route {
+            neighbors[i].formUnion(stopToBuses[stop, default: []].filter { $0 != i })
+        }
+    }
+
+    var visited = stopToBuses[source, default: []]
+    var queue = Array(stopToBuses[source, default: []])
+    var buses = 1
 
     while !queue.isEmpty {
-        result += 1
-        
         for _ in 0..<queue.count {
             let first = queue.removeFirst()
+            if routes[first].contains(target) { return buses }
 
-            for bus in stopToBuses[first, default: []] {
-                if visitedBuses.contains(bus) { continue }
-                visitedBuses.insert(bus)
+            for next in neighbors[first] {
+                if visited.contains(next) { continue }
 
-                for stop in routes[bus] {
-                    if stop == target { return result }
-                    if visitedStops.contains(stop) { continue }
-
-                    visitedStops.insert(stop)
-                    queue.append(stop)
-                }
+                queue.append(next)
+                visited.insert(next)
             }
         }
+
+        buses += 1
     }
 
     return -1
