@@ -1,51 +1,49 @@
+// Given an m x n grid. Each cell of the grid has a sign pointing 
+// to the next cell you should visit if you are currently in this cell. 
+// The sign of grid[i][j] can be:
+// 1 which means go to the cell to the right. (i.e go from grid[i][j] to grid[i][j + 1])
+// 2 which means go to the cell to the left. (i.e go from grid[i][j] to grid[i][j - 1])
+// 3 which means go to the lower cell. (i.e go from grid[i][j] to grid[i + 1][j])
+// 4 which means go to the upper cell. (i.e go from grid[i][j] to grid[i - 1][j])
+// You will initially start at the upper left cell (0, 0). 
+// A valid path in the grid is a path that starts from the upper left cell 
+// (0, 0) and ends at the bottom-right cell (m - 1, n - 1) following the signs on the grid. 
+// The valid path does not have to be the shortest.
+// You can modify the sign on a cell with cost = 1. 
+// You can modify the sign on a cell one time only.
+// Return the minimum cost to make the grid have at least one valid path.
+
+// Time: O(m * n), Space: O(m * n)
 func minCost(_ grid: [[Int]]) -> Int {
-    let numRows = grid.count
-    let numCols = grid[0].count
+    let rows = grid.count, cols = grid[0].count
+    let directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+    var result = Array(repeating: Array(repeating: Int.max, count: cols), count: rows)
+    result[0][0] = 0
+    var deque = [(0, 0)]
+    
+    while !deque.isEmpty {
+        let (i, j) = deque.removeFirst()
 
-    var minChanges = Array(repeating: Array(repeating: Int.max, count: numCols), count: numRows)
-    minChanges[0][0] = 0
+        for (index, (dx, dy)) in directions.enumerated() {
+            let r = i + dx, c = j + dy
+            let cost = grid[i][j] == index + 1 ? 0 : 1
+            
+            if r < 0 || r >= rows || c < 0 || c >= cols { continue }
+            if result[i][j] + cost >= result[r][c] { continue }
 
-    while true {
-        let prevState = minChanges.map { $0 }
+            result[r][c] = result[i][j] + cost
 
-        for row in 0..<numRows {
-            for col in 0..<numCols {
-                if row > 0 {
-                    minChanges[row][col] = min(
-                        minChanges[row][col],
-                        minChanges[row - 1][col] + (grid[row - 1][col] == 3 ? 0 : 1)
-                    )
-                }
-                if col > 0 {
-                    minChanges[row][col] = min(
-                        minChanges[row][col],
-                        minChanges[row][col - 1] + (grid[row][col - 1] == 1 ? 0 : 1)
-                    )
-                }
+            if cost == 1 {
+                deque.append((r, c))
+            } else {
+                deque.insert((r, c), at: 0)
             }
-        }
-
-        for row in stride(from: numRows - 1, through: 0, by: -1) {
-            for col in stride(from: numCols - 1, through: 0, by: -1) {
-                if row < numRows - 1 {
-                    minChanges[row][col] = min(
-                        minChanges[row][col],
-                        minChanges[row + 1][col] + (grid[row + 1][col] == 4 ? 0 : 1)
-                    )
-                }
-                if col < numCols - 1 {
-                    minChanges[row][col] = min(
-                        minChanges[row][col],
-                        minChanges[row][col + 1] + (grid[row][col + 1] == 2 ? 0 : 1)
-                    )
-                }
-            }
-        }
-
-        if minChanges == prevState {
-            break
         }
     }
-
-    return minChanges[numRows - 1][numCols - 1]
+    
+    return result[rows - 1][cols - 1]
 }
+
+print(minCost([[1,1,1,1],[2,2,2,2],[1,1,1,1],[2,2,2,2]]))
+print(minCost([[1,1,3],[3,2,2],[1,1,4]]))
+print(minCost([[1,2],[4,3]]))
