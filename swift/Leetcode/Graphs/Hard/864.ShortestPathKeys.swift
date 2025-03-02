@@ -12,49 +12,48 @@ func shortestPathAllKeys(_ grid: [String]) -> Int {
     let rows = grid.count, cols = grid[0].count
     let locks = Set<Character>(["A", "B", "C", "D", "E", "F"])
     var target = [0, 0, 0, 0, 0, 0]
-    var x = 0, y = 0
-
+    var queue = [[Int]]()
+    
     for i in 0..<rows {
         for j in 0..<cols {
             if grid[i][j].isLetter, !locks.contains(grid[i][j]) {
                 target[Int(grid[i][j].asciiValue!) - 97] = 1
             } else if grid[i][j] == "@" {
-                x = i
-                y = j
+                queue.append([i, j, 0, 0, 0, 0, 0, 0])
             }
         }
     }
-
-    var visited = Set<[Int]>()
-    visited.insert([x, y, 0, 0, 0, 0, 0, 0])
-    var queue = [(x, y, [0, 0, 0, 0, 0, 0])]
+    
+    let directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    var visited = Set([queue[0]])
     var result = 1
-
+    
     while !queue.isEmpty {
         for _ in 0..<queue.count {
-            var (i, j, keys) = queue.removeFirst()
-            let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
-
+            let first = queue.removeFirst()
+            let i = first[0], j = first[1]
+            
             for (di, dj) in directions {
-                var newKeys = keys
+                let r = i + di, c = j + dj
 
-                if di < 0 || di >= rows || dj < 0 || dj >= cols { continue }
-                if visited.contains([di, dj] + newKeys) || grid[di][dj] == "#" { continue }
+                if r < 0 || r >= rows || c < 0 || c >= cols { continue }
 
-                let cell = grid[di][dj]
-
-                if locks.contains(cell), newKeys[Int(cell.asciiValue!) - 65] != 1 { continue }
-                if cell.isLowercase { newKeys[Int(cell.asciiValue!) - 97] = 1 }
-                if newKeys == target { return result }
-
-                visited.insert([di, dj] + newKeys)
-                queue.append((di, dj, newKeys))
+                let cell = grid[r][c]
+                var keys = Array(first[2...])
+                
+                if cell == "#" || visited.contains([r, c] + keys) { continue }
+                if locks.contains(cell), keys[Int(cell.asciiValue!) - 65] != 1 { continue }
+                if cell.isLowercase { keys[Int(cell.asciiValue!) - 97] = 1 }
+                if keys == target { return result }
+                
+                visited.insert([r, c] + keys)
+                queue.append([r, c] + keys)
             }
         }
-
+        
         result += 1
     }
-
+    
     return -1
 }
 

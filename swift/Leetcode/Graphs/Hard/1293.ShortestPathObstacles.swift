@@ -5,31 +5,33 @@
 // (0, 0) to the lower right corner (m - 1, n - 1) given that you can eliminate 
 // at most k obstacles. If it is not possible to find such walk return -1.
 
+// Time: O(m * n), Space: O(m * n)
 func shortestPath(_ grid: [[Int]], _ k: Int) -> Int {
+    if grid.count == 1, grid[0].count == 1 { return 0 }
+
     let rows = grid.count, cols = grid[0].count
+    let directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
     var visited = Set([[0, 0, 0]])
     var queue = [(0, 0, 0)]
     var result = 0
 
     while !queue.isEmpty {
         for _ in 0..<queue.count {
-            let (i, j, count) = queue.removeFirst()
-            let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
-            
-            if i == rows - 1, j == cols - 1 { return result }
+            let (i, j, removed) = queue.removeFirst()                
 
             for (di, dj) in directions {
-                let key = [di, dj, count]
+                let r = i + di, c = j + dj
 
-                if di < 0 || di >= rows || dj < 0 || dj >= cols { continue }
-                if visited.contains(key) { continue }
-                if count == k, grid[di][dj] == 1 { continue }
-
-                var newCount = count
-                if grid[di][dj] == 1 { newCount += 1 }
-
-                visited.insert(key)
-                queue.append((di, dj, newCount))
+                if r < 0 || r >= rows || c < 0 || c >= cols { continue }
+                if r == rows - 1, c == cols - 1 { return result + 1 }
+                
+                if grid[r][c] == 0, !visited.contains([r, c, removed]) {
+                    visited.insert([r, c, removed])
+                    queue.append((r, c, removed))
+                } else if removed < k, !visited.contains([r, c, removed + 1]) {
+                    visited.insert([r, c, removed + 1])
+                    queue.append((r, c, removed + 1))
+                }
             }
         }
 

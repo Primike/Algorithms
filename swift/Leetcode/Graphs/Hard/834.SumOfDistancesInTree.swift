@@ -5,6 +5,7 @@
 // Return an array answer of length n where answer[i] is the 
 // sum of the distances between the ith node in the tree and all other nodes.
 
+// Time: O(n), Space: O(n)
 func sumOfDistancesInTree(_ n: Int, _ edges: [[Int]]) -> [Int] {
     var neighbors = Array(repeating: [Int](), count: n)
 
@@ -17,21 +18,21 @@ func sumOfDistancesInTree(_ n: Int, _ edges: [[Int]]) -> [Int] {
     var result = Array(repeating: 0, count: n)
 
     func dfs(_ node: Int, _ parent: Int) {
-        for child in neighbors[node] {
-            if child == parent { continue }
+        for next in neighbors[node] {
+            if next == parent { continue }
 
-            dfs(child, node)
-            count[node] += count[child]
-            result[node] += result[child] + count[child]
+            dfs(next, node)
+            count[node] += count[next]
+            result[node] += result[next] + count[next]
         }
     }
 
     func dfs2(_ node: Int, _ parent: Int) {
-        for child in neighbors[node] {
-            if child == parent { continue }
+        for next in neighbors[node] {
+            if next == parent { continue }
 
-            result[child] = result[node] - count[child] + n - count[child]
-            dfs2(child, node)
+            result[next] = result[node] - count[next] + n - count[next]
+            dfs2(next, node)
         }
     }
 
