@@ -85,7 +85,7 @@ LinkedList:
 
 Math: 
     Easy: 2582?
-    Medium: 856?, 939, 2601
+    Medium: 856?, 939, 1780, 2601
     Hard: 2366?
     Tricks: e1518
 
