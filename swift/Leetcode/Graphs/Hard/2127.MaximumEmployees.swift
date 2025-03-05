@@ -1,39 +1,48 @@
+// A company is organizing a meeting and has a list of n employees, 
+// waiting to be invited. They have arranged for a large circular table, 
+// capable of seating any number of employees.
+// The employees are numbered from 0 to n - 1. 
+// Each employee has a favorite person and they will attend the meeting 
+// only if they can sit next to their favorite person at the table. 
+// The favorite person of an employee is not themself.
+// Given a 0-indexed integer array favorite, where favorite[i] 
+// denotes the favorite person of the ith employee, 
+// return the maximum number of employees that can be invited to the meeting.
+
+// Time: O(n), Space: O(n)
 func maximumInvitations(_ favorite: [Int]) -> Int {
-    let n = favorite.count
-    var inDegree = [Int](repeating: 0, count: n)
+    var inDegree = Array(repeating: 0, count: favorite.count)
     
-    for person in 0..<n {
-        inDegree[favorite[person]] += 1
+    for next in favorite {
+        inDegree[next] += 1
     }
     
     var queue = [Int]()
-    for person in 0..<n {
-        if inDegree[person] == 0 {
-            queue.append(person)
-        }
+
+    for i in 0..<favorite.count {
+        if inDegree[i] == 0 { queue.append(i) }
     }
     
-    var depth = [Int](repeating: 1, count: n)
+    var depth = Array(repeating: 1, count: favorite.count)
+
     while !queue.isEmpty {
-        let currentNode = queue.removeFirst()
-        let nextNode = favorite[currentNode]
-        depth[nextNode] = max(depth[nextNode], depth[currentNode] + 1)
-        inDegree[nextNode] -= 1
-        if inDegree[nextNode] == 0 {
-            queue.append(nextNode)
-        }
+        let node = queue.removeFirst()
+        let next = favorite[node]
+        depth[next] = max(depth[next], depth[node] + 1)
+        inDegree[next] -= 1
+
+        if inDegree[next] == 0 { queue.append(next) }
     }
     
     var longestCycle = 0
-    var twoCycleInvitations = 0
+    var twoCycleNodes = 0
     
-    for person in 0..<n {
-        if inDegree[person] == 0 {
-            continue
-        }
+    for i in 0..<favorite.count {
+        if inDegree[i] == 0 { continue }
         
         var cycleLength = 0
-        var current = person
+        var current = i
+        
         while inDegree[current] != 0 {
             inDegree[current] = 0
             cycleLength += 1
@@ -41,11 +50,15 @@ func maximumInvitations(_ favorite: [Int]) -> Int {
         }
         
         if cycleLength == 2 {
-            twoCycleInvitations += depth[person] + depth[favorite[person]]
+            twoCycleNodes += depth[i] + depth[favorite[i]]
         } else {
             longestCycle = max(longestCycle, cycleLength)
         }
     }
     
-    return max(longestCycle, twoCycleInvitations)
+    return max(longestCycle, twoCycleNodes)
 }
+
+print(maximumInvitations([2,2,1,2]))
+print(maximumInvitations([1,2,0]))
+print(maximumInvitations([3,0,1,4,1]))
