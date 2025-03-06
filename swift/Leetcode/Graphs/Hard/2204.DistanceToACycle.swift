@@ -9,6 +9,7 @@
 // Return an integer array answer of size n, where answer[i] 
 // is the minimum distance between the ith node and any node in the cycle.
 
+// Time: O(n + e), Space: O(n + e)
 func distanceToCycle(_ n: Int, _ edges: [[Int]]) -> [Int] {
     var neighbors = Array(repeating: [Int](), count: n)
 
@@ -18,43 +19,32 @@ func distanceToCycle(_ n: Int, _ edges: [[Int]]) -> [Int] {
     }
 
     var visited = Set<Int>()
+    var stack = [Int]()
+    var queue = [Int]()
 
-    func dfs(_ node: Int, _ parent: Int) -> Int {
-        if visited.contains(node) { return node }
+    func dfs(_ node: Int, _ parent: Int) -> Bool {
+        if visited.contains(node) {
+            let index = stack.firstIndex(of: node)!
+            queue = Array(stack[index...])
+            return true
+        }
 
+        stack.append(node)
         visited.insert(node)
 
         for next in neighbors[node] {
             if next == parent { continue }
-            
-            let value = dfs(next, node)
-            if value != -1 { return value }
+            if dfs(next, node) { return true }
         }
 
-        return -1
-    }
-
-    let cycleNode = dfs(0, -1)
-    visited = []
-
-    func findCycleNodes(_ node: Int, _ parent: Int) -> Bool {
-        if visited.contains(node) { return true }
-
-        visited.insert(node)
-
-        for next in neighbors[node] {
-            if next == parent { continue }
-            if findCycleNodes(next, node) { return true }
-        }
-
-        visited.remove(node)
+        stack.removeLast()
         return false
     }
 
-    findCycleNodes(cycleNode, -1)
+    dfs(0, -1)
+    visited = Set(queue)
     var result = Array(repeating: 0, count: n)
-    var queue = Array(visited)
-    var distance = 1
+    var distance = 0
 
     while !queue.isEmpty {
         for _ in 0..<queue.count {
@@ -63,7 +53,7 @@ func distanceToCycle(_ n: Int, _ edges: [[Int]]) -> [Int] {
             for next in neighbors[first] {
                 if visited.contains(next) { continue }
 
-                result[next] = distance
+                result[next] = distance + 1
                 visited.insert(next)
                 queue.append(next)
             }
