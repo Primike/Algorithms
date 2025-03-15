@@ -85,7 +85,7 @@ LinkedList:
 
 Math: 
     Easy: 2582?
-    Medium: 856?, 939, 1780, 2579, 2601
+    Medium: 856?, 939, 1780, 2523, 2579, 2601
     Hard: 2366?
     Tricks: e1518
 
@@ -121,7 +121,7 @@ Simulation:
 
 Sliding Window:
     Easy: 1652
-    Medium: 2107, 2134, 2461, 2516, 2779
+    Medium: 2107, 2134, 2461, 2516, 2779, 3306
     Hard: 632, 2444
     Tricks: m1297, h922
 
