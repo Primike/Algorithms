@@ -8,8 +8,31 @@
 // Return the maximum profit we can achieve after 
 // assigning the workers to the jobs.
 
-// Time: O(n * log(n)), Space: O(n)
+// Time: O(n + w), Space: O(max(w))
 func maxProfitAssignment(_ difficulty: [Int], _ profit: [Int], _ worker: [Int]) -> Int {
+    let maxSkill = worker.max() ?? 0
+    var maxProfit = Array(repeating: 0, count: maxSkill + 1)
+
+    for i in 0..<difficulty.count {
+        if difficulty[i] > maxSkill { continue }
+        maxProfit[difficulty[i]] = max(maxProfit[difficulty[i]], profit[i])
+    }
+
+    for i in 1..<maxProfit.count {
+        maxProfit[i] = max(maxProfit[i], maxProfit[i - 1])
+    }
+
+    var result = 0
+
+    for skill in worker {
+        result += maxProfit[skill]
+    }
+
+    return result
+}
+
+// Time: O(n * log(n)), Space: O(n)
+func maxProfitAssignment2(_ difficulty: [Int], _ profit: [Int], _ worker: [Int]) -> Int {
     let worker = worker.sorted()
     var jobs = [(Int, Int)]()
 

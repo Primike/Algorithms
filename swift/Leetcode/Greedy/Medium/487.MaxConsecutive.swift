@@ -3,29 +3,32 @@
 
 // Time: O(n), Space: O(n)
 func findMaxConsecutiveOnes(_ nums: [Int]) -> Int {
-    var array = [Int]()
-    var count = 0
+    var onesFromLeft = Array(repeating: 0, count: nums.count)
+    var onesFromRight = Array(repeating: 0, count: nums.count)
+    onesFromLeft[0] = nums[0] == 1 ? 1 : 0
+    onesFromRight[nums.count - 1] = nums[nums.count - 1] == 1 ? 1 : 0
+    var i = 1, j = nums.count - 2
 
-    for number in nums {
-        if number == 0 { 
-            if count > 0 { array.append(count) }
-            
-            array.append(0) 
-            count = 0 
-        } else {
-            count += 1
-        }
+    while i < nums.count {
+        if nums[i] == 1 { onesFromLeft[i] += onesFromLeft[i - 1] + 1 }
+        if nums[j] == 1 { onesFromRight[j] += onesFromRight[j + 1] + 1 }
+
+        i += 1
+        j -= 1
     }
 
-    if count > 0 { array.append(count) }
+    var result = 0
 
-    var result = max(array.max() ?? 0, 1)
+    for i in 0..<nums.count {
+        if nums[i] == 1 {
+            result = max(result, onesFromLeft[i], onesFromRight[i])
+        } else {
+            var total = 1
 
-    for i in 0..<array.count {
-        if array[i] == 0 {
-            let left = i > 0 ? array[i - 1] : 0
-            let right = i < array.count - 1 ? array[i + 1] : 0
-            result = max(result, left + 1 + right)
+            if i > 0 { total += onesFromLeft[i - 1] }
+            if i < nums.count - 1 { total += onesFromRight[i + 1] }
+
+            result = max(result, total)
         }
     }
 
