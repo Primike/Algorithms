@@ -6,29 +6,31 @@
 
 // Time: O(n), Space: O(n)
 func maximumGain(_ s: String, _ x: Int, _ y: Int) -> Int {
-    let high = x > y ? "ab" : "ba"
-    let low = high == "ab" ? "ba" : "ab"
+    let s = Array(s).map { String($0) }
+    var leading = x > y ? "a" : "b", trailing = x > y ? "b" : "a"
+    var maxVal = x > y ? x : y, minVal = x > y ? y : x
+    var result = 0
+    var leadingStack = [String]()
 
-    func removeSubstring(_ string: String, _ substring: String) -> String {
-        var stack = [Character]()
-        
-        for letter in string {
-            if letter == substring.last, stack.last == substring.first {
-                stack.removeLast() 
-            } else {
-                stack.append(letter)
-            }
+    for letter in s {
+        if let last = leadingStack.last, last == leading, letter == trailing {
+            leadingStack.removeLast()
+            result += maxVal
+        } else {
+            leadingStack.append(letter)
         }
-        
-        return String(stack)
     }
 
-    var result = 0
-
-    let firstPass = removeSubstring(s, high)
-    result += ((s.count - firstPass.count) / 2) * max(x, y)
-    let secondPass = removeSubstring(firstPass, low)
-    result += ((firstPass.count - secondPass.count) / 2) * min(x, y)
+    var trailingStack = [String]()
+    
+    for letter in leadingStack {
+        if let last = trailingStack.last, last == trailing, letter == leading {
+            trailingStack.removeLast()
+            result += minVal
+        } else {
+            trailingStack.append(letter)
+        }
+    }
     
     return result
 }
