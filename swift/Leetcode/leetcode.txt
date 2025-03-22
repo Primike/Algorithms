@@ -60,7 +60,7 @@ Graphs:
 
 
 Greedy: 
-    Medium: 624?, 670?, 1564?, 1580?, 2116?, 2406, 2938
+    Medium: 624?, 670?, 1564?, 1580?, 2116, 2938
     Hard: 330!, 871?, 1326
     Tricks: m487, m826, m2745
 
@@ -73,7 +73,7 @@ Heap:
 
 
 Intervals:
-    Medium: 1229
+    Medium: 1229, 2406?
 
 
 
@@ -173,5 +173,5 @@ UnionFind:
 Deque
 
 DAG 2^n * n
-
+Sweep Line
 Python: 1634, 1644

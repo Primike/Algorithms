@@ -40,3 +40,35 @@ func canBeValid(_ s: String, _ locked: String) -> Bool {
 print(canBeValid("))()))", "010100"))
 print(canBeValid("()()", "0000"))
 print(canBeValid(")", "0"))
+
+
+func canBeValid2(_ s: String, _ locked: String) -> Bool {
+    if s.count % 2 == 1 { return false }
+
+    let s = Array(s), locked = Array(locked)
+    var opened = [Int]()
+    var unlocked = [Int]()
+
+    for (i, bracket) in s.enumerated() {
+        if locked[i] == "0" { 
+            unlocked.append(i) 
+        } else if bracket == "(" {
+            opened.append(i)
+        } else if bracket == ")" {
+            if !opened.isEmpty {
+                opened.removeLast()
+            } else if !unlocked.isEmpty {
+                unlocked.removeLast()
+            } else {
+                return false 
+            }
+        }
+    }
+
+    while !opened.isEmpty, !unlocked.isEmpty, unlocked.last! > opened.last! {
+        opened.removeLast()
+        unlocked.removeLast()
+    }
+
+    return opened.isEmpty
+}
