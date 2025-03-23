@@ -8,13 +8,12 @@
 func minimumSteps(_ s: String) -> Int {
     let s = Array(s)
     var result = 0
-    var current = 0
+    var left = 0
 
-    for i in (0..<s.count).reversed() {
+    for i in 0..<s.count {
         if s[i] == "0" {
-            current += 1
-        } else if s[i] == "1" {
-            result += current
+            result += i - left
+            left += 1
         }
     }
 

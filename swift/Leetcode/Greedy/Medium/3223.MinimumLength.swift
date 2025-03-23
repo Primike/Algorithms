@@ -11,10 +11,8 @@ func minimumLength(_ s: String) -> Int {
     let dict = s.reduce(into: [:]) { $0[$1, default: 0] += 1 }
     var result = 0
 
-    for (key, value) in dict {
-        if value < 3 {
-            result += value
-        } else if value % 2 == 0 {
+    for (_, value) in dict {
+        if value % 2 == 0 {
             result += 2
         } else {
             result += 1

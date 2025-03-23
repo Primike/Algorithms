@@ -5,6 +5,7 @@
 // A board is peaceful if there is exactly one rook in each row and each column.
 // Return the minimum number of moves required to get a peaceful board.
 
+// Time: O(n * log(n)), Space: O(n)
 func minMoves(_ rooks: [[Int]]) -> Int {
     var rooks = rooks
     var result = 0
