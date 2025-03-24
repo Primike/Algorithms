@@ -5,6 +5,7 @@
 // Return the minimum number of refueling stops the car must make in order to 
 // reach its destination. If it cannot reach the destination, return -1.
 
+// Time: O(n * log(n)), Space: O(n)
 func minRefuelStops(_ target: Int, _ startFuel: Int, _ stations: [[Int]]) -> Int {
     var heap = Heap<Int>(type: .maxHeap)
     var fuel = startFuel 
