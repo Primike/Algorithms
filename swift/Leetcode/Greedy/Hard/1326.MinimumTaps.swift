@@ -7,7 +7,46 @@
 // Return the minimum number of taps that should be open 
 // to water the whole garden, If the garden cannot be watered return -1.
 
+// Time: O(n * log(n)), Space: O(n)
 func minTaps(_ n: Int, _ ranges: [Int]) -> Int {
+    var intervals = [[Int]]()
+
+    for (i, range) in ranges.enumerated() {
+        intervals.append([max(0, i - range), i + range])
+    }
+
+    intervals.sort { ($0[0], -$0[1]) < ($1[0], -$1[1]) }
+    
+    if intervals[0][0] > 0 { return -1 }
+
+    var result = 1
+    var farthest = intervals[0][1]
+    var current = intervals[0][1]
+
+    for i in 1..<intervals.count {
+        if farthest < intervals[i][0] { return -1 }
+        if current > n { return result }
+        if current < intervals[i][0] {
+            current = farthest
+            result += 1
+        }
+
+        farthest = max(farthest, intervals[i][1])
+    }
+
+    if current < n { 
+        current = farthest 
+        result += 1
+    }
+
+    return current >= n ? result : -1
+}
+
+print(minTaps(5, [3,4,1,1,0,0]))
+print(minTaps(3, [0,0,0,0]))
+
+
+func minTaps2(_ n: Int, _ ranges: [Int]) -> Int {
     var intervals = [(Int, Int)]()
 
     for (i, range) in ranges.enumerated() {
@@ -36,6 +75,3 @@ func minTaps(_ n: Int, _ ranges: [Int]) -> Int {
 
     return maxReach >= n ? result : -1
 }
-
-print(minTaps(5, [3,4,1,1,0,0]))
-print(minTaps(3, [0,0,0,0]))
