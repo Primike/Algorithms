@@ -22,7 +22,7 @@ Advanced Graphs:
         With letters precompute all shortest paths to every other letter
     ]
 
-    Medium: 1976, 2976?
+    Medium: 1976, 2737?, 2976?
     Hard: 2045?, 2097, 2290, 2577, 2699!!
     Tricks: h1568
 
@@ -33,7 +33,7 @@ Advanced Trees:
 
 
 Array:
-    Medium: 264?, 277?, 731?, 769, 1072?, 1726, 1852, 2168, 2349, 2364, 2657?, 2762, 2948, 2981?, 3160
+    Medium: 264?, 277?, 731?, 769, 1072?, 1726, 1852, 2168, 2349, 2364, 2657?, 2762, 2780?, 2948, 2981?, 3160
     Hard: 2371?, 2781?
     Tricks: m1508
 
@@ -85,7 +85,7 @@ LinkedList:
 
 Math: 
     Easy: 2582?
-    Medium: 856?, 939, 1780, 2523, 2579, 2601
+    Medium: 856?, 939, 1780, 2033, 2523, 2579, 2601
     Hard: 2366?
     Tricks: e1518
 
