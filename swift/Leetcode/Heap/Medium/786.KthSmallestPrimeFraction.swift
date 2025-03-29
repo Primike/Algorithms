@@ -16,6 +16,7 @@ struct PrimeFraction: Comparable {
     }
 }
 
+// Time: O((n + k) * log(n)), Space: O(n)
 func kthSmallestPrimeFraction(_ arr: [Int], _ k: Int) -> [Int] {
     var heap = Heap<PrimeFraction>(.minHeap)
 
