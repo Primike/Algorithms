@@ -62,13 +62,14 @@ Graphs:
 Greedy: 
     Medium: 624?, 670?, 1564?, 1580?, 2116
     Hard: 330, 871?, 1326?
-    Tricks: m487, m826, m2745
+    Tricks: m487, m826, m1055, m2745
 
 
 
 Heap: 
-    Medium: 786?, 1438, 1792, 1942, 2599
+    Medium: 786?, 1792, 1942, 2599
     Hard: 407, 862, 1354?, 2940
+    Tricks: m1438
 
 
 
@@ -86,7 +87,7 @@ LinkedList:
 Math: 
     Easy: 2582?
     Medium: 856?, 939, 1780, 2033, 2523, 2579, 2601
-    Hard: 2366?
+    Hard: 2366?, 2818!
     Tricks: e1518
 
 
