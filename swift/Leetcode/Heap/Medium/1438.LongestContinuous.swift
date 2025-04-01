@@ -4,8 +4,8 @@
 // is less than or equal to limit.
 
 struct Num: Comparable {
-    let number: Int
     let i: Int
+    let number: Int
 
     static func < (_ l: Num, _ r: Num) -> Bool {
         if l.number == r.number { return l.i < r.i }
@@ -13,25 +13,29 @@ struct Num: Comparable {
     }
 }
 
+// Time: O(n * log(n)), Space: O(n)
 func longestSubarray(_ nums: [Int], _ limit: Int) -> Int {
-    var minHeap = Heap<Num>(.minHeap), maxHeap = Heap<Num>(.maxHeap)
+    var minHeap = Heap<Num>(.minHeap)
+    var maxHeap = Heap<Num>(.maxHeap)
     var result = 0
     var left = 0
 
-    for (i, number) in nums.enumerated() {
-        minHeap.push(Num(number: number, i: i))
-        maxHeap.push(Num(number: number, i: i))
+    for i in 0..<nums.count {
+        minHeap.push(Num(i: i, number: nums[i]))
+        maxHeap.push(Num(i: i, number: nums[i]))
 
-        while let s = minHeap.peek(), let l = maxHeap.peek(), l.number - s.number > limit {
-            left = min(s.i, l.i) + 1
+        while let n1 = minHeap.peek(), let n2 = maxHeap.peek(), n2.number - n1.number > limit {
+            left = min(n1.i, n2.i)
 
-            while let s = minHeap.peek(), s.i < left {
+            while let first = minHeap.peek(), first.i <= left {
                 minHeap.pop()
             }
 
-            while let l = maxHeap.peek(), l.i < left {
+            while let first = maxHeap.peek(), first.i <= left {
                 maxHeap.pop()
             }
+
+            left += 1
         }
 
         result = max(result, i - left + 1)

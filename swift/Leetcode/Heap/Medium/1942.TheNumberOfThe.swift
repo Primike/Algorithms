@@ -1,31 +1,55 @@
-struct Chair: Comparable {
-    let chair: Int
-    let time: Int
+// There is a party where n friends numbered from 0 to n - 1 are attending. 
+// There is an infinite number of chairs in this party that are 
+// numbered from 0 to infinity. When a friend arrives at the party,
+// they sit on the unoccupied chair with the smallest number.
+// When a friend leaves the party, their chair becomes unoccupied 
+// at the moment they leave. If another friend arrives at that same moment, 
+// they can sit in that chair.
+// You are given a 0-indexed 2D integer array times where times[i] = [arrivali, leavingi], 
+// indicating the arrival and leaving times of the ith friend respectively, 
+// and an integer targetFriend. All arrival times are distinct.
+// Return the chair number that the friend numbered targetFriend will sit on.
 
-    static func < (_ l: Chair, _ r: Chair) -> Bool {
-        if l.time == r.time { return l.chair < r.chair }
-        return l.time < r.time
+struct Friend: Comparable {
+    let i: Int
+    let leave: Int
+    let seat: Int 
+
+    static func < (_ l: Friend, _ r: Friend) -> Bool {
+        return l.leave < r.leave
     }
 }
 
+// Time: O(n * log(n)), Space: O(n)
 func smallestChair(_ times: [[Int]], _ targetFriend: Int) -> Int {
-    let timesTriplets = times.enumerated().map { (index, time) in
-        (time[0], time[1], index)
-    }.sorted { $0.0 < $1.0 } 
-    var chairsHeap = Heap<Int>(.minHeap, Array(0..<times.count))
-    var timeHeap = Heap<Chair>(.minHeap)
-
-    for (start, end, i) in timesTriplets {            
-        while let first = timeHeap.peek(), first.time <= start {
-            chairsHeap.push(first.chair)
-            timeHeap.pop()
-        }
-        
-        let chair = chairsHeap.pop()!  
-        if i == targetFriend { return chair }
-        
-        timeHeap.push(Chair(chair: chair, time: end))
-    }
+    var friends = [(Int, Int, Int)]()
     
-    return -1 
+    for i in 0..<times.count {
+        friends.append((i, times[i][0], times[i][1]))
+    }
+
+    friends.sort { $0.1 < $1.1 }
+
+    var sittingFriends = Heap<Friend>(.minHeap)
+    var seats = Heap<Int>(.minHeap, Array(0..<times.count))
+    var time = 0
+
+    for i in 0..<friends.count {
+        time = max(time, friends[i].1)
+
+        while let first = sittingFriends.peek(), first.leave <= time {
+            sittingFriends.pop()
+            seats.push(first.seat)
+        }
+
+        if friends[i].0 == targetFriend { return seats.peek()! }
+
+        let seat = seats.pop()!
+        sittingFriends.push(Friend(i: i, leave: friends[i].2, seat: seat))
+    }
+
+    return -1
 }
+
+print(smallestChair([[1,4],[2,3],[4,6]], 1))
+print(smallestChair([[3,10],[1,5],[2,6]], 0))
