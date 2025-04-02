@@ -67,7 +67,7 @@ Greedy:
 
 
 Heap: 
-    Medium: 786?, 1792?, 2599
+    Medium: 786?, 1792?, 2182?
     Hard: 407, 862, 1354?, 2940
     Tricks: m1438
 

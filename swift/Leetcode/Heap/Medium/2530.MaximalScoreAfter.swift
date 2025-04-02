@@ -10,10 +10,10 @@ func maxKelements(_ nums: [Int], _ k: Int) -> Int {
     var heap = Heap<Int>(.maxHeap, nums)
     var result = 0
 
-    for _ in 0..<k {
-        let largest = heap.pop()!
-        result += largest
-        heap.push((largest + 2) / 3)
+    for i in 0..<k {
+        let first = heap.pop()!
+        result += first
+        heap.push(Int(ceil(Double(first) / 3.0)))
     }
 
     return result

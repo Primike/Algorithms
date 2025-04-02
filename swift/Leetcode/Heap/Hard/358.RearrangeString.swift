@@ -3,9 +3,8 @@
 // If it is not possible to rearrange the string, return an empty string "".
 
 struct Letter: Comparable {
-    let letter: Character
+    let letter: String
     var count: Int
-    var time: Int
 
     static func < (_ l: Letter, _ r: Letter) -> Bool {
         return l.count < r.count
@@ -14,36 +13,29 @@ struct Letter: Comparable {
 
 // Time: O(n * 26 * log(26)), Space: O(26)
 func rearrangeString(_ s: String, _ k: Int) -> String {
-    if k == 0 { return s }
-    
-    let dict = Array(s).reduce(into: [:]) { $0[$1, default: 0] += 1 }
+    let s = Array(s).map { String($0) }
+    let dict = s.reduce(into: [:]) { $0[$1, default: 0] += 1 }
     var heap = Heap<Letter>(.maxHeap)
 
-    for (key, count) in dict {
-        heap.push(Letter(letter: key, count: count, time: 0))
+    for (key, value) in dict {
+        heap.push(Letter(letter: key, count: value))
     }
 
+    var queue = [(Int, Letter)]()
     var result = ""
-    var queue = [Letter]()
     var time = 0
 
     while !heap.isEmpty {
-        var first = heap.pop()!
-        result += String(first.letter)
-        first.count -= 1 
-        first.time = time + k
+        var letter = heap.pop()!
+        result += letter.letter
+        letter.count -= 1
+        time += 1
 
-        time += 1 
-
-        if first.count > 0 { queue.append(first) }
-        if let first = queue.first, first.time == time { 
-            queue.removeFirst()
-            heap.push(first)
-        }
+        if letter.count > 0 { queue.append((time + k - 1, letter)) }
+        if !queue.isEmpty, queue[0].0 <= time { heap.push(queue.removeFirst().1) }
     }
 
-    if !queue.isEmpty { return "" }
-    return result
+    return result.count == s.count ? result : ""
 }
 
 print(rearrangeString("aabbcc", 3))

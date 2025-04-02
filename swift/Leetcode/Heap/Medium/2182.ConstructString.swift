@@ -1,36 +1,47 @@
-struct CharCount: Comparable {
-    let char: Character
+// You are given a string s and an integer repeatLimit. 
+// Construct a new string repeatLimitedString using the characters 
+// of s such that no letter appears more than repeatLimit times in a row. 
+// You do not have to use all characters from s.
+// Return the lexicographically largest repeatLimitedString possible.
+
+struct Letter: Comparable {
+    let letter: String
     var count: Int
 
-    static func < (lhs: CharCount, rhs: CharCount) -> Bool {
-        return lhs.char < rhs.char 
+    static func < (_ l: Letter, _ r: Letter) -> Bool {
+        return l.letter < r.letter
     }
 }
 
+// Time: O(n * log(26)), Space: O(26)
 func repeatLimitedString(_ s: String, _ repeatLimit: Int) -> String {
-    var charCountDict: [Character: Int] = [:]
-    for char in s {
-        charCountDict[char, default: 0] += 1
-    }
+    let s = Array(s).map { String($0) } 
+    let dict = s.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+    var heap = Heap<Letter>(.maxHeap)
 
-    var maxHeap = Heap<CharCount>(.maxHeap, charCountDict.map { CharCount(char: $0.key, count: $0.value) })
+    for (key, value) in dict {
+        heap.push(Letter(letter: key, count: value))
+    }    
+
     var result = ""
 
-    while !maxHeap.isEmpty {
-        guard let current = maxHeap.pop() else { break }
-        let use = min(current.count, repeatLimit)
-        result.append(String(repeating: current.char, count: use))
+    while var first = heap.pop() {
+        let count = min(first.count, repeatLimit)
+        result += String(repeating: first.letter, count: count)
 
-        if current.count > use {
-            if let next = maxHeap.pop() {
-                result.append(next.char)
-                if next.count > 1 {
-                    maxHeap.push(CharCount(char: next.char, count: next.count - 1))
-                }
-                maxHeap.push(CharCount(char: current.char, count: current.count - use))
-            }
+        if first.count > count, var next = heap.pop() {
+            result += next.letter
+            next.count -= 1
+
+            if next.count > 0 { heap.push(next) }
+            
+            first.count -= count
+            heap.push(first)
         }
     }
 
     return result
 }
+
+print(repeatLimitedString("cczazcc", 3))
+print(repeatLimitedString("aababab", 2))

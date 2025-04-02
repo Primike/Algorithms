@@ -7,22 +7,24 @@
 // Return the minimum number of operations such that the 
 // prefix sum array does not contain negative integers. 
 
+// Time: O(n * log(n)), Space: O(n)
 func makePrefSumNonNegative(_ nums: [Int]) -> Int {
-    var operations = 0
-    var prefixSum = 0
     var heap = Heap<Int>(.minHeap)
-    
-    for num in nums {
-        if num < 0 {
-            heap.push(num)
-        }
-        prefixSum += num
-        if prefixSum < 0, let popped = heap.pop() {
-            prefixSum -= popped
-            operations += 1
+    var result = 0
+    var total = 0
+
+    for number in nums {
+        total += number
+
+        if number < 0 { heap.push(number) }
+
+        if total < 0, !heap.isEmpty {
+            total -= heap.pop()!
+            result += 1
         }
     }
-    return operations
+
+    return result
 }
 
 print(makePrefSumNonNegative([2,3,-5,4]))
