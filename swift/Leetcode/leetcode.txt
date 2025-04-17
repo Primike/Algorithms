@@ -122,7 +122,7 @@ Simulation:
 
 Sliding Window:
     Easy: 1652
-    Medium: 2107, 2134, 2461, 2516, 2779, 3306
+    Medium: 2107, 2134, 2461, 2516, 2537?, 2779, 3306
     Hard: 632, 2444
     Tricks: m1297, h922
 
