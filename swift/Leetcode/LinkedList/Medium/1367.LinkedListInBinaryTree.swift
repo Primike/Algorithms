@@ -5,23 +5,30 @@
 // In this context downward path means a path that starts at 
 // some node and goes downwards.
 
+// Time: O(n * l), Space: O(h)
 func isSubPath(_ head: ListNode?, _ root: TreeNode?) -> Bool {
-    guard let root = root else { return false }
+    guard let head = head else { return true }
 
-    func dfs(_ node: TreeNode?, _ head: ListNode?) -> Bool {
-        if head == nil { return true }
-        guard let node = node, let head = head else { return false }
-        if node.val != head.val { return false }
-
-        return dfs(node.left, head.next) || dfs(node.right, head.next)
-    }
-
-    func checkPath(_ node: TreeNode?, _ head: ListNode?) -> Bool {
+    func checkSubTree(_ node: TreeNode?, _ list: ListNode?) -> Bool {
+        guard let list = list else { return true }
         guard let node = node else { return false }
-        if dfs(node, head) { return true }
-        
-        return checkPath(node.left, head) || checkPath(node.right, head)
+
+        if list.val != node.val { return false }
+        if checkSubTree(node.left, list.next) { return true }
+        if checkSubTree(node.right, list.next) { return true }
+
+        return false
     }
 
-    return checkPath(root, head)
+    func dfs(_ root: TreeNode?) -> Bool {
+        guard let root = root else { return false }
+
+        if root.val == head.val, checkSubTree(root, head) { return true }
+        if dfs(root.left) { return true }
+        if dfs(root.right) { return true }
+
+        return false
+    }
+
+    return dfs(root)
 }

@@ -1,104 +1,92 @@
-class Node {
-    var val: Int
-    var next: Node?
-    var prev: Node?
+// Design your implementation of the circular double-ended queue (deque).
 
-    init(_ val: Int, _ next: Node? = nil, _ prev: Node? = nil) {
-        self.val = val
+class Node {
+    var value: Int
+    var previous: Node?
+    var next: Node?
+
+    init(_ value: Int, _ previous: Node? = nil, _ next: Node? = nil) {
+        self.value = value
+        self.previous = previous
         self.next = next
-        self.prev = prev
     }
 }
 
 class MyCircularDeque {
 
-    private var head: Node?
-    private var rear: Node?
-    private let capacity: Int
-    private var size: Int
+    private var head: Node
+    private var tail: Node
+    private let k: Int
+    private var count: Int
 
     init(_ k: Int) {
-        self.size = 0
-        self.capacity = k
-        self.head = nil
-        self.rear = nil
+        self.head = Node(0)
+        self.tail = Node(0)
+        self.k = k
+        self.count = 0
+        self.head.next = self.tail
+        self.tail.previous = self.head
     }
-
+    
     func insertFront(_ value: Int) -> Bool {
-        if isFull() { return false }
-        
-        if head == nil {
-            head = Node(value)
-            rear = head
-        } else {
-            let newHead = Node(value, head, nil)
-            head?.prev = newHead
-            head = newHead
-        }
+        if count == k { return false }
 
-        size += 1
+        let firstNode = head.next
+        let newNode = Node(value, head, firstNode)
+        head.next = newNode
+        firstNode?.previous = newNode
+        count += 1
+
         return true
     }
-
+    
     func insertLast(_ value: Int) -> Bool {
-        if isFull() { return false }
+        if count == k { return false }
 
-        if head == nil {
-            head = Node(value)
-            rear = head
-        } else {
-            let newRear = Node(value, nil, rear)
-            rear?.next = newRear
-            rear = newRear
-        }
+        let lastNode = tail.previous
+        let newNode = Node(value, lastNode, tail)
+        tail.previous = newNode
+        lastNode?.next = newNode
+        count += 1
 
-        size += 1
         return true
     }
-
+    
     func deleteFront() -> Bool {
-        if isEmpty() { return false }
+        if count == 0 { return false }
 
-        if size == 1 {
-            head = nil
-            rear = nil
-        } else {
-            head = head?.next
-            head?.prev = nil
-        }
+        head.next = head.next?.next
+        head.next?.previous = head
+        count -= 1
 
-        size -= 1
         return true
     }
-
+    
     func deleteLast() -> Bool {
-        if isEmpty() { return false }
-        
-        if size == 1 {
-            head = nil
-            rear = nil
-        } else {
-            rear = rear?.prev
-            rear?.next = nil
-        }
+        if count == 0 { return false }
 
-        size -= 1
+        tail.previous = tail.previous?.previous
+        tail.previous?.next = tail
+        count -= 1
+
         return true
     }
-
+    
     func getFront() -> Int {
-        return isEmpty() ? -1 : head!.val
+        if count == 0 { return -1 }
+        return head.next?.value ?? -1
     }
-
+    
     func getRear() -> Int {
-        return isEmpty() ? -1 : rear!.val
+        if count == 0 { return -1 }
+        return tail.previous?.value ?? -1
     }
-
+    
     func isEmpty() -> Bool {
-        return size == 0
+        return count == 0
     }
-
+    
     func isFull() -> Bool {
-        return size == capacity
+        return count == k
     }
 }

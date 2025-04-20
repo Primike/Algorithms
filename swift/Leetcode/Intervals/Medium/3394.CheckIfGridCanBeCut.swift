@@ -13,39 +13,35 @@
 
 // Time: O(n * log(n)), Space: O(n)
 func checkValidCuts(_ n: Int, _ rectangles: [[Int]]) -> Bool {
-    let horizontal = rectangles.sorted { ($0[0], -$0[2]) < ($1[0], -$1[2]) }
-    var xIntervals = [[Int]]()
-    var i = 0
+    let horizontal = rectangles.map { [$0[0], $0[2]] }.sorted { $0[0] < $1[0] }
+    let vertical = rectangles.map { [$0[1], $0[3]] }.sorted { $0[0] < $1[0] }
+    var last = horizontal[0][1]
+    var count = 0
 
-    while i < horizontal.count {
-        var current = horizontal[i]
-
-        while i < horizontal.count, current[2] > horizontal[i][0] {
-            current[2] = max(current[2], horizontal[i][2])
-            i += 1
+    for interval in horizontal {
+        if last <= interval[0] {
+            count += 1
+            last = interval[1]
+        } else {
+            last = max(last, interval[1])
         }
-
-        xIntervals.append(current)
     }
 
-    if xIntervals.count >= 3 { return true }
+    if count >= 2 { return true }
+    
+    last = vertical[0][1]
+    count = 0
 
-    let vertical = rectangles.sorted { ($0[1], -$0[3]) < ($1[1], -$1[3]) }
-    var yIntervals = [[Int]]()
-    i = 0
-
-    while i < vertical.count {
-        var current = vertical[i]
-
-        while i < vertical.count, current[3] > vertical[i][1] {
-            current[3] = max(current[3], vertical[i][3])
-            i += 1
+    for interval in vertical {
+        if last <= interval[0] {
+            count += 1
+            last = interval[1]
+        } else {
+            last = max(last, interval[1])
         }
-
-        yIntervals.append(current)
     }
 
-    return yIntervals.count >= 3
+    return count >= 2
 }
 
 print(checkValidCuts(5, [[1,0,5,2],[0,2,2,4],[3,2,5,3],[0,4,4,5]]))

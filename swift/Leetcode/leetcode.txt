@@ -74,13 +74,12 @@ Heap:
 
 
 Intervals:
-    Medium:
     Tricks: m1272, m2406
 
 
 
 LinkedList:
-    Medium: 641, 1171?, 1367, 2058?, 2816?, 3217
+    Medium: 1171?, 1367, 2058?, 2816?, 3217
     Hard: 432
 
 
