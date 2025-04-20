@@ -27,3 +27,21 @@ func minGroups(_ intervals: [[Int]]) -> Int {
 
 print(minGroups([[5,10],[6,8],[1,5],[2,3],[1,10]]))
 print(minGroups([[1,3],[5,6],[8,10],[11,13]]))
+
+
+func minGroups2(_ intervals: [[Int]]) -> Int {
+    let intervals = intervals.sorted { $0[0] < $1[0] }
+    var heap = Heap<Int>(.minHeap)
+    var result = 0
+
+    for interval in intervals {
+        while let first = heap.peek(), first < interval[0] {
+            heap.pop()
+        }
+
+        heap.push(interval[1])
+        result = max(result, heap.count)
+    }
+
+    return result
+}

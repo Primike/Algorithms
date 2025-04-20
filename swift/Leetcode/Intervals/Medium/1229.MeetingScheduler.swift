@@ -11,22 +11,20 @@ func minAvailableDuration(_ slots1: [[Int]], _ slots2: [[Int]], _ duration: Int)
     let slots1 = slots1.filter { $0[1] - $0[0] >= duration }.sorted { $0[0] < $1[0] }
     let slots2 = slots2.filter { $0[1] - $0[0] >= duration }.sorted { $0[0] < $1[0] }
     var i = 0, j = 0
-    
+
     while i < slots1.count, j < slots2.count {
         let start = max(slots1[i][0], slots2[j][0])
         let end = min(slots1[i][1], slots2[j][1])
         
-        if end - start >= duration {
-            return [start, start + duration]
-        }
-        
-        if slots1[i][1] < slots2[j][1] {
-            i += 1
-        } else {
+        if end - start >= duration { return [start, start + duration] }
+
+        if slots1[i][1] > slots2[j][1] {
             j += 1
+        } else {
+            i += 1
         }
     }
-    
+
     return []
 }
 

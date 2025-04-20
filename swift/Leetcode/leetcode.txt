@@ -68,13 +68,14 @@ Greedy:
 
 Heap: 
     Medium: 786?, 1792?, 2182?
-    Hard: 407?, 862, 1354?, 2940
+    Hard: 407?, 862, 1354?, 2940?
     Tricks: m1438, h358
 
 
 
 Intervals:
-    Medium: 1229, 2406?
+    Medium:
+    Tricks: m1272, m2406
 
 
 
