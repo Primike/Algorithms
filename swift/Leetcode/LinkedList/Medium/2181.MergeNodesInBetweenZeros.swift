@@ -9,29 +9,27 @@
 
 // Time: O(n), Space: O(1)
 func mergeNodes(_ head: ListNode?) -> ListNode? {
-    var previous: ListNode? = nil
-    var current = head
+    var current = head?.next
 
-    while let node = current, node.next != nil {
-        var right = current?.next
+    while current !== nil {
+        var first = current
         var sum = 0
 
-        while let next = right, next.val != 0  {
-            sum += next.val
-            right = next.next
+        while let node = current, node.val != 0 {
+            sum += node.val
+            first?.next = node.next
+            current = current?.next
         }
 
-        current?.val = sum
-        current?.next = right
-        previous = current
-        current = right
+        first?.val = sum
+        first?.next = current?.next
+        current = current?.next
     }
 
-    previous?.next = nil
-    return head
+    return head?.next
 }
 
-
+// Time: O(n), Space: O(n)
 func mergeNodes2(_ head: ListNode?) -> ListNode? {
     let newHead = ListNode()
     var newNode = newHead

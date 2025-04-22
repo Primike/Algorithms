@@ -79,7 +79,7 @@ Intervals:
 
 
 LinkedList:
-    Medium: 1171?, 1367, 2058?, 2816?, 3217
+    Medium: 1171?, 2058?
     Hard: 432
 
 
@@ -174,5 +174,6 @@ UnionFind:
 Deque
 
 DAG 2^n * n
+Euclidean
 Sweep Line
 Python: 1634, 1644

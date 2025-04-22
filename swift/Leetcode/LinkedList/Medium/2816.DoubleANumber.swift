@@ -2,9 +2,26 @@
 // a non-negative integer without leading zeroes.
 // Return the head of the linked list after doubling it.
 
-// 1 pass possible
 // Time: O(n), Space: O(1)
 func doubleIt(_ head: ListNode?) -> ListNode? {
+    var list = head
+    var current = head
+
+    if (current?.val ?? 0) >= 5 { list = ListNode(1, head) }
+
+    while let node = current {
+        var value = (node.val * 2) % 10
+        
+        if let next = node.next, next.val >= 5 { value += 1 }
+
+        current?.val = value
+        current = node.next
+    }
+
+    return list
+}
+
+func doubleIt2(_ head: ListNode?) -> ListNode? {
     var current = head
     var previous: ListNode? = nil 
 

@@ -21,15 +21,12 @@ func insertGreatestCommonDivisors(_ head: ListNode?) -> ListNode? {
     }
 
     var current = head
-    var next = head?.next
 
-    while let node1 = current, let node2 = next {
-        let gcd = euclidean(node1.val, node2.val)
-        let newNode = ListNode(gcd, node2)
-        node1.next = newNode
-
-        current = node2
-        next = node2.next
+    while let node = current, let next = node.next {
+        let gcd = euclidean(node.val, next.val)
+        let newNode = ListNode(gcd, next)
+        node.next = newNode
+        current = next
     }
 
     return head

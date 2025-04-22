@@ -3,23 +3,22 @@
 // removing all nodes from the linked list that have a value 
 // that exists in nums.
 
+// Time: O(n), Space: O(n)
 func modifiedList(_ nums: [Int], _ head: ListNode?) -> ListNode? {
-    let nums = Set(nums)
-    let newHead = ListNode(0, head)
-    var previous = newHead
+    var numbers = Set(nums)
+    let newNode = ListNode(0, head)
+    var previous = newNode
     var current = head
 
     while let node = current {
-        let next = node.next
-
-        if nums.contains(node.val) {
-            previous.next = next
+        if numbers.contains(node.val) {
+            previous.next = node.next
         } else {
             previous = node
         }
-        
-        current = next
+
+        current = node.next
     }
 
-    return newHead.next
+    return newNode.next
 }
