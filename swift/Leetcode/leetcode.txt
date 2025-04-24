@@ -80,7 +80,7 @@ Intervals:
 
 LinkedList:
     Medium: 1171?, 2058?
-    Hard: 432
+    Hard: 432?
 
 
 
