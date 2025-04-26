@@ -5,10 +5,14 @@
 
 // Time: O(1), Space: O(1)
 func passThePillow(_ n: Int, _ time: Int) -> Int {
-    let rounds = time / (n - 1)
-    let moves = time % (n - 1)
+    let roundTrip = n * 2 - 2
+    let remainder = time % roundTrip
 
-    return rounds % 2 == 0 ? moves + 1 : n - moves
+    if remainder > n - 1 {
+        return n - (remainder - n + 1)
+    } else {
+        return 1 + remainder
+    }
 }
 
 print(passThePillow(4, 5))

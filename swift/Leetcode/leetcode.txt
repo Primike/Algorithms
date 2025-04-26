@@ -85,10 +85,14 @@ LinkedList:
 
 
 Math: 
-    Easy: 2582?, 2843
+    [
+        Euclidean,
+        log10(x) + 1
+    ]
+
     Medium: 528?, 856?, 939, 1780, 2033, 2523, 2579, 2601
     Hard: 2366?, 2818!, 2999
-    Tricks: e1518
+    Tricks: e2485
 
 
 
@@ -174,6 +178,5 @@ UnionFind:
 Deque
 
 DAG 2^n * n
-Euclidean
 Sweep Line
 Python: 1634, 1644

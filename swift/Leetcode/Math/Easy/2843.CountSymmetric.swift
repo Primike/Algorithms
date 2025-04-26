@@ -1,20 +1,38 @@
-class Solution {
-    func countSymmetricIntegers(_ low: Int, _ high: Int) -> Int {
-        var res = 0
-        for a in low...high {
-            if a >= 10 && a < 100 { 
-                if a % 11 == 0 {
-                     res += 1
-                }
-            } else if a >= 1000 && a < 10000 {
-                let left = a / 1000 + (a % 1000) / 100
-                let right = (a % 100) / 10 + a % 10
-                if left == right {
-                    res += 1
-                }
-            }
+// You are given two positive integers low and high.
+// An integer x consisting of 2 * n digits is symmetric 
+// if the sum of the first n digits of x is equal to t
+// he sum of the last n digits of x. Numbers with an 
+// odd number of digits are never symmetric.
+// Return the number of symmetric integers in the range [low, high].
 
+// Time: O(n * log10(n)), Space: O(1)
+func countSymmetricIntegers(_ low: Int, _ high: Int) -> Int {
+    var result = 0
+
+    for i in low...high {
+        let digitCount = Int(floor(log10(Double(i)))) + 1
+        if digitCount % 2 != 0 { continue }
+
+        var lastHalf = 0
+        var current = i
+
+        for _ in 0..<(digitCount / 2) {
+            lastHalf += current % 10
+            current = current / 10
         }
-        return res
+
+        var firstHalf = 0
+        
+        for _ in 0..<(digitCount / 2) {
+            firstHalf += current % 10
+            current = current / 10
+        }
+
+        if firstHalf == lastHalf { result += 1 }
     }
+
+    return result
 }
+
+print(countSymmetricIntegers(1, 100))
+print(countSymmetricIntegers(1200, 1230))

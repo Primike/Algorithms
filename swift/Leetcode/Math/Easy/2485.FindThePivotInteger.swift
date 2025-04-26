@@ -16,3 +16,34 @@ func pivotInteger(_ n: Int) -> Int {
 print(pivotInteger(8))
 print(pivotInteger(1))
 print(pivotInteger(-1))
+
+
+// Time: O(log(n)), Space: O(1)
+func pivotInteger2(_ n: Int) -> Int {
+    func arithmetic(_ x: Int, _ y: Int) -> Int {
+        return (y - x + 1) * (x + y) / 2
+    }
+
+    if n == 1 { return 1 }
+
+    let total = arithmetic(1, n)
+    var left = 1, right = n 
+
+    while left < right {
+        let mid = (right + left) / 2
+        let leftSum = arithmetic(1, mid - 1)
+
+        if leftSum > total - leftSum - mid {
+            right = mid
+        } else if leftSum < total - leftSum - mid {
+            left = mid + 1
+        } else {
+            return mid
+        }
+    }
+
+    if left == 1  { return -1 }
+
+    let leftSum = arithmetic(1, left - 1)
+    return (leftSum == total - left - leftSum) ? left : -1
+}

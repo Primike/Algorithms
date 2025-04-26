@@ -7,16 +7,17 @@
 
 // Time: O(log_m(n)), Space: O(1)
 func numWaterBottles(_ numBottles: Int, _ numExchange: Int) -> Int {
-    var result = numBottles
-    var current = numBottles
+    var result = 0
+    var filled = numBottles
 
-    while current >= numExchange {
-        let remainder = current % numExchange
-        result += current / numExchange
-        current = (current / numExchange) + remainder
+    while filled >= numExchange {
+        let refills = filled / numExchange
+        let remainder = filled % numExchange
+        result += filled - remainder
+        filled = refills + remainder
     }
 
-    return result
+    return result + filled
 }
 
 print(numWaterBottles(9, 3))
