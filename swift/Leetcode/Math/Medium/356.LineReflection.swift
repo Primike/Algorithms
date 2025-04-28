@@ -4,31 +4,30 @@
 // reflecting all points over the given line, the original points' set is 
 // the same as the reflected ones. Note that there can be repeated points.
 
+// Time: O(n * log(n)), Space: O(n)
 func isReflected(_ points: [[Int]]) -> Bool {
-    var yLines = [Int: [Int]]()
+    var points = Array(Set(points)).map { [Double($0[0]), Double($0[1])] }
+    points.sort { $0[0] < $1[0] }
+    var yLines = [Double: [Double]]()
 
     for point in points {
         yLines[point[1], default: []].append(point[0])
     }
-
-    for key in yLines.keys {
-        yLines[key] = Array(Set(yLines[key]!)).sorted()
-    }
-
-    var line = (Double(yLines[points[0][1]]!.last!) + Double(yLines[points[0][1]]!.first!)) / 2
+    
+    let leftPoint = yLines[points[0][1]]!.first!
+    let rightPoint = yLines[points[0][1]]!.last!
+    var midPoint = (leftPoint + rightPoint) / 2
 
     for values in yLines.values {
         var left = 0, right = values.count - 1
 
         while left <= right {
-            let mid = Double(values[left] + values[right]) / 2
-
-            if mid == line {
-                left += 1
-                right -= 1
-            } else {
-                return false
+            if (values[left] + values[right]) / 2 != midPoint { 
+                return false 
             }
+
+            left += 1
+            right -= 1
         }
     }
 

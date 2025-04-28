@@ -4,6 +4,7 @@
 // AB has score A + B, where A and B are balanced parentheses strings.
 // (A) has score 2 * A, where A is a balanced parentheses string.
 
+// Time: O(n), Space: O(1)
 func scoreOfParentheses(_ s: String) -> Int {
     let s = Array(s)
     var opened = 0

@@ -11,9 +11,7 @@ func numRabbits(_ answers: [Int]) -> Int {
     var result = 0
 
     for (key, value) in dict {
-        let groupSize = key + 1
-        let groups = Int(ceil(Double(value) / Double(groupSize)))
-        result += groups * groupSize
+        result += ((value + key) / (key + 1)) * (key + 1)
     }
 
     return result
