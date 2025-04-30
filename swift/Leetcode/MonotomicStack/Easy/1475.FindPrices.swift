@@ -12,16 +12,15 @@
 // Time: O(n), Space: O(n)
 func finalPrices(_ prices: [Int]) -> [Int] {
     var result = prices
-    let prices = prices + [0]
-    var stack = [Int]()
+    var monotomic = [(Int, Int)]()
 
-    for (i, price) in prices.enumerated() {
-        while let last = stack.last, price <= prices[last] {
-            stack.removeLast()
-            result[last] = prices[last] - price
+    for j in 0..<prices.count {
+        while let (i, last) = monotomic.last, last >= prices[j] {
+            result[i] = last - prices[j]
+            monotomic.removeLast()
         }
 
-        stack.append(i)
+        monotomic.append((j, prices[j]))
     }
 
     return result

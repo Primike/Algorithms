@@ -87,7 +87,8 @@ LinkedList:
 Math: 
     [
         Euclidean,
-        log10(x) + 1
+        log10(x) + 1,
+        Geometric series
     ]
 
     Medium: 356?, 781?, 856?, 939?, 1780, 2033, 2523, 2579, 2601
