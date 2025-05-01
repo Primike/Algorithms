@@ -1,4 +1,5 @@
-// Given the root of a binary tree, return the length of the diameter of the tree.
+// Given the root of a binary tree, 
+// return the length of the diameter of the tree.
 
 // Time: O(n), Space: O(h)
 func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
@@ -17,4 +18,3 @@ func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
     dfs(root)
     return result
 }
-

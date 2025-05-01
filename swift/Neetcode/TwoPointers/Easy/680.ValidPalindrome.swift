@@ -1,6 +1,7 @@
 // Given a string s, return true if the s can be palindrome after 
 // deleting at most one character from it.
 
+// Time: O(n), Space: O(1)
 func validPalindrome(_ s: String) -> Bool {
     let s = Array(s)
     var left = 0

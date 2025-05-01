@@ -4,25 +4,26 @@
 
 // Time: O(n), Space: O(n)
 func removeDuplicateLetters(_ s: String) -> String {
-    var sDict = Array(s).reduce(into: [:]) { $0[$1, default: 0] += 1 }
-    var addedLetters = Set<Character>()
-    var stack = [Character]()
+    var dict = s.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+    var monotomic = [Character]()
+    var visited = Set<Character>()
 
     for letter in s {
-        sDict[letter, default: 0] -= 1
+        dict[letter, default: 1] -= 1
 
-        if addedLetters.contains(letter) { continue }
+        if dict[letter] == 0 { dict[letter] = nil }
+        if visited.contains(letter) { continue }
 
-        while let last = stack.last, sDict[last, default: 0] > 0, last > letter {
-            stack.removeLast()
-            addedLetters.remove(last)
+        while let last = monotomic.last, last > letter, dict.keys.contains(last) {
+            monotomic.removeLast()
+            visited.remove(last)
         }
 
-        stack.append(letter)
-        addedLetters.insert(letter)
+        monotomic.append(letter)
+        visited.insert(letter)
     }
 
-    return String(stack)
+    return String(monotomic)
 }
 
 print(removeDuplicateLetters("bcabc"))

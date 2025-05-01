@@ -103,7 +103,7 @@ Matrix:
 
 
 Monotomic Stack:
-    Medium: 503, 316?, 962, 2832, 2863
+    Medium: 316, 503, 962, 2832, 2863
 
 
 
@@ -181,3 +181,6 @@ Deque
 DAG 2^n * n
 Sweep Line
 Python: 1634, 1644
+
+
+1650

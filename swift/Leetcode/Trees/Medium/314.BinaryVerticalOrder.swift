@@ -7,25 +7,25 @@
 func verticalOrder(_ root: TreeNode?) -> [[Int]] {
     guard let root = root else { return [] }
 
-    var xToNodes = [Int: [Int]]()
-    var queue = [(root, 0)]
+    var dict = [Int: [Int]]()
+    var queue = [(0, root)]
 
     while !queue.isEmpty {
         for _ in 0..<queue.count {
-            let (node, x) = queue.removeFirst()
-            xToNodes[x, default: []].append(node.val)
-            
-            if let left = node.left { queue.append((left, x - 1)) }
-            if let right = node.right { queue.append((right, x + 1)) }
+            let (x, node) = queue.removeFirst()
+            dict[x, default: []].append(node.val)
+
+            if let left = node.left { queue.append((x - 1, left)) }
+            if let right = node.right { queue.append((x + 1, right)) }
         }
     }
 
-    let minimum = xToNodes.keys.min() ?? 0
-    let maximum = xToNodes.keys.max() ?? 0
+    let minimum = dict.keys.min() ?? 0
+    let maximum = dict.keys.max() ?? 0
     var result = [[Int]]()
 
     for i in minimum...maximum {
-        result.append(xToNodes[i, default: []])
+        if let array = dict[i] { result.append(array) }
     }
 
     return result

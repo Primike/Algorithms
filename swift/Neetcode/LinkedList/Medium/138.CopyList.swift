@@ -10,17 +10,21 @@ func copyRandomList(_ head: Node?) -> Node? {
     var current: Node? = head
 
     while let node = current {
-        nodes[node] = Node(node.val)
-        current = current?.next
+        let newNode = Node(node.val)
+        nodes[node] = newNode
+        current = node.next
     }
 
+    var copy: Node? = nodes[head]
     current = head
 
     while let node = current {
-        if let next = node.next { nodes[node]?.next = nodes[next] }
-        if let random = node.random { nodes[node]?.random = nodes[random] }
-        current = current?.next
+        if node.next != nil { copy?.next = nodes[node.next!] }
+        if node.random != nil { copy?.random = nodes[node.random!] }
+
+        current = node.next
+        copy = copy?.next
     }
 
-    return nodes[head] 
+    return nodes[head]
 }
