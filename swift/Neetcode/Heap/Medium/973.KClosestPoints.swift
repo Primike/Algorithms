@@ -13,7 +13,7 @@ struct Point: Comparable {
     }
 }
 
-// Time: nlog(k), Space: k
+// Time: O(n * log(k)), Space: O(k)
 func kClosest(_ points: [[Int]], _ k: Int) -> [[Int]] {
     var heap = Heap<Point>(.maxHeap)
 

@@ -2,6 +2,7 @@
 // The digits are stored in reverse order, and each of their nodes contains a single digit. 
 // Add the two numbers and return the sum as a linked list.
 
+// Time: O(n), Space: O(1)
 func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
     var l1 = l1, l2 = l2
     let newHead = ListNode(0) 
