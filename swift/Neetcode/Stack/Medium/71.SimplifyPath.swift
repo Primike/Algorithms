@@ -2,6 +2,7 @@
 // to a file or directory in a Unix-style file system, convert it to the 
 // simplified canonical path.
 
+// Time: O(n), Space: O(n)
 func simplifyPath(_ path: String) -> String {
     let path = path.components(separatedBy: "/")
     var result = [String]()

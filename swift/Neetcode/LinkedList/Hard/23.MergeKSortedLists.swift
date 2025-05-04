@@ -2,7 +2,48 @@
 // linked-list is sorted in ascending order.
 // Merge all the linked-lists into one sorted linked-list and return it.
 
+struct Node: Comparable, Equatable {
+    var node: ListNode
+    var value: Int
+
+    static func < (_ l: Node, _ r: Node) -> Bool {
+        return l.value < r.value
+    }
+
+    static func == (_ l: Node, _ r: Node) -> Bool {
+        return l.value == r.value
+    }
+}
+
+// Time: O(n * log(k)), Space: O(k)
 func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
+    var heap = Heap<Node>(.minHeap)
+
+    for list in lists {
+        guard let head = list else { continue }
+        heap.push(Node(node: head, value: head.val))
+    }
+
+    var newHead = ListNode()
+    var current = newHead
+
+    while !heap.isEmpty {
+        var node = heap.pop()!
+        current.next = node.node
+        current = node.node
+
+        if let next = node.node.next {
+            node.node = next
+            node.value = next.val
+            heap.push(node)
+        }
+    }
+
+    return newHead.next
+}
+
+
+func mergeKLists2(_ lists: [ListNode?]) -> ListNode? {
     if lists.count == 0 { return nil }
     if lists.count == 1 { return lists[0] }
 

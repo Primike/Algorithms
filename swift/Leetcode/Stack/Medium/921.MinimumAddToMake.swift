@@ -7,19 +7,25 @@
 // In one move, you can insert a parenthesis at any position of the string.
 // Return the minimum number of moves required to make s valid.
 
-// Time: O(n), Space: O(n)
+// Time: O(n), Space: O(1)
 func minAddToMakeValid(_ s: String) -> Int {
-    var stack = [Character]()
-    
-    for letter in s {
-        if let last = stack.last, letter == ")", last == "(" {
-            stack.removeLast()  
+    var result = 0
+    var opened = 0
+
+    for bracket in s {
+        if bracket == "(" {
+            opened += 1
         } else {
-            stack.append(letter)
+            opened -= 1
+        }
+
+        if opened < 0 {
+            result += 1
+            opened = 0
         }
     }
 
-    return stack.count
+    return result + opened
 }
 
 print(minAddToMakeValid("())"))
