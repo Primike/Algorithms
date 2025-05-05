@@ -23,4 +23,4 @@ func longestOnes(_ nums: [Int], _ k: Int) -> Int {
 }
 
 print(longestOnes([1,1,1,0,0,0,1,1,1,1,0], 2))
-print(longestOnes())
+print(longestOnes([0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], 3))

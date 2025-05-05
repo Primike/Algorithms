@@ -4,6 +4,7 @@
 // There may be multiple nodes in the same row and same column. 
 // In such a case, sort these nodes by their values.
 
+// Time: O(n * log(n)), Space: O(n)
 func verticalTraversal(_ root: TreeNode?) -> [[Int]] {
     guard let root = root else { return [] }
 
@@ -31,4 +32,29 @@ func verticalTraversal(_ root: TreeNode?) -> [[Int]] {
     }
 
     return result
+}
+
+func verticalTraversal2(_ root: TreeNode?) -> [[Int]] {
+    var nodes = [Int: [(Int, Int)]]()
+
+    func dfs(_ root: TreeNode?, _ x: Int, _ y: Int) {
+        guard let root = root else { return }
+
+        nodes[x, default: []].append((root.val, y))
+        dfs(root.left, x - 1, y + 1)
+        dfs(root.right, x + 1, y + 1)
+    }
+
+    dfs(root, 0, 0)
+    var result = [[(Int, Int)]]()
+    let minimum = nodes.keys.min() ?? 0
+    let maximum = nodes.keys.max() ?? 0
+
+    for i in minimum...maximum {
+        if let array = nodes[i] { 
+            result.append(array.sorted { ($0.1, $0.0) < ($1.1, $1.0) }) 
+        }
+    }   
+
+    return result.map { $0.map { $0.0 } }
 }

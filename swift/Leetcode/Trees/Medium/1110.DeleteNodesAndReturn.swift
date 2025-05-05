@@ -6,27 +6,23 @@
 
 // Time: O(n), Space: O(h)
 func delNodes(_ root: TreeNode?, _ to_delete: [Int]) -> [TreeNode?] {
-    guard let root = root else { return [] }
-
     let to_delete = Set(to_delete)
-    var roots = [TreeNode?]()
-    
+    var result = [TreeNode]()
+
     func dfs(_ root: TreeNode?) -> TreeNode? {
         guard let root = root else { return nil }
 
-        let left = dfs(root.left), right = dfs(root.right)
-        root.left = left
-        root.right = right
-        
-        if !to_delete.contains(root.val) { return root }
-
-        if left != nil { roots.append(left) }
-        if right != nil { roots.append(right) }
-        return nil 
+        if to_delete.contains(root.val) {
+            if let left = dfs(root.left) { result.append(left) }
+            if let right = dfs(root.right) { result.append(right) }
+            return nil
+        } else {
+            root.left = dfs(root.left)
+            root.right = dfs(root.right)
+            return root
+        }
     }
 
-    dfs(root)
-    if !to_delete.contains(root.val) { roots.append(root) }
-
-    return roots
+    if let node = dfs(root) { result.append(node) }
+    return result
 }

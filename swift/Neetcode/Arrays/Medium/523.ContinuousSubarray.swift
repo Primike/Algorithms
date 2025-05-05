@@ -4,18 +4,17 @@
 //its length is at least two, and
 //the sum of the elements of the subarray is a multiple of k.
 
+// Time: O(n), Space: O(min(n, k))
 func checkSubarraySum(_ nums: [Int], _ k: Int) -> Bool {
-    var dict: [Int: Int] = [0: -1]
-    var currentSum = 0
+    var dict = [0: -1]
+    var sum = 0
 
-    for (i, number) in nums.enumerated() {
-        currentSum += number
+    for i in 0..<nums.count {
+        sum += nums[i]
+        let remainder = sum % k
 
-        if let index = dict[currentSum % k], i - index >= 2 {
-            return true
-        } else if dict[currentSum % k] == nil {
-            dict[currentSum % k] = i
-        }
+        if let value = dict[remainder], i - value >= 2 { return true }
+        if !dict.keys.contains(remainder) { dict[remainder] = i }
     }
 
     return false

@@ -2,6 +2,7 @@
 // return true if there are two distinct indices i and j in the array 
 // such that nums[i] == nums[j] and abs(i - j) <= k.
 
+// Time: O(n), Space: O(k)
 func containsNearbyDuplicate(_ nums: [Int], _ k: Int) -> Bool {
     var window = Set<Int>()
 

@@ -2,6 +2,7 @@
 //remove the duplicates in-place such that each unique element appears only once. 
 //The relative order of the elements should be kept the same.
 
+// Time: O(n), Space: O(1)
 func removeDuplicates(_ nums: inout [Int]) -> Int {
     var left = 1
 
