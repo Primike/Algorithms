@@ -1,6 +1,7 @@
 // Given an array of strings strs, group the anagrams together. 
 // You can return the answer in any order.
 
+// Time: O(n * l), Space: O(n * l)
 func groupAnagrams(_ strs: [String]) -> [[String]] {
     var dict = [String: [String]]()
 
@@ -19,3 +20,5 @@ func groupAnagrams(_ strs: [String]) -> [[String]] {
 }
 
 print(groupAnagrams(["eat","tea","tan","ate","nat","bat"]))
+print(groupAnagrams([""]))
+print(groupAnagrams(["a"]))

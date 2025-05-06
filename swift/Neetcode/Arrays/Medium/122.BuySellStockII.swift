@@ -2,6 +2,7 @@
 // the price of a given stock on the ith day.
 // Find and return the maximum profit you can achieve.
 
+// Time: O(n), Space: O(1)
 func maxProfit(_ prices: [Int]) -> Int {
     var profit = 0
 

@@ -2,6 +2,7 @@
 // return the k closest integers to x in the array. 
 // The result should also be sorted in ascending order.
 
+// Time: O(log(n) + k), Space: O(1)
 func findClosestElements(_ arr: [Int], _ k: Int, _ x: Int) -> [Int] {
     var left = 0, right = arr.count - 1
 
