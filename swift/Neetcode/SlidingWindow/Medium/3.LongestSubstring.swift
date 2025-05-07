@@ -1,6 +1,7 @@
 // Given a string s, find the length of the longest substring
 // without repeating characters.
 
+// Time: O(n), Space: O(26)
 func lengthOfLongestSubstring(_ s: String) -> Int {
     var s = Array(s)
     var window = Set<Character>()

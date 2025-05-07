@@ -1,5 +1,6 @@
 // Given an array nums of size n, return the majority element.
 
+// Time: O(n), Space: O(1)
 func majorityElement(_ nums: [Int]) -> Int {
     var result = 0
     var count = 0
