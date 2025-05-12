@@ -67,42 +67,37 @@ print(accountsMerge([
     ["Fern","Fern5@m.co","Fern1@m.co","Fern0@m.co"]]))
 
 
-func accountsMerge2(_ accountList: [[String]]) -> [[String]] {
+func accountsMerge2(_ accounts: [[String]]) -> [[String]] {
     var neighbors = [String: [String]]()
-    
-    for account in accountList {
-        for j in 2..<account.count {
-            neighbors[account[1], default: []].append(account[j])
-            neighbors[account[j], default: []].append(account[1])
+
+    for account in accounts {
+        for i in 2..<account.count {
+            neighbors[account[1], default: []].append(account[i])
+            neighbors[account[i], default: []].append(account[1])
         }
     }
 
     var visited = Set<String>()
 
-    func dfs(_ mergedAccount: inout [String], _ node: String) {
-        if visited.contains(node) { return }
+    func dfs(_ email: String) -> [String] {
+        if visited.contains(email) { return [] }
 
-        visited.insert(node)
-        mergedAccount.append(node)
-                    
-        for next in neighbors[node, default: []] {
-            dfs(&mergedAccount, next)
+        visited.insert(email)
+        var emails = [email]
+
+        for next in neighbors[email, default: []] {
+            emails += dfs(next)
         }
+
+        return emails
     }
 
     var result = [[String]]()
 
-    for account in accountList {
+    for account in accounts {
         if visited.contains(account[1]) { continue }
-
-        let name = account[0]
-        let root = account[1]
-        var mergedAccount = [name]   
-
-        dfs(&mergedAccount, root)
-        mergedAccount[1...].sort()
-        result.append(mergedAccount)
+        result.append([account[0]] + dfs(account[1]).sorted())
     }
-    
+
     return result
 }

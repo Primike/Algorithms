@@ -4,34 +4,36 @@
 // left, right, up, or down. You may not move diagonally or 
 // move outside the boundary (i.e., wrap-around is not allowed).
 
+// Time: O(m * n), Space: O(m * n)
 func longestIncreasingPath(_ matrix: [[Int]]) -> Int {
     let rows = matrix.count, cols = matrix[0].count
-    var memo = [String: Int]()
+    let directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    var memo = [[Int]: Int]()
 
-    func dfs(_ i: Int, _ j: Int, _ last: Int) -> Int {
-        let key = "\(i),\(j)"
+    func dfs(_ i: Int, _ j: Int) -> Int {
+        if let value = memo[[i, j]] { return value }
 
-        if i < 0 || i >= rows || j < 0 || j >= cols { return .min }
-        if matrix[i][j] <= last { return 0 }
-        if let value = memo[key] { return value }
-        
-        var result = 0
-        let directions = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
+        var maximum = 0
 
         for (di, dj) in directions {
-            result = max(result, dfs(di, dj, matrix[i][j]))
+            let r = i + di, c = j + dj
+
+            if r < 0 || r >= rows || c < 0 || c >= cols { continue }
+            if matrix[r][c] >= matrix[i][j] { continue }
+
+            maximum = max(maximum, dfs(r, c))
         }
 
-        result += 1
-        memo[key] = result
-        return result
+        maximum += 1
+        memo[[i, j]] = maximum
+        return maximum
     }
 
     var result = 0
 
     for i in 0..<rows {
         for j in 0..<cols {
-            result = max(result, dfs(i, j, .min))
+            result = max(result, dfs(i, j))
         }
     }
 

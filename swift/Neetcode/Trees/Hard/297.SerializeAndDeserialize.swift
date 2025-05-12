@@ -1,3 +1,47 @@
+// Time: O(n), Space: O(n)
+class Codec {
+    func serialize(_ root: TreeNode?) -> String {
+        var result = ""
+
+        func dfs(_ root: TreeNode?) {
+            guard let root = root else { 
+                result += "nil,"
+                return 
+            }
+
+            result += "\(root.val),"
+
+            dfs(root.left)
+            dfs(root.right)
+        }
+
+        dfs(root)
+        result.dropLast()
+        return result
+    }
+    
+    func deserialize(_ data: String) -> TreeNode? {
+        let data = data.components(separatedBy: ",")
+        var i = 0
+
+        func dfs() -> TreeNode? {
+            if data[i] == "nil" { 
+                i += 1
+                return nil 
+            }
+
+            let newNode = TreeNode(Int(data[i])!)
+            i += 1
+            newNode.left = dfs()
+            newNode.right = dfs()
+
+            return newNode
+        }
+
+        return dfs()
+    }
+}
+
 class Codec {
     func serialize(_ root: TreeNode?) -> String {
         guard let root = root else { return "" }
