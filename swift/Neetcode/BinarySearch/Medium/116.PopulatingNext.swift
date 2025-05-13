@@ -3,6 +3,7 @@
 // its next right node. If there is no next right node, 
 // the next pointer should be set to NULL.
 
+// Time: O(n), Space: O(1)
 func connect(_ root: Node?) -> Node? {
     var node = root
     var nextLevel = node?.left

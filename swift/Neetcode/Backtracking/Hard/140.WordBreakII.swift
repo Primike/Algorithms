@@ -4,6 +4,33 @@
 
 // Time: O(n * 2^n), Space: O(n * 2^n)
 func wordBreak(_ s: String, _ wordDict: [String]) -> [String] {
+    let s = Array(s)
+    var tab = Array(repeating: [[String]](), count: s.count + 1)
+    tab[0] = [[""]]
+
+    for i in 0..<s.count {
+        for word in wordDict {
+            if i + word.count > s.count { continue }
+
+            let string = String(s[i..<(i + word.count)])
+            
+            if string == word {
+                for sentence in tab[i] {
+                    tab[i + word.count].append(sentence + [word])
+                }
+            }
+        }
+    }
+
+    return tab[s.count].map { $0[1...].joined(separator: " ") }
+}
+
+print(wordBreak("catsanddog", ["cat","cats","and","sand","dog"]))
+print(wordBreak("pineapplepenapple", ["apple","pen","applepen","pine","pineapple"]))
+print(wordBreak("catsandog", ["cats","dog","sand","and","cat"]))
+
+
+func wordBreak2(_ s: String, _ wordDict: [String]) -> [String] {
     let s = Array(s).map { String($0) }
     let wordDict = Set(wordDict)
     let alphaSet = Set(wordDict.joined())
@@ -37,7 +64,3 @@ func wordBreak(_ s: String, _ wordDict: [String]) -> [String] {
 
     return dp(0)
 }
-
-print(wordBreak("catsanddog", ["cat","cats","and","sand","dog"]))
-print(wordBreak("pineapplepenapple", ["apple","pen","applepen","pine","pineapple"]))
-print(wordBreak("catsandog", ["cats","dog","sand","and","cat"]))
