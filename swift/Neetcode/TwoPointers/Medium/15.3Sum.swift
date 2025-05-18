@@ -3,29 +3,30 @@
 // such that i != j, i != k, and j != k, 
 // and nums[i] + nums[j] + nums[k] == 0.
 
+// Time: O(n^2), Space: O(1)
 func threeSum(_ nums: [Int]) -> [[Int]] {
-    var nums = nums.sorted()
+    let nums = nums.sorted()
     var result = [[Int]]()
 
-    for i in 0..<nums.count - 2 {
+    for i in 0..<(nums.count - 2) {
         if i > 0, nums[i - 1] == nums[i] { continue }
 
-        var left = i + 1, right = nums.count - 1 
-        
-        while left < right, right < nums.count {
-            var sum = nums[i] + nums[left] + nums[right]
+        var j = i + 1, k = nums.count - 1 
 
-            if sum == 0 {
-                result.append([nums[i], nums[left], nums[right]])
-                left += 1
+        while j < k {
+            var sum = nums[i] + nums[j] + nums[k]
 
-                while left < right, nums[left] == nums[left - 1] { 
-                    left += 1 
-                }
-            } else if sum > 0 {
-                right -= 1
+            if sum > 0 {
+                k -= 1
+            } else if sum < 0 {
+                j += 1
             } else {
-                left += 1
+                result.append([nums[i], nums[j], nums[k]])
+                var last = nums[j]
+
+                while j < k, last == nums[j] {
+                    j += 1
+                }
             }
         }
     }
