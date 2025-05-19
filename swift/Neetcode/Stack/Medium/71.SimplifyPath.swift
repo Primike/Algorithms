@@ -4,20 +4,18 @@
 
 // Time: O(n), Space: O(n)
 func simplifyPath(_ path: String) -> String {
-    let path = path.components(separatedBy: "/")
-    var result = [String]()
+    let path = path.components(separatedBy: "/").filter { $0 != "" }
+    var stack = [String]()
 
-    for item in path {
-        if item == "." || item == "" {
-            continue
-        } else if item == ".." {
-            if !result.isEmpty { result.removeLast() }
-        } else {
-            result.append(item)
+    for string in path {
+        if string == ".." {
+            if !stack.isEmpty { stack.removeLast() }
+        } else if string != "." {
+            stack.append(string)
         }
     }
-    
-    return "/" + result.joined(separator: "/")
+
+    return "/" + stack.joined(separator: "/")
 }
 
 print(simplifyPath("/home/"))
