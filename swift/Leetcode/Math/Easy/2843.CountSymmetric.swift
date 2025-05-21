@@ -11,24 +11,27 @@ func countSymmetricIntegers(_ low: Int, _ high: Int) -> Int {
 
     for i in low...high {
         let digitCount = Int(floor(log10(Double(i)))) + 1
+
         if digitCount % 2 != 0 { continue }
 
-        var lastHalf = 0
         var current = i
+        var left = 0, right = 0
+        var count = 0
 
-        for _ in 0..<(digitCount / 2) {
-            lastHalf += current % 10
-            current = current / 10
+        while current > 0 {
+            let digit = current % 10
+            current /= 10
+
+            if count < digitCount / 2 {
+                right += digit
+            } else {
+                left += digit
+            }
+
+            count += 1
         }
 
-        var firstHalf = 0
-        
-        for _ in 0..<(digitCount / 2) {
-            firstHalf += current % 10
-            current = current / 10
-        }
-
-        if firstHalf == lastHalf { result += 1 }
+        if left == right { result += 1 }
     }
 
     return result
