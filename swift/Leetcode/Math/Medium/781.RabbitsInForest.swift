@@ -11,7 +11,11 @@ func numRabbits(_ answers: [Int]) -> Int {
     var result = 0
 
     for (key, value) in dict {
-        result += ((value + key) / (key + 1)) * (key + 1)
+        let groupSize = key + 1
+        var groups = value / groupSize
+        if value % groupSize > 0 { groups += 1 }
+        
+        result += groupSize * groups
     }
 
     return result

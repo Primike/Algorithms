@@ -18,3 +18,24 @@ func checkPowersOfThree(_ n: Int) -> Bool {
 print(checkPowersOfThree(12))
 print(checkPowersOfThree(91))
 print(checkPowersOfThree(21))
+
+
+func checkPowersOfThree2(_ n: Int) -> Bool {
+    var power = 0
+
+    while Int(pow(3.0, Double(power))) < n {
+        power += 1
+    }
+
+    var current = n
+
+    while current > 0, power >= 0 {
+        let number = Int(pow(3.0, Double(power)))
+
+        if number <= current { current -= number }
+
+        power -= 1
+    }
+
+    return current == 0
+}
