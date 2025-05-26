@@ -9,36 +9,40 @@
 // return the one with the smallest num1 value. 
 // If no such numbers exist, return [-1, -1].
 
-func _sieve(_ upperLimit: Int) -> [Bool] {
-    var sieve = [Bool](repeating: true, count: upperLimit + 1)
-    if upperLimit >= 0 { sieve[0] = false }
-    if upperLimit >= 1 { sieve[1] = false }
-    if upperLimit < 2 { return sieve }
-    let limit = Int(Double(upperLimit).squareRoot())
-    for number in 2...limit {
-        if sieve[number] {
-            for multiple in stride(from: number * number, through: upperLimit, by: number) {
-                sieve[multiple] = false
-            }
-        }
-    }
-    return sieve
-}
-
+// Time: O(n * log(log(n))), Space: O(n)
 func closestPrimes(_ left: Int, _ right: Int) -> [Int] {
-    let sieveArray = _sieve(right)
-    let primeNumbers = (left...right).filter { sieveArray[$0] }
-    if primeNumbers.count < 2 { return [-1, -1] }
-    var minDifference = Int.max
-    var closestPair = (-1, -1)
-    for i in 1..<primeNumbers.count {
-        let difference = primeNumbers[i] - primeNumbers[i - 1]
-        if difference < minDifference {
-            minDifference = difference
-            closestPair = (primeNumbers[i - 1], primeNumbers[i])
+    if right == left { return [-1, -1] }
+    
+    var isPrime = Array(repeating: true, count: right + 1)
+    var sieve = [Int]()
+
+    for i in 2...right {
+        if !isPrime[i] { continue }
+        if i >= left { sieve.append(i) }
+        
+        var number = i + i
+
+        while number <= right {
+            isPrime[number] = false
+            number += i
         }
     }
-    return [closestPair.0, closestPair.1]
+
+    if sieve.count <= 1 { return [-1, -1] }
+
+    var result = [-1, -1]
+    var closest = Int.max
+
+    for i in 1..<sieve.count {
+        let difference = sieve[i] - sieve[i - 1]
+
+        if closest > difference {
+            result = [sieve[i - 1], sieve[i]]
+            closest = difference
+        }
+    }
+
+    return result
 }
 
 print(closestPrimes(10, 19))

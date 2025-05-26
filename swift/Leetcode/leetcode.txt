@@ -93,11 +93,15 @@ Math:
         Euclidean,
         log10(x) + 1,
         Geometric series
+        Fast Exponentiation
+        Congruence Modulo n
+        Sieve of Eratosthenes
+        Prime Factorization
     ]
 
-    Medium: 356?, 856?, 939?, 1922?, 2033, 2523, 2579, 2601
-    Hard: 2366?, 2818!, 2999
-    Tricks: e2485, e2843, m1780
+    Medium: 356?, 856?, 939?, 1922?, 2033?, 2523?, 2601
+    Hard: 2338!!, 2366?, 2818!, 2999
+    Tricks: e2485, e2843, m1780, m2145
 
 
 
@@ -144,7 +148,7 @@ Stack:
 
 
 String:
-    Medium: 227, 418!!, 2914, 3163
+    Medium: 227, 418!!, 2131?, 2914, 3163
     Hard: 214!, 273!, 282?, 564, 1106
     Tricks: m1062
 
@@ -185,11 +189,3 @@ Deque
 DAG 2^n * n
 Sweep Line
 Python: 1634, 1644
-
-
-
-227, 708, 31, 498, 394, 6
-1229, 146
-1094, 162, 528, 670, 647, 2094, 1868, 73, 1539, 71, 9, 1650, 270, 173
-
-quickselect

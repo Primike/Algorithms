@@ -6,20 +6,23 @@
 // each element is strictly greater than its preceding element.
 
 func primeSubOperation(_ nums: [Int]) -> Bool {
-    let maxElement = nums.max() ?? 0
-    let sieveSize = max(2, maxElement + 1)
+    let sieveSize = max(2, (nums.max() ?? 0) + 1)
     let limit = Int(sqrt(Double(sieveSize))) + 1
-    var sieve = Array(repeating: 1, count: sieveSize)
-    sieve[0] = 0
-    sieve[1] = 0
+    var sieve = Array(repeating: true, count: sieveSize)
+    sieve[0] = false
+    sieve[1] = false
 
     for i in 2..<limit {
-        if sieve[i] == 1 {
-            for j in stride(from: i * i, to: sieveSize, by: i) {
-                sieve[j] = 0
-            }
+        if !sieve[i] { continue }
+        
+        var current = i * i
+
+        while current < sieveSize {
+            sieve[current] = false
+            current += i
         }
     }
+
     var current = 1
     var i = 0
 
@@ -27,7 +30,7 @@ func primeSubOperation(_ nums: [Int]) -> Bool {
         let difference = nums[i] - current
         if difference < 0 { return false }
 
-        if sieve[difference] == 1 || difference == 0 {
+        if sieve[difference] || difference == 0 {
             i += 1
             current += 1
         } else {

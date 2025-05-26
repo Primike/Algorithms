@@ -9,7 +9,9 @@
 
 // Time: O(1), Space: O(1)
 func coloredCells(_ n: Int) -> Int {
-    return 1 + n * (n - 1) * 2
+    let totalGridArea = (n * 2 - 1) * (n * 2 - 1)
+    let cornerBlanks = (n * (n + 1) / 2) - n
+    return totalGridArea - 4 * cornerBlanks
 }
 
 print(coloredCells(1))
