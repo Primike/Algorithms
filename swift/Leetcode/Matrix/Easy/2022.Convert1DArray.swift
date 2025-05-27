@@ -9,12 +9,16 @@
 
 // Time: O(n), Space: O(m * n)
 func construct2DArray(_ original: [Int], _ m: Int, _ n: Int) -> [[Int]] {
-    if m * n != original.count { return [] }
+    if original.count != m * n { return [] }
 
-    var result = [[Int]]()
+    var result = Array(repeating: Array(repeating: 0, count: n), count: m)
+    var index = 0
 
     for i in 0..<m {
-        result.append(Array(original[(i * n)..<(i * n + n)]))
+        for j in 0..<n {
+            result[i][j] = original[index]
+            index += 1
+        }
     }
 
     return result

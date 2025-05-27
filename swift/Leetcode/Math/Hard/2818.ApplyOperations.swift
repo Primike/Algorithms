@@ -1,81 +1,88 @@
-class Solution {
-    let MOD = 1000000007
-    func maximumScore(_ nums: [Int], _ k: Int) -> Int {
-        let n = nums.count
-        var primeScores = [Int](repeating: 0, count: n)
-        let maxElement = nums.max()!
-        let primes = getPrimes(maxElement)
-        for i in 0..<n {
-            var num = nums[i]
-            for prime in primes {
-                if prime * prime > num { break }
-                if num % prime != 0 { continue }
-                primeScores[i] += 1
-                while num % prime == 0 { num /= prime }
+// Initially, you start with a score of 1. You have to maximize your score 
+// by applying the following operation at most k times:
+// Choose any non-empty subarray nums[l, ..., r] that you haven't chosen previously.
+// Choose an element x of nums[l, ..., r] with the highest prime score. 
+// If multiple such elements exist, choose the one with the smallest index.
+// Multiply your score by x.
+// Return the maximum possible score after applying at most k operations.
+
+func maximumScore(_ nums: [Int], _ k: Int) -> Int {
+    var primeScores = Array(repeating: 0, count: nums.count)
+
+    for (i, number) in nums.enumerated() {
+        if number < 2 { continue }
+
+        var factors = Set<Int>()
+        var current = number
+
+        if current % 2 == 0 { factors.insert(2) }
+
+        while current % 2 == 0 {
+            current /= 2
+        }
+
+        var odd = 3
+
+        while odd * odd <= current {
+            if current % odd == 0 { factors.insert(odd) }
+
+            while current % odd == 0 {
+                current /= odd
             }
-            if num > 1 { primeScores[i] += 1 }
+
+            odd += 2
         }
 
-        var nextDominant = [Int](repeating: n, count: n)
-        var prevDominant = [Int](repeating: -1, count: n)
-        var stack = [Int]()
-        for i in 0..<n {
-            while !stack.isEmpty && primeScores[stack.last!] < primeScores[i] {
-                let top = stack.removeLast()
-                nextDominant[top] = i
-            }
-            if !stack.isEmpty {
-                prevDominant[i] = stack.last!
-            }
-            stack.append(i)
-        }
-
-        var numOfSubarrays = [Int](repeating: 0, count: n)
-        for i in 0..<n {
-            numOfSubarrays[i] = (nextDominant[i] - i) * (i - prevDominant[i])
-        }
-
-        let sortedArray = nums.enumerated().sorted { $0.element > $1.element }
-        var score = 1
-        var remainingK = k
-        var processingIndex = 0
-
-        func power(_ base: Int, _ exponent: Int) -> Int {
-            var res = 1
-            var b = base % MOD
-            var e = exponent
-            while e > 0 {
-                if e % 2 == 1 { res = (res * b) % MOD }
-                b = (b * b) % MOD
-                e /= 2
-            }
-            return res
-        }
-
-        while remainingK > 0 {
-            let (index, num) = sortedArray[processingIndex]
-            processingIndex += 1
-            let operations = min(remainingK, numOfSubarrays[index])
-            score = (score * power(num, operations)) % MOD
-            remainingK -= operations
-        }
-
-        return score
+        if current > 1 { factors.insert(current) }
+        primeScores[i] = factors.count
     }
 
-    func getPrimes(_ limit: Int) -> [Int] {
-        if limit < 2 { return [] }
-        var isPrime = [Bool](repeating: true, count: limit + 1)
-        var primes = [Int]()
-        for number in 2...limit {
-            if !isPrime[number] { continue }
-            primes.append(number)
-            var multiple = number * number
-            while multiple <= limit {
-                isPrime[multiple] = false
-                multiple += number
-            }
+    var nextDominant = Array(repeating: nums.count, count: nums.count)
+    var prevDominant = Array(repeating: -1, count: nums.count)
+    var monotomic = [(Int, Int)]()
+
+    for i in 0..<nums.count {
+        while let last = monotomic.last, last.1 < primeScores[i] {
+            nextDominant[last.0] = i
+            monotomic.removeLast()
         }
-        return primes
+
+        if let last = monotomic.last { prevDominant[i] = last.0 }
+        monotomic.append((i, primeScores[i]))
     }
+
+    var subarrays = Array(repeating: 0, count: nums.count)
+
+    for i in 0..<nums.count {
+        subarrays[i] = (nextDominant[i] - i) * (i - prevDominant[i])
+    }
+
+    let mod = 1_000_000_007
+    let nums = nums.enumerated().sorted { $0.element > $1.element }
+    var result = 1
+    var k = k
+    var i = 0
+
+    while k > 0 {
+        let (index, num) = nums[i]
+        let operations = min(k, subarrays[index])
+        var current = 1
+        var base = num % mod
+        var power = operations
+
+        while power > 0 {
+            if power % 2 == 1 { current = (current * base) % mod }
+            base = (base * base) % mod
+            power /= 2
+        }
+
+        result = (result * current) % mod
+        k -= operations
+        i += 1
+    }
+
+    return result
 }
+
+print(maximumScore([8,3,9,3,8], 2))
+print(maximumScore([19,12,14,6,10,18], 3))

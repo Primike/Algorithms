@@ -4,16 +4,15 @@
 // it is the minimum element in its row and maximum in its column.
 
 // Time: O(m * n), Space: O(m + n)
-func luckyNumbers (_ matrix: [[Int]]) -> [Int] {
+func luckyNumbers(_ matrix: [[Int]]) -> [Int] {
     let rows = matrix.count, cols = matrix[0].count
-    var rowMinimums = Array(repeating: Int.max, count: rows)
-    var colMaximums = Array(repeating: Int.min, count: cols)
+    var rowMax = Array(repeating: Int.max, count: rows)
+    var colMin = Array(repeating: Int.min, count: cols)
 
     for i in 0..<rows {
-        rowMinimums[i] = matrix[i].min() ?? 0
-
         for j in 0..<cols {
-            colMaximums[j] = max(colMaximums[j], matrix[i][j])
+            rowMax[i] = min(rowMax[i], matrix[i][j])
+            colMin[j] = max(colMin[j], matrix[i][j])
         }
     }
 
@@ -21,12 +20,14 @@ func luckyNumbers (_ matrix: [[Int]]) -> [Int] {
 
     for i in 0..<rows {
         for j in 0..<cols {
-            if rowMinimums[i] == matrix[i][j], colMaximums[j] == matrix[i][j] { 
-                result.append(matrix[i][j]) 
+            let number = matrix[i][j]
+
+            if rowMax[i] == number, colMin[j] == number {
+                result.append(number)
             }
         }
     }
-    
+
     return result
 }
 
