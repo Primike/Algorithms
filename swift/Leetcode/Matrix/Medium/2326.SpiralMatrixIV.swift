@@ -7,6 +7,7 @@
 // If there are remaining empty spaces, fill them with -1.
 // Return the generated matrix.
 
+// Time: O(m * n), Space: O(m * n)
 func spiralMatrix(_ m: Int, _ n: Int, _ head: ListNode?) -> [[Int]] {
     let directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     var result = Array(repeating: Array(repeating: -1, count: n), count: m)

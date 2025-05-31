@@ -12,6 +12,7 @@
 // another stone, or the bottom of the box.
 // Return an n x m matrix representing the box after the rotation described above.
 
+// Time: O(m * n), Space: O(m * n)
 func rotateTheBox(_ box: [[Character]]) -> [[Character]] {
     let rows = box.count, cols = box[0].count
     var result = Array(repeating: Array(repeating: Character("."), count: rows), count: cols)

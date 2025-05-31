@@ -6,6 +6,7 @@
 // Return the maximum sum of the matrix's elements using 
 // the operation mentioned above.
 
+// Time: O(m * n), Space: O(1)
 func maxMatrixSum(_ matrix: [[Int]]) -> Int {
     var total = 0
     var minimum = Int.max
