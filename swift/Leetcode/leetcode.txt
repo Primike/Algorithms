@@ -113,7 +113,7 @@ Matrix:
 
 
 Monotomic Stack:
-    Medium: 316, 503, 962, 1856, 2832, 2863
+    Medium: 316, 962, 1856, 2832, 2863
 
 
 
