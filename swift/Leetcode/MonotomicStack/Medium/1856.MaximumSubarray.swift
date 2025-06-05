@@ -1,47 +1,34 @@
-class Solution {
-    func maxSumMinProduct(_ nums: [Int]) -> Int {
-        let n = nums.count
-        let MOD = 1_000_000_007
+// The min-product of an array is equal to the minimum value in 
+// the array multiplied by the array's sum.
+// For example, the array [3,2,5] (minimum value is 2) has a 
+// min-product of 2 * (3+2+5) = 2 * 10 = 20.
+// Given an array of integers nums, return the maximum min-product 
+// of any non-empty subarray of nums. Since the answer may be large, 
+// return it modulo 109 + 7.
 
-        var prefixSum: [Int64] = Array(repeating: 0, count: n + 1)
-        for i in 0..<n {
-            prefixSum[i + 1] = prefixSum[i] + Int64(nums[i])
+// Time: O(n), Space: O(n)
+func maxSumMinProduct(_ nums: [Int]) -> Int {
+    let mod: Int64 = 1_000_000_007
+    var result: Int64 = 0
+    var monotonic = [(Int, Int64)]()
+
+    for number in nums + [0] {
+        var total: Int64 = 0
+
+        while let last = monotonic.last, last.0 >= number {
+            total += last.1
+            result = max(result, total * Int64(last.0))
+            monotonic.removeLast()
         }
 
-        var left: [Int] = Array(repeating: -1, count: n)
-        var stackPle: [Int] = []
-        for i in 0..<n {
-            while let lastIndex = stackPle.last, nums[lastIndex] >= nums[i] {
-                stackPle.removeLast()
-            }
-            if let lastIndex = stackPle.last {
-                left[i] = lastIndex
-            }
-            stackPle.append(i)
-        }
-
-        var right: [Int] = Array(repeating: n, count: n)
-        var stackNle: [Int] = []
-        for i in stride(from: n - 1, through: 0, by: -1) {
-             while let lastIndex = stackNle.last, nums[lastIndex] >= nums[i] {
-                stackNle.removeLast()
-             }
-             if let lastIndex = stackNle.last {
-                 right[i] = lastIndex
-             }
-             stackNle.append(i)
-        }
-
-        var maxProduct: Int64 = 0
-        for i in 0..<n {
-            let lBoundExclusive = left[i]
-            let rBoundExclusive = right[i]
-            
-            let currentSum: Int64 = prefixSum[rBoundExclusive] - prefixSum[lBoundExclusive + 1]
-            let currentProduct: Int64 = Int64(nums[i]) * currentSum
-            maxProduct = max(maxProduct, currentProduct)
-        }
-
-        return Int(maxProduct % Int64(MOD))
+        total += Int64(number)
+        result = max(result, total * Int64(number))
+        monotonic.append((number, total))
     }
+
+    return Int(result % mod)
 }
+
+print(maxSumMinProduct([1,2,3,2]))
+print(maxSumMinProduct([2,3,3,1,2]))
+print(maxSumMinProduct([3,1,5,6,4,2]))

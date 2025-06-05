@@ -24,3 +24,27 @@ func maxWidthRamp(_ nums: [Int]) -> Int {
 
 print(maxWidthRamp([6,0,8,2,1,5]))
 print(maxWidthRamp([9,8,1,0,1,9,4,0,4,1]))
+
+
+func maxWidthRamp2(_ nums: [Int]) -> Int {
+    var postfixArray = Array(repeating: nums[nums.count - 1], count: nums.count)
+
+    for i in (0..<(nums.count - 1)).reversed() {
+        postfixArray[i] = max(nums[i], postfixArray[i + 1])
+    }
+
+    var result = 0
+    var left = 0
+    var right = 0
+
+    while right < nums.count {
+        while left < right, nums[left] > postfixArray[right] {
+            left += 1
+        }
+
+        result = max(result, right - left)
+        right += 1
+    }
+
+    return result
+}

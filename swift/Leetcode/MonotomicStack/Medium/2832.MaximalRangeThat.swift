@@ -8,20 +8,19 @@
 
 // Time: O(n), Space: O(n)
 func maximumLengthOfRanges(_ nums: [Int]) -> [Int] {
-    var nums = nums + [(nums.max() ?? 0) + 1]
-    var result = Array(repeating: 1, count: nums.count - 1)
-    var monotomic = [(Int, Int)]()
+    var result = Array(repeating: 1, count: nums.count)
+    var monotomic = [(Int, Int, Int)]()
 
-    for i in 0..<nums.count {
-        var count = 0
+    for (i, number) in (nums + [Int.max]).enumerated() {
+        var streak = 0
 
-        while let last = monotomic.last, nums[last.0] <= nums[i] {
+        while let last = monotomic.last, last.1 <= number {
+            streak += last.2
+            result[last.0] = streak
             monotomic.removeLast()
-            result[last.0] = last.1 + i - last.0
-            count = i - last.0 + last.1
         }
 
-        monotomic.append((i, count))
+        monotomic.append((i, number, streak + 1))
     }
 
     return result
