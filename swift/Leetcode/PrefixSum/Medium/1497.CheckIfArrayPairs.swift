@@ -3,6 +3,8 @@
 // the sum of each pair is divisible by k.
 // Return true If you can find a way to do that or false otherwise.
 
+// Negative remainders
+
 // Time: O(n), Space: O(n)
 func canArrange(_ arr: [Int], _ k: Int) -> Bool {
     var dict = [Int: Int]()

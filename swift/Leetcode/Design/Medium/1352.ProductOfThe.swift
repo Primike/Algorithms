@@ -8,28 +8,23 @@
 // has at least k numbers.
 
 class ProductOfNumbers {
-    var prefixProduct: [Int]
-    var size: Int
+
+    private var stream: [Int]
 
     init() {
-        prefixProduct = [1]
-        size = 0
+        stream = [1]
     }
 
     func add(_ num: Int) {
         if num == 0 {
-            prefixProduct = [1]
-            size = 0
+            stream = [1]
         } else {
-            prefixProduct.append(prefixProduct[size] * num)
-            size += 1
+            stream.append(stream.last! * num)
         }
     }
 
     func getProduct(_ k: Int) -> Int {
-        if k > size {
-            return 0
-        }
-        return prefixProduct[size] / prefixProduct[size - k]
+        if k >= stream.count { return 0 }
+        return stream.last! / stream[stream.count - 1 - k]
     }
 }

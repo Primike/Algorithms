@@ -1,6 +1,8 @@
 // Given an integer array nums and an integer k, return the 
 // number of non-empty subarrays that have a sum divisible by k.
 
+// In swift -9 % 4 == -1 
+
 // Time: O(n), Space: O(n)
 func subarraysDivByK(_ nums: [Int], _ k: Int) -> Int {
     var prefixSums = [0: 1]

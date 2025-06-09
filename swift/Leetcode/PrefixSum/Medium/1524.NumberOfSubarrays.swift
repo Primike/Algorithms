@@ -3,20 +3,26 @@
 // Since the answer can be very large, return it modulo 109 + 7.
 
 func numOfSubarrays(_ arr: [Int]) -> Int {
-    let MOD = 1_000_000_007
-    var count = 0, prefixSum = 0, oddCount = 0, evenCount = 1
-    for num in arr {
-        prefixSum += num
-        if prefixSum % 2 == 0 {
-            count += oddCount
-            evenCount += 1
+    let mod = 1_000_000_007
+    var result = 0
+    var even = 1, odd = 0
+    var sum = 0
+
+    for number in arr {
+        sum += number 
+
+        if sum % 2 == 0 {
+            result += odd
+            even += 1
         } else {
-            count += evenCount
-            oddCount += 1
+            result += even
+            odd += 1
         }
-        count %= MOD
+
+        result %= mod
     }
-    return count
+
+    return result 
 }
 
 print(numOfSubarrays([1,3,5]))
