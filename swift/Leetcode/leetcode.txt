@@ -132,6 +132,7 @@ Prefix:
 
 Queue: 
     Medium: 2337
+    Hard: 2014
 
 
 
@@ -144,7 +145,7 @@ Simulation:
 Sliding Window:
     Easy: 1652
     Medium: 1248?, 2107, 2134, 2461, 2516, 2537?, 2779, 3306
-    Hard: 632, 2444, 3445!
+    Hard: 632, 683, 2444, 3445!
     Tricks: m1297, h922
 
 
@@ -182,6 +183,7 @@ Tries:
 
     
 Two Pointers:
+    Easy: 2200
     Medium: 1574, 1813, 1868?, 2109, 2491, 2825
     Tricks: m31
 
