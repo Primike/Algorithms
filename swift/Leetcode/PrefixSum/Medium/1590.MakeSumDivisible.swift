@@ -7,22 +7,20 @@
 
 // Time: O(n), Space: O(n)
 func minSubarray(_ nums: [Int], _ p: Int) -> Int {
-    let targetRemainder = nums.reduce(0, +) % p
-    if targetRemainder == 0 { return 0 } 
+    let target = nums.reduce(0, +) % p
+    if target == 0 { return 0 } 
 
     var dict = [0: -1]
     var result = Int.max
-    var currentRemainder = 0
+    var current = 0
 
     for (i, number) in nums.enumerated() {
-        currentRemainder = (currentRemainder + number) % p
-        if currentRemainder < 0 { currentRemainder += p } 
+        current = (current + number) % p
+        let remainder = (current - target + p) % p
 
-        let requiredRemainder = (currentRemainder - targetRemainder + p) % p
+        if let value = dict[remainder] { result = min(result, i - value) }
 
-        if let value = dict[requiredRemainder] { result = min(result, i - value) }
-
-        dict[currentRemainder] = i
+        dict[current] = i
     }
 
     return result == Int.max || result == nums.count ? -1 : result
