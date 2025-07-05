@@ -4,6 +4,7 @@
 // There is at least one element to the right of i. That is, 0 <= i < n - 1.
 // Return the number of valid splits in nums.
 
+// Time: O(n), Space: O(1)
 func waysToSplitArray(_ nums: [Int]) -> Int {
     var result = 0
     var total = nums.reduce(0, +)

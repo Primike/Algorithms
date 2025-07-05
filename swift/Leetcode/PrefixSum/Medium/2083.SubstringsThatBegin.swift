@@ -18,3 +18,16 @@ func numberOfSubstrings(_ s: String) -> Int {
 print(numberOfSubstrings("abcba"))
 print(numberOfSubstrings("abacad"))
 print(numberOfSubstrings("a"))
+
+
+func numberOfSubstrings2(_ s: String) -> Int {
+    let dict = s.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+    var result = 0
+
+    for (_, value) in dict {
+        result += (value * (value - 1) / 2)
+        result += value
+    }
+
+    return result
+}

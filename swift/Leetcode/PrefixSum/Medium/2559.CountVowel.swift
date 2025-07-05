@@ -4,29 +4,24 @@
 // Return an array ans of size queries.length, 
 // where ans[i] is the answer to the ith query.
 
+// Time: O(n), Space: O(n)
 func vowelStrings(_ words: [String], _ queries: [[Int]]) -> [Int] {
-    let words = words.map { Array($0) }
-    var vowels: Set<Character> = ["a", "e", "i", "o", "u"]
+    let vowels: Set<Character> = ["a", "e", "i", "o", "u"]
     var prefixSum = Array(repeating: (0, false), count: words.count)
-    var total = 0
+    var count = 0
 
-    for i in 0..<words.count {
-        var isVowel = false
+    for (i, word) in words.enumerated() {
+        let isValid = vowels.contains(word.first!) && vowels.contains(word.last!)
+        if isValid { count += 1 }
 
-        if vowels.contains(words[i][0]), vowels.contains(words[i][words[i].count - 1]) {
-            total += 1
-            isVowel = true
-        }
-
-        prefixSum[i] = (total, isVowel)
+        prefixSum[i] = (count, isValid)
     }
 
-    var result = [Int]()
+    var result = Array(repeating: 0, count: queries.count)
 
-    for query in queries {
-        var count = prefixSum[query[1]].0 - prefixSum[query[0]].0
-        if prefixSum[query[0]].1 { count += 1 }
-        result.append(count)
+    for (i, query) in queries.enumerated() {
+        result[i] = prefixSum[query[1]].0 - prefixSum[query[0]].0
+        if prefixSum[query[0]].1 { result[i] += 1 } 
     }
 
     return result
