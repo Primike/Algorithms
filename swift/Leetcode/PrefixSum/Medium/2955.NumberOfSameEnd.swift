@@ -9,36 +9,36 @@
 // Time: O(n + q), Space: O(n)
 func sameEndSubstringCount(_ s: String, _ queries: [[Int]]) -> [Int] {
     let s = Array(s)
-    var letterCounts = Array(repeating: Array(repeating: 0, count: s.count), count: 26)
-    
-    for (i, letter) in s.enumerated() {
-        letterCounts[Int(letter.asciiValue!) - 97][i] += 1
-    }
-    
-    for i in 0..<26 {
-        for j in 1..<s.count {
-            letterCounts[i][j] += letterCounts[i][j - 1]
+    var lettersCount = Array(repeating: Array(repeating: (0, false), count: s.count), count: 26)
+
+    for i in 0..<s.count {
+        let ascii = Int(s[i].asciiValue!) - 97
+
+        for j in 0..<26 {
+            let bool = ascii == j
+            lettersCount[j][i].1 = bool
+
+            if bool { lettersCount[j][i].0 += 1 }
+            if i > 0 { lettersCount[j][i].0 += lettersCount[j][i - 1].0 }
         }
     }
-    
-    var results = [Int]()
-    
+
+    var result = [Int]()
+
     for query in queries {
         let l = query[0], r = query[1]
-        var substrings = 0
-        
-        for count in letterCounts {
-            let leftCount = l == 0 ? 0 : count[l - 1]
-            let rightCount = count[r]
-            let total = rightCount - leftCount
-            
-            substrings += (total * (total + 1)) / 2
+        var total = 0
+
+        for i in 0..<26 {
+            var count = lettersCount[i][r].0 - lettersCount[i][l].0
+            count += lettersCount[i][l].1 ? 1 : 0
+            total += count * (count - 1) / 2 + count
         }
-        
-        results.append(substrings)
+
+        result.append(total)
     }
-    
-    return results
+
+    return result
 }
 
 print(sameEndSubstringCount("abcaab", [[0,0],[1,4],[2,5],[0,5]]))

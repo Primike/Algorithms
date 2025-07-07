@@ -6,24 +6,24 @@
 // Return an array of booleans answer such that answer[i] is true 
 // if nums[fromi..toi] is special.
 
+// Time: O(n), Space: O(n)
 func isArraySpecial(_ nums: [Int], _ queries: [[Int]]) -> [Bool] {
-    var result = Array(repeating: false, count: queries.count)
     var prefixArray = Array(repeating: 0, count: nums.count)
-    prefixArray[0] = 0
 
     for i in 1..<nums.count {
-        if nums[i] % 2 == nums[i - 1] % 2 {
-            prefixArray[i] = prefixArray[i - 1] + 1
-        } else {
-            prefixArray[i] = prefixArray[i - 1]
-        }
+        prefixArray[i] += prefixArray[i - 1]
+        let parity1 = nums[i - 1] % 2 == 0
+        let parity2 = nums[i] % 2 == 0
+
+        if parity1 != parity2 { prefixArray[i] += 1 }
     }
 
-    for i in 0..<queries.count {
-        let query = queries[i]
-        let start = query[0]
-        let end = query[1]
-        result[i] = prefixArray[end] - prefixArray[start] == 0
+    var result = [Bool]()
+
+    for query in queries {
+        let l = query[0], r = query[1]
+        let count = prefixArray[r] - prefixArray[l]
+        result.append(count == r - l)
     }
 
     return result
