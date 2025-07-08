@@ -10,38 +10,37 @@
 // by moving the pieces of the string start any number of times. 
 // Otherwise, return false.
 
+// Time: O(n), Space: O(n)
 func canChange(_ start: String, _ target: String) -> Bool {
-    var startQueue: [(Character, Int)] = []
-    var targetQueue: [(Character, Int)] = []
+    let start = Array(start), target = Array(target)
+    var queue = [(Int, Character)]()
+
+    for i in 0..<start.count {
+        if start[i] == "_" { continue }
+        queue.append((i, start[i]))
+    }
+
+    var i = 0
     
-    let startArray = Array(start)
-    let targetArray = Array(target)
+    for j in 0..<target.count {
+        if target[j] == "_" { continue }
 
-    for i in 0..<startArray.count {
-        if startArray[i] != "_" {
-            startQueue.append((startArray[i], i))
-        }
-        if targetArray[i] != "_" {
-            targetQueue.append((targetArray[i], i))
-        }
-    }
-
-    if startQueue.count != targetQueue.count {
-        return false
-    }
-
-    for i in 0..<startQueue.count {
-        let (startChar, startIndex) = startQueue[i]
-        let (targetChar, targetIndex) = targetQueue[i]
-
-        if startChar != targetChar ||
-            (startChar == "L" && startIndex < targetIndex) ||
-            (startChar == "R" && startIndex > targetIndex) {
-            return false
+        if target[j] == "L" {
+            if i < queue.count, queue[i].0 >= j, queue[i].1 == "L" {
+                i += 1
+            } else {
+                return false
+            }
+        } else if target[j] == "R" {
+            if i < queue.count, queue[i].0 <= j, queue[i].1 == "R" {
+                i += 1
+            } else {
+                return false
+            }
         }
     }
 
-    return true
+    return i == queue.count
 }
 
 print(canChange("_L__R__R_", "L______RR"))

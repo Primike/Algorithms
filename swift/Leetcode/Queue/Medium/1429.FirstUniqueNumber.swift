@@ -30,3 +30,38 @@ class FirstUnique {
         if dict[value]! == 1 { queue.append(value) }
     }
 }
+
+class FirstUnique2 {
+
+    private var queue: [Int]
+    private var uniqueSet: Set<Int>
+    private var duplicateSet: Set<Int>
+
+    init(_ nums: [Int]) {
+        self.queue = []
+        self.uniqueSet = []
+        self.duplicateSet = []
+
+        for number in nums {
+            self.add(number)
+        }
+    }
+    
+    func showFirstUnique() -> Int {
+        while let first = queue.first, !uniqueSet.contains(first) {
+            queue.removeFirst()
+        }
+
+        return queue.first ?? -1
+    }
+    
+    func add(_ value: Int) {
+        if uniqueSet.contains(value) {
+            uniqueSet.remove(value)
+            duplicateSet.insert(value)
+        } else if !duplicateSet.contains(value), !uniqueSet.contains(value) {
+            queue.append(value)
+            uniqueSet.insert(value)
+        }
+    }
+}
