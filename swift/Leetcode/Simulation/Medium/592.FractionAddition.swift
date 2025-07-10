@@ -6,6 +6,7 @@
 // of a fraction that has a denominator 1. 
 // So in this case, 2 should be converted to 2/1.
 
+// Time: O(n), Space: O(n)
 func fractionAddition(_ expression: String) -> String {
     func euclidian(_ x: Int, _ y: Int) -> Int {
         var x = x, y = y
@@ -20,13 +21,12 @@ func fractionAddition(_ expression: String) -> String {
     }
 
     let expression = Array(expression)
-    var numerator = 0
-    var denominator = 1
+    var last = (0, 1)
     var i = 0
 
     while i < expression.count {
-        var currentNumerator = 0
-        var currentDenominator = 0
+        var numerator = 0
+        var denominator = 0
         var isNegative = false
         
         if expression[i] == "-" || expression[i] == "+" {
@@ -35,26 +35,26 @@ func fractionAddition(_ expression: String) -> String {
         }
         
         while i < expression.count, let value = expression[i].wholeNumberValue {
-            currentNumerator = currentNumerator * 10 + value
+            numerator = numerator * 10 + value
             i += 1
         }
         
-        if isNegative { currentNumerator *= -1 }
-        
+        if isNegative { numerator *= -1 }
         i += 1
         
         while i < expression.count, let value = expression[i].wholeNumberValue {
-            currentDenominator = currentDenominator * 10 + value
+            denominator = denominator * 10 + value
             i += 1
         }
         
-        numerator = numerator * currentDenominator + currentNumerator * denominator
-        denominator = denominator * currentDenominator
+        let nextNumerator = last.0 * denominator + numerator * last.1
+        let nextDenominator = last.1 * denominator
+        last = (nextNumerator, nextDenominator)
     }
     
-    let gcd = abs(euclidian(numerator, denominator))
-    numerator /= gcd
-    denominator /= gcd
+    let gcd = abs(euclidian(last.0, last.1))
+    let numerator = last.0 / gcd
+    let denominator = last.1 / gcd
     
     return "\(numerator)/\(denominator)"
 }

@@ -11,6 +11,7 @@
 // Return the resulting integer after performing the operations 
 // described above.
 
+// Time: O(n), Space: O(n)
 func getLucky(_ s: String, _ k: Int) -> Int {
     var current = Array(s).map { String(Int($0.asciiValue!) - 96) }.joined()
     
@@ -25,3 +26,25 @@ func getLucky(_ s: String, _ k: Int) -> Int {
 print(getLucky("iiii", 1))
 print(getLucky("leetcode", 2))
 print(getLucky("zbax", 2))
+
+
+func getLucky2(_ s: String, _ k: Int) -> Int {
+    var result = ""
+
+    for char in s {
+        result += String(Int(char.asciiValue!) - 96)
+    }
+
+    var sum = 0
+
+    for _ in 0..<k {
+        for digit in result {
+            sum += Int(String(digit)) ?? 0
+        }
+
+        result = String(sum)
+        sum = 0
+    }
+
+    return Int(result) ?? 0
+}
