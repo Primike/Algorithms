@@ -11,30 +11,27 @@
 // Time: O(max(m * n)^2), Space: O(m * n)
 func spiralMatrixIII(_ rows: Int, _ cols: Int, _ rStart: Int, _ cStart: Int) -> [[Int]] {
     let directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-    var result = [[Int]]()
-    var i = rStart, j = cStart  
-    var totalSteps = 1, currentSteps = 1, rotations = 2
-    var k = 0
+    var result = [[rStart, cStart]]
+    var x = rStart, y = cStart
+    var index = 0
+    var steps = 1
     
     while result.count < rows * cols {
-        if i >= 0, i < rows, j >= 0, j < cols { result.append([i, j]) }
+        for i in 0..<2 {
+            for j in 0..<steps {
+                x += directions[index].0
+                y += directions[index].1
 
-        i += directions[k].0
-        j += directions[k].1
-        currentSteps -= 1
+                if x < 0 || x >= rows || y < 0 || y >= cols { continue }
 
-        if currentSteps == 0 { 
-            k = (k + 1) % directions.count
-            rotations -= 1 
-
-            if rotations == 0 {
-                totalSteps += 1
-                rotations = 2
+                result.append([x, y])
             }
 
-            currentSteps = totalSteps
+            index = (index + 1) % 4
         }
-    }
+
+        steps += 1
+    }   
 
     return result
 }
