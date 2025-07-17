@@ -10,28 +10,27 @@
 
 // Time: O(t), Space: O(26)
 func lengthAfterTransformations(_ s: String, _ t: Int) -> Int {
-    var ascii = Array(repeating: 0, count: 26)
     let mod = 1_000_000_007
+    var letterCounts = Array(repeating: 0, count: 26)
 
-    for char in s {
-        let index = Int(char.asciiValue!) - 97
-        ascii[index] += 1
+    for letter in s {
+        letterCounts[Int(letter.asciiValue!) - 97] += 1
     }
 
     for _ in 0..<t {
         var last = 0
 
-        for i in 0..<ascii.count {
-            let current = ascii[i]
-            ascii[i] = last
+        for i in 0..<letterCounts.count {
+            let current = letterCounts[i]
+            letterCounts[i] = last
             last = current
         }
 
-        ascii[0] += last % mod
-        ascii[1] += last % mod
+        letterCounts[0] += last % mod
+        letterCounts[1] += last % mod
     }
 
-    return ascii.reduce(0, +) % mod
+    return letterCounts.reduce(0, +) % mod
 }
 
 print(lengthAfterTransformations("abcyy", 2))

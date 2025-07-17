@@ -10,17 +10,17 @@
 // replace the chalk.
 // Return the index of the student that will replace the chalk pieces.
 
+// Time: O(n), Space: O(1)
 func chalkReplacer(_ chalk: [Int], _ k: Int) -> Int {
     let total = chalk.reduce(0, +)
-    var sum = k % total
+    var current = k % total
 
     for i in 0..<chalk.count {
-        if sum < chalk[i] { return i }
-        
-        sum -= chalk[i]
+        if current < chalk[i] { return i }
+        current -= chalk[i]
     }
 
-    return -1
+    return 0
 }
 
 print(chalkReplacer([5,1,5], 22))
