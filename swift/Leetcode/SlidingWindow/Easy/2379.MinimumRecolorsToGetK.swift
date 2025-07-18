@@ -10,19 +10,17 @@
 func minimumRecolors(_ blocks: String, _ k: Int) -> Int {
     let blocks = Array(blocks)
     var result = Int.max
-    var left = 0
-    var white = 0
-
+    var blacks = 0
+    
     for i in 0..<blocks.count {
-        white += blocks[i] == "W" ? 1 : 0
-        if i - left + 1 < k { continue }
+        if blocks[i] == "B" { blacks += 1 }
+        if i < k - 1 { continue }
 
-        result = min(result, white)
-        white -= blocks[left] == "W" ? 1 : 0
-        left += 1
+        result = min(result, k - blacks)
+        if blocks[i - k + 1] == "B" { blacks -= 1 }
     }
 
-    return result
+    return result == .max ? -1 : result
 }
 
 print(minimumRecolors("WBBWWBBWBW", 7))

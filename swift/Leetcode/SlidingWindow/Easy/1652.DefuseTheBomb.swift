@@ -10,27 +10,34 @@
 // Given the circular array code and an integer key k, 
 // return the decrypted code to defuse the bomb!
 
+// Time: O(n), Space: O(n)
 func decrypt(_ code: [Int], _ k: Int) -> [Int] {
-    let n = code.count
-    guard k != 0 else { return Array(repeating: 0, count: n) }
+    if k == 0 { return Array(repeating: 0, count: code.count) }
 
-    var result = Array(repeating: 0, count: n)
+    let numbers = abs(k)
+    var result = Array(repeating: 0, count: code.count)
+    var total = 0
+    let range = k > 0 ? (0..<numbers) : ((code.count - numbers)..<code.count)
+
+    for i in range {
+        total += code[i]
+    }
 
     if k > 0 {
-        for i in 0..<n {
-            var sum = 0
-            for j in 1...k {
-                sum += code[(i + j) % n]
-            }
-            result[i] = sum
+        var index = numbers - 1
+
+        for i in (0..<code.count).reversed() {
+            result[i] = total
+            total += code[i] - code[index]
+            index = (index - 1 + code.count) % code.count
         }
     } else {
-        for i in 0..<n {
-            var sum = 0
-            for j in 1...(-k) {
-                sum += code[(i - j + n) % n]
-            }
-            result[i] = sum
+        var index = code.count - numbers
+
+        for i in 0..<code.count {
+            result[i] = total
+            total += code[i] - code[index]
+            index = (index + 1) % code.count
         }
     }
 
