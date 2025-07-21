@@ -3,18 +3,16 @@
 
 // Time: O(n), Space: O(1)
 func minSwaps(_ data: [Int]) -> Int {
-    let target = data.filter { $0 == 1 }.count
-    var result = Int.max
-    var left = 0
-    var ones = 0
+    var totalOnes = data.filter { $0 == 1 }.count
+    if totalOnes == 0 { return 0 }
+    var result = totalOnes
+    var zeros = 0
 
     for i in 0..<data.count {
-        if data[i] == 1 { ones += 1 }
-        if i >= target - 1 {
-            result = min(result, target - ones)
-            ones -= data[left] == 1 ? 1 : 0
-            left += 1
-        }
+        if data[i] == 0 { zeros += 1 }
+        if i < totalOnes - 1 { continue }
+        result = min(result, zeros)
+        if data[i - totalOnes + 1] == 0 { zeros -= 1 }
     }
 
     return result

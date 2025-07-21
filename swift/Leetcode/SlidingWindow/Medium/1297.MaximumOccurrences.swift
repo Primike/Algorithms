@@ -6,24 +6,26 @@
 
 // Time: O(n), Space: O(n)
 func maxFreq(_ s: String, _ maxLetters: Int, _ minSize: Int, _ maxSize: Int) -> Int {
-    var substrings = [String: Int]()
-    var window = [Character: Int](), string = [Character]()
+    let s = Array(s)
+    var strings = [String: Int]()
+    var window = [Character: Int]()
+    var left = 0
 
-    for letter in s {
-        string.append(letter)
-        window[letter, default: 0] += 1
-        if string.count < minSize { continue }
+    for i in 0..<s.count {
+        window[s[i], default: 0] += 1
 
-        if window.keys.count <= maxLetters { 
-            substrings[String(string), default: 0] += 1
+        while window.keys.count > maxLetters || (i - left + 1) > minSize {
+            window[s[left], default: 1] -= 1
+            if window[s[left]] == 0 { window[s[left]] = nil }
+            left += 1
         }
 
-        let char = string.removeFirst()
-        window[char, default: 0] -= 1
-        if window[char, default: 0] == 0 { window[char] = nil }
+        if i - left + 1 == minSize { 
+            strings[String(s[left...i]), default: 0] += 1 
+        }
     }
 
-    return substrings.values.max() ?? 0
+    return strings.values.max() ?? 0
 }
 
 print(maxFreq("aababcaab", 2, 3, 4))

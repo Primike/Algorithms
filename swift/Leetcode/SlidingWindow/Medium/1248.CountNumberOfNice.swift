@@ -5,17 +5,21 @@
 // Time: O(n), Space: O(1)
 func numberOfSubarrays(_ nums: [Int], _ k: Int) -> Int {
     var result = 0
-    var left = 0
     var odd = 0
+    var subarrays = 0
+    var left = 0
 
-    for (i, number) in nums.enumerated() {
-        if number % 2 != 0 { odd += 1 }
-        if odd == k { result += 1 }
+    for i in 0..<nums.count {
+        if nums[i] % 2 != 0 { odd += 1 }
+        if odd == k { subarrays = 0 }
         
-        while odd > k {
-            odd -= nums[left] % 2 != 0 ? 1 : 0
+        while odd == k {
+            if nums[left] % 2 != 0 { odd -= 1 }
+            subarrays += 1
             left += 1
         }
+        
+        result += subarrays
     }
 
     return result

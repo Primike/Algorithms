@@ -3,23 +3,19 @@
 
 // Time: O(n), Space: O(26)
 func numKLenSubstrNoRepeats(_ s: String, _ k: Int) -> Int {
-    let s = Array(s).map { String($0) }
-    var window = [String: Int]()
+    let s = Array(s)
+    var letters = Set<Character>()
     var result = 0
-    var left = 0, count = 0
+    var left = 0
+    
+    for i in 0..<s.count {
+        while letters.contains(s[i]) || i - left + 1 > k {
+            letters.remove(s[left]) 
+            left += 1
+        }
 
-    for i in 0..<s.count {  
-        window[s[i], default: 0] += 1 
-        if window[s[i]] == 1 { count += 1 }
-        if window[s[i]]! == 2 { count -= 1 }
-
-        if i < k - 1 { continue }
-        if count == k { result += 1 }
-
-        window[s[left]]! -= 1
-        if window[s[left]] == 0 { count -= 1 }
-        if window[s[left]] == 1 { count += 1 }
-        left += 1
+        letters.insert(s[i])
+        if i - left + 1 == k { result += 1 }
     }
 
     return result
