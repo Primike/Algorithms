@@ -4,23 +4,21 @@
 
 // Time: O(n), Space: O(1)
 func numberOfSubstrings(_ s: String) -> Int {
-    let s = Array(s).map { String($0) }
-    var window = [String: Int]()
+    let s = Array(s)
+    var dict = [Character: Int]()
     var result = 0
-    var left = 0, count = 0
+    var left = 0
 
     for i in 0..<s.count {
-        window[s[i], default: 0] += 1
+        dict[s[i], default: 0] += 1
+        if dict.keys.count == 3 { result += s.count - i }
 
-        if window[s[i]]! == 1 { count += 1 }
-
-        while left < i, count == 3 {
-            result += s.count - i
-            window[s[left]]! -= 1
-
-            if window[s[left]]! == 0 { count -= 1 } 
-
+        while dict.keys.count == 3 {
+            dict[s[left], default: 1] -= 1
+            if dict[s[left]] == 0 { dict[s[left]] = nil }
             left += 1
+
+            if dict.keys.count == 3 { result += s.count - i }
         }
     }
 

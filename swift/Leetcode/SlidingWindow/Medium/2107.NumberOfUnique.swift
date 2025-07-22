@@ -6,21 +6,19 @@
 // Return the maximum number of unique flavors of candy 
 // you can keep after sharing with your sister.
 
+// Time: O(n), Space: O(n)
 func shareCandies(_ candies: [Int], _ k: Int) -> Int {
-    if k == 0 { return Set(candies).count }
-    
     var dict = candies.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+    if k == 0 { return dict.keys.count }
     var result = 0
     
-    for (i, candy) in candies.enumerated() {
-        dict[candy]! -= 1   
-        if dict[candy]! == 0 { dict[candy] = nil }
-
+    for i in 0..<candies.count {
+        dict[candies[i]]! -= 1
+        if dict[candies[i]]! == 0 { dict[candies[i]] = nil }
         if i < k - 1 { continue }
-        result = max(result, dict.keys.count)
 
-        let left = i - k + 1
-        dict[candies[left], default: 0] += 1
+        result = max(result, dict.keys.count)
+        dict[candies[i - k + 1], default: 0] += 1
     }
 
     return result
