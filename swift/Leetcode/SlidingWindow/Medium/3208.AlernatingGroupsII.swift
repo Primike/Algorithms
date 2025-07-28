@@ -9,24 +9,23 @@
 // has a different color from its left and right tiles).
 // Return the number of alternating groups.
 
-// Time: O(n + k), Space: O(n + k)
+// Time: O(n + k), Space: O(1)
 func numberOfAlternatingGroups(_ colors: [Int], _ k: Int) -> Int {
-    let circular = colors + Array(colors.prefix(k - 1))
     var result = 0
     var count = 1
-    var isZero = circular[0] == 0
-
-    for i in 1..<circular.count {
-        let color = circular[i]
-
-        if (isZero && color == 1) || (!isZero && color == 0) {
+    var last = colors[0]
+    var i = 1
+    
+    for _ in 1..<(colors.count + k - 1) {
+        if colors[i] != last {
             count = min(k, count + 1)
         } else {
             count = 1
         }
 
-        isZero = color == 0
-        result += count == k ? 1 : 0
+        if count == k { result += 1 }
+        last = colors[i]
+        i = (i + 1) % colors.count
     }
 
     return result

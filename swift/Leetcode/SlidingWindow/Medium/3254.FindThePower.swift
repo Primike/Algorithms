@@ -5,31 +5,22 @@
 // Return an integer array results of size n - k + 1, 
 // where results[i] is the power of nums[i..(i + k - 1)].
 
-// Time: O(n), Space: O(n)
+// Time: O(n), Space: O(1)
 func resultsArray(_ nums: [Int], _ k: Int) -> [Int] {
+    if nums.count == 1 { return [nums[0]] }
     if k == 1 { return nums }
 
-    var result = [Int]()
-    var left = 0
-    var lastConsecutive = 0
-    var queue = [0]
+    var result = Array(repeating: -1, count: nums.count - k + 1)
+    var streak = 1
 
     for i in 1..<nums.count {
-        if let first = queue.first, first < left { queue.removeFirst() }
-
-        while let last = queue.last, nums[i] >= nums[last] {
-            queue.removeLast()
+        if nums[i] == nums[i - 1] + 1 { 
+            streak = min(k, streak + 1)
+        } else {
+            streak = 1
         }
 
-        queue.append(i)
-
-        if nums[i] - 1 != nums[i - 1] { lastConsecutive = i }
-        
-        if i - left + 1 == k {
-            result.append(lastConsecutive == left ? nums[queue[0]] : -1)
-            left += 1
-            lastConsecutive = max(left, lastConsecutive)
-        } 
+        if streak == k { result[i - k + 1] = nums[i] }
     }
 
     return result

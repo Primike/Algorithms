@@ -4,23 +4,20 @@
 // character). Your task is to count the number of special substrings. 
 // Return the number of special substrings.
 
-// Time: O(n), Space: O(26)
+// Time: O(n), Space: O(n)
 func numberOfSpecialSubstrings(_ s: String) -> Int {
     let s = Array(s)
-    var dict = [Character: Int]()
+    var letters = Set<Character>()
     var result = 0
     var left = 0
 
     for i in 0..<s.count {
-        dict[s[i], default: 0] += 1
-
-        while left < i, let value = dict[s[i]], value >= 2 {
-            dict[s[left], default: 1] -= 1
-            if dict[s[left], default: 0] == 0 { dict[s[left]] = nil }
-            
+        while letters.contains(s[i]) {
+            letters.remove(s[left])
             left += 1
         }
 
+        letters.insert(s[i])
         result += i - left + 1
     }
 

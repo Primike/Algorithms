@@ -6,36 +6,24 @@
 // Return the maximum subarray sum of all the subarrays that 
 // meet the conditions. If no subarray meets the conditions, return 0.
 
+// Time: O(n), Space: O(n)
 func maximumSubarraySum(_ nums: [Int], _ k: Int) -> Int {
     var dict = [Int: Int]()
-    var singles = 0
     var result = 0
     var sum = 0
+    var left = 0
 
-    for (i, number) in nums.enumerated() {
-        dict[number, default: 0] += 1
-        if dict[number]! == 1 {
-            singles += 1
-        } else if dict[number]! == 2 {
-            singles -= 1
+    for i in 0..<nums.count {
+        dict[nums[i], default: 0] += 1
+        sum += nums[i]
+
+        while dict[nums[i], default: 1] > 1 || i - left + 1 >= k {
+            if i - left + 1 == k, dict.keys.count == k { result = max(result, sum) }
+            dict[nums[left], default: 1] -= 1
+            if dict[nums[left]] == 0 { dict[nums[left]] = nil }
+            sum -= nums[left]
+            left += 1
         }
-
-        sum += number
-
-        if i >= k {
-            let removed = nums[i - k]
-            dict[removed]! -= 1
-            sum -= removed
-            
-            if dict[removed]! == 1 {
-                singles += 1
-            } else if dict[removed]! == 0 {
-                singles -= 1
-                dict.removeValue(forKey: removed)
-            }
-        }
-
-        if i >= k - 1, singles == k { result = max(result, sum) }
     }
 
     return result

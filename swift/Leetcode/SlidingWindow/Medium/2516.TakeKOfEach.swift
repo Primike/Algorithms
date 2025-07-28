@@ -7,38 +7,31 @@
 // to take k of each character.
 
 func takeCharacters(_ s: String, _ k: Int) -> Int {
-    let s = Array(s)
-    var count = Array(repeating: 0, count: 3)
+    if k == 0 { return 0 }
+    
+    let s = Array(s).map { String($0) }
+    var dict = s.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+    if dict.keys.count < 3 || !dict.values.allSatisfy { $0 >= k } { return -1 }
 
-    for c in s {
-        count[Int(c.asciiValue!) - Int(Character("a").asciiValue!)] += 1
-    }
-
-    for i in 0..<3 {
-        if count[i] < k {
-            return -1
-        }
-    }
-
-    var window = [Int](repeating: 0, count: 3)
+    var window = ["a" : 0, "b": 0, "c": 0]
+    var result = 0
     var left = 0
-    var maxWindow = 0
 
-    for right in 0..<s.count {
-        window[Int(s[right].asciiValue!) - Int(Character("a").asciiValue!)] += 1
+    for i in 0..<s.count {
+        window[s[i], default: 0] += 1
 
-        while left <= right &&
-                (count[0] - window[0] < k ||
-                count[1] - window[1] < k ||
-                count[2] - window[2] < k) {
-            window[Int(s[left].asciiValue!) - Int(Character("a").asciiValue!)] -= 1
+        while left <= i,
+                (dict["a"]! - window["a"]! < k ||
+                dict["b"]! - window["b"]! < k ||
+                dict["c"]! - window["c"]! < k) {
+            window[s[left], default: 0] -= 1
             left += 1
         }
 
-        maxWindow = max(maxWindow, right - left + 1)
+        result = max(result, i - left + 1)
     }
 
-    return s.count - maxWindow
+    return s.count - result
 }
 
 print(takeCharacters("aabaaaacaabc", 2))
