@@ -143,8 +143,8 @@ Simulation:
 
 Sliding Window:
     Medium: 1248?, 2134?, 2516, 3306, 3439?
-    Hard: 632, 683, 2444, 3445!
-    Tricks: e1652, m1297, m3254, h922
+    Hard: 683, 2444, 3445!
+    Tricks: e1652, m1297, m3254, h632, h922
 
 
 
