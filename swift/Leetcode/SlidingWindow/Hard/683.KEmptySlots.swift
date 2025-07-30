@@ -1,31 +1,43 @@
-class Solution {
-    func kEmptySlots(_ flowers: [Int], _ k: Int) -> Int {
-        var days = [Int](repeating: 0, count: flowers.count)
-        for i in 0..<flowers.count {
-            days[flowers[i] - 1] = i + 1
-        }
+// You have n bulbs in a row numbered from 1 to n. Initially, 
+// all the bulbs are turned off. We turn on exactly one bulb every day 
+// until all bulbs are on after n days.
+// You are given an array bulbs of length n where bulbs[i] = x 
+// means that on the (i+1)th day, we will turn on the bulb at 
+// position x where i is 0-indexed and x is 1-indexed.
+// Given an integer k, return the minimum day number such that 
+// there exists two turned on bulbs that have exactly k bulbs 
+// between them that are all turned off. If there isn't such day, return -1.
 
-        var ans = Int.max
-        var left = 0
-        var right = k + 1
+func kEmptySlots(_ flowers: [Int], _ k: Int) -> Int {
+    var days = Array(repeating: 0, count: flowers.count)
 
-        search: while right < days.count {
-            let leftDay = days[left]
-            let rightDay = days[right]
-            
-            for i in (left + 1)..<right {
-                if days[i] < leftDay || days[i] < rightDay {
-                    left = i
-                    right = i + k + 1
-                    continue search
-                }
+    for right in 0..<flowers.count {
+        days[flowers[right] - 1] = right + 1
+    }
+
+    var result = Int.max
+    var left = 0, right = k + 1
+
+    while right < days.count {
+        let day1 = days[left]
+        let day2 = days[right]
+        var isValid = true
+
+        for i in (left + 1)..<right {
+            if days[i] < day1 || days[i] < day2 {
+                left = i
+                right = i + k + 1
+                isValid = false
+                break
             }
-            
-            ans = min(ans, max(leftDay, rightDay))
+        }
+        
+        if isValid {
+            result = min(result, max(day1, day2))
             left = right
             right = left + k + 1
         }
-
-        return ans < Int.max ? ans : -1
     }
+
+    return result == Int.max ? -1 : result
 }
