@@ -8,6 +8,7 @@
 // there exists two turned on bulbs that have exactly k bulbs 
 // between them that are all turned off. If there isn't such day, return -1.
 
+// Time: O(n), Space: O(n)
 func kEmptySlots(_ flowers: [Int], _ k: Int) -> Int {
     var days = Array(repeating: 0, count: flowers.count)
 
@@ -41,3 +42,6 @@ func kEmptySlots(_ flowers: [Int], _ k: Int) -> Int {
 
     return result == Int.max ? -1 : result
 }
+
+print(kEmptySlots([1,3,2], 1))
+print(kEmptySlots([1,2,3], 1))
