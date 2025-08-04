@@ -11,12 +11,10 @@ func minOperations(_ logs: [String]) -> Int {
 
     for log in logs {
         if log == "../" {
-            result -= 1
+            result = max(0, result - 1)
         } else if log != "./" {
             result += 1
         }
-
-        result = max(0, result)
     }
 
     return result

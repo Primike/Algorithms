@@ -7,19 +7,18 @@
 
 // Time: O(n), Space: O(n)
 func minLength(_ s: String) -> Int {
-    let s = Array(s)
-    var stack = [Character]()
+    var result = [Character]()
 
-    for letter in s {
-        if let last = stack.last, (last == "A" && letter == "B" ) || 
-            (last == "C" && letter == "D") {
-            stack.removeLast()
+    for char in s {
+        if (char == "B" && result.last == "A") || 
+           (char == "D" && result.last == "C") {
+            result.removeLast()
         } else {
-            stack.append(letter)
+            result.append(char)
         }
     }
 
-    return stack.count
+    return result.count
 }
 
 print(minLength("ABFCACDB"))

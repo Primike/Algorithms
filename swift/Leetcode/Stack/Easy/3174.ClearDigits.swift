@@ -5,17 +5,17 @@
 
 // Time: O(n), Space: O(n)
 func clearDigits(_ s: String) -> String {
-    var stack = [Character]()
+    var result = [Character]()
 
     for char in s {
-        if char.isNumber {
-            stack.popLast()
+        if char.isNumber, let last = result.last, !last.isNumber {
+            result.removeLast()
         } else {
-            stack.append(char)
+            result.append(char)
         }
     }
 
-    return String(stack)
+    return String(result)
 }
 
 print(clearDigits("abc"))
