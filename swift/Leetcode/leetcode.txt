@@ -143,13 +143,13 @@ Simulation:
 
 Sliding Window:
     Medium: 1248?, 2134?, 2516, 3306, 3439?
-    Hard: 683?, 2444
+    Hard: 683?, 2106, 2444
     Tricks: e1652, m1297, m3254, h632
 
 
 
 Stack: 
-    Medium: 1381
+    Medium: 1190?, 1381?
     Hard: 224!, 85?
 
 
