@@ -18,35 +18,30 @@ func survivedRobotsHealths(_ positions: [Int], _ healths: [Int], _ directions: S
     }
 
     robots.sort { $0.1 < $1.1 }
-    var stack = [(Int, Int, Int, Character)]()
+    var result = [(Int, Int, Character)]()
 
-    for i in 0..<robots.count {
-        var current = robots[i]
-
-        if current.3 == "R" { 
-            stack.append(current)
+    for (i, _, health, direction) in robots {
+        if result.isEmpty || direction == "R" {
+            result.append((i, health, direction))
             continue 
         }
 
-        while let last = stack.last, last.3 == "R", last.2 <= current.2, current.2 > 0 {
-            stack.removeLast()
-            if last.2 == current.2 { current.2 = 0 }
-            current.2 -= 1
+        var health = health
+
+        while let last = result.last, last.2 == "R", last.1 <= health {
+            result.removeLast()
+            health = last.1 == health ? 0 : health - 1
         }
 
-        if var last = stack.last, last.3 == "R" {
-            if current.2 > 0 { last.2 -= 1 }
-            if last.2 == 0 { 
-                stack.removeLast()
-            } else {
-                stack[stack.count - 1] = last
-            }
-        } else if current.2 > 0 {
-            stack.append(current)
+        if result.isEmpty && health > 0 || result.last?.2 == "L" && health > 0 {
+            result.append((i, health, direction))
+        } else if let last = result.last, last.2 == "R", last.1 > health, health > 0 {
+            result[result.count - 1].1 -= 1
+            if last.1 == 1 { result.removeLast() }
         }
     }
 
-    return stack.sorted { $0.0 < $1.0 }.map { $0.2 } 
+    return result.sorted { $0.0 < $1.0 }.map { $0.1 }
 }
 
 print(survivedRobotsHealths([5,4,3,2,1], [2,17,9,15,10], "RRRRR"))
