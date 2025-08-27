@@ -10,20 +10,22 @@ func validWordAbbreviation(_ word: String, _ abbr: String) -> Bool {
     var i = 0, j = 0
 
     while i < word.count, j < abbr.count {
-        if word[i] == abbr[j] {
+        if abbr[j].isLetter {
+            if word[i] != abbr[j] { return false }
+
             i += 1
             j += 1
-        } else if abbr[j].isNumber, abbr[j] != "0" {
-            var number = ""
+        } else {
+            var number = 0
+            
+            if abbr[j] == "0" { return false }
 
             while j < abbr.count, abbr[j].isNumber {
-                number.append(abbr[j])
+                number = (number * 10) + (abbr[j].wholeNumberValue ?? 0)
                 j += 1
             }
 
-            i += Int(number)!
-        } else {
-            return false
+            i += number
         }
     }
 
