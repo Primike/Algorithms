@@ -16,23 +16,28 @@
 
 // Time: O(n^2), Space: O(n^2)
 func toGoatLatin(_ sentence: String) -> String {
+    let vowels: Set<Character> = [
+        "a", "e", "i", "o", "u",
+        "A", "E", "I", "O", "U"
+    ]
     let sentence = sentence.components(separatedBy: " ")
-    let vowels = Set(["a", "e", "i", "o", "u"])
     var result = [String]()
 
     for i in 0..<sentence.count {
-        var word = Array(sentence[i]).map { String($0) }
-        let aLetters = String(repeating: "a", count: i + 1)
-
-        if vowels.contains(word[0].lowercased()) {
-            word.append("ma" + aLetters)
+        var word = sentence[i]
+        
+        if vowels.contains(word.first ?? "$") {
+            word.append("ma")
         } else {
-            let letter = word.removeFirst()
-            word.append(letter + "ma" + aLetters)
+            word += "\(word.removeFirst())" + "ma"
         }
 
-        result.append(word.joined())
+        word += String(repeating: "a", count: i + 1)
+        result.append(word)
     }
 
     return result.joined(separator: " ")
 }
+
+print(toGoatLatin("I speak Goat Latin"))
+print(toGoatLatin("The quick brown fox jumped over the lazy dog"))
