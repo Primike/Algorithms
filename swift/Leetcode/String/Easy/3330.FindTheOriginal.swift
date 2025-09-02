@@ -10,20 +10,12 @@
 
 // Time: O(n), Space: O(n)
 func possibleStringCount(_ word: String) -> Int {
-    let word = Array(word)
     var result = 1
-    var i = 0
+    var last = Character("?")
 
-    while i < word.count {
-        var letter = word[i]
-        var count = 0
-
-        while i < word.count, word[i] == letter {
-            i += 1
-            count += 1
-        }
-
-        result += count - 1
+    for char in word {
+        if char == last { result += 1 }
+        last = char
     }
 
     return result

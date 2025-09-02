@@ -5,15 +5,23 @@
 
 // Time: O(n), Space: O(n)
 func isCircularSentence(_ sentence: String) -> Bool {
-    let sentence = sentence.components(separatedBy: " ").map { Array($0) }
-    var last = sentence[0][0]
+    if sentence.last != sentence.first { return false }
 
-    for i in 0..<sentence.count {
-        if sentence[i][0] != last { return false }
-        last = sentence[i].last ?? Character("$")
+    var lastLetter = Character("?")
+    var lastIsSpace = false
+
+    for char in sentence {
+        if lastIsSpace, lastLetter != char { return false }
+        
+        if char == " " {
+            lastIsSpace = true
+        } else {
+            lastLetter = char
+            lastIsSpace = false
+        }
     }
 
-    return sentence[0][0] == (sentence[sentence.count - 1].last ?? Character("$"))
+    return true
 }
 
 print(isCircularSentence("leetcode exercises sound delightful"))

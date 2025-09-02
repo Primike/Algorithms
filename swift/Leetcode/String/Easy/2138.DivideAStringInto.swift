@@ -14,22 +14,23 @@
 
 // Time: O(n), Space: O(n)
 func divideString(_ s: String, _ k: Int, _ fill: Character) -> [String] {
-    let s = Array(s)
     var result = [String]()
-    var current = [Character]()
+    var string = ""
+    var index = 0
 
-    for i in 0..<s.count {
-        current.append(s[i])
+    for char in s {
+        string.append(char)
+        index += 1
 
-        if (i + 1) % k == 0 {
-            result.append(String(current))
-            current = []
+        if index == k { 
+            result.append(string) 
+            string = ""
+            index = 0
         }
     }
 
-    if !current.isEmpty {
-        var string = String(current) 
-        string += String(repeating: fill, count: k - string.count)
+    if index != 0 {
+        string += String(repeating: fill, count: k - index)
         result.append(string)
     }
 

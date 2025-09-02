@@ -8,12 +8,7 @@ func findWordsContaining(_ words: [String], _ x: Character) -> [Int] {
     var result = [Int]()
 
     for i in 0..<words.count {
-        for char in words[i] {
-            if char == x {
-                result.append(i)
-                break
-            }
-        }
+        if words[i].contains(x) { result.append(i) }
     }
 
     return result

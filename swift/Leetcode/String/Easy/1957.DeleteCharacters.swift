@@ -15,7 +15,7 @@ func makeFancyString(_ s: String) -> String {
             last = letter
             count = 1
             result.append(letter)
-        } else if letter == last, count < 2{
+        } else if letter == last, count < 2 {
             count += 1
             result.append(letter)
         }
