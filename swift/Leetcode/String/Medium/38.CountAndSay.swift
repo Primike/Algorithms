@@ -15,28 +15,29 @@
 
 // Time: O(n), Space: O(n)
 func countAndSay(_ n: Int) -> String {
-    var result = ["1"] 
+    var result = [1]
 
-    for _ in 1..<n {
-        var encoding = [String]() 
+    for _ in 0..<(n - 1) {
+        var encoding = [Int]()
         var i = 0
 
         while i < result.count {
-            let number = result[i]
+            var current = result[i]
             var count = 0
 
-            while i < result.count, result[i] == number {
+            while i < result.count, current == result[i] {
                 count += 1
                 i += 1
             }
 
-            encoding += [String(count), number]
+            encoding.append(count)
+            encoding.append(current)
         }
 
         result = encoding
     }
 
-    return result.joined()
+    return result.map { String($0) }.joined()
 }
 
 print(countAndSay(4))
