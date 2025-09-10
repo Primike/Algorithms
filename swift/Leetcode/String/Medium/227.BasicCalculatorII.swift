@@ -1,37 +1,48 @@
+// Given a string s which represents an expression, 
+// evaluate this expression and return its value. 
+// The integer division should truncate toward zero.
+// You may assume that the given expression is always valid. 
+// All intermediate results will be in the range of [-231, 231 - 1].
+
+// Time: O(n), Space: O(1)
 func calculate(_ s: String) -> Int {
-    let s = Array(s + "+")
-    var lastOperation: Character = "+"
+    let s = s + "+"
     var result = 0
-    var current = 0
     var last = 0
+    var lastOperator = Character("+")
+    var current = 0
 
-    for i in 0..<s.count {
-        if s[i] == " " { continue }
+    for char in s {
+        if char == " " { continue }
 
-        if s[i].isNumber {
-            current = current * 10 + Int(String(s[i]))!
-            continue
-        } else if lastOperation == "+" {
+        if char.isNumber {
+            current = (current * 10) + (char.wholeNumberValue ?? 0)
+            continue 
+        } else if lastOperator == "+" {
             result += last
             last = current
-        } else if lastOperation == "-" {
+        } else if lastOperator == "-" {
             result += last
             last = -current
-        } else if lastOperation == "*" {
+        } else if lastOperator == "*" {
             last *= current
-        } else if lastOperation == "/" {
+        } else if lastOperator == "/" {
             last /= current
         }
 
-        lastOperation = s[i]
+        lastOperator = char
         current = 0
     }
 
-    result += last 
-    return result
+    return result + last
 }
 
-func calculate(_ s: String) -> Int {
+print(calculate("3+2*2"))
+print(calculate(" 3/2 "))
+print(calculate(" 3+5 / 2 "))
+
+
+func calculate2(_ s: String) -> Int {
     let s = Array("+" + s).filter { $0 != " " }
     let operators: Set<Character> = ["*", "/"]
     var result = 0
