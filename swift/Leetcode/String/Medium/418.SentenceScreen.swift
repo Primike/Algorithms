@@ -4,6 +4,7 @@
 // and a word cannot be split into two lines. 
 // A single space must separate two consecutive words in a line.
 
+// Time: O(n * l), Space: O(n * l)
 func wordsTyping(_ sentence: [String], _ rows: Int, _ cols: Int) -> Int {
     let sentence = Array(sentence.joined(separator: " ") + " ")
     let length = sentence.count
