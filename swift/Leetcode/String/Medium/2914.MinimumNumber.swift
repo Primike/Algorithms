@@ -22,3 +22,27 @@ func minChanges(_ s: String) -> Int {
 print(minChanges("1001"))
 print(minChanges("10"))
 print(minChanges("0000"))
+
+
+func minChanges2(_ s: String) -> Int {
+    let s = Array(s)
+    var result = 0
+    var i = 0
+
+    while i < s.count {
+        let char = s[i]
+        var count = 0
+
+        while i < s.count, char == s[i] {
+            i += 1
+            count += 1
+        }
+
+        if count % 2 != 0 {
+            result += 1
+            i += 1
+        }
+    }
+
+    return result
+}

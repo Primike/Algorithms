@@ -8,27 +8,22 @@
 
 // Time: O(n), Space: O(1)
 func compressedString(_ word: String) -> String {
-    let word = Array(word).map { String($0) }
+    let word = Array(word)
     var result = ""
     var i = 0
 
     while i < word.count {
-        var current = word[i]
+        var char = word[i]
         var count = 0
 
-        while i < word.count, current == word[i] {
-            if count == 9 { 
-                result += "9" + current 
-                count = 0
-            }
-            
-            count += 1
+        while i < word.count, char == word[i], count < 9 {
             i += 1
+            count += 1
         }
 
-        result += "\(count)" + current
+        result += "\(count)\(char)"
     }
-    
+
     return result
 }
 
