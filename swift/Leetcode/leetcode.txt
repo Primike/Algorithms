@@ -51,7 +51,7 @@ Backtracking:
 
 
 Binary Search:
-    Medium: 852?, 2563?, 2594?, 3356
+    Medium: 852?, 1488, 2563?, 2594?, 3356
     Hard: 302, 719, 2040, 2071, 2081
     Tricks: e1150
 
