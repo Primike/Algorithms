@@ -37,3 +37,4 @@ func answerString(_ word: String, _ numFriends: Int) -> String {
 
 print(answerString("dbca", 2))
 print(answerString("gggg", 4))
+print(answerString("zayzbx", 3))
