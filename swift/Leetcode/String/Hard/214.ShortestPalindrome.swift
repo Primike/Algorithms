@@ -3,28 +3,32 @@
 // Return the shortest palindrome you can find by 
 // performing this transformation.
 
+// Time: O(n^2), Space: O(n)
 func shortestPalindrome(_ s: String) -> String {
-    let length = s.count
-    if length == 0 { return s }
+    if s.count == 0 { return s }
     
-    let sChars = Array(s)
-    var left = 0
-    
-    for right in stride(from: length - 1, through: 0, by: -1) {
-        if sChars[right] == sChars[left] {
+    let s = Array(s)
+    var index = s.count - 1
+
+    for i in (0..<s.count).reversed() {
+        var left = 0, right = i
+
+        while left <= right, s[left] == s[right] {
             left += 1
+            right -= 1
+        }
+
+        if left > right {
+            index = i 
+            break 
         }
     }
-    
-    if left == length { return s }
-    
-    let range = left..<length
-    let nonPalindrome = sChars[range]
-    let reverse = String(nonPalindrome.reversed())
-    let prefixSubstring = String(sChars[0..<left])
-    let shortestPrefixPalindrome = shortestPalindrome(prefixSubstring)
-    
-    return reverse + shortestPrefixPalindrome + String(nonPalindrome)
+
+    let rightPart = String(s[(index + 1)...])
+    let leftPart = rightPart.reversed()
+    let palindrome = String(s[0...index])
+
+    return leftPart + palindrome + rightPart
 }
 
 print(shortestPalindrome("aacecaaa"))
