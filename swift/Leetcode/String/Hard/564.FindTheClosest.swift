@@ -4,43 +4,42 @@
 // The closest is defined as the absolute difference minimized 
 // between two integers.
 
+// Time: O(n), Space: O(n)
 func nearestPalindromic(_ n: String) -> String {
-    func halfToPalindrome(_ left: Int, _ isEven: Bool) -> Int {
-        var result = left
-        var leftCopy = isEven ? left : left / 10
+    func numberToPalindrome(_ number: Int) -> Int {
+        var palindrome = number
+        var current = (n.count % 2 == 0) ? number : number / 10
         
-        while leftCopy > 0 {
-            result = result * 10 + leftCopy % 10
-            leftCopy /= 10
+        while current > 0 {
+            palindrome = palindrome * 10 + current % 10
+            current /= 10
         }
-        
-        return result
+
+        return palindrome
     }
 
-    let i = n.count % 2 == 0 ? n.count / 2 - 1 : n.count / 2
-    let firstHalf = Int(n.prefix(i + 1))!
-
+    let leftHalf = Int(n.prefix((n.count + 1) / 2))!
     var possibilities = [Int]()
-    possibilities.append(halfToPalindrome(firstHalf, n.count % 2 == 0))
-    possibilities.append(halfToPalindrome(firstHalf + 1, n.count % 2 == 0))
-    possibilities.append(halfToPalindrome(firstHalf - 1, n.count % 2 == 0))
+    possibilities.append(numberToPalindrome(leftHalf))
+    possibilities.append(numberToPalindrome(leftHalf + 1))
+    possibilities.append(numberToPalindrome(leftHalf - 1))
     possibilities.append(Int(pow(10.0, Double(n.count - 1))) - 1)
     possibilities.append(Int(pow(10.0, Double(n.count))) + 1)
     
-    var difference = Int.max
+    let integerN = Int(n)!
     var result = 0
-    let nl = Int(n)!
+    var closest = Int.max
     
-    for cand in possibilities {
-        if cand == nl { continue }
+    for palindrome in possibilities {
+        if palindrome == integerN { continue }
 
-        let currentDiff = abs(cand - nl)
+        let difference = abs(palindrome - integerN)
 
-        if currentDiff < difference {
-            difference = currentDiff
-            result = cand
-        } else if currentDiff == difference {
-            result = min(result, cand)
+        if difference < closest {
+            closest = difference
+            result = palindrome
+        } else if difference == closest {
+            result = min(result, palindrome)
         }
     }
 

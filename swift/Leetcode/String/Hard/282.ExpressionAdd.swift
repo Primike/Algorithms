@@ -1,68 +1,67 @@
-    func addOperators(_ num: String, _ target: Int) -> [String] {
-        let num = Array(num).map { String($0) }
-        let operators = ["+", "-", "*"]
+// Given a string num that contains only digits and an integer target, 
+// return all possibilities to insert the binary operators '+', '-', 
+// and/or '*' between the digits of num so that the resultant expression 
+// evaluates to the target value.
+// Note that operands in the returned expressions 
+// should not contain leading zeros.
 
-        func backtrack(_ index: Int, _ current: String) {
-            if index >= num.count {
-                checkValid(String(current.dropLast()))
-                return 
+// Time: O(4^n * n), Space(n^2)
+func addOperators(_ num: String, _ target: Int) -> [String] {
+    let num = Array(num).map { String($0) }
+    let operators = ["+", "-", "*"]
+    var result = [String]()
+
+    func checkExpression(_ expression: String) {
+        let expression = expression + "+"
+        var total = 0
+        var last = 0
+        var lastOperator = Character("+")
+        var current = 0
+
+        for char in expression {
+            if char == " " { continue }
+
+            if char.isNumber {
+                current = (current * 10) + (char.wholeNumberValue ?? 0)
+                continue 
+            } else if lastOperator == "+" {
+                total += last
+                last = current
+            } else if lastOperator == "-" {
+                total += last
+                last = -current
+            } else if lastOperator == "*" {
+                last *= current
             }
 
-            if index == num.count - 1 {
-                backtrack(index + 1, current + num[index] + operators[0])
-            } else if num[index] == "0" {
-                for sign in operators {
-                    backtrack(index + 1, current + num[index] + sign)
-                }
-            } else {
-                var string = ""
-
-                for i in index..<num.count {
-                    string += num[i]
-
-                    if i == num.count - 1 {
-                        backtrack(i + 1, current + string + operators[0])
-                    } else {
-                        for sign in operators {
-                            backtrack(i + 1, current + string + sign)
-                        }
-                    }
-                }
-            }
-        } 
-
-        var result = [String]()
-
-        func checkValid(_ expression: String) {
-            let string = Array(expression + "+")
-            var total = 0
-            var number = 0
-            var lastNumber = 0
-            var lastOperator = Character("+")
-
-            for i in 0..<string.count {
-                if string[i].isNumber {
-                    let digit = Int(String(string[i]))!
-                    number = number * 10 + digit
-                    continue
-                } else if lastOperator == "+" {
-                    total += lastNumber
-                    lastNumber = number
-                } else if lastOperator == "-" {
-                    total += lastNumber
-                    lastNumber = -number
-                } else if lastOperator == "*" {
-                    lastNumber *= number
-                }
-
-                lastOperator = string[i]
-                number = 0
-            }
-
-            total += lastNumber
-            if total == target { result.append(expression) }
+            lastOperator = char
+            current = 0
         }
 
-        backtrack(0, "")
-        return result
+        if total + last == target { 
+            result.append(String(expression.dropLast())) 
+        }
     }
+
+    func backtrack(_ i: Int, _ string: String) {
+        if i == num.count - 1 {
+            checkExpression(string + num[i])
+            return
+        }
+
+        if !(num[i] == "0" && operators.contains(String(string.last ?? "+"))) {
+            backtrack(i + 1, string + num[i]) 
+        }
+
+        for sign in operators {
+            backtrack(i + 1, string + num[i] + sign)
+        }
+    }
+
+    backtrack(0, "")
+    return result
+}
+
+print(addOperators("123", 6))
+print(addOperators("232", 8))
+print(addOperators("3456237490", 9191))
