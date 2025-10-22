@@ -5,42 +5,41 @@
 
 // Time: O(n + e), Space: O(n + e)
 func minimumSemesters(_ n: Int, _ relations: [[Int]]) -> Int {
-    var paths = Array(repeating: [Int](), count: n + 1)
-    
+    var paths = [Int: [Int]]()
+
     for relation in relations {
-        paths[relation[0]].append(relation[1])
+        paths[relation[0], default: []].append(relation[1])
     }
 
-    var finished = [Int: Int]()
+    var memo = [Int: Int]()
     var visited = Set<Int>()
+    var hasCycle = false
 
-    func dfs(_ n: Int) -> (Int, Bool) {
-        if visited.contains(n) { return (0, false) }
-        if let value = finished[n] { return (value, true) }
-
-        visited.insert(n)
-        var longest = 0
-
-        for node in paths[n] {
-            let (count, bool) = dfs(node)
-
-            if !bool { return (0, false) }
-            longest = max(longest, count)
+    func dfs(_ node: Int) -> Int {
+        if let value = memo[node] { return value }
+        if visited.contains(node) { 
+            hasCycle = true
+            return 0
         }
 
-        longest += 1
-        finished[n] = longest
-        visited.remove(n)
-        return (longest, true)
-    }
+        visited.insert(node)
+        var longestPath = 0
 
+        for next in paths[node, default: []] {
+            longestPath = max(longestPath, dfs(next))
+        }
+
+        longestPath += 1
+        visited.remove(node)
+        memo[node] = longestPath
+        return longestPath
+    }
+    
     var result = 0
 
-    for i in 1..<paths.count {
-        let (count, bool) = dfs(i)
-        if !bool { return -1 }
-
-        result = max(result, count)
+    for node in 1...n {
+        result = max(result, dfs(node))
+        if hasCycle { return -1 }
     }
 
     return result

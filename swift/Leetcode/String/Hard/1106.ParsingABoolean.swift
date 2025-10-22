@@ -1,33 +1,49 @@
+// 't' that evaluates to true.
+// 'f' that evaluates to false.
+// '!(subExpr)' that evaluates to the logical NOT of the inner expression subExpr.
+// '&(subExpr1, subExpr2, ..., subExprn)' that evaluates to the logical AND 
+// of the inner expressions subExpr1, subExpr2, ..., subExprn where n >= 1.
+// '|(subExpr1, subExpr2, ..., subExprn)' that evaluates to the logical OR 
+// of the inner expressions subExpr1, subExpr2, ..., subExprn where n >= 1.
+// Given a string expression that represents a boolean expression, 
+// return the evaluation of that expression.
+
+// Time: O(n), Space: O(n)
 func parseBoolExpr(_ expression: String) -> Bool {
-    var expr = Array(expression)
-    
-    while expr.count > 1 {
-        let start = max(expr.lastIndex(of: "!") ?? -1,
-                        expr.lastIndex(of: "&") ?? -1,
-                        expr.lastIndex(of: "|") ?? -1)
-        
-        let end = expr[start...].firstIndex(of: ")") ?? -1
-        let subExpr = Array(expr[start...end])
-        let op = subExpr[0]
-        let values = subExpr[2..<subExpr.count-1]
+    var operators: Set<Character> = ["!", "&", "|"]
+    var stack = [Character]()
+    var operatorStack = [Character]()
 
-        let result: Character
+    for char in expression {
+        if operators.contains(char) {
+            operatorStack.append(char)
+        } else if char == "," {
+            continue 
+        } else if char != ")" {
+            stack.append(char)
+        } else {
+            let sign = operatorStack.removeLast()
+            var current = stack.last == "t"
 
-        switch op {
-        case "!":
-            result = values.contains("t") ? "f" : "t"
-        case "&":
-            result = values.contains("f") ? "f" : "t"
-        case "|":
-            result = values.contains("t") ? "t" : "f"
-        default:
-            result = "f"
+            while let last = stack.last, last != "(" {
+                stack.removeLast()
+                let bool = last == "t"
+
+                if sign == "&" {
+                    current = current && bool
+                } else if sign == "|" {
+                    current = current || bool
+                } else {
+                    current = !current
+                }
+            }
+            
+            stack.removeLast()
+            stack.append(current ? "t" : "f")
         }
-        
-        expr.replaceSubrange(start...end, with: [result])
     }
-    
-    return expr == ["t"]
+
+    return stack.last == "t"
 }
 
 print(parseBoolExpr("&(|(f))"))

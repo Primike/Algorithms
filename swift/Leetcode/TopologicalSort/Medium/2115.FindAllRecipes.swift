@@ -3,37 +3,36 @@
 
 // Time: O(n + I), Space: O(n + I)
 func findAllRecipes(_ recipes: [String], _ ingredients: [[String]], _ supplies: [String]) -> [String] {
-    var finished = supplies.reduce(into: [:]) { $0[$1] = true }
     var paths = [String: [String]]()
 
     for i in 0..<recipes.count {
-        paths[recipes[i], default: []] += ingredients[i]
+        paths[recipes[i]] = ingredients[i]
     }
 
+    var supplies = Set(supplies)
     var visited = Set<String>()
 
-    func dfs(_ n: String) -> Bool {
-        if visited.contains(n) { return false }
-        if let value = finished[n] { return value }
+    func dfs(_ node: String) -> Bool {
+        if supplies.contains(node) { return true }
+        if visited.contains(node) { return false }
+        if paths[node, default: []].isEmpty { return false }
 
-        visited.insert(n)
+        visited.insert(node)
+        var canCreate = true
 
-        for node in paths[n, default: []] {
-            if !dfs(node) {
-                finished[n] = false
-                return false
-            }
-        }        
+        for next in paths[node, default: []] {
+            canCreate = canCreate && dfs(next)
+        }
 
-        visited.remove(n)
-        finished[n] = true
-        return true
+        visited.remove(node)
+        if canCreate { supplies.insert(node) }
+        return canCreate
     }
 
     var result = [String]()
-    
-    for i in 0..<recipes.count {
-        if dfs(recipes[i]) { result.append(recipes[i]) }
+
+    for recipe in paths.keys {
+        if dfs(recipe) { result.append(recipe) }
     }
 
     return result
