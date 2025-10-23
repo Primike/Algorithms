@@ -6,17 +6,30 @@
 func sumOfLeftLeaves(_ root: TreeNode?) -> Int {
     guard let root = root else { return 0 }
     
-    var queue = [(root, false)]
+    var queue = [root]
     var result = 0
 
     while !queue.isEmpty {
-        for _ in 0..<queue.count {
-            let (first, bool) = queue.removeFirst()
-            
-            if first.left == nil, first.right == nil, bool { result += first.val }
-            if let left = first.left { queue.append((left, true)) }
-            if let right = first.right { queue.append((right, false)) }
+        let first = queue.removeFirst()
+
+        if let left = first.left, left.left == nil, left.right == nil { 
+            result += left.val
         }
+
+        if let left = first.left { queue.append(left) }
+        if let right = first.right { queue.append(right) }
+    }
+
+    return result
+}
+
+func sumOfLeftLeaves2(_ root: TreeNode?) -> Int {
+    guard let root = root else { return 0 }
+    
+    var result = sumOfLeftLeaves(root.left) + sumOfLeftLeaves(root.right)
+
+    if let left = root.left, left.left == nil, left.right == nil { 
+        result += left.val
     }
 
     return result

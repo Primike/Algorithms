@@ -4,19 +4,14 @@
 
 // Time: O(n), Space: O(1)
 func minDepth(_ root: TreeNode?) -> Int {
+    guard let root = root else { return 0 }
+
     var result = Int.max
 
-    func dfs(_ root: TreeNode?, _ level: Int) -> TreeNode? {
-        guard let root = root else { return nil }
+    if let left = root.left { result = min(result, minDepth(left)) }
+    if let right = root.right { result = min(result, minDepth(right)) }
+    if result == Int.max { result = 0 }
 
-        let left = dfs(root.left, level + 1)
-        let right = dfs(root.right, level + 1)
-
-        if left == nil, right == nil { result = min(result, level + 1) }
-
-        return root
-    }
-
-    dfs(root, 0)
-    return result == Int.max ? 0 : result
+    result += 1
+    return result
 }

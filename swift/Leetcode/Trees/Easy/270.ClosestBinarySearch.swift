@@ -2,23 +2,56 @@
 // return the value in the BST that is closest to the target. 
 // If there are multiple answers, print the smallest.
 
-// Time: O(n), Space: O(h)
+// Time: O(h), Space: O(1)
 func closestValue(_ root: TreeNode?, _ target: Double) -> Int {
     var result = 0
-    var minimum = Double.greatestFiniteMagnitude
+    var closest = Double.greatestFiniteMagnitude
+    var current = root 
+
+    while let node = current {
+        let value = Double(node.val)
+        let difference = abs(value - target)
+
+        if difference < closest {
+            result = node.val
+            closest = difference
+        } else if difference == closest {
+            result = min(result, node.val)
+        }
+
+        if value > target {
+            current = node.left
+        } else {
+            current = node.right
+        }
+    }
+
+    return result
+}
+
+// Time: O(h), Space: O(h)
+func closestValue2(_ root: TreeNode?, _ target: Double) -> Int {
+    var result = 0
+    var closest = Double.greatestFiniteMagnitude
 
     func dfs(_ root: TreeNode?) {
         guard let root = root else { return }
 
-        let distance = abs(Double(root.val) - target)
+        let value = Double(root.val)
+        let difference = abs(value - target)
 
-        if (distance < minimum) || (distance == minimum && result > root.val) {
+        if difference < closest {
             result = root.val
-            minimum = abs(Double(root.val) - target)
+            closest = difference
+        } else if difference == closest {
+            result = min(result, root.val)
         }
 
-        dfs(root.left) 
-        dfs(root.right)
+        if value > target {
+            dfs(root.left)
+        } else {
+            dfs(root.right)
+        }
     }
 
     dfs(root)
