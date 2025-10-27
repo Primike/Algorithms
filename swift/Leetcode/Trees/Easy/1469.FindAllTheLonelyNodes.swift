@@ -6,6 +6,30 @@
 
 // Time: O(n), Space: O(h)
 func getLonelyNodes(_ root: TreeNode?) -> [Int] {
+    guard let root = root else { return [] }
+    
+    var stack = [root]
+    var result = [Int]()
+
+    while !stack.isEmpty {
+        let last = stack.removeLast()
+
+        if let left = last.left {
+            if last.right == nil { result.append(left.val) }
+            stack.append(left)
+        }
+
+        if let right = last.right {
+            if last.left == nil { result.append(right.val) }
+            stack.append(right)
+        }
+    }
+
+    return result
+}
+
+
+func getLonelyNodes2(_ root: TreeNode?) -> [Int] {
     var result = [Int]()
 
     func dfs(_ root: TreeNode?) -> TreeNode? {

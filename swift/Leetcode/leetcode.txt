@@ -60,7 +60,7 @@ Binary Search:
 
 
 Design:
-    Medium: 1352?, 3408, 3484, 3508
+    Medium: 1352?, 2043, 3408, 3484, 3508
     Hard: 1912
 
 
