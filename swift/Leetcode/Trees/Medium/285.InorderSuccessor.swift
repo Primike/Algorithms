@@ -6,18 +6,18 @@
 
 // Time: O(n), Space: O(h)
 func inorderSuccessor(_ root: TreeNode?, _ p: TreeNode?) -> TreeNode? {
-    var last: TreeNode? = nil
+    guard let p else { return nil }
 
-    func dfs(_ root: TreeNode?) -> TreeNode? {
-        guard let root = root else { return nil }
+    var result: TreeNode? = nil
 
-        if let left = dfs(root.left) { return left }
-        if last === p { return root }
-        last = root
-        if let right = dfs(root.right) { return right}
+    func dfs(_ root: TreeNode?) {
+        guard let root else { return }
 
-        return nil
+        dfs(root.left)
+        if root.val > p.val, result == nil { result = root }
+        dfs(root.right)
     }
 
-    return dfs(root)
+    dfs(root)
+    return result
 }
