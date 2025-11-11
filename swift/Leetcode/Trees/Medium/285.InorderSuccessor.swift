@@ -4,6 +4,60 @@
 // The successor of a node p is the node with the 
 // smallest key greater than p.val.
 
+// Time: O(log(n)), Space: O(1)
+func inorderSuccessor(_ root: TreeNode?, _ p: TreeNode?) -> TreeNode? {
+    guard let p else { return nil }
+
+    var result: TreeNode? = nil
+    var largest = Int.max
+    var current = root
+
+    while let node = current {
+        let difference = node.val - p.val
+        
+        if difference > 0, difference < largest {
+            result = node
+            largest = difference
+        }
+
+        if node.val > p.val {
+            current = node.left
+        } else {
+            current = node.right
+        }
+    }
+
+    return result
+}
+
+// Time: O(log(n)), Space: O(h)
+func inorderSuccessor(_ root: TreeNode?, _ p: TreeNode?) -> TreeNode? {
+    guard let p else { return nil }
+
+    var result: TreeNode? = nil
+    var largest = Int.max
+
+    func dfs(_ root: TreeNode?) {
+        guard let root else { return }
+
+        let difference = root.val - p.val
+        
+        if difference > 0, difference < largest {
+            result = root
+            largest = difference
+        }
+
+        if root.val > p.val {
+            dfs(root.left)
+        } else {
+            dfs(root.right)
+        }
+    }
+
+    dfs(root)
+    return result
+}
+
 // Time: O(n), Space: O(h)
 func inorderSuccessor(_ root: TreeNode?, _ p: TreeNode?) -> TreeNode? {
     guard let p else { return nil }
