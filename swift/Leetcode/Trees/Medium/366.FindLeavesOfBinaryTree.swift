@@ -6,25 +6,24 @@
 
 // Time: O(n), Space: O(h)
 func findLeaves(_ root: TreeNode?) -> [[Int]] {
-    var levels = [Int: [Int]]()
+    var dict = [Int: [Int]]()
 
     func dfs(_ root: TreeNode?) -> Int {
-        guard let root = root else { return 0 }
+        guard let root else { return 0 }
 
-        let left = dfs(root.left), right = dfs(root.right)
-        let deepest = max(left, right)
+        let left = dfs(root.left)
+        let right = dfs(root.right)
+        let level = max(left, right)
 
-        levels[deepest, default: []].append(root.val)
-        return deepest + 1
+        dict[level, default: []].append(root.val)
+        return level + 1
     }
-
+    
     dfs(root)
-    let smallest = levels.keys.min() ?? 0
-    let largest = levels.keys.max() ?? 0
-    var result = [[Int]]()
+    var result = Array(repeating: [Int](), count: dict.keys.count)
 
-    for i in smallest...largest {
-        result.append(levels[i, default: []])
+    for i in 0..<result.count {
+        result[i] = dict[i, default: []]
     }
 
     return result
