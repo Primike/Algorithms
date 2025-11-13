@@ -31,7 +31,7 @@ func inorderSuccessor(_ root: TreeNode?, _ p: TreeNode?) -> TreeNode? {
 }
 
 // Time: O(log(n)), Space: O(h)
-func inorderSuccessor(_ root: TreeNode?, _ p: TreeNode?) -> TreeNode? {
+func inorderSuccessor2(_ root: TreeNode?, _ p: TreeNode?) -> TreeNode? {
     guard let p else { return nil }
 
     var result: TreeNode? = nil
@@ -59,7 +59,7 @@ func inorderSuccessor(_ root: TreeNode?, _ p: TreeNode?) -> TreeNode? {
 }
 
 // Time: O(n), Space: O(h)
-func inorderSuccessor(_ root: TreeNode?, _ p: TreeNode?) -> TreeNode? {
+func inorderSuccessor3(_ root: TreeNode?, _ p: TreeNode?) -> TreeNode? {
     guard let p else { return nil }
 
     var result: TreeNode? = nil

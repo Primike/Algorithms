@@ -11,25 +11,50 @@
 // should point to its successor. You should return the pointer 
 // to the smallest element of the linked list.
 
-// Time: O(n), Space: O(1)
+// Time: O(n), Space: O(h)
 func treeToDoublyList(_ root: Node?) -> Node? {
-    var previous: Node? = nil
-    var head: Node? = nil
+    guard let root else { return nil }
+
+    var newNode = Node(0)
+    var previous: Node? = newNode
+    var current: Node? = root
+    var stack = [Node]()
+
+    while current != nil || !stack.isEmpty {
+        while let node = current {
+            stack.append(node)
+            current = node.left
+        }
+
+        current = stack.removeLast()
+        current?.left = previous
+        previous?.right = current
+        previous = current
+        current = current?.right
+    }
+
+    newNode.right?.left = previous
+    previous?.right = newNode.right
+    return newNode.right
+}
+
+// Time: O(n), Space: O(h)
+func treeToDoublyList2(_ root: Node?) -> Node? {
+    var newNode = Node(0)
+    var previous = newNode
 
     func dfs(_ root: Node?) {
-        guard let root = root else { return }
+        guard let root else { return }
 
-        let left = dfs(root.left)
-        if head == nil { head = root }
-        previous?.right = root
+        dfs(root.left)
+        previous.right = root
         root.left = previous
         previous = root
-        let right = dfs(root.right)
+        dfs(root.right)
     }
 
     dfs(root)
-    previous?.right = head
-    head?.left = previous
-
-    return head
+    newNode.right?.left = previous
+    previous.right = newNode.right
+    return newNode.right
 }
