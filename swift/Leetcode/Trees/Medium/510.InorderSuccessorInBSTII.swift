@@ -11,21 +11,23 @@
 func inorderSuccessor(_ node: Node?) -> Node? {
     guard let node = node else { return nil }
 
-    if var right = node.right {
-        while let left = right.left {
-            right = left
+    if let right = node.right {
+        var result = right
+
+        while let left = result.left {
+            result = left
         }
 
-        return right
+        return result
     } else {
         var previous = node
-        var current = node.parent
+        var result = node.parent
 
-        while let parent = current, parent.left !== previous {
-            current = parent.parent
+        while let parent = result, parent.left !== previous {
+            result = parent.parent
             previous = parent
         }
 
-        return current
+        return result
     }
 }

@@ -4,21 +4,20 @@
 
 // Time: O(n), Space: O(n)
 func addOneRow(_ root: TreeNode?, _ val: Int, _ depth: Int) -> TreeNode? {
-    func dfs(_ node: TreeNode?, _ currentDepth: Int) -> TreeNode? {
-        guard let node = node else { return nil }
-
-        if currentDepth == depth - 1 {
-            node.left = TreeNode(val, node.left, nil) 
-            node.right = TreeNode(val, nil, node.right)
-        } else {
-            node.left = dfs(node.left, currentDepth + 1)
-            node.right = dfs(node.right, currentDepth + 1)
-        }
-
-        return node
+    if depth == 1 {
+        let newNode = TreeNode(val, root, nil)
+        return newNode
     }
 
-    if depth == 1 { return TreeNode(val, root, nil) }
+    guard let root else { return nil }
 
-    return dfs(root, 1)
+    if depth > 2 {
+        root.left = addOneRow(root.left, val, depth - 1)
+        root.right = addOneRow(root.right, val, depth - 1)
+    } else {
+        root.left = TreeNode(val, root.left, nil)
+        root.right = TreeNode(val, nil, root.right)
+    }
+
+    return root
 }

@@ -10,53 +10,42 @@
 
 // Time: O(n), Space: O(h)
 func str2tree(_ s: String) -> TreeNode? {
+    if s.count == 0 { return nil }
+    
     let s = Array(s)
+    var i = 0
 
-    func dfs(_ l: Int, _ r: Int) -> TreeNode? {
-        if l > r { return nil }
+    func dfs() -> TreeNode? {
+        var isPositive = true
 
-        var isNegative = false
-        var l1 = l
-
-        if s[l1] == "-" { 
-            isNegative = true
-            l1 += 1
+        if s[i] == "-" {
+            i += 1
+            isPositive = false
         }
 
-        var string = ""
+        var number = 0
 
-        while l1 <= r, s[l1].isNumber {
-            string.append(s[l1])
-            l1 += 1
+        while i < s.count, let digit = s[i].wholeNumberValue {
+            number = (number * 10) + digit
+            i += 1
         }
 
-        guard var number = Int(string) else { return nil }
-
-        let newNode = TreeNode(number * (isNegative ? -1 : 1))
-        var r1 = l1 + 1
-        var opened = 1 
-
-        while r1 <= r, opened > 0 {
-            if s[r1] == "(" { opened += 1 }
-            if s[r1] == ")" { opened -= 1 }
-            r1 += 1
+        let newNode = TreeNode(number * (isPositive ? 1 : -1))
+        
+        if i < s.count, s[i] == "(" {
+            i += 1
+            newNode.left = dfs()
+            i += 1
         }
 
-        newNode.left = dfs(l1 + 1, r1 - 2)
-        let l2 = r1 
-        var r2 = l2 + 1
-        opened = 1
-
-        while r2 <= r, opened > 0 {
-            if s[r2] == "(" { opened += 1 }
-            if s[r2] == ")" { opened -= 1 }
-            r2 += 1
+        if i < s.count, s[i] == "(" {
+            i += 1
+            newNode.right = dfs()
+            i += 1
         }
-
-        newNode.right = dfs(l2 + 1, r2 - 2)
 
         return newNode
     }
-    
-    return dfs(0, s.count - 1)
+
+    return dfs()
 }
