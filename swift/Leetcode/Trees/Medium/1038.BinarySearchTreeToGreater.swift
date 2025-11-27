@@ -5,6 +5,28 @@
 
 // Time: O(n), Space: O(h)
 func bstToGst(_ root: TreeNode?) -> TreeNode? {
+    guard let root else { return nil }
+
+    var stack = [TreeNode]()
+    var current: TreeNode? = root
+    var total = 0
+
+    while !stack.isEmpty || current != nil {
+        while let node = current {
+            stack.append(node)
+            current = node.right
+        }
+
+        let last = stack.removeLast()
+        total += last.val
+        last.val = total
+        current = last.left
+    }
+
+    return root
+}
+
+func bstToGst2(_ root: TreeNode?) -> TreeNode? {
     var total = 0
 
     func dfs(_ root: TreeNode?) -> TreeNode? {

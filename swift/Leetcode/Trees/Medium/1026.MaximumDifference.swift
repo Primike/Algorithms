@@ -4,23 +4,39 @@
 
 // Time: O(n), Space: O(h)
 func maxAncestorDiff(_ root: TreeNode?) -> Int {
-    guard let root = root else { return 0 }
+    guard let root else { return 0 }
 
     var result = 0
+    var stack = [(root, root.val, root.val)]
 
-    func dfs(_ root: TreeNode?, _ currentMin: Int, _ currentMax: Int) {
-        guard let root = root else { return }
+    while !stack.isEmpty {
+        var (last, minimum, maximum) = stack.removeLast()
+        result = max(result, abs(last.val - minimum))
+        result = max(result, abs(last.val - maximum))
+        
+        minimum = min(minimum, last.val)
+        maximum = max(maximum, last.val)
 
-        result = max(result, abs(currentMin - root.val))
-        result = max(result, abs(currentMax - root.val))
-
-        let newMin = min(currentMin, root.val)
-        let newMax = max(currentMax, root.val)
-
-        if let left = root.left { dfs(left, newMin, newMax) }
-        if let right = root.right { dfs(right, newMin, newMax) }
+        if let left = last.left { stack.append((left, minimum, maximum)) }
+        if let right = last.right { stack.append((right, minimum, maximum)) }
     }
 
-    dfs(root, root.val, root.val)
+    return result
+}
+
+func maxAncestorDiff2(_ root: TreeNode?) -> Int {
+    var result = 0
+
+    func dfs(_ root: TreeNode?, _ minimum: Int, _ maximum: Int) {
+        guard let root else { return }
+
+        result = max(result, abs(root.val - minimum))
+        result = max(result, abs(root.val - maximum))
+
+        dfs(root.left, min(minimum, root.val), max(maximum, root.val))
+        dfs(root.right, min(minimum, root.val), max(maximum, root.val))
+    } 
+
+    dfs(root, root?.val ?? 0, root?.val ?? 0)
     return result
 }
