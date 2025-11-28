@@ -4,29 +4,32 @@
 
 // Time: O(n), Space: O(n)
 func balanceBST(_ root: TreeNode?) -> TreeNode? {
-    var values = [Int]()
+    guard let root else { return nil }
 
-    func inorder(_ root: TreeNode?) {
-        guard let root = root else { return }
+    var nodes = [TreeNode]()
+    var stack = [TreeNode]()
+    var current: TreeNode? = root
 
-        inorder(root.left)
-        values.append(root.val)
-        inorder(root.right)
+    while !stack.isEmpty || current != nil {
+        while let node = current {
+            stack.append(node)
+            current = node.left
+        }
+
+        let last = stack.removeLast()
+        nodes.append(last)
+        current = last.right
     }
 
-    inorder(root)
-
-    func construct(_ left: Int, _ right: Int) -> TreeNode? {
+    func generateTree(_ left: Int, _ right: Int) -> TreeNode? {
         if left > right { return nil }
-        if left == right { return TreeNode(values[left]) }
 
         let mid = (right + left) / 2
-        let node = TreeNode(values[mid])
-        node.left = construct(left, mid - 1)
-        node.right = construct(mid + 1, right)
+        nodes[mid].left = generateTree(left, mid - 1)
+        nodes[mid].right = generateTree(mid + 1, right)
 
-        return node
+        return nodes[mid]
     }
 
-    return construct(0, values.count - 1)
+    return generateTree(0, nodes.count - 1)
 }

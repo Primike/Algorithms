@@ -16,22 +16,17 @@ func treeDiameter(_ edges: [[Int]]) -> Int {
     var result = 0
 
     func dfs(_ n: Int, _ parent: Int) -> Int {
-        var longest = 0, secondLongest = 0
+        var longestPath = 0
 
         for node in neighbors[n] {
             if node == parent { continue }
+
             let pathLength = dfs(node, n)
-            
-            if pathLength > longest {
-                secondLongest = longest
-                longest = pathLength
-            } else if pathLength > secondLongest {
-                secondLongest = pathLength
-            }
+            result = max(result, longestPath + pathLength)
+            longestPath = max(longestPath, pathLength)
         }
 
-        result = max(result, longest + secondLongest)
-        return longest + 1
+        return longestPath + 1
     }
 
     dfs(0, -1)
