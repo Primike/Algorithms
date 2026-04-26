@@ -2,15 +2,16 @@
 
 // Time: O(n), Space: O(h)
 func lowestCommonAncestor(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> TreeNode? {
-    guard let root = root else { return nil }
+    guard let root else { return nil }
+
+    if root === p || root === q { return root }
 
     let left = lowestCommonAncestor(root.left, p, q)
     let right = lowestCommonAncestor(root.right, p, q)
 
     if left != nil, right != nil { return root }
-    if root === p || root === q { return root }
-
-    return left == nil ? right : left
+    
+    return left ?? right
 }
 
 // Time: O(n), Space: O(n)
